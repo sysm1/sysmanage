@@ -61,9 +61,6 @@ public class Account implements java.io.Serializable {
 	}
 	/**
 	 * 时间格式化
-	 * @author lanyuan
-	 * Email：mmm333zzz520@163.com
-	 * date：2014-2-17
 	 * @return
 	 */
 	@ExcelDataMapper(title="创建时间",order=4)
