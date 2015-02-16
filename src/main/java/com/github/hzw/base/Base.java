@@ -3,6 +3,7 @@ package com.github.hzw.base;
 import java.util.List;
 
 public interface Base<T> {
+	
 	/**
 	 * 返回所有数据
 	 * @param t
