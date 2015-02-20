@@ -118,9 +118,6 @@ public class AccountController extends BaseController{
 	
 	/**
 	 * 验证账号是否存在
-	 * @author lanyuan
-	 * Email：mmm333zzz520@163.com
-	 * date：2014-2-19
 	 * @param name
 	 * @return
 	 */

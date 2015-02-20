@@ -59,8 +59,9 @@
 	</bean>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<!-- 自动匹配Mapper映射文件 -->
+		<!-- 自动匹配Mapper映射文件  **表示可以表示任意多级目录 如：classpath*:mappings/**/*Mapper.xml *表示多个任意字符 -->
 		<property name="mapperLocations" value="classpath:mappings/*-mapper.xml" />
+		<!-- 多个包可以用 ,; \t\n 分隔 -->
 		<property name="typeAliasesPackage" value="com.github.hzw.security.entity" />
 		<property name="plugins">
 			<array>

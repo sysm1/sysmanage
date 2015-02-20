@@ -1,0 +1,104 @@
+
+-- 工厂信息
+SET NAMES utf8;
+CREATE TABLE  factory_info(
+	`id` int NOT NULL AUTO_INCREMENT,
+	`code` varchar(32) NOT NULL,
+	 code2 varchar(32) not null,
+	`name` varchar(256) NOT NULL,
+	`mark` text,
+	PRIMARY KEY (`id`),
+	UNIQUE `uniqe_1` (`code`),
+	UNIQUE `uniqe_2` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 布种信息
+create table cloth_info (
+	id int not null auto_increment,
+	code varchar(32), 						-- 编号
+	cloth_name varchar(255) not null unique, -- 布种名称
+	order_name varchar(255) not null unique, -- 下单名称
+	create_Time date not null,
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 工艺信息
+create table technology_info(
+	id	int not null auto_increment,
+	code varchar(32),
+	name varchar(255) not null unique,
+	mark text,
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 业务员信息 
+create table salesman_info(
+	id	int not null auto_increment,
+	code varchar(32),
+	name varchar(255) not null unique,
+	mark text,
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 布种单位
+create table cloth_unit (
+	id int not null auto_increment,
+	kg  int not null,
+	cm  int not null,
+	yard int not null,
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 布种余量 -- kg cm yard
+create table cloth_allowance (
+	id int not null auto_increment,
+	cloth_id int not null,
+	factory_id int not null,
+	allowance int not null,  // -- 现余量
+	unit1 varchar(32) not null,
+	old_sum int not null, // -- 前余量
+	change_sum int not null, // --变动量
+	mark text,
+	create_time date not null,
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 开版录入
+create table sample_input(
+	id	int not null auto_increment,
+	sample_date date,   -- 开版日期
+	factory_id	int not null,
+	cloth_id	int not null,
+	code_type	int not null, -- 0 文件分色号，1 工厂编号, 2 我司编号
+	code varchar(255),  -- 具体编号
+	technology_id int, -- 工艺id
+	saleman_id int not null, -- 业务员
+	picture varchar(255) not null, -- 图片
+	demand text,  -- 需求
+	mark text,  -- 备注
+	status int not null,  -- 0 未回版 1 已回版
+	reply_code varchar(255),  -- 回版编号
+	my_company_code varchar(255),	-- 我司编号
+	reply_factory_code varchar(255),  -- 工厂编号(多个以逗号分隔)
+	reply_factory_color varchar(255),  -- 工厂颜色(多个以逗号分隔)
+	reply_date timestamp,  -- 回版日期
+	is_repeat int not null, -- 是否重复（我司编号或者回版编号 、布种相同，供应商，与花号基础相同的算重复）
+	create_time date not null,
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 花号基本资料
+create table flower_info(
+	id int not null auto_increment,
+	company_name varchar(255) not null,
+	
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+	
