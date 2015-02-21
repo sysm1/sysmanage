@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.ClothUnitMapper" >
+  
+  <sql id="selectId" >
+    id, cloth_id as clothId, kg, cm, yard
+  </sql>
+  
+  <select id="query" resultType="ClothUnit" parameterType="ClothUnit">
+		select
+		<include refid="selectId" />
+		from cloth_unit
+		<where>
+		<if test="t.clothId != null and t.clothId != ''">
+			cloth_id = #{t.clothId}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="ClothUnit">
+		select
+		<include refid="selectId" />
+		from cloth_unit
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="ClothUnit" useGeneratedKeys="true" keyProperty="id">
+		insert into cloth_unit (
+			cloth_id, kg, cm, yard
+		)
+		values(
+			${clothId},
+			#{kg},
+			#{cm},
+			#{yard}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from cloth_unit where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="ClothUnit">
+		select
+		<include refid="selectId" />
+		from cloth_unit where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="ClothUnit">
+		update cloth_unit
+		<set>
+		<if test="clothId != null" >
+        	cloth_id=#{clothId},
+      	</if>
+		<if test="kg != null" >
+        	kg=#{kg},
+      	</if>
+      	<if test="cm != null" >
+        	cm=#{cm},
+      	</if>
+		<if test="yard != null" >
+        	yard=#{yard},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+  
+</mapper>

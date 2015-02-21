@@ -23,7 +23,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.salesman.loadGird();
+								parent.technology.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
@@ -33,12 +33,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					}
 				});
 			},
+			
 			rules : {
 				name : {
 					required : true,
 					remote:{ //异步验证是否存在
 						type:"POST",
-						url: rootPath + '/background/salesman/isExist.html',
+						url: rootPath + '/background/technology/isExist.html',
 						data:{
 							name:function(){return $("#name").val();}
 						 }
@@ -50,13 +51,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			},
 			messages : {
 				name : {
-					required : "请输入业务员名称",
+					required : "请输入工艺名称",
 				    remote:"该名称已经存在"
 				},
 				code : {
 					required : "填写编号"
 				}
 			},
+			
 			errorPlacement : function(error, element) {//自定义提示错误位置
 				$(".l_err").css('display','block');
 				//element.css('border','3px solid #FFCCCC');
@@ -80,21 +82,21 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <body>
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/salesman/update.html" method="post">
+	<form name="form" id="form" action="${ctx}/background/technology/update.html" method="post">
 		<table style="width: 285px; height: 200px;">
 			<tbody>
 				<tr>
 					<td class="l_right">名称：</td>
 					<td class="l_left">
-					<input id='id' name="id" type="hidden" value="${salesman.id}">
-					<input id='name' name="name" class="isNum" type="text" value="${salesman.name}">
+					<input id='id' name="id" type="hidden" value="${technology.id}">
+					<input id='name' name="name" class="isNum" type="text" value="${technology.name}">
 					</td>
 				</tr>
 				<tr>
 					<td class="l_right">编码：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='code' name="code" type="text" class="checkpass" value="${salesman.code}">
+						<input id='code' name="code" type="text" class="checkpass" value="${technology.code}">
 					</div>
 					</td>
 				</tr>
@@ -103,7 +105,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='mark'
-						name="mark" type="text" class="checkdesc" value="${salesman.mark}">
+						name="mark" type="text" class="checkdesc" value="${technology.mark}">
 						</div>
 						</td>
 				</tr>

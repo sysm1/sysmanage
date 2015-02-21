@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.ClothInfoMapper" >
+
+  <sql id="selectId" >
+    id, code, cloth_name as clothName, order_name as orderName, mark, create_time as createTime
+  </sql>
+  
+  <select id="query" resultType="ClothInfo" parameterType="ClothInfo">
+		select
+		<include refid="selectId" />
+		from cloth_info
+		<where>
+		<if test="t.clothName != null and t.clothName != ''">
+				cloth_name like '%${t.clothName}%'
+		</if>
+		<if test="t.orderName != null and t.orderName != ''">
+				order_name like '%${t.orderName}%'
+		</if>
+		<if test="t.code != null and t.code != ''">
+				code = ${t.code}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+				mark like '%${t.mark}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="ClothInfo">
+		select
+		<include refid="selectId" />
+		from cloth_info
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="ClothInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into cloth_info (
+			code, cloth_name, order_name,mark, create_time
+		)
+		values(
+			#{code},
+			#{clothName},
+			#{orderName},
+			#{mark},
+			#{createTime}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from cloth_info where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="ClothInfo">
+		select
+		<include refid="selectId" />
+		from cloth_info where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="ClothInfo">
+		update cloth_info
+		<set>
+		<if test="clothName != null" >
+        	cloth_name=#{clothName},
+      	</if>
+      	<if test="orderName != null" >
+        	order_name=#{orderName},
+      	</if>
+		<if test="code != null" >
+        	code=#{code},
+      	</if>
+		<if test="mark != null" >
+        	mark=#{mark},
+      	</if>
+		<if test="createTime != null" >
+        	create_time=#{createTime},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+  
+</mapper>

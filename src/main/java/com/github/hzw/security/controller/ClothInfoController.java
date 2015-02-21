@@ -1,5 +1,6 @@
 package com.github.hzw.security.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,25 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.Account;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.Resources;
-import com.github.hzw.security.entity.SalesmanInfo;
-import com.github.hzw.security.service.SalesmanInfoService;
+import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.util.Common;
-import com.github.hzw.util.Md5Tool;
 import com.github.hzw.util.POIUtils;
 
 @Controller
-@RequestMapping("/background/salesman/")
-public class SalesmanInfoController extends BaseController {
+@RequestMapping("/background/cloth/")
+public class ClothInfoController extends BaseController {
 
-	
 	@Inject
-	private SalesmanInfoService salesmanInfoService;
+	private ClothInfoService clothInfoService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
-		return Common.BACKGROUND_PATH+"/salesman/list";
+		return Common.BACKGROUND_PATH+"/cloth/list";
 	}
 	
 	/**
@@ -41,8 +39,8 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("query")
-	public PageView query(SalesmanInfo salesmanInfo,String pageNow,String pagesize) {
-		pageView = salesmanInfoService.query(getPageView(pageNow,pagesize), salesmanInfo);
+	public PageView query(ClothInfo clothInfo,String pageNow,String pagesize) {
+		pageView = clothInfoService.query(getPageView(pageNow,pagesize), clothInfo);
 		return pageView;
 	}
 	
@@ -57,10 +55,11 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(SalesmanInfo salesmanInfo) {
+	public Map<String, Object> add(ClothInfo clothInfo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			salesmanInfoService.add(salesmanInfo);
+			clothInfo.setCreateTime(new Date());
+			clothInfoService.add(clothInfo);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -77,25 +76,10 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@RequestMapping("addUI")
 	public String addUI() {
-		return Common.BACKGROUND_PATH+"/salesman/add";
+		return Common.BACKGROUND_PATH+"/cloth/add";
 	}
 	
-	/**
-	 * 验证业务员名称是否存在
-	 * @param name
-	 * @return
-	 */
-	@RequestMapping("isExist")
-	@ResponseBody
-	public boolean isExist(String name){
-		SalesmanInfo salesmanInfo = salesmanInfoService.isExist(name);
-		if(salesmanInfo == null){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
+
 	/**
 	 * 跑到新增界面
 	 * 
@@ -104,9 +88,9 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
-		SalesmanInfo salesmanInfo = salesmanInfoService.getById(id);
-		model.addAttribute("salesman", salesmanInfo);
-		return Common.BACKGROUND_PATH+"/salesman/edit";
+		ClothInfo clothInfo = clothInfoService.getById(id);
+		model.addAttribute("cloth", clothInfo);
+		return Common.BACKGROUND_PATH+"/cloth/edit";
 	}
 	
 	
@@ -119,10 +103,10 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public Map<String, Object> update(Model model, SalesmanInfo salesmanInfo) {
+	public Map<String, Object> update(Model model, ClothInfo clothInfo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			salesmanInfoService.update(salesmanInfo);
+			clothInfoService.update(clothInfo);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -146,7 +130,7 @@ public class SalesmanInfoController extends BaseController {
 			String id[] = ids.split(",");
 			for (String string : id) {
 				if(!Common.isEmpty(string)){
-					salesmanInfoService.delete(string);
+					clothInfoService.delete(string);
 				}
 			}
 			map.put("flag", "true");
@@ -157,9 +141,9 @@ public class SalesmanInfoController extends BaseController {
 	}
 	
 	@RequestMapping("exportExcel")
-	public void exportExcel(HttpServletResponse response,SalesmanInfo salesmanInfo) {
-		 List<SalesmanInfo> acs =salesmanInfoService.queryAll(salesmanInfo);
-		POIUtils.exportToExcel(response, "业务员报表", acs, SalesmanInfo.class, "业务员", acs.size());
+	public void exportExcel(HttpServletResponse response,ClothInfo clothInfo) {
+		 List<ClothInfo> acs = clothInfoService.queryAll(clothInfo);
+		POIUtils.exportToExcel(response, "布种报表", acs, ClothInfo.class, "布种", acs.size());
 	}
 	
 	

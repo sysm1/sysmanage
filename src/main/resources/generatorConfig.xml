@@ -18,13 +18,34 @@
         <javaClientGenerator targetPackage="com.renrenxian.manage.persistence"
             targetProject="/Users/hujh/Documents/src/dan/website/src/test/java" type="XMLMAPPER" />
          -->  
-           
+        
+        <!-- 
         <table schema="system-manage" tableName="salesman_info" enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table>
+        -->  
        
+       <table schema="system-manage" tableName="factory_info" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
        
+       <table schema="system-manage" tableName="cloth_info" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="system-manage" tableName="technology_info" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="system-manage" tableName="cloth_unit" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
         <!--  
         	<property name="modelOnly" value="true"/>
         -->

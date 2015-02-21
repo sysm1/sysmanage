@@ -13,25 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.Resources;
-import com.github.hzw.security.entity.SalesmanInfo;
-import com.github.hzw.security.service.SalesmanInfoService;
+import com.github.hzw.security.entity.TechnologyInfo;
+import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
-import com.github.hzw.util.Md5Tool;
 import com.github.hzw.util.POIUtils;
 
-@Controller
-@RequestMapping("/background/salesman/")
-public class SalesmanInfoController extends BaseController {
 
-	
+@Controller
+@RequestMapping("/background/technology/")
+public class TechnologyInfoController extends BaseController {
+
 	@Inject
-	private SalesmanInfoService salesmanInfoService;
+	private TechnologyInfoService technologyInfoService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
-		return Common.BACKGROUND_PATH+"/salesman/list";
+		return Common.BACKGROUND_PATH+"/technology/list";
 	}
 	
 	/**
@@ -41,8 +39,8 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("query")
-	public PageView query(SalesmanInfo salesmanInfo,String pageNow,String pagesize) {
-		pageView = salesmanInfoService.query(getPageView(pageNow,pagesize), salesmanInfo);
+	public PageView query(TechnologyInfo info,String pageNow,String pagesize) {
+		pageView = technologyInfoService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
 	}
 	
@@ -57,10 +55,10 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(SalesmanInfo salesmanInfo) {
+	public Map<String, Object> add(TechnologyInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			salesmanInfoService.add(salesmanInfo);
+			technologyInfoService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -77,19 +75,19 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@RequestMapping("addUI")
 	public String addUI() {
-		return Common.BACKGROUND_PATH+"/salesman/add";
+		return Common.BACKGROUND_PATH+"/technology/add";
 	}
 	
 	/**
-	 * 验证业务员名称是否存在
+	 * 验证工厂名称是否存在
 	 * @param name
 	 * @return
 	 */
 	@RequestMapping("isExist")
 	@ResponseBody
 	public boolean isExist(String name){
-		SalesmanInfo salesmanInfo = salesmanInfoService.isExist(name);
-		if(salesmanInfo == null){
+		TechnologyInfo info = technologyInfoService.isExist(name);
+		if(info == null){
 			return true;
 		}else{
 			return false;
@@ -104,9 +102,9 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
-		SalesmanInfo salesmanInfo = salesmanInfoService.getById(id);
-		model.addAttribute("salesman", salesmanInfo);
-		return Common.BACKGROUND_PATH+"/salesman/edit";
+		TechnologyInfo info = technologyInfoService.getById(id);
+		model.addAttribute("technology", info);
+		return Common.BACKGROUND_PATH+"/technology/edit";
 	}
 	
 	
@@ -119,10 +117,10 @@ public class SalesmanInfoController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public Map<String, Object> update(Model model, SalesmanInfo salesmanInfo) {
+	public Map<String, Object> update(Model model, TechnologyInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			salesmanInfoService.update(salesmanInfo);
+			technologyInfoService.update(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -146,7 +144,7 @@ public class SalesmanInfoController extends BaseController {
 			String id[] = ids.split(",");
 			for (String string : id) {
 				if(!Common.isEmpty(string)){
-					salesmanInfoService.delete(string);
+					technologyInfoService.delete(string);
 				}
 			}
 			map.put("flag", "true");
@@ -157,9 +155,9 @@ public class SalesmanInfoController extends BaseController {
 	}
 	
 	@RequestMapping("exportExcel")
-	public void exportExcel(HttpServletResponse response,SalesmanInfo salesmanInfo) {
-		 List<SalesmanInfo> acs =salesmanInfoService.queryAll(salesmanInfo);
-		POIUtils.exportToExcel(response, "业务员报表", acs, SalesmanInfo.class, "业务员", acs.size());
+	public void exportExcel(HttpServletResponse response,TechnologyInfo info) {
+		 List<TechnologyInfo> acs = technologyInfoService.queryAll(info);
+		POIUtils.exportToExcel(response, "工艺报表", acs, TechnologyInfo.class, "工艺", acs.size());
 	}
 	
 	

@@ -3,16 +3,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript">
-
+//单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
 	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
 }, "编号由6至16位字符组合构成");
 
 	$(function() {
-		
 		$("form").validate({
 			submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
 				$(form).ajaxSubmit({//验证新增是否成功
@@ -23,7 +21,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.salesman.loadGird();
+								parent.factory.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
@@ -38,13 +36,16 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					required : true,
 					remote:{ //异步验证是否存在
 						type:"POST",
-						url: rootPath + '/background/salesman/isExist.html',
+						url: rootPath + '/background/factory/isExist.html',
 						data:{
 							name:function(){return $("#name").val();}
 						 }
 						}
 				},
 				code : {
+					required : true
+				},
+				code2 : {
 					required : true
 				}
 			},
@@ -55,6 +56,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				},
 				code : {
 					required : "填写编号"
+				},
+				code2 : {
+					required : "填写编号2"
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -67,43 +71,51 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			}
 		});
 	});
-	
 	function saveWin() {
 		$("#form").submit();
-	}
-	function closeWin() {
-		 parent.$.ligerDialog.close(); //关闭弹出窗; //关闭弹出窗
-		parent.$(".l-dialog,.l-window-mask").css("display","none"); 
 	}
 </script>
 </head>
 <body>
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/salesman/update.html" method="post">
+	<form name="form" id="form" action="${ctx}/background/factory/add.html" method="post">
 		<table style="width: 285px; height: 200px;">
 			<tbody>
 				<tr>
 					<td class="l_right">名称：</td>
 					<td class="l_left">
-					<input id='id' name="id" type="hidden" value="${salesman.id}">
-					<input id='name' name="name" class="isNum" type="text" value="${salesman.name}">
-					</td>
+					<div class="lanyuan_input">
+					<input id='name' name="name" type="text" value="">
+						</div></td>
 				</tr>
+				
 				<tr>
-					<td class="l_right">编码：</td>
+					<td class="l_right">编号：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='code' name="code" type="text" class="checkpass" value="${salesman.code}">
-					</div>
-					</td>
+					<input id='code'
+						name="code" type="text" class="checkpass" value="">
+						</div>
+						</td>
 				</tr>
+				
+				<tr>
+					<td class="l_right">编号2：</td>
+					<td class="l_left">
+					<div class="lanyuan_input">
+					<input id='code2'
+						name="code2" type="text" class="checkpass" value="">
+						</div>
+						</td>
+				</tr>
+				
 				<tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='mark'
-						name="mark" type="text" class="checkdesc" value="${salesman.mark}">
+						name="mark" class="checkdesc" type="text" value="">
 						</div>
 						</td>
 				</tr>
@@ -117,7 +129,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
 									onclick="closeWin()"><span>关闭</span> </a>
 							</div>
-					</td>
+						</td>
 				</tr>
 			</tbody>
 		</table>

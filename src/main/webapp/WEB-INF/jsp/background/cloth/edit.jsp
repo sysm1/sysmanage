@@ -7,10 +7,11 @@
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript">
 
+/**
 jQuery.validator.addMethod("checkpass", function(value, element) {
 	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
 }, "编号由6至16位字符组合构成");
-
+**/
 	$(function() {
 		
 		$("form").validate({
@@ -23,7 +24,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.salesman.loadGird();
+								parent.cloth.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
@@ -34,24 +35,22 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				});
 			},
 			rules : {
-				name : {
-					required : true,
-					remote:{ //异步验证是否存在
-						type:"POST",
-						url: rootPath + '/background/salesman/isExist.html',
-						data:{
-							name:function(){return $("#name").val();}
-						 }
-						}
-				},
 				code : {
+					required : true
+				},
+				clothName : {
+					required : true
+				},
+				orderName : {
 					required : true
 				}
 			},
 			messages : {
-				name : {
-					required : "请输入业务员名称",
-				    remote:"该名称已经存在"
+				clothName : {
+					required : "请输入布种名称",
+				},
+				orderName : {
+					required : "请输入下单名称",
 				},
 				code : {
 					required : "填写编号"
@@ -80,30 +79,40 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <body>
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/salesman/update.html" method="post">
+	<form name="form" id="form" action="${ctx}/background/cloth/update.html" method="post">
 		<table style="width: 285px; height: 200px;">
 			<tbody>
-				<tr>
-					<td class="l_right">名称：</td>
-					<td class="l_left">
-					<input id='id' name="id" type="hidden" value="${salesman.id}">
-					<input id='name' name="name" class="isNum" type="text" value="${salesman.name}">
-					</td>
-				</tr>
-				<tr>
+			
+			<tr>
 					<td class="l_right">编码：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='code' name="code" type="text" class="checkpass" value="${salesman.code}">
+						<input id='id' name="id" type="hidden" value="${cloth.id}">
+						<input id='code' name="code" type="text" value="${cloth.code}">
 					</div>
 					</td>
 				</tr>
+				
+				<tr>
+					<td class="l_right">布种名称：</td>
+					<td class="l_left">
+					<input id='clothName' name="clothName" type="text" value="${cloth.clothName}">
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="l_right">下单名称：</td>
+					<td class="l_left">
+					<input id='orderName' name="orderName" type="text" value="${cloth.orderName}">
+					</td>
+				</tr>
+				
 				<tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='mark'
-						name="mark" type="text" class="checkdesc" value="${salesman.mark}">
+						name="mark" type="text" class="checkdesc" value="${cloth.mark}">
 						</div>
 						</td>
 				</tr>

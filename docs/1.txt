@@ -3,9 +3,9 @@
 SET NAMES utf8;
 CREATE TABLE  factory_info(
 	`id` int NOT NULL AUTO_INCREMENT,
-	`code` varchar(32) NOT NULL,
-	 code2 varchar(32) not null,
-	`name` varchar(256) NOT NULL,
+	`name` varchar(255) NOT NULL,
+	`code` varchar(32),
+	 code2 varchar(32),
 	`mark` text,
 	PRIMARY KEY (`id`),
 	UNIQUE `uniqe_1` (`code`),
@@ -19,7 +19,8 @@ create table cloth_info (
 	code varchar(32), 						-- 编号
 	cloth_name varchar(255) not null unique, -- 布种名称
 	order_name varchar(255) not null unique, -- 下单名称
-	create_Time date not null,
+	create_time date not null,
+	mark text,
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -44,6 +45,7 @@ create table salesman_info(
 -- 布种单位
 create table cloth_unit (
 	id int not null auto_increment,
+	cloth_id not null,
 	kg  int not null,
 	cm  int not null,
 	yard int not null,
@@ -55,10 +57,10 @@ create table cloth_allowance (
 	id int not null auto_increment,
 	cloth_id int not null,
 	factory_id int not null,
-	allowance int not null,  // -- 现余量
+	allowance int not null,   -- 现余量
 	unit1 varchar(32) not null,
-	old_sum int not null, // -- 前余量
-	change_sum int not null, // --变动量
+	old_sum int not null,  -- 前余量
+	change_sum int not null,  --变动量
 	mark text,
 	create_time date not null,
 	PRIMARY KEY (`id`)

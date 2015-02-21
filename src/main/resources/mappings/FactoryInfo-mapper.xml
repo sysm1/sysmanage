@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.FactoryInfoMapper" >
+
+  <sql id="selectId" >
+    id, name, code, code2, mark
+  </sql>
+  
+  <select id="query" resultType="FactoryInfo" parameterType="FactoryInfo">
+		select
+		<include refid="selectId" />
+		from factory_info
+		<where>
+		<if test="t.name != null and t.name != ''">
+				name like '%${t.name}%'
+		</if>
+		<if test="t.code != null and t.code != ''">
+				code = ${t.code}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+				mark like '%${t.mark}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="FactoryInfo">
+		select
+		<include refid="selectId" />
+		from factory_info
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="FactoryInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into factory_info (
+			name, code, code2 , mark
+		)
+		values(
+			#{name},
+			#{code},
+			#{code2},
+			#{mark}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from factory_info where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="FactoryInfo">
+		select
+		<include refid="selectId" />
+		from factory_info where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="FactoryInfo">
+		update factory_info
+		<set>
+		<if test="name != null" >
+        	name=#{name},
+      	</if>
+		<if test="code != null" >
+        	code=#{code},
+      	</if>
+		<if test="code2 != null" >
+        	code2=#{code2},
+      	</if>
+		<if test="mark != null" >
+        	mark=#{mark},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+  
+  
+  <select id="isExist" resultType="FactoryInfo" parameterType="String">
+		select
+		<include refid="selectId" />
+		from factory_info
+		where name = #{name}
+	</select>
+  
+</mapper>
