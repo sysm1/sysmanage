@@ -118,7 +118,7 @@ public class SalesmanInfo {
      *
      * @mbggenerated Thu Feb 19 18:47:07 CST 2015
      */
-    @ExcelDataMapper(title="备注",order=3)
+    @ExcelDataMapper(title="备注",order=4)
     public String getMark() {
         return mark;
     }
