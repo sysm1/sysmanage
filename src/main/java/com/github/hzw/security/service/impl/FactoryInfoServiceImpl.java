@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.FactoryInfo;
-import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.mapper.FactoryInfoMapper;
 import com.github.hzw.security.service.FactoryInfoService;
 
@@ -32,6 +31,15 @@ public class FactoryInfoServiceImpl implements FactoryInfoService {
 		return pageView;
 	}
 
+	
+	public List<FactoryInfo> queryPinyin(String name){
+		Map<String, Object> map = new HashMap<String, Object>();
+		String cn = name.toUpperCase();
+		// System.out.println(cn);
+		map.put("t", cn);
+		return factoryInfoMapper.queryPinyin(map);
+	}
+	
 	
 	@Override
 	public List<FactoryInfo> queryAll(FactoryInfo t) {

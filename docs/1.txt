@@ -4,8 +4,7 @@ SET NAMES utf8;
 CREATE TABLE  factory_info(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) NOT NULL,
-	// `code` varchar(32),
-	//  code2 varchar(32),
+	 pinyin varchar(255),
 	`mark` text,
 	PRIMARY KEY (`id`),
 	UNIQUE `uniqe_1` (`code`),
@@ -16,7 +15,7 @@ CREATE TABLE  factory_info(
 -- 布种信息
 create table cloth_info (
 	id int not null auto_increment,
-	code varchar(32), 						-- 编号
+	pinyin varchar(255), 						-- 
 	cloth_name varchar(255) not null unique, -- 布种名称
 	order_name varchar(255) not null unique, -- 下单名称
 	create_time date not null,
@@ -27,7 +26,7 @@ create table cloth_info (
 -- 工艺信息
 create table technology_info(
 	id	int not null auto_increment,
-	code varchar(32),
+	pinyin varchar(255),
 	name varchar(255) not null unique,
 	mark text,
 	PRIMARY KEY (`id`)
@@ -220,4 +219,4 @@ param_properties(
 
 
 
--- 联想查询： 布种，我司编号 我司color,工厂，工艺
+-- 联想查询： 布种，工厂，工艺, 我司编号 我司color,

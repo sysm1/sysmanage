@@ -58,6 +58,11 @@ public class ClothInfoServiceImpl implements ClothInfoService {
 		this.clothInfoMapper.add(t);
 	}
 
-	
+	public List<ClothInfo> queryPinyin(String name){
+		Map<String, Object> map = new HashMap<String, Object>();
+		String cn = name.toUpperCase();
+		map.put("t", cn);
+		return clothInfoMapper.queryPinyin(map);
+	}
 	
 }

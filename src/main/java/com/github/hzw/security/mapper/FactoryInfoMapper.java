@@ -1,10 +1,14 @@
 package com.github.hzw.security.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import com.github.hzw.base.BaseMapper;
 import com.github.hzw.security.entity.FactoryInfo;
 
 public interface FactoryInfoMapper extends BaseMapper<FactoryInfo> {
 
-	FactoryInfo isExist(String name);
-
+	public FactoryInfo isExist(String name);
+	// public List<FactoryInfo> queryPinyin(String name);
+	public List<FactoryInfo> queryPinyin(Map<String, Object> map);
 }

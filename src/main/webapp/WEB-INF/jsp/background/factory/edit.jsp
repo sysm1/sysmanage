@@ -34,13 +34,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				});
 			},
 			rules : {
-				state : {
-					required : true
+				name : {
+					required : true,
 				}
 			},
 			messages : {
-				state : {
-					required : "选择状态"
+				name : {
+					required : "请输入业务员名称"
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -74,22 +74,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td class="l_left">
 					<input id='id' name="id" type="hidden" value="${factory.id}">
 					<input id='name' name="name" class="isNum" type="text" value="${factory.name}">
-					</td>
-				</tr>
-				<tr>
-					<td class="l_right">编码：</td>
-					<td class="l_left">
-					<div class="lanyuan_input">
-						<input id='code' name="code" type="text" class="checkpass" value="${factory.code}">
-					</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="l_right">编码：</td>
-					<td class="l_left">
-					<div class="lanyuan_input">
-						<input id='code2' name="code2" type="text" class="checkpass" value="${factory.code2}">
-					</div>
 					</td>
 				</tr>
 				<tr>

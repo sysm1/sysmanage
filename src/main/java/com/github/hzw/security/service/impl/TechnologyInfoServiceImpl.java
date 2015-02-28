@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.mapper.TechnologyInfoMapper;
 import com.github.hzw.security.service.TechnologyInfoService;
@@ -63,5 +62,12 @@ public class TechnologyInfoServiceImpl implements TechnologyInfoService {
 	@Override
 	public TechnologyInfo isExist(String name) {
 		return this.technologyInfoMapper.isExist(name);
+	}
+	
+	public List<TechnologyInfo> queryPinyin(String name){
+		Map<String, Object> map = new HashMap<String, Object>();
+		String cn = name.toUpperCase();
+		map.put("t", cn);
+		return technologyInfoMapper.queryPinyin(map);
 	}
 }

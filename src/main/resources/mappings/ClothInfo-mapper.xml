@@ -3,7 +3,7 @@
 <mapper namespace="com.github.hzw.security.mapper.ClothInfoMapper" >
 
   <sql id="selectId" >
-    id, code, cloth_name as clothName, order_name as orderName, mark, create_time as createTime
+    id, pinyin, cloth_name as clothName, order_name as orderName, mark, create_time as createTime
   </sql>
   
   <select id="query" resultType="ClothInfo" parameterType="ClothInfo">
@@ -17,11 +17,20 @@
 		<if test="t.orderName != null and t.orderName != ''">
 				order_name like '%${t.orderName}%'
 		</if>
-		<if test="t.code != null and t.code != ''">
-				code = ${t.code}
-		</if>
 		<if test="t.mark != null and t.mark != ''">
 				mark like '%${t.mark}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryPinyin" resultType="ClothInfo" parameterType="map">
+		select
+		<include refid="selectId" />
+		from cloth_info
+		<where>
+		<if test="t != null and t != ''">
+				cloth_name like '%${t}%' or pinyin like '%${t}%'
 		</if>
 		</where>
 		order by id desc
@@ -37,10 +46,10 @@
 
 	<insert id="add" parameterType="ClothInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into cloth_info (
-			code, cloth_name, order_name,mark, create_time
+			pinyin, cloth_name, order_name,mark, create_time
 		)
 		values(
-			#{code},
+			#{pinyin},
 			#{clothName},
 			#{orderName},
 			#{mark},
@@ -68,8 +77,8 @@
       	<if test="orderName != null" >
         	order_name=#{orderName},
       	</if>
-		<if test="code != null" >
-        	code=#{code},
+		<if test="pinyin != null" >
+        	pinyin=#{pinyin},
       	</if>
 		<if test="mark != null" >
         	mark=#{mark},

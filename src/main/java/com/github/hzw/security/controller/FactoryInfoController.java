@@ -18,6 +18,7 @@ import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
+import com.github.hzw.util.PinyinUtil;
 
 
 @Controller
@@ -58,6 +59,8 @@ public class FactoryInfoController extends BaseController {
 	public Map<String, Object> add(FactoryInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			// pinyin
+			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getName()).toUpperCase());
 			factoryInfoService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
@@ -120,6 +123,8 @@ public class FactoryInfoController extends BaseController {
 	public Map<String, Object> update(Model model, FactoryInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			// pinyin
+			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getName()).toUpperCase());
 			factoryInfoService.update(info);
 			map.put("flag", "true");
 		} catch (Exception e) {

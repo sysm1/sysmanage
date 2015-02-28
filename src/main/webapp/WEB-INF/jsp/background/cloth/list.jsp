@@ -18,9 +18,6 @@
 						name : "id",
 						width : "50px"
 					}, {
-						colkey : "code",
-						name : "编码"
-					}, {
 						colkey : "clothName",
 						name : "布种名称",
 					},{

@@ -86,16 +86,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr>
 				
 				<tr>
-					<td class="l_right">编号：</td>
-					<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='code'
-						name="code" type="text" class="checkpass" value="">
-						</div>
-						</td>
-				</tr>
-				
-				<tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">

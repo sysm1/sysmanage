@@ -19,6 +19,7 @@ import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
+import com.github.hzw.util.PinyinUtil;
 
 @Controller
 @RequestMapping("/background/cloth/")
@@ -55,11 +56,13 @@ public class ClothInfoController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(ClothInfo clothInfo) {
+	public Map<String, Object> add(ClothInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			clothInfo.setCreateTime(new Date());
-			clothInfoService.add(clothInfo);
+			info.setCreateTime(new Date());
+			// pinyin
+			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getClothName()).toUpperCase());
+			clothInfoService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -103,10 +106,12 @@ public class ClothInfoController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public Map<String, Object> update(Model model, ClothInfo clothInfo) {
+	public Map<String, Object> update(Model model, ClothInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			clothInfoService.update(clothInfo);
+			// pinyin
+			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getClothName()).toUpperCase());
+			clothInfoService.update(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");

@@ -17,13 +17,11 @@
 						colkey : "id",
 						name : "id",
 						width : "50px"
-					}, {
-						colkey : "code",
-						name : "编码"
-					}, {
+					},
+					{
 						colkey : "name",
 						name : "名称",
-						width:"70px"
+						width:"300px"
 					}, {
 						colkey : "mark",
 						name : "备注"
@@ -51,7 +49,7 @@
 				width : 300,
 				height : 310,
 				url : rootPath + '/background/technology/addUI.html',
-				title : "增加业务员信息",
+				title : "增加工艺信息",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 			});
 		});

@@ -18,6 +18,7 @@ import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
+import com.github.hzw.util.PinyinUtil;
 
 
 @Controller
@@ -58,6 +59,8 @@ public class TechnologyInfoController extends BaseController {
 	public Map<String, Object> add(TechnologyInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			// pinyin
+			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getName()).toUpperCase());
 			technologyInfoService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
@@ -120,6 +123,8 @@ public class TechnologyInfoController extends BaseController {
 	public Map<String, Object> update(Model model, TechnologyInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			
+			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getName()).toUpperCase());
 			technologyInfoService.update(info);
 			map.put("flag", "true");
 		} catch (Exception e) {

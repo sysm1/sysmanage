@@ -36,14 +36,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			
 			rules : {
 				name : {
-					required : true,
-					remote:{ //异步验证是否存在
-						type:"POST",
-						url: rootPath + '/background/technology/isExist.html',
-						data:{
-							name:function(){return $("#name").val();}
-						 }
-						}
+					required : true
 				},
 				code : {
 					required : true
@@ -51,8 +44,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			},
 			messages : {
 				name : {
-					required : "请输入工艺名称",
-				    remote:"该名称已经存在"
+					required : "请输入工艺名称"
+				    
 				},
 				code : {
 					required : "填写编号"
@@ -92,14 +85,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<input id='name' name="name" class="isNum" type="text" value="${technology.name}">
 					</td>
 				</tr>
-				<tr>
-					<td class="l_right">编码：</td>
-					<td class="l_left">
-					<div class="lanyuan_input">
-						<input id='code' name="code" type="text" class="checkpass" value="${technology.code}">
-					</div>
-					</td>
-				</tr>
+				
 				<tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">

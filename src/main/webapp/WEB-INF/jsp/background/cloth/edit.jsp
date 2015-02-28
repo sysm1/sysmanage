@@ -35,9 +35,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				});
 			},
 			rules : {
-				code : {
-					required : true
-				},
 				clothName : {
 					required : true
 				},
@@ -51,9 +48,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				},
 				orderName : {
 					required : "请输入下单名称",
-				},
-				code : {
-					required : "填写编号"
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -82,20 +76,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	<form name="form" id="form" action="${ctx}/background/cloth/update.html" method="post">
 		<table style="width: 285px; height: 200px;">
 			<tbody>
-			
-			<tr>
-					<td class="l_right">编码：</td>
-					<td class="l_left">
-					<div class="lanyuan_input">
-						<input id='id' name="id" type="hidden" value="${cloth.id}">
-						<input id='code' name="code" type="text" value="${cloth.code}">
-					</div>
-					</td>
-				</tr>
 				
 				<tr>
-					<td class="l_right">布种名称：</td>
+					<td class="l_right">名称：</td>
 					<td class="l_left">
+					<input id='id' name="id" type="hidden" value="${cloth.id}">
 					<input id='clothName' name="clothName" type="text" value="${cloth.clothName}">
 					</td>
 				</tr>
