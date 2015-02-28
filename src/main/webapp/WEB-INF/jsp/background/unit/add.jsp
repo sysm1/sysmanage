@@ -43,6 +43,9 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				clothId : {
 					required : true
 				},
+				item : {
+					required : true
+				},
 				kg : {
 					required : true
 				},
@@ -55,6 +58,9 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			},
 			messages : {
 				clothId : {
+					required : "不能为空",
+				},
+				item : {
 					required : "不能为空",
 				},
 				kg : {
@@ -104,7 +110,16 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			</tr>
 			
 			<tr>
-				<td class="l_right">kg：</td>
+				<td class="l_right">条：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+					<input id='item' name="item" type="text" class="isNum" value="1" readonly="readonly">
+					</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="l_right">公斤：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='kg' name="kg" type="text" class="isNum" value="">
@@ -113,7 +128,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			</tr>
 				
 			<tr>
-				<td class="l_right">cm：</td>
+				<td class="l_right">米：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='cm' name="cm" type="text" class="isNum" value="">
@@ -122,7 +137,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			</tr>
 			
 			<tr>
-				<td class="l_right">yard：</td>
+				<td class="l_right">码：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='yard' name="yard" type="text" class="isNum" value="">

@@ -17,13 +17,10 @@
 						colkey : "id",
 						name : "id",
 						width : "50px"
-					}, {
-						colkey : "code",
-						name : "编码"
-					}, {
+					},  {
 						colkey : "name",
 						name : "名称",
-						width:"70px"
+						width:"300px"
 					}, {
 						colkey : "mark",
 						name : "备注"

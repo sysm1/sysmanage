@@ -42,18 +42,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							name:function(){return $("#name").val();}
 						 }
 						}
-				},
-				code : {
-					required : true
 				}
 			},
 			messages : {
 				name : {
 					required : "请输入业务员名称",
 				    remote:"该名称已经存在"
-				},
-				code : {
-					required : "填写编号"
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -83,16 +77,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<div class="lanyuan_input">
 					<input id='name' name="name" class="isNum" type="text" value="">
 						</div></td>
-				</tr>
-				
-				<tr>
-					<td class="l_right">编号：</td>
-					<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='code'
-						name="code" type="text" class="checkpass" value="">
-						</div>
-						</td>
 				</tr>
 				
 				<tr>

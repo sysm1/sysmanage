@@ -3,7 +3,7 @@
 <mapper namespace="com.github.hzw.security.mapper.SalesmanInfoMapper" >
 
   <sql id="selectId" >
-    id, code, name, mark
+    id, name, mark
   </sql>
 
   <select id="query" resultType="SalesmanInfo" parameterType="SalesmanInfo">
@@ -14,9 +14,7 @@
 		<if test="t.name != null and t.name != ''">
 				name like '%${t.name}%'
 		</if>
-		<if test="t.code != null and t.code != ''">
-				code = ${t.code}
-		</if>
+		
 		<if test="t.mark != null and t.mark != ''">
 				mark like '%${t.mark}%'
 		</if>
@@ -34,10 +32,9 @@
 
 	<insert id="add" parameterType="SalesmanInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into salesman_info (
-			code, name, mark
+			name, mark
 		)
 		values(
-			#{code},
 			#{name},
 			#{mark}
 		)
@@ -58,7 +55,6 @@
 	<update id="update" parameterType="SalesmanInfo">
 		update salesman_info
 		<set>
-		code=#{code},
 		name=#{name},
 		mark=#{mark},
 		</set>

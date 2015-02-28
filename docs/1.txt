@@ -35,7 +35,6 @@ create table technology_info(
 -- 业务员信息 
 create table salesman_info(
 	id	int not null auto_increment,
-	code varchar(32),
 	name varchar(255) not null unique,
 	mark text,
 	PRIMARY KEY (`id`)

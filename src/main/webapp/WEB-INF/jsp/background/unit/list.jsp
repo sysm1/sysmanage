@@ -18,8 +18,12 @@
 						name : "id",
 						width : "50px"
 					}, {
-						colkey : "clothId",
-						name : "布种"
+						colkey : "clothName",
+						name : "布种",
+						width : "300px"
+					}, {
+						colkey : "item",
+						name : "条"
 					}, {
 						colkey : "kg",
 						name : "公斤"

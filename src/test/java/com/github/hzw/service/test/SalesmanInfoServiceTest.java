@@ -25,7 +25,7 @@ public class SalesmanInfoServiceTest {
 	public void saveTest() throws Exception{
 		for(int i = 10; i < 100; i++){
 			SalesmanInfo info = new SalesmanInfo();
-			info.setCode(i + "");
+			//info.setCode(i + "");
 			info.setMark("mark...");
 			info.setName("sale" + i);
 			this.salesmanInfoService.add(info);

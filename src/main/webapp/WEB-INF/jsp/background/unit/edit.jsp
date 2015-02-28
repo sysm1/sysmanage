@@ -44,6 +44,9 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				clothId : {
 					required : true
 				},
+				item : {
+					required : true
+				},
 				kg : {
 					required : true
 				},
@@ -56,6 +59,9 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 			},
 			messages : {
 				clothId : {
+					required : "不能为空",
+				},
+				item : {
 					required : "不能为空",
 				},
 				kg : {
@@ -112,6 +118,15 @@ $(function() {
 								<option value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
+					</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="l_right">条：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+					<input id='item' name="item" type="text" class="isNum" value="${unit.item}" readonly="readonly">
 					</div>
 				</td>
 			</tr>

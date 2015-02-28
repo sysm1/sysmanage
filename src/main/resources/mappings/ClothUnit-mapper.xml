@@ -3,35 +3,44 @@
 <mapper namespace="com.github.hzw.security.mapper.ClothUnitMapper" >
   
   <sql id="selectId" >
-    id, cloth_id as clothId, kg, cm, yard
+    id, cloth_id as clothId, item, kg, cm, yard
+  </sql>
+  
+  <sql id="selectIdExt" >
+    unit.id as id, unit.cloth_id as clothId, info.cloth_name as clothName, item, kg, cm, yard
   </sql>
   
   <select id="query" resultType="ClothUnit" parameterType="ClothUnit">
 		select
-		<include refid="selectId" />
-		from cloth_unit
+		<include refid="selectIdExt" />
+		from cloth_unit unit, cloth_info info
 		<where>
+		unit.cloth_id = info.id
 		<if test="t.clothId != null and t.clothId != ''">
-			cloth_id = #{t.clothId}
+			and cloth_id = #{t.clothId}
 		</if>
 		</where>
-		order by id desc
+		order by unit.id desc
 	</select>
 
 	<select id="queryAll" resultType="ClothUnit">
 		select
-		<include refid="selectId" />
-		from cloth_unit
+		<include refid="selectIdExt" />
+		from cloth_unit unit, cloth_info info
+		<where>
+			unit.cloth_id = info.id
+		</where>
 		order by id desc
 	</select>
 
 
 	<insert id="add" parameterType="ClothUnit" useGeneratedKeys="true" keyProperty="id">
 		insert into cloth_unit (
-			cloth_id, kg, cm, yard
+			cloth_id, item, kg, cm, yard
 		)
 		values(
 			${clothId},
+			${item},
 			#{kg},
 			#{cm},
 			#{yard}
@@ -54,6 +63,9 @@
 		<set>
 		<if test="clothId != null" >
         	cloth_id=#{clothId},
+      	</if>
+      	<if test="item != null" >
+        	item=#{item},
       	</if>
 		<if test="kg != null" >
         	kg=#{kg},
