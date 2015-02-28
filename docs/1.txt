@@ -56,12 +56,12 @@ create table cloth_allowance (
 	id int not null auto_increment,
 	cloth_id int not null,
 	factory_id int not null,
-	allowance int not null,   -- 现余量
-	unit1 varchar(32) not null, -- 单位（录入单位）
-	old_sum int not null,  -- 前余量(单位需要统一)
-	change_sum int not null,  --变动量(单位需要统一)
+	allowance int not null,    -- 现余量
+	unit varchar(32) not null, -- 单位（录入单位）
+	old_sum int not null,      -- 前余量(单位需要统一)
+	change_sum int not null,   --变动量(单位需要统一)
 	mark text,
-	create_time date not null,
+	create_time datetime not null,
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -84,24 +84,24 @@ create table sample_input(
 	demand text,  -- 需求
 	mark text,  -- 备注
 	status int not null,  -- 0 未回  1 新版 2 新厂 3 新色 4已回
-	reply_date timestamp,  -- 回版日期
-	create_time date not null,
+	reply_date datetime,  -- 回版日期
+	create_time datetime not null,
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
  -- 开版录入附加表
-sample_additional(
-	id int,
+create table sample_additional(
+	id int not null auto_increment,
 	sample_id int,
 	factory_code varchar(255),  -- 工厂编号
-	factory_color varchar(255) null,  -- 工厂color
-)
+	factory_color varchar(255) null, -- 工厂color
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- 花号基本资料
 create table flower_info(
 	id int not null auto_increment,
-	// company_name varchar(255) not null,
 	factory_id	int not null,
 	my_company_code varchar(255),	-- 我司编号
 	cloth_id	int not null,
@@ -113,108 +113,114 @@ create table flower_info(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 花号附加表
-flower_additional(
-	id int,
+create table flower_additional(
+	id int not null auto_increment,
 	flower_id int,
 	factory_code varchar(255),       -- 工厂编号
 	factory_color varchar(255) null, -- 工厂color
 	my_company_code varchar(255),	 -- 我司编号(冗余)
-	my_company_color varchar(255)    
-)
+	my_company_color varchar(255),
+	PRIMARY KEY (`id`)  
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 下单预录入表
-order_input(
-	id int,
+create table order_input(
+	id int not null auto_increment,
 	cloth_id int,
 	my_company_code varchar(255), -- 我司编号(来自花号基本资料表)
 	salesman_id int,
-	status int ,   -- 0 未下单 1 已下单
-	createTime datetime
-);
+	status int default 0,   -- 0 未下单 1 已下单
+	create_time datetime,
+	PRIMARY KEY (`id`) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-order_input_additional(
-	id int,
-	order_input_id int,
+create table order_input_additional(
+	id int not null auto_increment,
+	input_id int,
 	my_company_color varchar(255), -- 我司color(来自花号基本资料表)
-	num int,
-	unit1 varchar(16), -- -- kg cm yard
-	mark text   -- 
-)
+	num int,				-- 预录入数量
+	unit varchar(16),  -- -- kg cm yard item
+	mark text,   -- 
+	PRIMARY KEY (`id`) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --预下单录入汇总表
-order_input_summary(
-	id int,
+create table order_input_summary(
+	id int not null auto_increment,
 	cloth_id	int not null,
 	my_company_code varchar(255), -- 我司code
 	my_company_color varchar(255), -- 我司color
 	num int,					  -- 单位为条(从相应的余量表中减去该数)
-	mark text,   -- 如果有“备注”则显示“见明细”，如果所有的“备注”都为空则显示“无”
-	order_ids varchar(255),  -- order_id组合，以,分隔
-)
+	mark text,   				-- 如果有“备注”则显示“见明细”，如果所有的“备注”都为空则显示“无”
+	order_ids varchar(255),  	-- order_id组合，以,分隔
+	PRIMARY KEY (`id`) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-order_summary(
-	id int,  
-	sum_id varchar(255), -- 以“YXD”开头后面以当天日期加4为数字结尾，例如YXD201501150001为当日的第一张单
+-- 下单录入
+create table order_summary(
+	id int not null auto_increment,  
+	order_code varchar(255), 			-- 以“YXD”开头后面以当天日期加4为数字结尾，例如YXD201501150001为当日的第一张单
 	order_date datetime,
-	factory_id	int not null,
 	cloth_id int not null,
-	technology_id int, -- 工艺id
+	factory_id	int not null,
+	technology_id int, 				-- 工艺id
 	my_company_code varchar(255),  -- 我司编号
 	my_company_color varchar(255), -- 我司color
 	factory_code varchar(255),     -- 根据编号 从花号基本表里查找(如何选取，从哪里来)
 	factory_color varchar(255),    -- 根据编号 从花号基本表里查找(如何选取，从哪里来)
-	cloth_num int,  -- 工厂布种余量
-	num int,        -- 下单数量(单位为条)
-	standard varchar(255), -- 规格
-	packing_style  varchar(255), -- 包装方式
-    -- 多业务员id，备注组合
-	mark text  -- 备注
-	print_status int  -- 状态 (0 未打印  1 打印)
-	print_num int -- 打印次数
-	status varchar(255)
-/**
-工厂不一样   ----新厂
-我司编号不一样----新花
-布种不一样---新布
-颜色不一样----新色   红色字体
-可以组合  （新厂新花)
-一样的为正常   绿色字体  
-**/
-	return_status int   -- 0 未回货  1 已回货
-	createTime datetime  -- 下单时间
-);
+	cloth_num int,  				-- 工厂布种余量
+	num int,        				-- 下单数量(单位为条)
+	standard varchar(255), 			-- 规格
+	packing_style  varchar(255),	 -- 包装方式
+    salesmans text,					 -- 多业务员id，备注组合
+	mark text,  					-- 备注
+	print_status int default 0,  					-- 状态 (0 未打印  1 打印)
+	print_num int,						-- 打印次数
+	status varchar(255), -- 工厂不一样   ----新厂 我司编号不一样----新花 布种不一样---新布 颜色不一样----新色   红色字体 可以组合  （新厂新花) 一样的为正常   绿色字体  
+	return_status int default 0,   -- 0 未回货  1 已回货
+	createTime datetime,  -- 下单时间
+	PRIMARY KEY (`id`) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-return_goods_process(
-	id int
-	summary_id int
-	return_date datetime   -- 回货日期
-	return_num int		-- 回货数量
-	return_unit  varchar(16), -- -- kg cm yard
-	statistics_num int   -- 换算单位后数量(条)
-	return_color varchar(255)  -- 实到颜色
-	mark text  -- 备注
-	
-	create_time datetime
-	
-)
-order_notify_info(
-	id int,
-	no varchar,   -- 编号
-	summary_ids varchar(255),
-	mark  text
-	地址
-	电话
-	传真 ？？？？
-)
+-- 回货进度
+create table return_goods_process(
+	id int not null auto_increment,
+	summary_id int,
+	return_date datetime,   -- 回货日期
+	return_num int,		-- 回货数量
+	return_unit  varchar(16), -- -- kg cm yard item
+	statistics_num int,      -- 换算单位后数量(条)
+	return_color varchar(255),  -- 实到颜色
+	mark text,  -- 备注
+	create_time datetime,
+	PRIMARY KEY (`id`) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 下单通知
+create table order_notify_info(
+	id int not null auto_increment,
+	no varchar(255),   -- 打印编号
+	summary_ids varchar(255),  -- 下单录入的id组合
+	mark  text,				   -- 备注
+	create_time datetime,
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 
-param_properties(
-	id int,   -- 1 修改、删除权限码 2 修改打印下单勾选条数
+create table param_properties(
+	id int not null auto_increment,   -- 1 修改、删除权限码 2 修改打印下单勾选条数
 	demo varchar(255),
-	value varchar(255)
-)
+	value varchar(255),
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+-- 作为序号生产器使用。
+create table date_version(
+	id int not null auto_increment,
+	date_k varchar(255) unique,   -- yyyy-MM-dd 每天标识
+	value_v int default 0,				-- 每天递增数
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
