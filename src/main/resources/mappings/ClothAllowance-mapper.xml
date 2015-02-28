@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.ClothAllowanceMapper" >
+  
+  <sql id="selectId" >
+    id, cloth_id as clothId, factory_id as factoryId, allowance, unit, old_sum as oldSum, change_sum as changeSum, create_time as createTime, mark
+  </sql>
+  
+  <select id="query" resultType="ClothAllowance" parameterType="ClothAllowance">
+		select
+		<include refid="selectId" />
+		from cloth_allowance
+		<where>
+		<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+		</if>
+		<if test="t.factoryId != null and t.factoryId != ''">
+			and	factory_id = #{t.factoryId}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="ClothAllowance">
+		select
+		<include refid="selectId" />
+		from cloth_allowance
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="ClothAllowance" useGeneratedKeys="true" keyProperty="id">
+		insert into cloth_allowance (
+			cloth_id, factory_id, allowance, unit, old_sum, change_sum, create_time, mark
+		)
+		values(
+			#{clothId},
+			#{factoryId},
+			#{allowance},
+			#{unit},
+			#{oldSum},
+			#{changeSum},
+			#{createTime},
+			#{mark}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from cloth_allowance where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="ClothAllowance">
+		select
+		<include refid="selectId" />
+		from cloth_allowance where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="ClothAllowance">
+		update cloth_allowance
+		<set>
+		<if test=" clothId!= null" >
+        	cloth_id=#{clothId},
+      	</if>
+      	<if test="factoryId != null" >
+        	factory_id=#{factoryId},
+      	</if>
+		<if test="allowance != null" >
+        	allowance=#{allowance},
+      	</if>
+      	<if test="unit != null" >
+        	unit=#{unit},
+      	</if>
+      	<if test="oldSum != null" >
+        	old_sum=#{oldSum},
+      	</if>
+      	<if test="changeSum != null" >
+        	change_sum=#{changeSum},
+      	</if>
+		<if test="mark != null" >
+        	mark=#{mark},
+      	</if>
+		<if test="createTime != null" >
+        	create_time=#{createTime},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+  
+</mapper>

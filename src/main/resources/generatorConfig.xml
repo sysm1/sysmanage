@@ -24,7 +24,7 @@
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table>
-        -->  
+         
        
        <table schema="system-manage" tableName="factory_info" enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
@@ -45,6 +45,71 @@
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table>
+        --> 
+        <table schema="system-manage" tableName="cloth_allowance" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="system-manage" tableName="sample_input" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="system-manage" tableName="sample_additional" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        
+        <table schema="system-manage" tableName="flower_info" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="system-manage" tableName="flower_additional" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        
+        <table schema="system-manage" tableName="order_input" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+         <table schema="system-manage" tableName="order_input_additional" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        <table schema="system-manage" tableName="order_input_summary" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        <table schema="system-manage" tableName="order_summary" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="system-manage" tableName="return_goods_process" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="system-manage" tableName="order_notify_info" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
+        <table schema="system-manage" tableName="param_properties" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table> 
+        
+        <table schema="system-manage" tableName="date_version" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table> 
         
         <!--  
         	<property name="modelOnly" value="true"/>
