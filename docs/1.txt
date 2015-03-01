@@ -1,5 +1,5 @@
 
--- 工厂信息
+-- 工厂信息 关键字 factory
 SET NAMES utf8;
 CREATE TABLE  factory_info(
 	`id` int NOT NULL AUTO_INCREMENT,
@@ -12,7 +12,7 @@ CREATE TABLE  factory_info(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 布种信息
+-- 布种信息  关键字 cloth
 create table cloth_info (
 	id int not null auto_increment,
 	pinyin varchar(255), 						-- 
@@ -23,7 +23,7 @@ create table cloth_info (
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 工艺信息
+-- 工艺信息  关键字technology
 create table technology_info(
 	id	int not null auto_increment,
 	pinyin varchar(255),
@@ -32,7 +32,7 @@ create table technology_info(
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 业务员信息 
+-- 业务员信息  关键字salesman
 create table salesman_info(
 	id	int not null auto_increment,
 	name varchar(255) not null unique,
@@ -40,8 +40,8 @@ create table salesman_info(
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 布种单位
-create table cloth_unit (
+-- 布种单位   关键字unit
+create table cloth_unit (  
 	id int not null auto_increment,
 	cloth_id not null,
 	kg  int not null,
@@ -51,7 +51,7 @@ create table cloth_unit (
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 布种余量 -- kg cm yard
+-- 布种余量 -- kg cm yard item   allowance 余量关键字
 create table cloth_allowance (
 	id int not null auto_increment,
 	cloth_id int not null,
@@ -68,7 +68,7 @@ create table cloth_allowance (
 -- 修改时只能修改新增量。布种与工厂唯一
 -- 单位问题
 
--- 开版录入
+-- 开版录入  关键字  sample
 create table sample_input(
 	id	int not null auto_increment,
 	sample_date date,   -- 开版日期
@@ -99,7 +99,7 @@ create table sample_additional(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 花号基本资料
+-- 花号基本资料 关键字  flower
 create table flower_info(
 	id int not null auto_increment,
 	factory_id	int not null,
@@ -123,7 +123,7 @@ create table flower_additional(
 	PRIMARY KEY (`id`)  
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 下单预录入表
+-- 下单预录入表  关键字  input
 create table order_input(
 	id int not null auto_increment,
 	cloth_id int,
@@ -144,7 +144,7 @@ create table order_input_additional(
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---预下单录入汇总表
+--预下单录入汇总表  关键字  inputsummary
 create table order_input_summary(
 	id int not null auto_increment,
 	cloth_id	int not null,
@@ -156,7 +156,7 @@ create table order_input_summary(
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 下单录入
+-- 下单录入  关键字  ordersummary
 create table order_summary(
 	id int not null auto_increment,  
 	order_code varchar(255), 			-- 以“YXD”开头后面以当天日期加4为数字结尾，例如YXD201501150001为当日的第一张单
@@ -182,7 +182,7 @@ create table order_summary(
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 回货进度
+-- 回货进度 关键字  process
 create table return_goods_process(
 	id int not null auto_increment,
 	summary_id int,
@@ -196,7 +196,7 @@ create table return_goods_process(
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 下单通知
+-- 下单通知  关键字  notify
 create table order_notify_info(
 	id int not null auto_increment,
 	no varchar(255),   -- 打印编号
@@ -206,7 +206,7 @@ create table order_notify_info(
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8
 
-
+ -- 关键字  property
 create table param_properties(
 	id int not null auto_increment,   -- 1 修改、删除权限码 2 修改打印下单勾选条数
 	demo varchar(255),

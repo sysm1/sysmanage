@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.SampleInputMapper" >
+
+  <sql id="selectId" >
+    id, 
+    sample_date sampleDate, 
+    factory_id factoryId, 
+    cloth_id clothId, 
+    code_type codeType, 
+    file_code fileCode, 
+    factory_code factoryCode, 
+    my_company_code myCompanyCode, 
+    technology_id technologyId, 
+    saleman_id salemanId, 
+    picture, status, 
+    reply_date replyDate, 
+    create_time createTime, 
+    demand, mark
+  </sql>
+  
+  <select id="query" resultType="SampleInput" parameterType="SampleInput">
+		select
+		<include refid="selectId" />
+		from sample_input
+		<where>
+		<if test="t.factoryId != null and t.factoryId != ''">
+			and factory_id = #{t.factoryId}
+		</if>
+		<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+		</if>
+		<if test="t.factoryCode != null and t.factoryCode != ''">
+			and factory_code = #{t.factoryCode}
+		</if>
+		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
+			and my_company_code = #{t.myCompanyCode}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+				mark like '%${t.mark}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="SampleInput">
+		select
+		<include refid="selectId" />
+		from sample_input
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="SampleInput" useGeneratedKeys="true" keyProperty="id">
+		insert into sample_input (
+			sample_date, factory_id, cloth_id, code_type, file_code, factory_code, my_company_code, technology_id, saleman_id, 
+			picture, status, reply_date, create_time, demand, mark
+		)
+		values(
+			#{sampleDate},
+			#{factoryId},
+			#{clothId},
+			#{codeType},
+			#{fileCode},
+			#{factoryCode},
+			#{myCompanyCode},
+			#{technologyId},
+			#{salemanId},
+			#{picture},
+			#{status},
+			#{replyDate},
+			#{createTime},
+			#{demand},
+			#{mark}
+		)
+	</insert>
+	
+	
+	<delete id="delete" parameterType="String">
+		delete from sample_input where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="SampleInput">
+		select
+		<include refid="selectId" />
+		from sample_input where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="SampleInput">
+		update sample_input
+		<set>
+		<if test="sampleDate != null and sampleDate != ''">
+        	sample_date=#{sampleDate},
+      	</if>
+      	<if test="factoryId != null and factoryId != ''">
+        	factory_id=#{factoryId},
+      	</if>
+      	<if test="clothId != null and clothId != ''">
+        	cloth_id=#{clothId},
+      	</if>
+      	<if test="codeType != null and codeType != ''">
+        	code_type=#{codeType},
+      	</if>
+      	<if test="fileCode != null and fileCode != ''">
+        	file_code=#{fileCode},
+      	</if>
+      	<if test="factoryCode != null and factoryCode != ''">
+        	factory_code=#{factoryCode},
+      	</if>
+      	<if test="myCompanyCode != null and myCompanyCode != ''">
+        	my_company_code=#{myCompanyCode},
+      	</if>
+      	<if test="technologyId != null and technologyId != ''">
+        	technology_id=#{technologyId},
+      	</if>
+      	<if test="salemanId != null and salemanId != ''">
+        	saleman_id=#{salemanId},
+      	</if>
+      	<if test="picture != null and picture != ''">
+        	picture=#{picture},
+      	</if>
+      	<if test="status != null and status != ''">
+        	status=#{status},
+      	</if>
+      	<if test="replyDate != null and replyDate != ''">
+        	reply_date=#{replyDate},
+      	</if>
+      	<if test="demand != null and demand != ''">
+        	demand=#{demand},
+      	</if>
+      	<if test="mark != null and mark != ''">
+        	mark=#{mark}
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+  
+</mapper>
