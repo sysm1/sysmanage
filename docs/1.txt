@@ -178,7 +178,7 @@ create table order_summary(
 	print_num int,						-- 打印次数
 	status varchar(255), -- 工厂不一样   ----新厂 我司编号不一样----新花 布种不一样---新布 颜色不一样----新色   红色字体 可以组合  （新厂新花) 一样的为正常   绿色字体  
 	return_status int default 0,   -- 0 未回货  1 已回货
-	createTime datetime,  -- 下单时间
+	create_time datetime,  -- 下单时间
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

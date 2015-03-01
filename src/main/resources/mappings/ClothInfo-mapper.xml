@@ -10,15 +10,15 @@
 		select
 		<include refid="selectId" />
 		from cloth_info
-		<where>
+		<where> 1=1
 		<if test="t.clothName != null and t.clothName != ''">
-				cloth_name like '%${t.clothName}%'
+			and cloth_name like '%${t.clothName}%'
 		</if>
 		<if test="t.orderName != null and t.orderName != ''">
-				order_name like '%${t.orderName}%'
+			and order_name like '%${t.orderName}%'
 		</if>
 		<if test="t.mark != null and t.mark != ''">
-				mark like '%${t.mark}%'
+			and mark like '%${t.mark}%'
 		</if>
 		</where>
 		order by id desc

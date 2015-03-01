@@ -14,7 +14,7 @@
 		select
 		<include refid="selectId" />
 			from order_input_summary
-		<where>
+		<where> 1=1
 		<if test="t.clothId != null and t.clothId != ''">
 			and cloth_id = #{t.clothId}
 		</if>
@@ -74,22 +74,22 @@
 		update order_input_summary
 		<set>
       	<if test="clothId != null and clothId != ''">
-        	cloth_id=#{clothId},
+        	and cloth_id=#{clothId},
       	</if>
       	<if test="myCompanyCode != null and myCompanyCode != ''">
-        	my_company_code=#{myCompanyCode},
+        	and my_company_code=#{myCompanyCode},
       	</if>
       	<if test="myCompanyColor != null and myCompanyColor != ''">
-        	my_company_color=#{myCompanyColor},
+        	and my_company_color=#{myCompanyColor},
       	</if>
       	<if test="num != null and num != ''">
-        	num=#{num},
+        	and num=#{num},
       	</if>
       	<if test="orderIds != null and orderIds != ''">
-        	order_ids=#{orderIds},
+        	and order_ids=#{orderIds},
       	</if>
       	<if test="mark != null and mark != ''">
-        	mark=#{mark},
+        	and mark=#{mark},
       	</if>
 		</set>
 		where id=#{id}

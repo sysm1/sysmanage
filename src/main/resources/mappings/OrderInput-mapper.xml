@@ -14,7 +14,7 @@
 		select
 		<include refid="selectId" />
 			from order_input
-		<where>
+		<where> 1=1
 		<if test="t.clothId != null and t.clothId != ''">
 			and cloth_id = #{t.clothId}
 		</if>

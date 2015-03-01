@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.OrderInputSummary;
+import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
-import com.github.hzw.security.service.OrderInputSummaryService;
+import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
 
 @Controller
-@RequestMapping("/background/inputsummary/")
-public class OrderInputSummaryController extends BaseController {
+@RequestMapping("/background/ordersummary/")
+public class OrderSummaryController extends BaseController {
 
 	@Inject
-	private OrderInputSummaryService orderInputSummaryService;
+	private OrderSummaryService orderSummaryService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
-		return Common.BACKGROUND_PATH+"/inputsummary/list";
+		return Common.BACKGROUND_PATH+"/ordersummary/list";
 	}
 	
 	/**
@@ -38,8 +38,8 @@ public class OrderInputSummaryController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("query")
-	public PageView query(OrderInputSummary info,String pageNow,String pagesize) {
-		pageView = orderInputSummaryService.query(getPageView(pageNow,pagesize), info);
+	public PageView query(OrderSummary info,String pageNow,String pagesize) {
+		pageView = orderSummaryService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
 	}
 	
@@ -54,10 +54,10 @@ public class OrderInputSummaryController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(OrderInputSummary info) {
+	public Map<String, Object> add(OrderSummary info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			orderInputSummaryService.add(info);
+			orderSummaryService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -74,7 +74,7 @@ public class OrderInputSummaryController extends BaseController {
 	 */
 	@RequestMapping("addUI")
 	public String addUI() {
-		return Common.BACKGROUND_PATH+"/inputsummary/add";
+		return Common.BACKGROUND_PATH+"/ordersummary/add";
 	}
 	
 
@@ -86,9 +86,9 @@ public class OrderInputSummaryController extends BaseController {
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
-		OrderInputSummary info = orderInputSummaryService.getById(id);
-		model.addAttribute("inputsummary", info);
-		return Common.BACKGROUND_PATH+"/inputsummary/edit";
+		OrderSummary info = orderSummaryService.getById(id);
+		model.addAttribute("summary", info);
+		return Common.BACKGROUND_PATH+"/ordersummary/edit";
 	}
 	
 	
@@ -101,10 +101,10 @@ public class OrderInputSummaryController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public Map<String, Object> update(Model model, OrderInputSummary info) {
+	public Map<String, Object> update(Model model, OrderSummary info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			orderInputSummaryService.update(info);
+			orderSummaryService.update(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -128,7 +128,7 @@ public class OrderInputSummaryController extends BaseController {
 			String id[] = ids.split(",");
 			for (String string : id) {
 				if(!Common.isEmpty(string)){
-					orderInputSummaryService.delete(string);
+					orderSummaryService.delete(string);
 				}
 			}
 			map.put("flag", "true");
@@ -139,9 +139,9 @@ public class OrderInputSummaryController extends BaseController {
 	}
 	
 	@RequestMapping("exportExcel")
-	public void exportExcel(HttpServletResponse response,OrderInputSummary info) {
-		 List<OrderInputSummary> acs = orderInputSummaryService.queryAll(info);
-		POIUtils.exportToExcel(response, "预下单录入汇总报表", acs, OrderInputSummary.class, "预下单录入汇总", acs.size());
+	public void exportExcel(HttpServletResponse response,OrderSummary info) {
+		 List<OrderSummary> acs = orderSummaryService.queryAll(info);
+		POIUtils.exportToExcel(response, "下单汇总报表", acs, OrderSummary.class, "下单汇总", acs.size());
 	}
 	
 }

@@ -19,7 +19,7 @@
 		select
 		<include refid="selectId" />
 			from flower_additional
-		<where>
+		<where> 1=1
 		<if test="t.flowerId != null and t.flowerId != ''">
 			and flower_id = #{t.flowerId}
 		</if>

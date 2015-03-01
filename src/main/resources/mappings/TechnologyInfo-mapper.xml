@@ -10,12 +10,12 @@
 		select
 		<include refid="selectId" />
 		from technology_info
-		<where>
+		<where> 1=1
 		<if test="t.name != null and t.name != ''">
-			name like '%${t.name}%'
+			and name like '%${t.name}%'
 		</if>
 		<if test="t.mark != null and t.mark != ''">
-				mark like '%${t.mark}%'
+			and mark like '%${t.mark}%'
 		</if>
 		</where>
 		order by id desc
@@ -27,7 +27,7 @@
 		from technology_info
 		<where>
 		<if test="t != null and t != ''">
-				name like '%${t}%' or pinyin like '%${t}%'
+			name like '%${t}%' or pinyin like '%${t}%'
 		</if>
 		</where>
 		order by id desc
