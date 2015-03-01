@@ -1,6 +1,5 @@
 package com.github.hzw.security.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.Resources;
-import com.github.hzw.security.service.ClothAllowanceService;
+import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
 
 @Controller
-@RequestMapping("/background/allowance/")
-public class ClothAllowanceController extends BaseController {
+@RequestMapping("/background/flower/")
+public class FlowerInfoController extends BaseController{
 
 	@Inject
-	private ClothAllowanceService clothAllowanceService;
+	private FlowerInfoService flowerInfoService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
-		return Common.BACKGROUND_PATH+"/allowance/list";
+		return Common.BACKGROUND_PATH+"/flower/list";
 	}
 	
 	/**
@@ -39,8 +38,8 @@ public class ClothAllowanceController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("query")
-	public PageView query(ClothAllowance info,String pageNow,String pagesize) {
-		pageView = clothAllowanceService.query(getPageView(pageNow,pagesize), info);
+	public PageView query(FlowerInfo info,String pageNow,String pagesize) {
+		pageView = flowerInfoService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
 	}
 	
@@ -55,11 +54,10 @@ public class ClothAllowanceController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(ClothAllowance info) {
+	public Map<String, Object> add(FlowerInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			info.setCreateTime(new Date());
-			clothAllowanceService.add(info);
+			flowerInfoService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -76,7 +74,7 @@ public class ClothAllowanceController extends BaseController {
 	 */
 	@RequestMapping("addUI")
 	public String addUI() {
-		return Common.BACKGROUND_PATH+"/allowance/add";
+		return Common.BACKGROUND_PATH+"/flower/add";
 	}
 	
 
@@ -88,9 +86,9 @@ public class ClothAllowanceController extends BaseController {
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
-		ClothAllowance info = clothAllowanceService.getById(id);
-		model.addAttribute("allowance", info);
-		return Common.BACKGROUND_PATH+"/allowance/edit";
+		FlowerInfo info = flowerInfoService.getById(id);
+		model.addAttribute("flower", info);
+		return Common.BACKGROUND_PATH+"/flower/edit";
 	}
 	
 	
@@ -103,10 +101,10 @@ public class ClothAllowanceController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public Map<String, Object> update(Model model, ClothAllowance info) {
+	public Map<String, Object> update(Model model, FlowerInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			clothAllowanceService.update(info);
+			flowerInfoService.update(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -130,7 +128,7 @@ public class ClothAllowanceController extends BaseController {
 			String id[] = ids.split(",");
 			for (String string : id) {
 				if(!Common.isEmpty(string)){
-					clothAllowanceService.delete(string);
+					flowerInfoService.delete(string);
 				}
 			}
 			map.put("flag", "true");
@@ -141,9 +139,9 @@ public class ClothAllowanceController extends BaseController {
 	}
 	
 	@RequestMapping("exportExcel")
-	public void exportExcel(HttpServletResponse response,ClothAllowance info) {
-		 List<ClothAllowance> acs = clothAllowanceService.queryAll(info);
-		POIUtils.exportToExcel(response, "余量报表", acs, ClothAllowance.class, "余量", acs.size());
+	public void exportExcel(HttpServletResponse response,FlowerInfo info) {
+		 List<FlowerInfo> acs = flowerInfoService.queryAll(info);
+		POIUtils.exportToExcel(response, "花号报表", acs, FlowerInfo.class, "花号", acs.size());
 	}
 	
 }
