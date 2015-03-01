@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.ReturnGoodsProcessMapper" >
+
+  <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.ReturnGoodsProcess" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="summary_id" property="summaryId" jdbcType="INTEGER" />
+    <result column="return_date" property="returnDate" jdbcType="TIMESTAMP" />
+    <result column="return_num" property="returnNum" jdbcType="INTEGER" />
+    <result column="return_unit" property="returnUnit" jdbcType="VARCHAR" />
+    <result column="statistics_num" property="statisticsNum" jdbcType="INTEGER" />
+    <result column="return_color" property="returnColor" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.github.hzw.security.entity.ReturnGoodsProcess" extends="BaseResultMap" >
+    <result column="mark" property="mark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, summary_id, return_date, return_num, return_unit, statistics_num, return_color, 
+    create_time, mark
+  </sql>
+  
+  <sql id="selectId" >
+    id, summary_id summaryId, return_date returnDate, return_num returnNum, return_unit returnUnit,
+    statistics_num statisticsNum, return_color returnColor, 
+    create_time createTime, mark
+  </sql>
+  
+  <select id="query" resultType="ReturnGoodsProcess" parameterType="ReturnGoodsProcess">
+		select
+		<include refid="selectId" />
+		from return_goods_process
+		<where> 1=1
+		<if test="t.summaryId != null and t.summaryId != ''">
+			and summary_id = #{t.summaryId}
+		</if>
+		<if test="t.freturnDate != null and t.returnDate != ''">
+			and	return_date = #{t.returnDate}
+		</if>
+		<if test="t.returnNum != null and t.returnNum != ''">
+			and	return_num = #{t.returnNum}
+		</if>
+		<if test="t.returnUnit != null and t.returnUnit != ''">
+			and	return_unit = #{t.returnUnit}
+		</if>
+		<if test="t.statisticsNum != null and t.statisticsNum != ''">
+			and	statistics_num = #{t.statisticsNum}
+		</if>
+		<if test="t.returnColor != null and t.returnColor != ''">
+			and	return_color = #{t.returnColor}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+			and mark like '%${t.mark}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+  
+  <select id="queryAll" resultType="ReturnGoodsProcess">
+		select
+		<include refid="selectId" />
+		from return_goods_process
+		order by id desc
+	</select>
+  
+  <select id="getById" parameterType="String" resultType="ReturnGoodsProcess" >
+    select 
+    <include refid="selectId" />
+    from return_goods_process
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="delete" parameterType="String">
+		delete from return_goods_process where
+		id=#{id}
+	</delete>
+  
+  <insert id="insert2" parameterType="ReturnGoodsProcess" >
+    insert into return_goods_process (id, summary_id, return_date, 
+      return_num, return_unit, statistics_num, 
+      return_color, create_time, mark
+      )
+    values (#{id,jdbcType=INTEGER}, #{summaryId,jdbcType=INTEGER}, #{returnDate,jdbcType=TIMESTAMP}, 
+      #{returnNum,jdbcType=INTEGER}, #{returnUnit,jdbcType=VARCHAR}, #{statisticsNum,jdbcType=INTEGER}, 
+      #{returnColor,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{mark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  
+  <insert id="add" parameterType="ReturnGoodsProcess" useGeneratedKeys="true" keyProperty="id" >
+    insert into return_goods_process
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="summaryId != null" >
+        summary_id,
+      </if>
+      <if test="returnDate != null" >
+        return_date,
+      </if>
+      <if test="returnNum != null" >
+        return_num,
+      </if>
+      <if test="returnUnit != null" >
+        return_unit,
+      </if>
+      <if test="statisticsNum != null" >
+        statistics_num,
+      </if>
+      <if test="returnColor != null" >
+        return_color,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="summaryId != null" >
+        #{summaryId,jdbcType=INTEGER},
+      </if>
+      <if test="returnDate != null" >
+        #{returnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnNum != null" >
+        #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnUnit != null" >
+        #{returnUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="statisticsNum != null" >
+        #{statisticsNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnColor != null" >
+        #{returnColor,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="update" parameterType="ReturnGoodsProcess" >
+    update return_goods_process
+    <set >
+      <if test="summaryId != null" >
+        summary_id = #{summaryId,jdbcType=INTEGER},
+      </if>
+      <if test="returnDate != null" >
+        return_date = #{returnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnNum != null" >
+        return_num = #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnUnit != null" >
+        return_unit = #{returnUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="statisticsNum != null" >
+        statistics_num = #{statisticsNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnColor != null" >
+        return_color = #{returnColor,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>

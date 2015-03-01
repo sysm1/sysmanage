@@ -45,7 +45,7 @@
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table>
-        --> 
+       
         <table schema="system-manage" tableName="cloth_allowance" enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
@@ -100,13 +100,19 @@
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table>
+
+        <table schema="system-manage" tableName="date_version" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table> 
         
         <table schema="system-manage" tableName="param_properties" enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table> 
-        
-        <table schema="system-manage" tableName="date_version" enableCountByExample="false" enableUpdateByExample="false"
+         --> 
+         
+         <table schema="system-manage" tableName="table_name" enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table> 
