@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.hzw.security.mapper.ParamPropertiesMapper">
+
+  <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.ParamProperties">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="demo" jdbcType="VARCHAR" property="demo" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+  </resultMap>
+  
+  <sql id="selectId">
+    id, demo, value
+  </sql>
+  
+  <select id="query" resultType="ParamProperties" parameterType="ParamProperties">
+		select
+		<include refid="selectId" />
+			from param_properties
+		<where> 1=1
+		<if test="t.demo != null and t.demo != ''">
+			and demo = #{t.demo}
+		</if>
+		<if test="t.value != null and t.value != ''">
+			and value = #{t.value}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="ParamProperties">
+		select
+		<include refid="selectId" />
+		from param_properties
+		order by id desc
+	</select>
+  
+  <select id="getById" parameterType="String" resultType="ParamProperties">
+    select 
+    <include refid="selectId" />
+    from param_properties
+    where id = #{id}
+  </select>
+  
+  <delete id="delete" parameterType="String">
+    delete from param_properties
+    where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.github.hzw.security.entity.ParamProperties">
+    insert into param_properties (id, demo, value
+      )
+    values (#{id,jdbcType=INTEGER}, #{demo,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="add" parameterType="ParamProperties" useGeneratedKeys="true" keyProperty="id">
+    insert into param_properties
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="demo != null">
+        demo,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="demo != null">
+        #{demo,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="ParamProperties">
+    update param_properties
+    <set>
+      <if test="demo != null">
+        demo = #{demo,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>
