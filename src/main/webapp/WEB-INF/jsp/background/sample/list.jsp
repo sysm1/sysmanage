@@ -19,30 +19,37 @@
 						name : "id",
 						width : "50px"
 					}, {
-						colkey : "accountName",
-						name : "开版日期"
+						colkey : "sampleDate",
+						name : "开版日期",
+						width : "100px"
 					}, {
-						colkey : "roleName",
+						colkey : "factoryName",
 						name : "工厂",
-						width:"70px"
+						width:"120px"
 					}, {
-						colkey : "state",
+						colkey : "clothName",
 						name : "布种",
 						width : "150px"
 					}, {
-						colkey : "description",
+						colkey : "codeValue",
 						name : "编号"
 					}, {
-						colkey : "createTime",
+						colkey : "technologyName",
 						name : "工艺"
 					}, {
-						colkey : "createTime",
+						colkey : "mark",
 						name : "备注"
 					}, {
 						colkey : "createTime",
-						name : "图片"
+						name : "图片",
+						render:function(rowdata, rowindex, value){
+							alert(22);
+						}
 					} ],
-					jsonUrl : '${pageContext.request.contextPath}/background/account/query.html',
+					
+
+					jsonUrl : '${pageContext.request.contextPath}/background/sample/query.html',
+					
 					checkbox : true
 				});
 		$("#seach").click("click", function() {//绑定查询按扭
@@ -59,24 +66,28 @@
 		});
 		$("#add").click("click", function() {//绑定新增按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 750,
-				height : 410,
+				width : 950,
+				height : 500,
 				url : rootPath + '/background/sample/addUI.html',
-				title : "开办录入",
+				title : "开版录入",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 			});
 		});
-		$("#editView").click("click", function() {//绑定查询按扭
+		$("#editView").click("click", function() {//绑定编辑按扭
 			var cbox=grid.getSelectedCheckbox();
-			if (cbox.length > 1||cbox=="") {
-				parent.$.ligerDialog.alert("只能选中一个");
+			if(cbox==""){
+				parent.$.ligerDialog.alert("请选择一条记录修改");
+				return;
+			}
+			if (cbox.length > 1) {
+				parent.$.ligerDialog.alert("一次只能修改一条记录");
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
-				height : 310,
-				url : rootPath + '/background/account/editUI.html?accountId='+cbox,
-				title : "修改账号",
+				width : 950,
+				height : 500,
+				url : rootPath + '/background/sample/editUI.html?id='+cbox,
+				title : "修改开版录入",
 				isHidden : false
 			});
 		});

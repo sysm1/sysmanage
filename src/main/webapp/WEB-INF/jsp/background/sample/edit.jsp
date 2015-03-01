@@ -3,14 +3,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript">
+//单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
-	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
-}, "密码由6至16位字符组合构成");
+	 	return this.optional(element) || ((value.length <= 16) && (value.length>=6));
+	}, "编号由6至16位字符组合构成");
+
 	$(function() {
-		
 		$("form").validate({
 			submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
 				$(form).ajaxSubmit({//验证新增是否成功
@@ -21,7 +21,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.account.loadGird();
+								parent.sample.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
@@ -32,13 +32,21 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				});
 			},
 			rules : {
-				state : {
-					required : true
+				name : {
+					required : true,
+					remote:{ //异步验证是否存在
+						type:"POST",
+						url: rootPath + '/background/salesman/isExist.html',
+						data:{
+							name:function(){return $("#name").val();}
+						 }
+						}
 				}
 			},
 			messages : {
-				state : {
-					required : "选择状态"
+				name : {
+					required : "请输入业务员名称",
+				    remote:"该名称已经存在"
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -51,55 +59,135 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			}
 		});
 	});
-	$(function() {
-		$("input:radio[value='${account.state}']").attr('checked','true');
-	});
 	function saveWin() {
 		$("#form").submit();
 	}
-	function closeWin() {
-		 parent.$.ligerDialog.close(); //关闭弹出窗; //关闭弹出窗
-		parent.$(".l-dialog,.l-window-mask").css("display","none"); 
+	
+	/** 
+	* 从 file 域获取 本地图片 url 
+	*/ 
+	function getFileUrl(sourceId) { 
+		var url; 
+		if (navigator.userAgent.indexOf("MSIE")>=1) { // IE 
+			url = document.getElementById(sourceId).value; 
+		} else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox 
+			url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
+		} else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome 
+			url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
+		} 
+		return url; 
+	} 
+	
+	/**图片预览	*/
+	function showPic(id,obj){
+		alert(obj.value+"||"+id+"||"+document.getElementById("picture").value);
+		var url = document.getElementById("picture").value;
+		alert(url);
+		//document.getElementById("pictd").innerHTML=url;
+		document.getElementById("viewpic").src=url;
 	}
+	
+	
+	function PreviewImage(imgFile){
+	    var pattern = /(\.*.jpg$)|(\.*.png$)|(\.*.jpeg$)|(\.*.gif$)|(\.*.bmp$)/;      
+	    if(!pattern.test(imgFile.value)){ 
+	     	alert("系统仅支持jpg/jpeg/png/gif/bmp格式的照片！");  
+	     	imgFile.focus(); 
+	    }else {
+			var path; 
+			if(document.all){//IE
+				imgFile.select(); 
+				path = document.selection.createRange().text; 
+			 	document.getElementById("imgPreview").innerHTML=""; 
+			 	document.getElementById("imgPreview").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果 
+			} else{//FF
+				path = URL.createObjectURL(imgFile.files[0]);
+			 	document.getElementById("imgPreview").innerHTML = "<img  src='"+path+"'/>"; 
+			} 
+	    } 
+	 } 
+	
+	
 </script>
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/account/update.html" method="post">
-		<table style="width: 285px; height: 200px;">
+	<div class="l_err" ></div>
+	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
+		<table style="height: 200px;" border="1">
 			<tbody>
 				<tr>
-					<td class="l_right">账号名：</td>
+					<td class="l_right">开版日期：</td>
 					<td class="l_left">
-					<input id='id' name="id" type="hidden" value="${account.id}">
-					${account.accountName}</td>
-				</tr>
-				<tr>
-					<td class="l_right">账号密码：</td>
+						<input id='sampleDate' name="sampleDate" class="isNum" readonly="readonly" type="text" value="<fmt:formatDate value="${bean.sampleDate}" pattern="YYYY-MM-DD"/>">
+					</td><td rowspan="9" id="pictd">
+						<div id="imgPreview" style="width: 600px;height:300px" > 
+					    	<img  src=""/> 
+					   </div>
+					</td>
+				</tr><tr>
+					<td>工厂：</td>
+					<td>
+						<select id="factoryId" name="factoryId">
+							<option value="">请选择工厂</option>
+							<c:forEach items="${ factoryInfos }" var = "factoryInfo">
+								<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
+							</c:forEach>
+					    </select>
+					</td>
+				</tr><tr>
+					<td>布种：</td>
+					<td>
+						<select id="clothId" name="clothId">
+							<option value="">请选择布种</option>
+							<c:forEach items="${ cloths }" var = "cloth">
+								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr><tr>
+					<td>
+						<select id="codeType" name="codeType" style="width:90px">
+							<option value="">编号类型</option>
+							<option <c:if test="${0 eq bean.codeType }">selected="selected"</c:if> value="0">分色文件号</option>
+							<option <c:if test="${1 eq bean.codeType }">selected="selected"</c:if> value="1">工厂编号</option>
+							<option <c:if test="${2 eq bean.codeType }">selected="selected"</c:if> value="2">我司编号</option>
+					    </select></td>
+					<td>
+						<input id='codeValue' name="codeValue" class="isNum" type="text" value="${bean.codeValue }">
+					</td>
+				</tr><tr>
+					<td>工艺：</td>
+					<td>
+						<select id="technologyId" name="technologyId">
+							<option value="">请选择</option>
+							<c:forEach items="${ technologyInfos }" var = "technologyInfo">
+								<option <c:if test="${technologyInfo.id eq bean.technologyId }">selected="selected"</c:if> value="${technologyInfo.id }">${technologyInfo.name}</option>
+							</c:forEach>
+					    </select>
+					</td>
+				</tr><tr>
+					<td>图片：</td>
+					<td>
+						<input type="file" id="myFile" name="myFile" style="width: 220px"  onchange="PreviewImage(this);"/>
+					</td>
+				</tr><tr>
+					<td>业务员：</td>
+					<td>
+						<select id="salemanId" name="salemanId">
+							<option value="">请选择</option>
+							<c:forEach items="${ salesmanInfos }" var = "salesmanInfo">
+								<option <c:if test="${salesmanInfo.id eq bean.salemanId }">selected="selected"</c:if> value="${salesmanInfo.id }">${salesmanInfo.name}</option>
+							</c:forEach>
+					    </select>
+					</td>
+				</tr><tr>
+					<td class="l_right">备注：</td>
 					<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='password'
-						name="password" type="password" class="checkpass" value="">
-						</div>
-						</td>
+						<textarea rows="4" cols="6" id='mark' name="mark" >${bean.mark }</textarea>
+					</td>
 				</tr>
-				<tr>
-					<td class="l_right">说明：</td>
-					<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='description'
-						name="description" type="text" class="checkdesc" value="${account.description}">
-						</div>
-						</td>
-				</tr>
-				<tr>
-					<td class="l_right">账号状态：</td>
-					<td class="l_left">
-					<input id='state' name="state" value="1" type="radio"> 启用　　
-					<input id='state' name="state" value="0" type="radio"> 停用
-						</td>
-				</tr>
+				
 				<tr>
 					<td colspan="2">
 						<div class="l_btn_centent">
@@ -109,7 +197,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
 									onclick="closeWin()"><span>关闭</span> </a>
 							</div>
-					</td>
+						</td>
 				</tr>
 			</tbody>
 		</table>

@@ -7,9 +7,8 @@
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
-	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
-}, "编号由6至16位字符组合构成");
-
+	 	return this.optional(element) || ((value.length <= 16) && (value.length>=6));
+	}, "编号由6至16位字符组合构成");
 
 	$(function() {
 		$("form").validate({
@@ -22,7 +21,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.salesman.loadGird();
+								parent.sample.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
@@ -63,63 +62,130 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	function saveWin() {
 		$("#form").submit();
 	}
+	
+	/** 
+	* 从 file 域获取 本地图片 url 
+	*/ 
+	function getFileUrl(sourceId) { 
+		var url; 
+		if (navigator.userAgent.indexOf("MSIE")>=1) { // IE 
+			url = document.getElementById(sourceId).value; 
+		} else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox 
+			url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
+		} else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome 
+			url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0)); 
+		} 
+		return url; 
+	} 
+	
+	/**图片预览	*/
+	function showPic(id,obj){
+		alert(obj.value+"||"+id+"||"+document.getElementById("picture").value);
+		var url = document.getElementById("picture").value;
+		alert(url);
+		//document.getElementById("pictd").innerHTML=url;
+		document.getElementById("viewpic").src=url;
+	}
+	
+	
+	 function PreviewImage(imgFile) 
+	   { 
+	    var pattern = /(\.*.jpg$)|(\.*.png$)|(\.*.jpeg$)|(\.*.gif$)|(\.*.bmp$)/;      
+	    if(!pattern.test(imgFile.value)) 
+	    { 
+	     alert("系统仅支持jpg/jpeg/png/gif/bmp格式的照片！");  
+	     imgFile.focus(); 
+	    } 
+	    else 
+	    { 
+	     var path; 
+	     if(document.all)//IE 
+	     { 
+	      imgFile.select(); 
+	      path = document.selection.createRange().text; 
+	      document.getElementById("imgPreview").innerHTML=""; 
+	      document.getElementById("imgPreview").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\"" + path + "\")";//使用滤镜效果 
+	     } 
+	     else//FF 
+	     { 
+	      path = URL.createObjectURL(imgFile.files[0]);
+	      document.getElementById("imgPreview").innerHTML = "<img src='"+path+"'/>"; 
+	     } 
+	    } 
+	   } 
+	
+	
 </script>
 </head>
 <body>
 <div class="divdialog">
 	<div class="l_err" ></div>
-	<form name="form" id="form" action="${ctx}/background/salesman/add.html" method="post">
+	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
 		<table style="height: 200px;" border="1">
 			<tbody>
 				<tr>
 					<td class="l_right">开版日期：</td>
 					<td class="l_left">
-						<input id='name' name="name" class="isNum" readonly="readonly" type="text" value="${nowDate }">
-					</td><td rowspan="9" style="width: 450px">
-						<img alt="" src="">图片预览区
+						<input id='sampleDate' name="sampleDate" class="isNum" readonly="readonly" type="text" value="${nowDate }">
+					</td><td rowspan="9"  id="pictd">
+						<div id="imgPreview" style="width: 600px;height:300px"> 
+					    	图片预览区<img src=""/> 
+					   </div>
 					</td>
 				</tr><tr>
 					<td>工厂：</td>
 					<td>
-						<select>
-							<option value="">请选择</option>
+						<select id="factoryId" name="factoryId">
+							<option value="">请选择工厂</option>
+							<c:forEach items="${ factoryInfos }" var = "factoryInfo">
+								<option value="${factoryInfo.id }">${factoryInfo.name}</option>
+							</c:forEach>
 					    </select>
 					</td>
 				</tr><tr>
 					<td>布种：</td>
 					<td>
-						<select>
-							<option value="">请选择</option>
-					    </select>
+						<select id="clothId" name="clothId">
+							<option value="">请选择布种</option>
+							<c:forEach items="${ cloths }" var = "cloth">
+								<option value="${cloth.id }">${cloth.clothName}</option>
+							</c:forEach>
+						</select>
 					</td>
 				</tr><tr>
 					<td>
-						<select style="width:90px">
+						<select id="codeType" name="codeType" style="width:90px">
 							<option value="">编号类型</option>
-							<option value="">分色文件号</option>
-							<option value="">工厂编号</option>
-							<option value="">我司编号</option>
+							<option value="0">分色文件号</option>
+							<option value="1">工厂编号</option>
+							<option value="2">我司编号</option>
 					    </select></td>
 					<td>
-						<input id='name' name="name" class="isNum" type="text" value="">
+						<input id='codeValue' name="codeValue" class="isNum" type="text" value="">
 					</td>
 				</tr><tr>
 					<td>工艺：</td>
 					<td>
-						<select>
+						<select id="technologyId" name="technologyId">
 							<option value="">请选择</option>
+							<c:forEach items="${ technologyInfos }" var = "technologyInfo">
+								<option value="${technologyInfo.id }">${technologyInfo.name}</option>
+							</c:forEach>
 					    </select>
 					</td>
 				</tr><tr>
 					<td>图片：</td>
 					<td>
-						<input type="file" id="pic" style="width: 220px"/>
+						<input type="file" id="myFile" name="myFile" style="width: 220px"  onchange="PreviewImage(this);"/>
 					</td>
 				</tr><tr>
 					<td>业务员：</td>
 					<td>
-						<select>
+						<select id="salemanId" name="salemanId">
 							<option value="">请选择</option>
+							<c:forEach items="${ salesmanInfos }" var = "salesmanInfo">
+								<option value="${salesmanInfo.id }">${salesmanInfo.name}</option>
+							</c:forEach>
 					    </select>
 					</td>
 				</tr><tr>
