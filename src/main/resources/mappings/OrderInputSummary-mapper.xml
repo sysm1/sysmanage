@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.OrderInputSummaryMapper" >
+
+  <sql id="selectId1" >
+    id, cloth_id, my_company_code, my_company_color, num, order_ids, mark
+  </sql>
+  
+  <sql id="selectId" >
+    id, cloth_id clothId, my_company_code myCompanyCode, my_company_color myCompanyColor, num, order_ids orderIds, mark
+  </sql>
+  
+  <select id="query" resultType="OrderInputSummary" parameterType="OrderInputSummary">
+		select
+		<include refid="selectId" />
+			from order_input_summary
+		<where>
+		<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+		</if>
+		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
+			and my_company_code = #{t.myCompanyCode}
+		</if>
+		<if test="t.myCompanyColor != null and t.myCompanyColor != ''">
+			and my_company_color = #{t.myCompanyColor}
+		</if>
+		<if test="t.num != null and t.num != ''">
+			and num = #{t.num}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+				mark like '%${t.mark}%'
+		</if>
+		<if test="t.orderIds != null and t.orderIds != ''">
+				order_ids like '%${t.orderIds}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="OrderInputSummary">
+		select
+		<include refid="selectId" />
+		from order_input_summary
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="OrderInputSummary" useGeneratedKeys="true" keyProperty="id">
+		insert into order_input_summary (
+			cloth_id, my_company_code, my_company_color, num, order_ids, mark
+		)
+		values(
+			#{clothId},
+			#{myCompanyCode},
+			#{myCompanyColor},
+			#{num},
+			#{orderIds},
+			#{mark}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from order_input_summary where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="OrderInputSummary">
+		select
+		<include refid="selectId" />
+		from order_input_summary where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="OrderInputSummary">
+		update order_input_summary
+		<set>
+      	<if test="clothId != null and clothId != ''">
+        	cloth_id=#{clothId},
+      	</if>
+      	<if test="myCompanyCode != null and myCompanyCode != ''">
+        	my_company_code=#{myCompanyCode},
+      	</if>
+      	<if test="myCompanyColor != null and myCompanyColor != ''">
+        	my_company_color=#{myCompanyColor},
+      	</if>
+      	<if test="num != null and num != ''">
+        	num=#{num},
+      	</if>
+      	<if test="orderIds != null and orderIds != ''">
+        	order_ids=#{orderIds},
+      	</if>
+      	<if test="mark != null and mark != ''">
+        	mark=#{mark},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+</mapper>
