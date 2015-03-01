@@ -447,6 +447,7 @@ CREATE TABLE `sample_input` (
   `factory_id` int(11) NOT NULL,
   `cloth_id` int(11) NOT NULL,
   `code_type` int(11) NOT NULL,
+  `code_value` varchar(255) NOT NULL,
   `file_code` varchar(255) DEFAULT NULL,
   `factory_code` varchar(255) DEFAULT NULL,
   `my_company_code` varchar(255) DEFAULT NULL,
