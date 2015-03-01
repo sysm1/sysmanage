@@ -225,3 +225,8 @@ create table date_version(
 
 
 -- 联想查询： 布种，工厂，工艺, 我司编号 我司color,
+
+
+
+  
+  

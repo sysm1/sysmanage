@@ -3,6 +3,7 @@
 <mapper namespace="com.github.hzw.security.mapper.OrderSummaryMapper" >
 
 
+<!-- 
   <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.OrderSummary" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
@@ -23,16 +24,17 @@
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="return_status" property="returnStatus" jdbcType="INTEGER" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.github.hzw.security.entity.OrderSummaryWithBLOBs" extends="BaseResultMap" >
     <result column="salesmans" property="salesmans" jdbcType="LONGVARCHAR" />
     <result column="mark" property="mark" jdbcType="LONGVARCHAR" />
   </resultMap>
+  -->
+  
   <sql id="Base_Column_List" >
     id, order_code, order_date, cloth_id, factory_id, technology_id, my_company_code, 
     my_company_color, factory_code, factory_color, cloth_num, num, standard, packing_style, 
     print_status, print_num, status, return_status, createTime
   </sql>
+  
   <sql id="Blob_Column_List" >
     salesmans, mark
   </sql>
@@ -332,19 +334,19 @@
 	
 	
 	
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultType="OrderSummary" parameterType="java.lang.Integer" >
     select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+    <include refid="selectId" />
     from order_summary
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from order_summary
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.github.hzw.security.entity.OrderSummaryWithBLOBs" >
+  
+  <insert id="insert" parameterType="OrderSummary" >
     insert into order_summary (id, order_code, order_date, 
       cloth_id, factory_id, technology_id, 
       my_company_code, my_company_color, factory_code, 
@@ -364,7 +366,7 @@
   </insert>
   
   
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.github.hzw.security.entity.OrderSummaryWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="OrderSummary" >
     update order_summary
     set order_code = #{orderCode,jdbcType=VARCHAR},
       order_date = #{orderDate,jdbcType=TIMESTAMP},
@@ -388,7 +390,8 @@
       mark = #{mark,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.github.hzw.security.entity.OrderSummary" >
+  
+  <update id="updateByPrimaryKey" parameterType="OrderSummary" >
     update order_summary
     set order_code = #{orderCode,jdbcType=VARCHAR},
       order_date = #{orderDate,jdbcType=TIMESTAMP},
