@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.hzw.security.mapper.SampleInputMapper" >
-
-  <sql id="selectId" >
+  <sql id="selectById" >
     id, 
     sample_date sampleDate, 
     factory_id factoryId, 
     cloth_id clothId, 
-    code_type codeType, 
+    code_type codeType,
+    code_value codeValue,
     file_code fileCode, 
     factory_code factoryCode, 
     my_company_code myCompanyCode, 
@@ -18,12 +18,32 @@
     create_time createTime, 
     demand, mark
   </sql>
+  <sql id="selectId" >
+    s.id id, 
+    sample_date sampleDate, 
+    factory_id factoryId,
+    f.name factoryName,
+    cloth_id clothId,
+    cloth_name  clothName,
+    s.code_type codeType, 
+    code_value codeValue,
+    factory_code factoryCode, 
+    my_company_code myCompanyCode, 
+    technology_id technologyId,
+    t.name technologyName,
+    saleman_id salemanId, 
+    picture, status, 
+    reply_date replyDate, 
+    s.create_time createTime, 
+    demand, s.mark mark
+  </sql>
   
-  <select id="query" resultType="SampleInput" parameterType="SampleInput">
+  <select id="query" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
 		select
 		<include refid="selectId" />
-		from sample_input
+		from sample_input s,cloth_info c,factory_info f,technology_info t
 		<where>
+		s.cloth_id=c.id and s.factory_id=f.id and s.technology_id=t.id
 		<if test="t.factoryId != null and t.factoryId != ''">
 			and factory_id = #{t.factoryId}
 		</if>
@@ -46,15 +66,15 @@
 	<select id="queryAll" resultType="SampleInput">
 		select
 		<include refid="selectId" />
-		from sample_input
-		order by id desc
+		from sample_input s,cloth_info c where s.cloth_id=c.id
+		order by s.id desc
 	</select>
 
 
 	<insert id="add" parameterType="SampleInput" useGeneratedKeys="true" keyProperty="id">
 		insert into sample_input (
 			sample_date, factory_id, cloth_id, code_type, file_code, factory_code, my_company_code, technology_id, saleman_id, 
-			picture, status, reply_date, create_time, demand, mark
+			picture, status, reply_date, create_time, demand, mark, code_value
 		)
 		values(
 			#{sampleDate},
@@ -71,7 +91,8 @@
 			#{replyDate},
 			#{createTime},
 			#{demand},
-			#{mark}
+			#{mark},
+			#{codeValue}
 		)
 	</insert>
 	
@@ -83,7 +104,7 @@
 	
 	<select id="getById" parameterType="String" resultType="SampleInput">
 		select
-		<include refid="selectId" />
+		<include refid="selectById" />
 		from sample_input where id=#{id}
 	</select>
 	
