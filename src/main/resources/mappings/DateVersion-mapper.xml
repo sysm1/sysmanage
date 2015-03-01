@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.DateVersionMapper" >
+
+  <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.DateVersion" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="date_k" property="dateK" jdbcType="VARCHAR" />
+    <result column="value_v" property="valueV" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, date_k, value_v
+  </sql>
+  
+  <sql id="selectId" >
+    id, date_k dateK, value_v valueV
+  </sql>
+  
+  <select id="query" resultType="DateVersion" parameterType="DateVersion">
+		select
+		<include refid="selectId" />
+		from date_version
+		<where> 1=1
+		<if test="t.dateK != null and t.dateK != ''">
+			and date_k = #{t.dateK}
+		</if>
+		<if test="t.valueV != null and t.valueV != ''">
+			and	value_v = #{t.valueV}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="DateVersion">
+		select
+		<include refid="selectId" />
+		from date_version
+		order by id desc
+	</select>
+  
+  <select id="getById" parameterType="String" resultType="ClothAllowance" >
+   
+    select 
+    <include refid="selectId" />
+    from date_version
+    where id = #{id}
+  </select>
+  
+  <delete id="delete" parameterType="String" >
+    delete from date_version
+    where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.github.hzw.security.entity.DateVersion" >
+    
+    insert into date_version (id, date_k, value_v
+      )
+    values (#{id,jdbcType=INTEGER}, #{dateK,jdbcType=VARCHAR}, #{valueV,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <insert id="add" parameterType="DateVersion" useGeneratedKeys="true" keyProperty="id" >
+    insert into date_version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dateK != null" >
+        date_k,
+      </if>
+      <if test="valueV != null" >
+        value_v,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dateK != null" >
+        #{dateK,jdbcType=VARCHAR},
+      </if>
+      <if test="valueV != null" >
+        #{valueV,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="DateVersion" >
+    update date_version
+    <set >
+      <if test="dateK != null" >
+        date_k = #{dateK,jdbcType=VARCHAR},
+      </if>
+      <if test="valueV != null" >
+        value_v = #{valueV,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  
+</mapper>
