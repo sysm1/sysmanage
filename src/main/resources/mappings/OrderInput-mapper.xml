@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.OrderInputMapper" >
+  
+  <sql id="selectId1" >
+    id, cloth_id, my_company_code, salesman_id, status, create_time
+  </sql>
+  
+   <sql id="selectId" >
+    id, cloth_id clothId, my_company_code myCompanyCode, salesman_id salesmanId, status, create_time createTime
+  </sql>
+  
+  <select id="query" resultType="OrderInput" parameterType="OrderInput">
+		select
+		<include refid="selectId" />
+			from order_input
+		<where>
+		<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+		</if>
+		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
+			and my_company_code = #{t.myCompanyCode}
+		</if>
+		<if test="t.salesmanId != null and t.salesmanId != ''">
+			and salesman_id = #{t.salesmanId}
+		</if>
+		<if test="t.status != null and t.status != ''">
+			and status = #{t.status}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="OrderInput">
+		select
+		<include refid="selectId" />
+		from order_input
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="OrderInput" useGeneratedKeys="true" keyProperty="id">
+		insert into order_input (
+			cloth_id, my_company_code, salesman_id, status, create_time
+		)
+		values(
+			#{clothId},
+			#{myCompanyCode},
+			#{salemanId},
+			#{status},
+			#{createTime}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from order_input where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="OrderInput">
+		select
+		<include refid="selectId" />
+		from order_input where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="OrderInput">
+		update order_input
+		<set>
+      	<if test="clothId != null and clothId != ''">
+        	cloth_id=#{clothId},
+      	</if>
+      	<if test="myCompanyCode != null and myCompanyCode != ''">
+        	my_company_code=#{myCompanyCode},
+      	</if>
+      	<if test="salemanId != null and salemanId != ''">
+        	saleman_id=#{salemanId},
+      	</if>
+      	<if test="status != null and status != ''">
+        	status=#{status},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+</mapper>

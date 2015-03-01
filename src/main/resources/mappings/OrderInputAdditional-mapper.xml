@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.OrderInputAdditionalMapper" >
+  
+  <sql id="selectId1" >
+    id, input_id, my_company_color, num, unit, mark
+  </sql>
+ 
+ <sql id="selectId" >
+    id, input_id inputId, my_company_color myCompanyColor, num, unit, mark
+ </sql>
+  
+ <select id="query" resultType="OrderInputAdditional" parameterType="OrderInputAdditional">
+		select
+		<include refid="selectId" />
+			from order_input_additional
+		<where>
+		<if test="t.inputId != null and t.inputId != ''">
+			and input_id = #{t.inputId}
+		</if>
+		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
+			and my_company_code = #{t.myCompanyCode}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+				mark like '%${t.mark}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="OrderInputAdditional">
+		select
+		<include refid="selectId" />
+		from order_input_additional
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="OrderInputAdditional" useGeneratedKeys="true" keyProperty="id">
+		insert into order_input_additional (
+			input_id, my_company_color, num, unit, mark
+		)
+		values(
+			#{inputId},
+			#{myCompanyCode},
+			#{num},
+			#{unit},
+			#{mark}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from order_input_additional where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="OrderInputAdditional">
+		select
+		<include refid="selectId" />
+		from order_input_additional where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="OrderInputAdditional">
+		update order_input_additional
+		<set>
+      	<if test="inputId != null and inputId != ''">
+        	input_id=#{inputId},
+      	</if>
+      	<if test="myCompanyCode != null and myCompanyCode != ''">
+        	my_company_code=#{myCompanyCode},
+      	</if>
+      	<if test="num != null and num != ''">
+        	num=#{num},
+      	</if>
+      	<if test="unit != null and unit != ''">
+        	unit=#{unit},
+      	</if>
+      	<if test="mark != null and mark != ''">
+        	mark=#{mark},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+  
+  
+</mapper>

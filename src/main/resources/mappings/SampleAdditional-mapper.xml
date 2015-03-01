@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.SampleAdditionalMapper" >
+  
+  <sql id="selectId1" >
+    id, sample_id, factory_code, factory_color
+  </sql>
+  
+  <sql id="selectId" >
+    id, sample_id sampleId, factory_code factoryCode, factory_color factoryColor
+  </sql>
+  
+  <select id="query" resultType="SampleAdditional" parameterType="SampleAdditional">
+		select
+		<include refid="selectId" />
+		from sample_additional
+		<where>
+		<if test="t.sampleId != null and t.sampleId != ''">
+			and sample_id = #{t.sampleId}
+		</if>
+		<if test="t.factoryCode != null and t.factoryCode != ''">
+			and factory_code = #{t.factoryCode}
+		</if>
+		<if test="t.factoryColor != null and t.ffactoryColor != ''">
+			and factory_color = #{t.factoryColor}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="SampleAdditional">
+		select
+		<include refid="selectId" />
+		from sample_additional
+		order by id desc
+	</select>
+
+
+	<insert id="add" parameterType="SampleAdditional" useGeneratedKeys="true" keyProperty="id">
+		insert into sample_additional (
+			sample_id, factory_code, factory_color
+		)
+		values(
+			#{sampleId},
+			#{factoryCode},
+			#{factoryColor}
+		)
+	</insert>
+	
+	
+	<delete id="delete" parameterType="String">
+		delete from sample_additional where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="SampleAdditional">
+		select
+		<include refid="selectId" />
+		from sample_additional where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="SampleAdditional">
+		update sample_additional
+		<set>
+		<if test="sampleId != null and sampleId != ''">
+        	sample_id=#{sampleId},
+      	</if>
+      	<if test="factoryCode != null and factoryCode != ''">
+        	factory_code=#{factoryCode},
+      	</if>
+      	<if test="factoryColor != null and factoryColor != ''">
+        	factory_color=#{factoryColor},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+  
+</mapper>

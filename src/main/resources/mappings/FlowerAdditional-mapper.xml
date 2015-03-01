@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.FlowerAdditionalMapper" >
+
+  <sql id="selectId1" >
+    id, flower_id, factory_code, factory_color, my_company_code, my_company_color
+  </sql>
+  
+  <sql id="selectId" >
+    id, 
+    flower_id flowerId, 
+    factory_code factoryCode, 
+    factory_color factoryColor, 
+    my_company_code myCompanyCode, 
+    my_company_color myCompanyColor
+  </sql>
+  
+  <select id="query" resultType="FlowerAdditional" parameterType="FlowerAdditional">
+		select
+		<include refid="selectId" />
+			from flower_additional
+		<where>
+		<if test="t.flowerId != null and t.flowerId != ''">
+			and flower_id = #{t.flowerId}
+		</if>
+		<if test="t.factoryCode != null and t.factoryCode != ''">
+			and factory_code = #{t.factoryCode}
+		</if>
+		<if test="t.factoryColor != null and t.factoryColor != ''">
+			and factory_color = #{t.factoryColor}
+		</if>
+		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
+			and my_company_code = #{t.myCompanyCode}
+		</if>
+		<if test="t.myCompanyColor != null and t.myCompanyColor != ''">
+			and my_company_color = #{t.myCompanyColor}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="FlowerAdditional">
+		select
+		<include refid="selectId" />
+		from flower_additional
+		order by id desc
+	</select>
+
+	<insert id="add" parameterType="FlowerAdditional" useGeneratedKeys="true" keyProperty="id">
+		insert into flower_additional (
+			flower_id, factory_code, factory_color, my_company_code, my_company_color
+		)
+		values(
+			#{flowerId},
+			#{factoryCode},
+			#{factoryColor},
+			#{myCompanyCode},
+			#{myCompanyColor}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from flower_additional where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="FlowerAdditional">
+		select
+		<include refid="selectId" />
+		from flower_additional where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="FlowerAdditional">
+		update flower_additional
+		<set>
+      	<if test="flowerId != null and flowerId != ''">
+        	flower_id=#{flowerId},
+      	</if>
+      	<if test="factoryCode != null and factoryCode != ''">
+        	factory_code=#{factoryCode},
+      	</if>
+      	<if test="factoryColor != null and factoryColor != ''">
+        	factory_color=#{factoryColor},
+      	</if>
+      	<if test="myCompanyCode != null and myCompanyCode != ''">
+        	my_company_code=#{myCompanyCode},
+      	</if>
+      	<if test="myCompanyColor != null and myCompanyColor != ''">
+        	my_company_color=#{myCompanyColor},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+  
+</mapper>
