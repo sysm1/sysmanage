@@ -113,7 +113,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <body>
 <div class="divdialog">
 	<div class="l_err" ></div>
-	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
+	<form name="form" id="form" action="${ctx}/background/sample/update.html" method="post"  enctype="multipart/form-data">
+		<input type="hidden" id="copyadd" name="copyadd" value="${copyadd }">
+		<input type="hidden" id="id" name="id" value="${bean.id }">
 		<table style="height: 200px;" border="1">
 			<tbody>
 				<tr>
@@ -160,7 +162,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td>工艺：</td>
 					<td>
 						<select id="technologyId" name="technologyId">
-							<option value="">请选择</option>
+							<option value="">请选择工艺</option>
 							<c:forEach items="${ technologyInfos }" var = "technologyInfo">
 								<option <c:if test="${technologyInfo.id eq bean.technologyId }">selected="selected"</c:if> value="${technologyInfo.id }">${technologyInfo.name}</option>
 							</c:forEach>

@@ -52,7 +52,7 @@
 					
 					checkbox : true
 				});
-		$("#seach").click("click", function() {//绑定查询按扭
+		$("#search").click("click", function() {//绑定查询按扭
 			var searchParams = $("#fenye").serialize();
 			grid.setOptions({
 				data : searchParams
@@ -91,6 +91,24 @@
 				isHidden : false
 			});
 		});
+		$("#copyadd").click("click", function() {//绑定复制新增按扭
+			var cbox=grid.getSelectedCheckbox();
+			if(cbox==""){
+				parent.$.ligerDialog.alert("请选择一条记录修改");
+				return;
+			}
+			if (cbox.length > 1) {
+				parent.$.ligerDialog.alert("一次只能修改一条记录");
+				return;
+			}
+			dialog = parent.$.ligerDialog.open({
+				width : 950,
+				height : 500,
+				url : rootPath + '/background/sample/editUI.html?id='+cbox+"&copyadd=copyadd",
+				title : "复制新增开版录入",
+				isHidden : false
+			});
+		});
 		$("#perrole").click("click", function() {//绑定查询按扭
 			var cbox=grid.selectRow();
 			if (cbox.id == undefined || cbox.id=="") {
@@ -105,7 +123,7 @@
 				isHidden : false
 			});
 		});
-		$("#deleteView").click("click", function() {//绑定查询按扭
+		$("#deleteView").click("click", function() {//绑定删除按扭
 			var cbox=grid.getSelectedCheckbox();
 			if (cbox=="") {
 				parent.$.ligerDialog.alert("请选择删除项！！");
@@ -117,7 +135,7 @@
 					    type: "post", //使用get方法访问后台
 					    dataType: "json", //json格式的数据
 					    async: false, //同步   不写的情况下 默认为true
-					    url: rootPath + '/background/account/deleteById.html', //要访问的后台地址
+					    url: rootPath + '/background/sample/deleteById.html', //要访问的后台地址
 					    data: {ids:cbox.join(",")}, //要发送的数据
 					    success: function(data){
 					    	if (data.flag == "true") {
@@ -145,18 +163,28 @@
 				开版日期：
 				<input type="text" id="startDay" name="startDay" value="" style="width:97px;">
 				<input type="text" id="endDay" name="endDay" value="" style="width:98px;">
-				备注：<input type="text" id="market" name="market" value="">
-				编号：<input type="text" id="code" name="code" value="">
+				备注：<input type="text" id="mark" name="mark" value="">
+				编号：<input type="text" id="codeValue" name="codeValue" value="">
 				<br>
-				工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：&nbsp;<select>
-						<option value="">请选择</option>
+				工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：&nbsp;
+				      <select  id="factoryId" name="factoryId">
+						<option value="">请选择工厂</option>
+						<c:forEach items="${ factoryInfos }" var = "factoryInfo">
+								<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
+							</c:forEach>
 					  </select>
-			          布种：<select>
-						<option value="">请选择</option>
-					  </select>
-			          工艺：<select>
-						<option value="">请选择</option>
-					  </select>
+			          布种：<select id="clothId" name="clothId">
+							<option value="">请选择布种</option>
+							<c:forEach items="${ cloths }" var = "cloth">
+								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
+							</c:forEach>
+						</select>
+			          工艺：<select id="technologyId" name="technologyId">
+							<option value="">请选择工艺</option>
+							<c:forEach items="${ technologyInfos }" var = "technologyInfo">
+								<option <c:if test="${technologyInfo.id eq bean.technologyId }">selected="selected"</c:if> value="${technologyInfo.id }">${technologyInfo.name}</option>
+							</c:forEach>
+					    </select>
 			</form>
 		</div>
 		<div class="topBtn">
@@ -164,12 +192,12 @@
 				<i class="icon-zoom-add icon-white"></i> <span>新增</span>
 			</a> <a class="btn btn-info" href="javascript:void(0)" id="editView"> 
 				<i class="icon-edit icon-white"></i> 修改
-			</a> <a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> 
+			</a> <a class="btn btn-danger" href="javascript:void(0)" id="copyadd"> 
 				<i class="icon-zoom-add icon-white"></i> 复制新增
 			</a> <a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> 
 				<i class="icon-trash icon-white"></i> 删除
 			</a>
-			<a class="btn btn-large btn-success" href="javascript:void(0)" id="perrole">
+			<a class="btn btn-large btn-success" href="javascript:void(0)" id="search">
 				查询
 			</a>
 		</div>

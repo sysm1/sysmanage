@@ -167,7 +167,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td>工艺：</td>
 					<td>
 						<select id="technologyId" name="technologyId">
-							<option value="">请选择</option>
+							<option value="">请选择工艺</option>
 							<c:forEach items="${ technologyInfos }" var = "technologyInfo">
 								<option value="${technologyInfo.id }">${technologyInfo.name}</option>
 							</c:forEach>
