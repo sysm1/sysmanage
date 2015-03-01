@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.OrderNotifyInfoMapper" >
+
+  <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.OrderNotifyInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="VARCHAR" />
+    <result column="summary_ids" property="summaryIds" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.github.hzw.security.entity.OrderNotifyInfo" extends="BaseResultMap" >
+    <result column="mark" property="mark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, no, summary_ids, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    mark
+  </sql>
+  
+  <sql id="selectId" >
+    id, no, summary_ids summaryIds, create_time createTime, mark
+  </sql>
+  
+  
+  <select id="query" resultType="OrderNotifyInfo" parameterType="OrderNotifyInfo">
+		select
+		<include refid="selectId" />
+		from order_notify_info
+		<where> 1=1
+		<if test="t.no != null and t.no != ''">
+			and no = #{t.no}
+		</if>
+		
+		<if test="t.mark != null and t.mark != ''">
+			and mark like '%${t.mark}%'
+		</if>
+		
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="OrderNotifyInfo">
+		select
+		<include refid="selectId" />
+		from order_notify_info
+		order by id desc
+	</select>
+  
+  <select id="getById" parameterType="String" resultType="OrderNotifyInfo" >
+    select 
+    <include refid="selectId" />
+    from order_notify_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="delete" parameterType="String" >
+    delete from order_notify_info
+    where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.github.hzw.security.entity.OrderNotifyInfo" >
+    insert into order_notify_info (id, no, summary_ids, 
+      create_time, mark)
+    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR}, #{summaryIds,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{mark,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <insert id="add" parameterType="OrderNotifyInfo" useGeneratedKeys="true" keyProperty="id" >
+    insert into order_notify_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="summaryIds != null" >
+        summary_ids,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryIds != null" >
+        #{summaryIds,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="OrderNotifyInfo" >
+    update order_notify_info
+    <set >
+      <if test="no != null" >
+        no = #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryIds != null" >
+        summary_ids = #{summaryIds,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+</mapper>

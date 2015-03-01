@@ -14,22 +14,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.OrderNotifyInfo;
 import com.github.hzw.security.entity.Resources;
-import com.github.hzw.security.entity.ReturnGoodsProcess;
-import com.github.hzw.security.service.ReturnGoodsProcessService;
+import com.github.hzw.security.service.OrderNotifyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
 
 @Controller
-@RequestMapping("/background/process/")
-public class ReturnGoodsProcessController extends BaseController {
+@RequestMapping("/background/notify/")
+public class OrderNotifyInfoController extends BaseController {
 
 	@Inject
-	private ReturnGoodsProcessService returnGoodsProcessService;
+	private OrderNotifyInfoService orderNotifyInfoService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
-		return Common.BACKGROUND_PATH+"/process/list";
+		return Common.BACKGROUND_PATH+"/notify/list";
 	}
 	
 	/**
@@ -39,8 +40,8 @@ public class ReturnGoodsProcessController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("query")
-	public PageView query(ReturnGoodsProcess info,String pageNow,String pagesize) {
-		pageView = returnGoodsProcessService.query(getPageView(pageNow,pagesize), info);
+	public PageView query(OrderNotifyInfo info,String pageNow,String pagesize) {
+		pageView = orderNotifyInfoService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
 	}
 	
@@ -55,11 +56,11 @@ public class ReturnGoodsProcessController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(ReturnGoodsProcess info) {
+	public Map<String, Object> add(OrderNotifyInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			info.setCreateTime(new Date());
-			returnGoodsProcessService.add(info);
+			orderNotifyInfoService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -76,7 +77,7 @@ public class ReturnGoodsProcessController extends BaseController {
 	 */
 	@RequestMapping("addUI")
 	public String addUI() {
-		return Common.BACKGROUND_PATH+"/process/add";
+		return Common.BACKGROUND_PATH+"/notify/add";
 	}
 	
 
@@ -88,9 +89,9 @@ public class ReturnGoodsProcessController extends BaseController {
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
-		ReturnGoodsProcess info = returnGoodsProcessService.getById(id);
-		model.addAttribute("process", info);
-		return Common.BACKGROUND_PATH+"/process/edit";
+		OrderNotifyInfo info = orderNotifyInfoService.getById(id);
+		model.addAttribute("notify", info);
+		return Common.BACKGROUND_PATH+"/notify/edit";
 	}
 	
 	
@@ -103,10 +104,10 @@ public class ReturnGoodsProcessController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public Map<String, Object> update(Model model, ReturnGoodsProcess info) {
+	public Map<String, Object> update(Model model, OrderNotifyInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			returnGoodsProcessService.update(info);
+			orderNotifyInfoService.update(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -130,7 +131,7 @@ public class ReturnGoodsProcessController extends BaseController {
 			String id[] = ids.split(",");
 			for (String string : id) {
 				if(!Common.isEmpty(string)){
-					returnGoodsProcessService.delete(string);
+					orderNotifyInfoService.delete(string);
 				}
 			}
 			map.put("flag", "true");
@@ -141,9 +142,9 @@ public class ReturnGoodsProcessController extends BaseController {
 	}
 	
 	@RequestMapping("exportExcel")
-	public void exportExcel(HttpServletResponse response,ReturnGoodsProcess info) {
-		 List<ReturnGoodsProcess> acs = returnGoodsProcessService.queryAll(info);
-		POIUtils.exportToExcel(response, "回货进度报表", acs, ReturnGoodsProcess.class, "回货进度", acs.size());
+	public void exportExcel(HttpServletResponse response,OrderNotifyInfo info) {
+		 List<OrderNotifyInfo> acs = orderNotifyInfoService.queryAll(info);
+		POIUtils.exportToExcel(response, "下单通知报表", acs, ClothAllowance.class, "下单通知", acs.size());
 	}
 	
 }
