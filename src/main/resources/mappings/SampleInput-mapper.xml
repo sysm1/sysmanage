@@ -55,9 +55,13 @@
 		</if>
 		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
 			and my_company_code = #{t.myCompanyCode}
+		</if><if test="t.technologyId != null and t.technologyId != ''">
+			and technology_id = #{t.technologyId}
 		</if>
 		<if test="t.mark != null and t.mark != ''">
-				mark like '%${t.mark}%'
+			and s.mark like '%${t.mark}%'
+		</if><if test="t.codeValue != null and t.codeValue != ''">
+			and s.code_value like '%${t.codeValue}%'
 		</if>
 		</where>
 		order by id desc
