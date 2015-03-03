@@ -10,6 +10,15 @@
     unit.id as id, unit.cloth_id as clothId, info.cloth_name as clothName, item, kg, cm, yard
   </sql>
   
+  
+  <select id="queryClothId" resultType="ClothUnit" parameterType="Integer">
+		select
+		<include refid="selectId" />
+		from cloth_unit unit
+		where cloth_id = #{clothId}
+	</select>
+	
+  
   <select id="query" resultType="ClothUnit" parameterType="ClothUnit">
 		select
 		<include refid="selectIdExt" />

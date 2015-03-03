@@ -58,4 +58,9 @@ public class ClothUnitServiceImpl implements ClothUnitService {
 		this.clothUnitMapper.add(t);
 	}
 	
+	// 跟据clothId选择
+	public ClothUnit queryClothId(Integer clothId){
+		return clothUnitMapper.queryClothId(clothId);
+	}
+	
 }

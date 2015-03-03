@@ -6,9 +6,22 @@
     id, cloth_id as clothId, factory_id as factoryId, allowance, unit, old_sum as oldSum, change_sum as changeSum, create_time as createTime, mark
   </sql>
   
+  <sql id="selectIdExt" >
+    id, 
+    cloth_id as clothId, 
+    (select cloth.name from cloth_info cloth where cloth.id = cloth_allowance.cloth_id ) as clothName 
+    factory_id as factoryId, 
+    (select factory.name from factory_info factory where factory.id = cloth_allowance.factory_id ) as factoryName 
+    allowance, unit, 
+    old_sum as oldSum, 
+    change_sum as changeSum, 
+    create_time as createTime, 
+    mark
+  </sql>
+  
   <select id="query" resultType="ClothAllowance" parameterType="ClothAllowance">
 		select
-		<include refid="selectId" />
+		<include refid="selectIdExt" />
 		from cloth_allowance
 		<where> 1=1
 		<if test="t.clothId != null and t.clothId != ''">
@@ -20,6 +33,17 @@
 		</where>
 		order by id desc
 	</select>
+
+	<select id="queryByClothAndFactory" resultType="ClothAllowance" parameterType="map">
+		select
+		<include refid="selectId" />
+		from cloth_allowance
+		<where> 
+		 cloth_id = #{clothId} and factory_id = #{factoryId}
+		</where>
+		order by id desc
+	</select>
+
 
 	<select id="queryAll" resultType="ClothAllowance">
 		select

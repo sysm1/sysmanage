@@ -5,4 +5,6 @@ import com.github.hzw.security.entity.ClothAllowance;
 
 public interface ClothAllowanceService extends BaseService<ClothAllowance> {
 
+	public ClothAllowance queryByClothAndFactory(Integer clothId, Integer factoryId);
+	
 }

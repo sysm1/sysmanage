@@ -4,5 +4,7 @@ import com.github.hzw.base.BaseService;
 import com.github.hzw.security.entity.ClothUnit;
 
 public interface ClothUnitService extends BaseService<ClothUnit> {
-
+	
+	public ClothUnit queryClothId(Integer clothId);
+	
 }
