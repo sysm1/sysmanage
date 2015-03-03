@@ -321,10 +321,10 @@ html>body td{ font-size:13px;}
 						总${pageView.rowCount }条&nbsp;&nbsp;&nbsp;每页${pageView.pageSize }条&nbsp;&nbsp;&nbsp; 
 						共${pageView.pageCount }页&nbsp;&nbsp;当前${pageView.pageNow }页</td>
 					<td colspan="5" style="text-align: right">
-						<a href="javascript:page(1)">首页</a>   
-						<a href="javascript:page(${pageView.pageNow-1 })">上一页</a>
+						<a href="javascript:page(1)">首页</a>
+						<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
 						<c:if test="${pageView.pageNow>2 }">
-							<a href="javascript:page(${pageView.pageNow-2 })">${pageView.pageNow-2 }</a>
+							...<a href="javascript:page(${pageView.pageNow-2 })">${pageView.pageNow-2 }</a>
 						</c:if><c:if test="${pageView.pageNow>1 }">					
 							<a href="javascript:page(${pageView.pageNow-1 })">${pageView.pageNow-1 }</a>
 						</c:if>	
@@ -332,7 +332,12 @@ html>body td{ font-size:13px;}
 						<c:if test="${pageView.pageCount-1>=pageView.pageNow }">
 							<a href="javascript:page(${pageView.pageNow+1 })">${pageView.pageNow+1 }</a>
 						</c:if><c:if test="${pageView.pageCount-2>=pageView.pageNow }">
-							<a href="javascript:page(${pageView.pageNow+2 })">${pageView.pageNow+2 }</a>
+							<a href="javascript:page(${pageView.pageNow+2 })">${pageView.pageNow+2 }</a>...
+						</c:if>
+						<c:if test="${pageView.pageNow>=pageView.pageCount }">
+							<a href="javascript:page(${pageView.pageNow })">下一页</a>
+						</c:if><c:if test="${pageView.pageNow<pageView.pageCount }">
+							<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
 						</c:if>
 						<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>						
 						<a href="javascript:page(${pageView.pageCount })">尾页</a>
