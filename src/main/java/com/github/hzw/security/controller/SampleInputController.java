@@ -60,15 +60,22 @@ public class SampleInputController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput) {
+		String pageNow=request.getParameter("pageNow");
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		pageView = sampleInputService.query(getPageView(pageNow,pagesize), sampleInput);
+		if(pageView.getPageNow()>pageView.getPageCount()){
+			pageView.setPageNow(Integer.parseInt(pageView.getPageCount()+""));
+		}
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("salesmanInfos", salesmanInfos);
+		model.addAttribute("bean", sampleInput);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("technologyInfos", technologyInfos);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/sample/list";
 	}
 	
