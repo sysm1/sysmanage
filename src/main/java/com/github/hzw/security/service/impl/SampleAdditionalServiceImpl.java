@@ -29,7 +29,14 @@ public class SampleAdditionalServiceImpl implements SampleAdditionalService {
 		pageView.setRecords(list);
 		return pageView;
 	}
-
+	/**
+	 * 删除开版进度的编号和颜色
+	 * @param sampleId
+	 */
+	@Override
+	public void deleteBySampleId(String sampleId){
+		sampleAdditionalMapper.deleteBySampleId(sampleId);
+	}
 	
 	@Override
 	public List<SampleAdditional> queryAll(SampleAdditional t) {
