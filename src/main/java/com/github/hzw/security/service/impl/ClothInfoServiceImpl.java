@@ -12,6 +12,7 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.mapper.ClothInfoMapper;
 import com.github.hzw.security.service.ClothInfoService;
+import com.github.hzw.util.PinyinUtil;
 
 @Transactional
 @Service("clothInfoService")
@@ -44,6 +45,7 @@ public class ClothInfoServiceImpl implements ClothInfoService {
 
 	@Override
 	public void update(ClothInfo t) throws Exception {
+		t.setPinyin(PinyinUtil.getPinYinHeadChar(t.getClothName()).toUpperCase());
 		this.clothInfoMapper.update(t);
 		
 	}
@@ -55,6 +57,7 @@ public class ClothInfoServiceImpl implements ClothInfoService {
 
 	@Override
 	public void add(ClothInfo t) throws Exception {
+		t.setPinyin(PinyinUtil.getPinYinHeadChar(t.getClothName()).toUpperCase());
 		this.clothInfoMapper.add(t);
 	}
 

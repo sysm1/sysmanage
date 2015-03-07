@@ -12,6 +12,7 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.mapper.FactoryInfoMapper;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.util.PinyinUtil;
 
 
 @Transactional
@@ -65,6 +66,7 @@ public class FactoryInfoServiceImpl implements FactoryInfoService {
 
 	@Override
 	public void add(FactoryInfo t) throws Exception {
+		t.setPinyin(PinyinUtil.getPinYinHeadChar(t.getName()).toUpperCase());
 		this.factoryInfoMapper.add(t);
 	}
 

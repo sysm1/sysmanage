@@ -44,12 +44,24 @@ create table salesman_info(
 create table cloth_unit (  
 	id int not null auto_increment,
 	cloth_id not null,
-	kg  int not null,
-	cm  int not null,
-	yard int not null,
+	kg  double not null,
+	cm  double not null,
+	yard double not null,
 	item int not null,  -- 默认单位 条， 默认值 1
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `cloth_unit`;
+CREATE TABLE `cloth_unit` (
+  `id` int(11) NOT NULL,
+  `cloth_id` int(11) NOT NULL,
+  `kg` double NOT NULL,
+  `cm` double NOT NULL,
+  `yard` double NOT NULL,
+  `item` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- 布种余量 -- kg cm yard item   allowance 余量关键字
 create table cloth_allowance (
