@@ -109,27 +109,39 @@ html>body td{ font-size:13px;}
 		});
 		$("#saveTemp").click("click", function() {//绑定查询按扭
 			var cbox=getSelectedCheckbox();
+			
 			if(cbox==""){
 				parent.$.ligerDialog.alert("请选择一条记录修改");
 				return;
 			}
-			if (cbox.length > 1) {
-				parent.$.ligerDialog.alert("一次只能修改一条记录");
+			//if (cbox.length > 1) {
+			//	parent.$.ligerDialog.alert("一次只能修改一条记录");
+			//	return;
+			//}
+			for(var i=0;i<cbox.length;i++){
+				var f = $('#'+cbox[i]+'_form');
+				//document.getElementById(cbox[i]+'_form').target="iframet";
+				f.attr('target','iframet');
+				f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html');
+				f.submit();
+			}
+			alert("数据暂存成功");
+		});
+		$("#answer").click("click", function() {//绑定新增按扭
+			var cbox=getSelectedCheckbox();
+			
+			if(cbox==""){
+				parent.$.ligerDialog.alert("请选择一条记录修改");
 				return;
 			}
-			var f = $('#'+cbox+'_form');
-			//f.attr('target','_blank');
-			f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html');
-			f.submit();
-		});
-		$("#add").click("click", function() {//绑定新增按扭
-			dialog = parent.$.ligerDialog.open({
-				width : 950,
-				height : 500,
-				url : rootPath + '/background/sample/addUI.html',
-				title : "开版录入",
-				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
-			});
+			for(var i=0;i<cbox.length;i++){
+				var f = $('#'+cbox[i]+'_form');
+				//document.getElementById(cbox[i]+'_form').target="iframet";
+				//f.attr('target','iframet');
+				f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/answer.html?type=1');
+				f.submit();
+			}
+			alert("开版进度已回成功");
 		});
 		$("#editView").click("click", function() {//绑定编辑按扭
 			var cbox=getSelectedCheckbox();
@@ -176,6 +188,23 @@ html>body td{ font-size:13px;}
 		});
 		return arr;
 	};
+	
+	/***增加工厂编号**/
+	function addFactoryCode(index){
+		alert(index);
+		document.getElementById(index+"factoryCode2").style.display='block';
+		document.getElementById(index+"1factoryColor2").style.display='';
+		document.getElementById(index+"2factoryColor2").style.display='';
+		document.getElementById(index+"3factoryColor2").style.display='';
+		document.getElementById(index+"jiahao2").style.display='';
+		document.getElementById(index+"jiahao").innerHTML='';
+	}
+	function addColor(st,param){
+		var flag=document.getElementById(st+"flag"+param).value;
+		alert(st+""+flag+"factoryColor"+param);
+		document.getElementById(st+""+flag+"factoryColor"+param).style.display='';
+		document.getElementById(st+"flag"+param).value=parseInt(document.getElementById(st+"flag"+param).value)+parseInt(1);
+	}
 </script>
 </head>
 <body>
@@ -217,25 +246,27 @@ html>body td{ font-size:13px;}
 						<input type="checkbox" id="checkIds" name="checkIds">
 					</th>
 					<th class="specalt" style="width:50px">id</th>
-					<th class="specalt" style="width:60px">开版日期</th>
+					<th class="specalt" style="width:45px">日期</th>
 					<th class="specalt" style="width:75px">分色文件号</th>
 					<th class="specalt" style="width:75px">布种</th>
-					<th class="specalt" style="width:110px">我司编号</th>
+					<th class="specalt" style="width:105px">我司编号</th>
 					<th class="specalt" style="width:100px">工厂</th>
 					<th class="specalt" style="width:75px">工艺</th>
 					<th class="specalt" style="width:110px">开版录入备注</th>
 					<th class="specalt" style="width:110px">工厂编号</th>
-					<th class="specalt">工厂颜色</th>
+					<th class="specalt" >工厂颜色</th>
 					<th class="specalt">回版日期</th>
 					<th class="specalt">备注</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
-				
+				<% int i=0; %>
 					<tr>
 					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 					 	<td>
 					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }">
 					 		<input type="hidden" id="id" name="id" value="${item.id }">
+					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">
+					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">
 					 	</td>
 						<td>${item.id }</td>
 						<td title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>">
@@ -244,7 +275,7 @@ html>body td{ font-size:13px;}
 						<td>${item.fileCode }</td>
 						<td>${item.clothName }</td>
 						<td>
-							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:50px" value="${item.myCompanyCode }">
+							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:100px" value="${item.myCompanyCode }">
 						</td>
 						<td>${item.factoryName }</td>
 						<td>${item.technologyName }</td>
@@ -253,13 +284,82 @@ html>body td{ font-size:13px;}
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
 						<td>
-							<input type="text" id="factoryCode" style="width:50px" name="factoryCode" value="${item.factoryCode }">+
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+							<% i++; %>
+								 <input type="text" id="${status.index }factoryCode${status1.index+1 }" style="width:80px" name="factoryCode${status1.index+1 }" value="${item1.key }">
+							</c:forEach>
+							<%if(i==0){ %>
+								<input type="text" id="${status.index }factoryCode1" style="width:80px" name="factoryCode1" value="">
+								<input type="text" id="${status.index }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
+							<%}if(i!=2){ %>
+								<input type="text" id="${status.index }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
+								<span onclick="addFactoryCode(${status.index })" id="${status.index }jiahao" style="cursor:pointer;">+</span>
+							<%} %>
+						</td>
+						<td>
+						<% int f=1; %>						
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+							<% int ff=1; %>
+							<div>
+								<c:forEach var="item2" items="${item1.value}" varStatus="status2">
+								<c:if test="${item2.factoryColor !=null }"><%f++; ff++;%>
+									<input type="text" id="${status.index }${status2.index+1 }factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px" value="${item2.factoryColor }">
+								</c:if>
+								</c:forEach>
+								<% if(ff<9){ 
+								  for(int s=ff;s<=9;s++){%>
+									  <input type="text" id="${status.index }<%=s %>factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px;display: none" value="">
+								<%} }%>
+								<span onclick="addColor(${status.index },${status1.index+1})" style="cursor:pointer;">+</span>
+								<input type="hidden" id="${status.index }flag${status1.index+1}" value="<%=ff%>">
+							</div>
+							</c:forEach>
+							<% if(f==1){ %>
+							<div>
+								<input type="text" id="${status.index }1factoryColor1" name="factoryColor1" style="width:50px" value="">
+								<input type="text" id="${status.index }2factoryColor1" name="factoryColor1" style="width:50px" value="">
+								<input type="text" id="${status.index }3factoryColor1" name="factoryColor1" style="width:50px" value="">
+								<input type="text" id="${status.index }4factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }5factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }6factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }7factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }8factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }9factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
+								<span onclick="addColor(${status.index },1)" style="cursor:pointer;">+</span>
+								<input type="hidden" id="${status.index }flag1" value="4">
+							</div>
+							<div>
+								<input type="text" id="${status.index }1factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }2factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }3factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }4factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }5factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }6factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<span onclick="addColor(${status.index },2)" id="${status.index }jiahao2" style="cursor:pointer;display: none">+</span>
+								<input type="hidden" id="${status.index }flag2" value="4">
+							</div>
+						<%} if(f==3){%>
+							<div>
+								<input type="text" id="${status.index }1factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }2factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }3factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }4factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }5factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }6factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${status.index }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<span onclick="addColor(${status.index },2)" id="${status.index }jiahao2" style="cursor:pointer;display: none">+</span>
+								<input type="hidden" id="${status.index }flag2" value="4">
+							</div>
+						<%} %>
 						</td><td>
-							<input type="text" id="factoryColor" name="factoryColor" style="width:50px" value="">+
+							<input type="text" id="replyDate" name="replyDate" style="width:60px" value="">
 						</td><td>
-							<input type="text" id="replyDate" name="replyDate" style="width:50px" value="">
-						</td><td>
-							<input type="text" id="replyMark" name="replyMark" style="width:50px" value="">
+							<input type="text" id="replyMark" name="replyMark" style="width:200px" value="">
 						</td>
 						</form>
 					<tr>
@@ -297,4 +397,5 @@ html>body td{ font-size:13px;}
 		
 	</div>
 </body>
+<iframe id="iframet" ></iframe>
 </html>	
