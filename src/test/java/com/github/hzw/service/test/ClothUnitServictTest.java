@@ -22,4 +22,17 @@ public class ClothUnitServictTest {
 		ClothUnit unit = clothUnitService.queryClothId(1);
 		System.out.println(unit);
 	}
+	
+	@Test
+	public void testSave() throws Exception {
+		ClothUnit unit = new ClothUnit();
+		unit.setClothId(4);
+		unit.setCm(2.3);
+		unit.setKg(5.4);
+		unit.setItem(1);
+		unit.setYard(10.333333);
+		clothUnitService.add(unit);
+	}
+	
+	
 }
