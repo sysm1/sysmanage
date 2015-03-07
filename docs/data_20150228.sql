@@ -456,6 +456,7 @@ CREATE TABLE `sample_input` (
   `picture` varchar(255) NOT NULL,
   `demand` text,
   `mark` text,
+  `return_mark` text,
   `status` int(11) NOT NULL,
   `reply_date` datetime DEFAULT NULL,
   `create_time` datetime NOT NULL,
