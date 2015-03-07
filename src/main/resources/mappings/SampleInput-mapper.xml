@@ -70,7 +70,7 @@
 	<select id="queryAll" resultType="SampleInput">
 		select
 		<include refid="selectId" />
-		from sample_input s,cloth_info c where s.cloth_id=c.id
+		from sample_input s,cloth_info c where s.cloth_id=c.id where status=0
 		order by s.id desc
 	</select>
 
