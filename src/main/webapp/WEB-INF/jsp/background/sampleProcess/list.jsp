@@ -212,6 +212,7 @@ html>body td{ font-size:13px;}
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
+				<input type="hidden" id="status" name="status" value="0">
 				工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：&nbsp;
 				      <select  id="factoryId" name="factoryId">
 						<option value="">请选择工厂</option>
@@ -357,9 +358,13 @@ html>body td{ font-size:13px;}
 							</div>
 						<%} %>
 						</td><td>
-							<input type="text" id="replyDate" name="replyDate" style="width:60px" value="">
+							<c:if test="${item.replyDate ==null }">
+								<input type="text" id="replyDate" name="replyDate" style="width:70px" value="${replyDate }">
+							</c:if><c:if test="${item.replyDate !=null }">
+								<input type="text" id="replyDate" name="replyDate" style="width:70px" value="<fmt:formatDate value='${item.replyDate }' pattern='yyyy-MM-dd'/>">
+							</c:if>
 						</td><td>
-							<input type="text" id="replyMark" name="replyMark" style="width:200px" value="">
+							<input type="text" id="replyMark" name="replyMark" style="width:200px" value="${item.replyMark }">
 						</td>
 						</form>
 					<tr>
