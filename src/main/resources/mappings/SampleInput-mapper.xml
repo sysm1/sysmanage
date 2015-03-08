@@ -16,7 +16,7 @@
     picture, status, 
     reply_date replyDate, 
     create_time createTime, 
-    demand, mark
+    demand, mark,reply_mark replyMark
   </sql>
   <sql id="selectId" >
     s.id id, 
@@ -35,7 +35,7 @@
     picture, status, 
     reply_date replyDate, 
     s.create_time createTime, 
-    demand, s.mark mark
+    demand, s.mark mark,s.reply_mark replyMark
   </sql>
   
   <select id="query" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
@@ -43,7 +43,50 @@
 		<include refid="selectId" />
 		from sample_input s,cloth_info c,factory_info f,technology_info t
 		<where>
-		s.cloth_id=c.id and s.factory_id=f.id and s.technology_id=t.id
+		s.cloth_id=c.id and s.factory_id=f.id and s.technology_id=t.id 
+		<if test="t.factoryId != null and t.factoryId != ''">
+			and factory_id = #{t.factoryId}
+		</if>
+		<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+		</if>
+		<if test="t.factoryCode != null and t.factoryCode != ''">
+			and factory_code = #{t.factoryCode}
+		</if>
+		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
+			and my_company_code = #{t.myCompanyCode}
+		</if><if test="t.technologyId != null and t.technologyId != ''">
+			and technology_id = #{t.technologyId}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+			and s.mark like '%${t.mark}%'
+		</if>
+		<if test="t.codeValue != null and t.codeValue != ''">
+			and s.code_value like '%${t.codeValue}%'
+		</if>
+		<if test="t.type != null and t.type != ''">
+			and s.type = #{t.type}
+		</if>
+		<if test="t.status != null and t.status != ''">
+			and s.status = #{t.status}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryAll" resultType="SampleInput">
+		select
+		<include refid="selectId" />
+		from sample_input s,cloth_info c where s.cloth_id=c.id where status=0
+		order by s.id desc
+	</select>
+	
+	<select id="queryReplay" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
+		select
+		<include refid="selectId" />
+		from sample_input s,cloth_info c,factory_info f,technology_info t
+		<where>
+		s.cloth_id=c.id and s.factory_id=f.id and s.technology_id=t.id 
 		<if test="t.factoryId != null and t.factoryId != ''">
 			and factory_id = #{t.factoryId}
 		</if>
@@ -64,14 +107,17 @@
 			and s.code_value like '%${t.codeValue}%'
 		</if>
 		</where>
-		order by id desc
+		order by status,id desc
 	</select>
-
-	<select id="queryAll" resultType="SampleInput">
+	
+	<select id="queryXinBan" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
 		select
-		<include refid="selectId" />
-		from sample_input s,cloth_info c where s.cloth_id=c.id
-		order by s.id desc
+		<include refid="selectById" />
+		from sample_input 
+		<where>
+			my_company_code = #{t.myCompanyCode}		
+		</where>
+		order by id desc
 	</select>
 
 
@@ -155,7 +201,9 @@
         	demand=#{demand},
       	</if>
       	<if test="mark != null and mark != ''">
-        	mark=#{mark}
+        	mark=#{mark},
+      	</if><if test="replyMark != null and replyMark != ''">
+        	reply_mark=#{replyMark}
       	</if>
 		</set>
 		where id=#{id}

@@ -28,22 +28,37 @@
 		order by id desc
 	</select>
 
-	<select id="queryAll" resultType="SampleAdditional">
+	<select id="queryAll" resultType="SampleAdditional" parameterType="SampleAdditional">
 		select
 		<include refid="selectId" />
 		from sample_additional
+		<where>
+		<if test="sampleId != null and sampleId != ''">
+			and sample_id = #{sampleId}
+		</if>
+		<if test="factoryCode != null and factoryCode != ''">
+			and factory_code = #{factoryCode}
+		</if>
+		<if test="factoryColor != null and ffactoryColor != ''">
+			and factory_color = #{factoryColor}
+		</if>
+		<if test="type != null and type != ''">
+			and type = #{type}
+		</if>
+		</where>
 		order by id desc
 	</select>
 
 
 	<insert id="add" parameterType="SampleAdditional" useGeneratedKeys="true" keyProperty="id">
 		insert into sample_additional (
-			sample_id, factory_code, factory_color
+			sample_id, factory_code, factory_color,type
 		)
 		values(
 			#{sampleId},
 			#{factoryCode},
-			#{factoryColor}
+			#{factoryColor},
+			#{type}
 		)
 	</insert>
 	
@@ -51,6 +66,11 @@
 	<delete id="delete" parameterType="String">
 		delete from sample_additional where
 		id=#{id}
+	</delete>
+	
+	<delete id="deleteBySampleId" parameterType="String">
+		delete from sample_additional where
+		sample_id=#{sampleId}
 	</delete>
 	
 	<select id="getById" parameterType="String" resultType="SampleAdditional">

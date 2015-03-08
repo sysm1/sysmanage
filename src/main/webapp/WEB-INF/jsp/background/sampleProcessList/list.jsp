@@ -104,7 +104,7 @@ html>body td{ font-size:13px;}
 			$('#pageNow').attr('value',1);
 			var f = $('#fenye');
 			//f.attr('target','_blank');
-			f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/list.html');
+			f.attr('action','${pageContext.request.contextPath}/background/sampleProcessList/list.html');
 			f.submit();
 		});
 		$("#saveTemp").click("click", function() {//绑定查询按扭
@@ -174,7 +174,7 @@ html>body td{ font-size:13px;}
 		$('#pageNow').attr('value',pageNO);
 		var f = $('#fenye');
 		//f.attr('target','_blank');
-		f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/list.html');
+		f.attr('action','${pageContext.request.contextPath}/background/sampleProcessList/list.html');
 		f.submit();
 	}
 	
@@ -208,35 +208,77 @@ html>body td{ font-size:13px;}
 </script>
 </head>
 <body>
-	<div class="divBody" style="width: 2000px">
+<div class="divBody" style="width: 1800px">
 		<div class="search">
-			<form name="fenye" id="fenye">
-				<input type="hidden" id="pageNow" name="pageNow" value="">
-				<input type="hidden" id="status" name="status" value="0">
-				工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：&nbsp;
-				      <select  id="factoryId" name="factoryId">
-						<option value="">请选择工厂</option>
-						<c:forEach items="${ factoryInfos }" var = "factoryInfo">
-								<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
-							</c:forEach>
-					  </select>
-			          布种：<select id="clothId" name="clothId">
-							<option value="">请选择布种</option>
-							<c:forEach items="${ cloths }" var = "cloth">
-								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
-							</c:forEach>
-						</select>
-			    <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">
-				查询
-			</a>
-			</form>
+<form name="fenye" id="fenye">
+	<input type="hidden" id="pageNow" name="pageNow" value="">
+	<table>
+		<tr>
+			<td>开版日期：</td>
+			<td>
+				<input type="text" id="startDate" name="startDate" value="" style="width:91px">至
+				<input type="text" id="endDate" name="endDate" value="" style="width:91px">
+			</td><td>备注：</td>
+			<td><input type="text" id="mark" name="mark" value="" ></td>
+			<td>工厂：</td>
+			<td>
+				<select  id="factoryId" name="factoryId">
+					<option value="">请选择工厂</option>
+					<c:forEach items="${ factoryInfos }" var = "factoryInfo">
+			<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
+			</c:forEach>
+			</select>
+			</td>
+		 </tr>
+			 <td>回版日期：</td>
+			 <td>
+			 	<input type="text" id="startDate" name="startDate" value="" style="width:91px">至
+				<input type="text" id="endDate" name="endDate" value="" style="width:91px">
+			</td><td>编号：</td>
+			<td>
+			    <input type="text" id="codeValue" name="codeValue" value=""/>
+			</td><td>布种：</td>
+			<td>
+			    <select id="clothId" name="clothId">
+					<option value="">请选择布种</option>
+					<c:forEach items="${ cloths }" var = "cloth">
+					<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
+					</c:forEach>
+				</select>
+			</td> 
+		</tr><tr>
+			<td align="right">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</td>
+			<td>
+			    <select>
+			   	<option value="">请选择</option>
+			   	<option value="0">未回</option>
+			   	<option value="1">新版</option>
+			   	<option value="2">新厂</option>
+			   	<option value="3">新色</option>
+			   	<option value="4">重复</option>
+			    </select>
+			</td><td>工艺：</td>
+			<td>
+			    <select id="technologyId" name="technologyId">
+					<option value="">请选择工艺</option>
+					<c:forEach items="${ technologyInfos }" var = "technologyInfo">
+					<option <c:if test="${technologyInfo.id eq bean.technologyId }">selected="selected"</c:if> value="${technologyInfo.id }">${technologyInfo.name}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td colspan="2" align="right">
+			    <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">查询</a>
+			</td>
+		</tr>
+	</table>
+</form>
 		</div>
-		<div class="topBtn">
+		<div class="topBtn" style="width:800px;text-align: center">
 			<a class="btn btn-large btn-primary" href="javascript:void(0)" id="answer">
-				已回
+				修改
 			</a>
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="saveTemp">
-				暂存数据
+				添加到花号基本资料
 			</a>
 			
 		</div>
@@ -247,6 +289,7 @@ html>body td{ font-size:13px;}
 						<input type="checkbox" id="checkIds" name="checkIds">
 					</th>
 					<th class="specalt" style="width:50px">id</th>
+					<th class="specalt" style="width:50px">状态</th>
 					<th class="specalt" style="width:45px">日期</th>
 					<th class="specalt" style="width:75px">分色文件号</th>
 					<th class="specalt" style="width:75px">布种</th>
@@ -256,7 +299,7 @@ html>body td{ font-size:13px;}
 					<th class="specalt" style="width:110px">开版录入备注</th>
 					<th class="specalt" style="width:110px">工厂编号</th>
 					<th class="specalt" >工厂颜色</th>
-					<th class="specalt">回版日期</th>
+					<th class="specalt" style="width:80px">回版日期</th>
 					<th class="specalt">备注</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
@@ -270,13 +313,20 @@ html>body td{ font-size:13px;}
 					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">
 					 	</td>
 						<td>${item.id }</td>
+						<td>
+							<c:if test="${item.status eq 0 }">未回</c:if>
+							<c:if test="${item.status eq 1 }">新版</c:if>
+							<c:if test="${item.status eq 2 }">新厂</c:if>
+							<c:if test="${item.status eq 3 }">新色</c:if>
+							<c:if test="${item.status eq 4 }">重复</c:if>
+						</td>
 						<td title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>">
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
 						<td>${item.fileCode }</td>
 						<td>${item.clothName }</td>
 						<td>
-							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:100px" value="${item.myCompanyCode }">
+							${item.myCompanyCode }
 						</td>
 						<td>${item.factoryName }</td>
 						<td>${item.technologyName }</td>
@@ -286,85 +336,25 @@ html>body td{ font-size:13px;}
 						</td>
 						<td>
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-							<% i++; %>
-								 <input type="text" id="${status.index }factoryCode${status1.index+1 }" style="width:80px" name="factoryCode${status1.index+1 }" value="${item1.key }">
+								 ${item1.key }
 							</c:forEach>
-							<%if(i==0){ %>
-								<input type="text" id="${status.index }factoryCode1" style="width:80px" name="factoryCode1" value="">
-								<input type="text" id="${status.index }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
-							<%}if(i!=2){ %>
-								<input type="text" id="${status.index }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
-								<span onclick="addFactoryCode(${status.index })" id="${status.index }jiahao" style="cursor:pointer;">+</span>
-							<%} %>
 						</td>
 						<td>
-						<% int f=1; %>						
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-							<% int ff=1; %>
 							<div>
 								<c:forEach var="item2" items="${item1.value}" varStatus="status2">
-								<c:if test="${item2.factoryColor !=null }"><%f++; ff++;%>
-									<input type="text" id="${status.index }${status2.index+1 }factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px" value="${item2.factoryColor }">
+								<c:if test="${item2.factoryColor !=null }">
+									<c:if test="${status2.index>0 }">,</c:if>
+									${item2.factoryColor }
 								</c:if>
 								</c:forEach>
-								<% if(ff<9){ 
-								  for(int s=ff;s<=9;s++){%>
-									  <input type="text" id="${status.index }<%=s %>factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px;display: none" value="">
-								<%} }%>
-								<span onclick="addColor(${status.index },${status1.index+1})" style="cursor:pointer;">+</span>
-								<input type="hidden" id="${status.index }flag${status1.index+1}" value="<%=ff%>">
 							</div>
 							</c:forEach>
-							<% if(f==1){ %>
-							<div>
-								<input type="text" id="${status.index }1factoryColor1" name="factoryColor1" style="width:50px" value="">
-								<input type="text" id="${status.index }2factoryColor1" name="factoryColor1" style="width:50px" value="">
-								<input type="text" id="${status.index }3factoryColor1" name="factoryColor1" style="width:50px" value="">
-								<input type="text" id="${status.index }4factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }5factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }6factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }7factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }8factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }9factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
-								<span onclick="addColor(${status.index },1)" style="cursor:pointer;">+</span>
-								<input type="hidden" id="${status.index }flag1" value="4">
-							</div>
-							<div>
-								<input type="text" id="${status.index }1factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }2factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }3factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }4factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }5factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }6factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<span onclick="addColor(${status.index },2)" id="${status.index }jiahao2" style="cursor:pointer;display: none">+</span>
-								<input type="hidden" id="${status.index }flag2" value="4">
-							</div>
-						<%} if(f==3){%>
-							<div>
-								<input type="text" id="${status.index }1factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }2factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }3factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }4factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }5factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }6factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<input type="text" id="${status.index }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<span onclick="addColor(${status.index },2)" id="${status.index }jiahao2" style="cursor:pointer;display: none">+</span>
-								<input type="hidden" id="${status.index }flag2" value="4">
-							</div>
-						<%} %>
 						</td><td>
-							<c:if test="${item.replyDate ==null }">
-								<input type="text" id="replyDate" name="replyDate" style="width:70px" value="${replyDate }">
-							</c:if><c:if test="${item.replyDate !=null }">
-								<input type="text" id="replyDate" name="replyDate" style="width:70px" value="<fmt:formatDate value='${item.replyDate }' pattern='yyyy-MM-dd'/>">
-							</c:if>
-						</td><td>
-							<input type="text" id="replyMark" name="replyMark" style="width:200px" value="${item.replyMark }">
+							<fmt:formatDate value='${item.replyDate }' pattern='yyyy-MM-dd'/>
+						</td><td title="${item.replyMark }">
+							${fn:substring(item.replyMark,0,10)}  
+							<c:if test="${fn:length(item.replyMark)>10}">...</c:if>
 						</td>
 						</form>
 					<tr>

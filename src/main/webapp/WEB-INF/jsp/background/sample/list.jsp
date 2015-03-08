@@ -302,9 +302,11 @@ html>body td{ font-size:13px;}
 						<td>${item.clothName }</td>
 						<td>
 							${item.codeValue }
+							<c:if test="${item.codeValue != null }">
 							<c:if test="${item.codeType eq 0 }">(分色)</c:if>
 							<c:if test="${item.codeType eq 1 }">(工厂)</c:if>
 							<c:if test="${item.codeType eq 2 }">(我司)</c:if>
+							</c:if>
 						</td>
 						
 						<td>${item.technologyName }</td>

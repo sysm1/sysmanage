@@ -18,10 +18,12 @@ import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SampleAdditional;
 import com.github.hzw.security.entity.SampleInput;
+import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.SampleAdditionalService;
 import com.github.hzw.security.service.SampleInputService;
+import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 
 /**
@@ -30,8 +32,8 @@ import com.github.hzw.util.Common;
  *
  */
 @Controller
-@RequestMapping("/background/sampleProcess/")
-public class SampleProcessController extends BaseController{
+@RequestMapping("/background/sampleProcessList/")
+public class SampleProcessListController extends BaseController{
 	
 	@Inject
 	private SampleInputService sampleInputService;//开版录入service
@@ -45,19 +47,21 @@ public class SampleProcessController extends BaseController{
 	@Inject
 	private SampleAdditionalService sampleAdditionalService;
 	
+	@Inject
+	private TechnologyInfoService technologyInfoService;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput){
 		String pageNow=request.getParameter("pageNow");
-		sampleInput.setStatus(0);
-		sampleInput.setType(0);
-		pageView = sampleInputService.query(getPageView(pageNow,pagesize), sampleInput);
+		pageView = sampleInputService.queryReplay(getPageView(pageNow,pagesize), sampleInput);
+		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		if(pageView.getPageNow()>pageView.getPageCount()){
 			pageView.setPageNow(Integer.parseInt(pageView.getPageCount()+""));
 		}
-		
+		//解析颜色  存放到map中
 		Map<Integer,Map<String,List<SampleAdditional>>> map=new HashMap<Integer,Map<String,List<SampleAdditional>>>();
 		List<SampleInputVO> plist=pageView.getRecords();
 		
@@ -75,14 +79,13 @@ public class SampleProcessController extends BaseController{
 			map.put(sample.getId(), facotoryCodeMap);
 		}
 		model.addAttribute("map", map);
-		model.addAttribute("replyDate", Common.fromDateY());
+		model.addAttribute("technologyInfos", technologyInfos);
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("bean", sampleInput);
-		return Common.BACKGROUND_PATH+"/sampleProcess/list";
+		return Common.BACKGROUND_PATH+"/sampleProcessList/list";
 	}
-	@SuppressWarnings("unchecked")
 	@RequestMapping("saveTemp")
 	public void saveTemp(Model model,SampleInput sampleInput,HttpServletRequest request){
 		SampleInput bean=new SampleInput();
@@ -151,9 +154,7 @@ public class SampleProcessController extends BaseController{
 			}
 			String type=request.getParameter("type");
 			if("1".equals(type)){
-				SampleInput si=new SampleInput();
-				si.setMyCompanyCode(sampleInput.getMyCompanyCode());
-				
+				sampleInput.setStatus(4);
 			}
 			sampleInputService.saveTemp(request, sampleInput);
 			

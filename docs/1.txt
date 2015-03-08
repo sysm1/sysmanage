@@ -99,6 +99,7 @@ create table sample_input(
 	picture varchar(255) not null, -- 图片(缩略图，原图)
 	demand text,  -- 需求
 	mark text,  -- 备注
+	return_mark text,  -- 回版备注
 	status int not null,  -- 0 未回  1 新版 2 新厂 3 新色 4已回
 	reply_date datetime,  -- 回版日期
 	create_time datetime not null,
