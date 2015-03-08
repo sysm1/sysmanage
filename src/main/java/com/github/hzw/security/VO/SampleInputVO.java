@@ -49,8 +49,6 @@ public class SampleInputVO {
 
     private Integer status;
     
-    private Integer type;
-
     private Date replyDate;
 
     private Date createTime;
@@ -84,14 +82,6 @@ public class SampleInputVO {
     public void setFactoryId(Integer factoryId) {
         this.factoryId = factoryId;
     }
-    
-    public Integer getType() {
-		return type;
-	}
-
-	public void setType(Integer type) {
-		this.type = type;
-	}
 
 	@ExcelDataMapper(title="工厂",order=3)
     public String getFactoryName() {

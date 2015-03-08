@@ -109,7 +109,6 @@ html>body td{ font-size:13px;}
 		});
 		$("#saveTemp").click("click", function() {//绑定查询按扭
 			var cbox=getSelectedCheckbox();
-			
 			if(cbox==""){
 				parent.$.ligerDialog.alert("请选择一条记录修改");
 				return;
@@ -119,11 +118,12 @@ html>body td{ font-size:13px;}
 			//	return;
 			//}
 			for(var i=0;i<cbox.length;i++){
-				var f = $('#'+cbox[i]+'_form');
+				check(cbox[i]);
+				//var f = $('#'+cbox[i]+'_form');
 				//document.getElementById(cbox[i]+'_form').target="iframet";
-				f.attr('target','iframet');
-				f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html');
-				f.submit();
+				//f.attr('target','iframet');
+				//f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html');
+				//f.submit();
 			}
 			alert("数据暂存成功");
 		});
@@ -205,6 +205,20 @@ html>body td{ font-size:13px;}
 		document.getElementById(st+""+flag+"factoryColor"+param).style.display='';
 		document.getElementById(st+"flag"+param).value=parseInt(document.getElementById(st+"flag"+param).value)+parseInt(1);
 	}
+	function check(id){
+		var row=$("#"+id+"_tr");
+		row=document.getElementById(id+"_tr");
+		var cells=row.getElementsByTagName("td");
+		var fileCode=cells[3].innerHTML.split('value="');
+		alert(cells[3].innerHTML);
+		if(fileCode[1].split('">')[0]==''){
+			alert("分色文件号不能为空！");
+			return false;
+		}
+		//var myComCode=cells[5].innerHTML.split('value="');
+		//alert(myComCode);
+		
+	}
 </script>
 </head>
 <body>
@@ -261,7 +275,7 @@ html>body td{ font-size:13px;}
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<% int i=0; %>
-					<tr>
+					<tr id="${item.id }_tr">
 					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 					 	<td>
 					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }">
@@ -273,7 +287,9 @@ html>body td{ font-size:13px;}
 						<td title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>">
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
-						<td>${item.fileCode }</td>
+						<td>
+							<input type="text" id="fileCode" name="fileCode" style="width:100px" value="${item.fileCode }">
+						</td>
 						<td>${item.clothName }</td>
 						<td>
 							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:100px" value="${item.myCompanyCode }">
@@ -375,7 +391,7 @@ html>body td{ font-size:13px;}
 					<td colspan="4" style="text-align: center">
 						总${pageView.rowCount }条&nbsp;&nbsp;&nbsp;每页${pageView.pageSize }条&nbsp;&nbsp;&nbsp; 
 						共${pageView.pageCount }页&nbsp;&nbsp;当前${pageView.pageNow }页</td>
-					<td colspan="5" style="text-align: right">
+					<td colspan="6" style="text-align: right">
 						<a href="javascript:page(1)">首页</a>
 						<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
 						<c:if test="${pageView.pageNow>2 }">
