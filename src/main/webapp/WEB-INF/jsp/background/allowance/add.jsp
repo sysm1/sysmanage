@@ -13,6 +13,13 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 	 return this.optional(element) || (num.test(value));
 }, "只能输入数字");
 
+
+jQuery.validator.addMethod("isDay", function(value, element) {
+	 var num = /^(\d{4})-(\d{2})-(\d{2})$/;
+	 return this.optional(element) || (num.test(value));
+}, "只能输入日期(yyyy-MM-dd)");
+
+
 jQuery.validator.addMethod("chrnum", function(value, element) {
 	var chrnum = /^([a-zA-Z0-9]+)$/;
 	return this.optional(element) || (chrnum.test(value));
@@ -29,48 +36,42 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.unit.loadGird();
+								parent.allowance.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
 						} else {
-							$.ligerDialog.warn("提交失败！！");
+							$.ligerDialog.warn("提交失败！！" + data.msg);
 						}
 					}
 				});
 			},
 			rules : {
+				inputDate : {
+					required : true
+				},
 				clothId : {
 					required : true
 				},
-				item : {
+				factoryId : {
 					required : true
 				},
-				kg : {
-					required : true
-				},
-				cm : {
-					required : true
-				},
-				yard : {
+				changeSum : {
 					required : true
 				}
 			},
 			messages : {
+				inputDate : {
+					required : "日期不能为空",
+				},
 				clothId : {
-					required : "不能为空",
+					required : "布种不能为空",
 				},
-				item : {
-					required : "不能为空",
+				factoryId : {
+					required : "工厂不能为空",
 				},
-				kg : {
-					required : "不能为空",
-				},
-				cm : {
-					required : "不能为空",
-				},
-				yard : {
-					required : "不能为空"
+				changeSum : {
+					required : "改变量不能为空",
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -90,10 +91,19 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/unit/add.html" method="post">
-		<table style="width: 285px; height: 200px;">
+	<div class="l_err" style="width: 370px;"></div>
+	<form name="form" id="form" action="${ctx}/background/allowance/add.html" method="post">
+		<table style="width: 385px; height: 300px;">
 			<tbody>
+			
+			<tr>
+				<td class="l_right">日期：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+						<input id='inputDate' name="inputDate" class="isDay" type="text" value="">
+					</div>
+				</td>
+			</tr>
 			
 			<tr>
 				<td class="l_right">布种：</td>
@@ -110,37 +120,41 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			</tr>
 			
 			<tr>
-				<td class="l_right">条：</td>
+				<td class="l_right">工厂：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-					<input id='item' name="item" type="text" class="isNum" value="1" readonly="readonly">
+						<select id="factoryId" name="factoryId">
+							<option value="">请选择工厂</option>
+							<c:forEach items="${ factorys }" var = "factory">
+								<option value="${factory.id }">${factory.name}</option>
+							</c:forEach>
+						</select>
 					</div>
 				</td>
 			</tr>
 			
+			
 			<tr>
-				<td class="l_right">公斤：</td>
+				<td class="l_right">新增量：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-					<input id='kg' name="kg" type="text" class="isNum" value="">
-					</div>
-				</td>
-			</tr>
-				
-			<tr>
-				<td class="l_right">米：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='cm' name="cm" type="text" class="isNum" value="">
+					<input id='changeSum' name="changeSum" type="text" class="isNum" value="">
+					<select id="unit" name="unit">
+						<option value="item">条</option>
+						<option value="kg">公斤</option>
+						<option value="cm">米</option>
+						<option value="yard">码</option>
+					</select>
 					</div>
 				</td>
 			</tr>
 			
+			
 			<tr>
-				<td class="l_right">码：</td>
+				<td class="l_right">备注：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-					<input id='yard' name="yard" type="text" class="isNum" value="">
+					<input id='mark' name="mark" type="text" value="">
 					</div>
 				</td>
 			</tr>

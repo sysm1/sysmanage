@@ -3,20 +3,22 @@
 <mapper namespace="com.github.hzw.security.mapper.ClothAllowanceMapper" >
   
   <sql id="selectId" >
-    id, cloth_id as clothId, factory_id as factoryId, allowance, unit, old_sum as oldSum, change_sum as changeSum, create_time as createTime, mark
+    id, cloth_id as clothId, factory_id as factoryId, allowance, unit, old_sum as oldSum, change_sum as changeSum, 
+    create_time as createTime, mark, input_date as inputDate
   </sql>
   
   <sql id="selectIdExt" >
     id, 
     cloth_id as clothId, 
-    (select cloth.name from cloth_info cloth where cloth.id = cloth_allowance.cloth_id ) as clothName 
+    (select cloth.cloth_name from cloth_info cloth where cloth.id = cloth_allowance.cloth_id ) as clothName,
     factory_id as factoryId, 
-    (select factory.name from factory_info factory where factory.id = cloth_allowance.factory_id ) as factoryName 
+    (select factory.name from factory_info factory where factory.id = cloth_allowance.factory_id ) as factoryName,
     allowance, unit, 
     old_sum as oldSum, 
     change_sum as changeSum, 
     create_time as createTime, 
-    mark
+    mark,
+    input_date as inputDate
   </sql>
   
   <select id="query" resultType="ClothAllowance" parameterType="ClothAllowance">
@@ -47,7 +49,7 @@
 
 	<select id="queryAll" resultType="ClothAllowance">
 		select
-		<include refid="selectId" />
+		<include refid="selectIdExt" />
 		from cloth_allowance
 		order by id desc
 	</select>
@@ -55,7 +57,7 @@
 
 	<insert id="add" parameterType="ClothAllowance" useGeneratedKeys="true" keyProperty="id">
 		insert into cloth_allowance (
-			cloth_id, factory_id, allowance, unit, old_sum, change_sum, create_time, mark
+			cloth_id, factory_id, allowance, unit, old_sum, change_sum, create_time, mark, input_date
 		)
 		values(
 			#{clothId},
@@ -65,7 +67,8 @@
 			#{oldSum},
 			#{changeSum},
 			#{createTime},
-			#{mark}
+			#{mark},
+			#{inputDate}
 		)
 	</insert>
 	
@@ -76,7 +79,7 @@
 	
 	<select id="getById" parameterType="String" resultType="ClothAllowance">
 		select
-		<include refid="selectId" />
+		<include refid="selectIdExt" />
 		from cloth_allowance where id=#{id}
 	</select>
 	
@@ -106,6 +109,9 @@
       	</if>
 		<if test="createTime != null" >
         	create_time=#{createTime},
+      	</if>
+      	<if test="inputDate != null" >
+        	input_date=#{inputDate},
       	</if>
 		</set>
 		where id=#{id}

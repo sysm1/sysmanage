@@ -1,5 +1,6 @@
 package com.github.hzw.security.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.ClothUnit;
 import com.github.hzw.security.mapper.ClothAllowanceMapper;
 import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothUnitService;
+import com.github.hzw.util.MathUtil;
 
 @Transactional
 @Service("clothAllowanceService")
@@ -55,19 +58,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 
 	@Override
 	public void update(ClothAllowance t) throws Exception {
-		// 转换单位
-		// ClothUnit unit = clothUnitService.
-		
-		if( t.getId() != null ) {
-			
-			this.clothAllowanceMapper.update(t);
-		} else {
-			ClothAllowance t1 = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId());
-			t.setId(t1.getId());
-			t.setOldSum(t1.getAllowance()); // 旧余量
-			
-		}
-		
+		this.add(t);
 	}
 
 	@Override
@@ -75,9 +66,56 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		return this.clothAllowanceMapper.getById(id);
 	}
 
+	/**
+	 * 先从库里查找clothId,factoryId唯一的值
+	 */
 	@Override
 	public void add(ClothAllowance t) throws Exception {
-		this.clothAllowanceMapper.add(t);
+		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId());
+		if(tm == null) {
+			t.setOldSum(0.0);
+			t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()));
+			t.setCreateTime(new Date());
+			this.clothAllowanceMapper.add(t);
+		} else {
+			t.setId(tm.getId());
+			t.setOldSum(tm.getAllowance());
+			t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()) + tm.getAllowance());
+			t.setCreateTime(new Date());
+			this.clothAllowanceMapper.update(t);
+		}
+		
+		
 	}
-
+	
+	
+	// 单位转换 把（米，码，公斤转为条）
+	/**
+	 * 
+	 * @param clothId  布种
+	 * @param unitname  单位
+	 * @param sum    量
+	 * @throws Exception 
+	 */
+	private Double changeUnit(Integer clothId, String unitname, Double sum) throws Exception {
+		if(sum == null) return 0.0;
+		ClothUnit clothUnit = clothUnitService.queryClothId(clothId);
+		if(clothUnit == null) throw new Exception("没有该布种单位");
+		Double rase = 1.0;
+		switch (unitname) {
+		case "cm":
+			rase = clothUnit.getCm();
+			break;
+		case "kg":
+			rase = clothUnit.getKg();
+			break;
+		case "yard":
+			rase = clothUnit.getYard();
+			break;
+		default:
+			break;
+		}
+		return MathUtil.formate(sum / rase, 2); // 返回两位小数
+	}
+	
 }

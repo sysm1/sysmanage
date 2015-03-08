@@ -18,23 +18,32 @@
 						name : "id",
 						width : "50px"
 					},{
+						colkey : "inputDate",
+						name : "日期",
+						width : "100px"
+					},{
 						colkey : "clothName",
-						name : "布种名称"
+						name : "布种名称",
+						width : "200px"
 					},{
 						colkey : "factoryName",
-						name : "工厂名称"
+						name : "工厂",
+						width : "200px"
 					}, {
 						colkey : "allowance",
-						name : "余量"
+						name : "现余量",
+						width : "50px"
 					}, {
-						colkey : "unit",
-						name : "单位"
+						colkey : "oldSum",
+						name : "前余量",
+						width : "50px"
 					}, {
 						colkey : "changeSum",
 						name : "新增量",
+						width : "50px"
 					},{
 						colkey : "mark",
-						name : "备注",
+						name : "备注"
 					}],
 					jsonUrl : '${pageContext.request.contextPath}/background/allowance/query.html',
 					checkbox : true
@@ -56,10 +65,10 @@
 		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
-				height : 310,
+				width : 400,
+				height : 410,
 				url : rootPath + '/background/allowance/addUI.html',
-				title : "增加布种单位信息",
+				title : "增加坯布余量",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 			});
 		});
@@ -74,7 +83,7 @@
 				width : 300,
 				height : 310,
 				url : rootPath + '/background/allowance/editUI.html?id='+cbox,
-				title : "修改布种单位信息",
+				title : "修改坯布余量",
 				isHidden : false
 			});
 		});
@@ -116,7 +125,7 @@
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-				布种：<input type="text" name="clothId" value="${param.clothId}" style="height: 20px" /> 
+				布种：<input type="text" name="clothId" value="" style="height: 20px" /> 
 				<a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>

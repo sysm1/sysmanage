@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.ClothAllowanceService;
+import com.github.hzw.security.service.ClothInfoService;
+import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
 
@@ -26,11 +29,19 @@ public class ClothAllowanceController extends BaseController {
 
 	@Inject
 	private ClothAllowanceService clothAllowanceService;
+	@Inject
+	private ClothInfoService clothInfoService;
+	@Inject
+	private FactoryInfoService factoryInfoService;
+	
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
+		model.addAttribute("cloths",clothInfoService.queryAll(null));
+		model.addAttribute("factorys",factoryInfoService.queryAll(null));
 		return Common.BACKGROUND_PATH+"/allowance/list";
 	}
+	
 	
 	/**
 	 * @param model
@@ -55,14 +66,16 @@ public class ClothAllowanceController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(ClothAllowance info) {
+	public Map<String, Object> add(HttpServletRequest request , HttpServletResponse response, ClothAllowance info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			
 			info.setCreateTime(new Date());
 			clothAllowanceService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
+			map.put("msg", e.getMessage());
 		}
 		return map;
 	}
@@ -75,7 +88,9 @@ public class ClothAllowanceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("addUI")
-	public String addUI() {
+	public String addUI(Model model) {
+		model.addAttribute("cloths",clothInfoService.queryAll(null));
+		model.addAttribute("factorys",factoryInfoService.queryAll(null));
 		return Common.BACKGROUND_PATH+"/allowance/add";
 	}
 	

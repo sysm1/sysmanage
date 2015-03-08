@@ -18,8 +18,8 @@ public class ClothUnitServictTest {
 	private ClothUnitService clothUnitService;
 	
 	@Test
-	public void test1() {
-		ClothUnit unit = clothUnitService.queryClothId(1);
+	public void queryClothIdTest() {
+		ClothUnit unit = clothUnitService.queryClothId(4);
 		System.out.println(unit);
 	}
 	
