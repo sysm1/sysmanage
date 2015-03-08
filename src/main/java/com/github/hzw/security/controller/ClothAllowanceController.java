@@ -21,6 +21,7 @@ import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.util.Common;
+import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
 
 @Controller
@@ -55,6 +56,27 @@ public class ClothAllowanceController extends BaseController {
 		return pageView;
 	}
 	
+	
+	/**
+	 * @param model
+	 * 存放返回界面的model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryByFind")
+	public PageView queryByFind(HttpServletRequest request, HttpServletResponse response, String pageNow,String pagesize) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clothId", request.getParameter("clothId"));
+		map.put("factoryId", request.getParameter("factoryId"));
+		map.put("mark", request.getParameter("mark"));
+		map.put("beginTime", DateUtil.str2Date(request.getParameter("beginTime"), "yyyy-MM-dd"));
+		map.put("endTime", DateUtil.str2Date(request.getParameter("endTime"), "yyyy-MM-dd"));
+		map.put("change", request.getParameter("change"));
+		pageView = clothAllowanceService.queryByFind(getPageView(pageNow,pagesize), map);
+		return pageView;
+		
+	}
 	
 	/**
 	 * 保存数据

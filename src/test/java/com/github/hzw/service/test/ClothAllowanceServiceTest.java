@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.util.DateUtil;
@@ -46,8 +47,8 @@ public class ClothAllowanceServiceTest {
 		// ae.setOldSum(8.0);
 		ae.setMark("mark....");
 		// Date temp = new Date();
-		//ae.setInputDate(DateUtil.str2Date("2015-01-01", "yyyy-MM-dd"));
-		ae.setInputDate("2015-01-01");
+		ae.setInputDate(DateUtil.str2Date("2015-01-01", "yyyy-MM-dd"));
+		// ae.setInputDate("2015-01-01");
 		ae.setUnit("cm");
 		clothAllowanceService.add(ae);
 	}
@@ -60,5 +61,20 @@ public class ClothAllowanceServiceTest {
 		}
 	}
 	
-
+	@Test
+	public void queryByFindTest() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		// map.put("clothId", 4);
+		// map.put("factoryId", 4);
+		// map.put("mark", "1");
+		// map.put("beginTime", DateUtil.str2Date("2015-01-03", "yyyy-MM-dd"));
+		// map.put("endTime", DateUtil.str2Date("2015-02-03", "yyyy-MM-dd"));
+		map.put("change", "all");
+		// map.put("change", "positive");
+		// map.put("change", "zero");
+		PageView pageView = new PageView(10,1);
+		pageView = clothAllowanceService.queryByFind(pageView, map);
+		System.out.println(pageView.getRecords().size());
+	}
+	
 }

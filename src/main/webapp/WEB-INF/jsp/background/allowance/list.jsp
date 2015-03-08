@@ -18,7 +18,7 @@
 						name : "id",
 						width : "50px"
 					},{
-						colkey : "inputDate",
+						colkey : "strInputDate",
 						name : "日期",
 						width : "100px"
 					},{
@@ -45,7 +45,7 @@
 						colkey : "mark",
 						name : "备注"
 					}],
-					jsonUrl : '${pageContext.request.contextPath}/background/allowance/query.html',
+					jsonUrl : '${pageContext.request.contextPath}/background/allowance/queryByFind.html',
 					checkbox : true
 				});
 		
@@ -125,7 +125,30 @@
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-				布种：<input type="text" name="clothId" value="" style="height: 20px" /> 
+				布种：
+				<select id="clothId" name="clothId">
+					<option value="">请选择布种</option>
+					<c:forEach items="${ cloths }" var = "cloth">
+						<option value="${cloth.id }">${cloth.clothName}</option>
+					</c:forEach>
+				</select> 
+				工厂:
+				<select id="factoryId" name="factoryId">
+					<option value="">请选择工厂</option>
+					<c:forEach items="${ factorys }" var = "factory">
+						<option value="${factory.id }">${factory.name}</option>
+					</c:forEach>
+				</select>
+				备注:<input type="text" name="mark" value="${param.mark}" style="height: 20px" /><br/>
+				开始日期:<input type="text" name="beginTime" value="${param.beginTime}" style="height: 20px;width:100px" />
+				结束日期:<input type="text" name="endTime" value="${param.endTime}" style="height: 20px;width:100px" />
+				新增量:
+				<select id="change" name="change">
+					<option value="all">全部</option>
+					<option value="positive">正数</option>
+					<option value="negative">负数</option>
+					<option value="zero">0</option>
+				</select>
 				<a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>

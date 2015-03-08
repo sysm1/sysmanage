@@ -37,6 +37,13 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		return pageView;
 	}
 
+	@Override
+	public PageView queryByFind(PageView pageView, Map<String, Object> map) {
+		map.put("paging", pageView);
+		List<ClothAllowance> list = clothAllowanceMapper.queryByFind(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
 	
 	public ClothAllowance queryByClothAndFactory(Integer clothId, Integer factoryId) {
 		Map<String, Integer> map = new HashMap<String, Integer>();

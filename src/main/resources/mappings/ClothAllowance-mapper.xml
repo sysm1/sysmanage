@@ -46,6 +46,45 @@
 		order by id desc
 	</select>
 
+	<select id="queryByFind" resultType="ClothAllowance" parameterType="map">
+		select
+		<include refid="selectIdExt" />
+		from cloth_allowance
+		<where> 
+		<if test="clothId != null and clothId != ''" >
+        	and cloth_id=#{clothId}
+      	</if>
+      	<if test="factoryId != null and factoryId != ''" >
+        	and factory_id = #{factoryId}
+      	</if>
+		<if test="mark != null and mark != ''">
+			and mark like '%${mark}%'
+		</if>
+      	<if test="beginTime != null and beginTime != ''">
+			and input_date &gt; #{beginTime}
+		</if>
+      	<if test="endTime != null and endTime != ''">
+			and input_date &lt; #{endTime}
+		</if>
+		<if test="change != null and change != ''">
+			<choose>
+		        <when test="change == 'positive'">  
+		            and change_sum > 0  
+		        </when>  
+		        <when test="change == 'negative'">  
+		             and change_sum &lt; 0 
+		        </when> 
+		        <when test="change == 'all'">  
+		             
+		        </when>
+		        <when test="change == 'zero'">  
+		            and change_sum = 0 
+		        </when>
+	    	</choose>
+		</if>
+		</where>
+		order by id desc
+	</select>
 
 	<select id="queryAll" resultType="ClothAllowance">
 		select

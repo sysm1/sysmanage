@@ -62,6 +62,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static Date str2Date(String str, String pattern) {
+		if(StringUtils.isEmpty(str)) return null;
 		Date d = null;
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		try {
@@ -511,6 +512,7 @@ public class DateUtil {
 	}
 
 	public static void main(String[] args) {
+		/**
 		Date d = new Date();
 		Integer year = getIntFromDate(d, "yyyy");
 		Integer month = getIntFromDate(d, "MM");
@@ -528,6 +530,9 @@ public class DateUtil {
 		List<Date> listDate3 = dateUtil.getCurHourAndNextHour();
 		for (Date date3 : listDate3)
 			System.out.println(dateUtil.date2Str(date3));
+		**/
+		Date d = DateUtil.str2Date(null, "yyyy-MM-dd");
+		System.out.println(d);
 	}
 
 }

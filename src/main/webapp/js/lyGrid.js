@@ -207,6 +207,7 @@
 						td_o.setAttribute("style", "text-align:"
 								+ column[o].align + ";width: "
 								+ column[o].width + ";");
+						// td_o.setAttribute("class", column[o].colkey);
 						if (l_tree.tree) {
 							if (l_tree.name == column[o].colkey) {
 								var divtree = document.createElement("div");
