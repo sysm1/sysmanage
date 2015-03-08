@@ -49,8 +49,7 @@ public class SampleProcessController extends BaseController{
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput){
 		String pageNow=request.getParameter("pageNow");
-		sampleInput.setStatus(0);
-		sampleInput.setType(0);
+		sampleInput.setStatus(new Integer(0));
 		pageView = sampleInputService.query(getPageView(pageNow,pagesize), sampleInput);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);

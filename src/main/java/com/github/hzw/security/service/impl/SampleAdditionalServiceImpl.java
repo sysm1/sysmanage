@@ -42,6 +42,11 @@ public class SampleAdditionalServiceImpl implements SampleAdditionalService {
 	public List<SampleAdditional> queryAll(SampleAdditional t) {
 		return sampleAdditionalMapper.queryAll(t);
 	}
+	
+	@Override
+	public List<SampleAdditional> queryByMyCompCode(SampleAdditional SampleAdditional){
+		return sampleAdditionalMapper.queryByMyCompCode(SampleAdditional);
+	}
 
 	@Override
 	public void delete(String id) throws Exception {

@@ -1,5 +1,7 @@
 package com.github.hzw.security.entity;
 
+import com.github.hzw.util.ExcelDataMapper;
+
 public class SampleAdditional {
 
 	private Integer id;
@@ -9,6 +11,8 @@ public class SampleAdditional {
     private String factoryCode;
 
     private String factoryColor;
+    
+    private String myCompanyCode;
     
     /***0 未回  1已回**/
     private Integer type;
@@ -44,7 +48,16 @@ public class SampleAdditional {
     public void setFactoryColor(String factoryColor) {
         this.factoryColor = factoryColor;
     }
+    
+    public String getMyCompanyCode() {
+		return myCompanyCode;
+	}
 
+	public void setMyCompanyCode(String myCompanyCode) {
+		this.myCompanyCode = myCompanyCode;
+	}
+
+	@ExcelDataMapper(title="回版状态",order=1)
 	public Integer getType() {
 		return type;
 	}

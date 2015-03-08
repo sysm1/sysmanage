@@ -115,6 +115,60 @@ public class SampleInputServiceImpl implements SampleInputService {
 		String factoryCode2=request.getParameter("factoryCode2");
 		String[] colors=request.getParameterValues("factoryColor1");
 		String[] colors2=request.getParameterValues("factoryColor2");
+		
+		
+		//已回时 判断其状态 从花号基本资料里判断
+		
+		if("1".equals(type)){
+			//判断新版
+			SampleInput si=new SampleInput();
+			si.setMyCompanyCode(sampleInput.getMyCompanyCode());
+			List<SampleInput> slist= queryList(si);
+			SampleAdditional add=new SampleAdditional();
+			add.setMyCompanyCode(sampleInput.getMyCompanyCode());
+			List<SampleAdditional> salist=sampleAdditionalService.queryByMyCompCode(add);
+			
+			if(salist.size()==0){//新版  先判断新版 再到后面判断是否是其他状态
+				bean.setStatus(1);
+			}else{
+				//判断其他状态
+				for(SampleAdditional sa:salist){
+					
+				}
+				
+				
+				
+				
+				SampleAdditional sampleAdd=new SampleAdditional();
+				sampleAdd.setFactoryCode(factoryCode1);
+				sampleAdd.setType(1);
+				sampleAdd.setSampleId(sampleInput.getId());
+				List<SampleAdditional> list=sampleAdditionalService.queryAll(sampleAdd);
+				if(list.size()>0){
+					boolean newColor=true;
+					if(!checkNewColor(list,colors)){
+						newColor=false;
+					}
+					sampleAdd.setFactoryCode(factoryCode2);
+					list=sampleAdditionalService.queryAll(sampleAdd);
+					if(list.size()==0){
+						bean.setStatus(2);//新厂
+					}else{
+						if(!checkNewColor(list,colors)){
+							newColor=false;
+						}
+					}
+					if(newColor){
+						bean.setStatus(3);//新色
+					}else{
+						bean.setStatus(4);//重复
+					}
+				}else{
+					bean.setStatus(2);//新厂
+				}
+			}
+		}
+		
 		//先清除表中的数据在往表中插入数据
 		sampleAdditionalService.deleteBySampleId(sampleInput.getId()+"");
 		SampleAdditional sampleAdditional=null;
@@ -153,50 +207,9 @@ public class SampleInputServiceImpl implements SampleInputService {
 					sampleAdditionalService.add(sampleAdditional);
 				}
 			}
-			bean.setStatus(sampleInput.getStatus());
 			bean.setReplyDate(sampleInput.getReplyDate());
 			bean.setReplyMark(sampleInput.getReplyMark());
-			bean.setType(0);//默认值为0  未回状态
-			//已回时 判断其状态
 			
-			if("1".equals(type)){
-				bean.setType(1);//已回
-				//判断新版
-				SampleInput si=new SampleInput();
-				si.setMyCompanyCode(sampleInput.getMyCompanyCode());
-				si.setType(1);
-				List<SampleInput> slist= queryList(si);
-				if(slist.size()==0){//新版  先判断新版 再到后面判断是否是其他状态
-					sampleInput.setStatus(1);
-				}
-				//判断其他状态
-				SampleAdditional sampleAdd=new SampleAdditional();
-				sampleAdd.setFactoryCode(factoryCode1);
-				sampleAdd.setType(1);
-				List<SampleAdditional> list=sampleAdditionalService.queryAll(sampleAdd);
-				if(list.size()>0){
-					boolean newColor=true;
-					if(!checkNewColor(list,colors)){
-						newColor=false;
-					}
-					sampleAdd.setFactoryCode(factoryCode2);
-					list=sampleAdditionalService.queryAll(sampleAdd);
-					if(list.size()==0){
-						bean.setStatus(2);//新厂
-					}else{
-						if(!checkNewColor(list,colors)){
-							newColor=false;
-						}
-					}
-					if(newColor){
-						bean.setStatus(3);//新色
-					}else{
-						bean.setStatus(4);//重复
-					}
-				}else{
-					bean.setStatus(2);//新厂
-				}
-			}
 			update(bean);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -204,20 +217,27 @@ public class SampleInputServiceImpl implements SampleInputService {
 	}
 	
 	/**
-	 * 验证是否有相同的数据
+	 * 是否是新色
 	 * @param list
 	 * @param stra
-	 * @return
+	 * @return true 是新色
 	 */
 	public boolean checkNewColor(List<SampleAdditional> list,String[] stra){
-		for(SampleAdditional sm:list){
-			for(String color:stra){
-				if(sm.getFactoryColor().equals(color)){
-					return false;
+		if(list.size()!=stra.length){
+			return true;
+		}else{
+			int i=0;
+			for(SampleAdditional sm:list){
+				for(String color:stra){
+					if(sm.getFactoryColor().equals(color)){
+						i++;
+					}
 				}
 			}
-			
+			if(i!=list.size()){
+				return true;
+			}
 		}
-		return true;
+		return false;
 	}
 }
