@@ -49,6 +49,8 @@ public class SampleProcessController extends BaseController{
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput){
 		String pageNow=request.getParameter("pageNow");
+		sampleInput.setStatus(0);
+		sampleInput.setType(0);
 		pageView = sampleInputService.query(getPageView(pageNow,pagesize), sampleInput);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
@@ -73,7 +75,7 @@ public class SampleProcessController extends BaseController{
 			map.put(sample.getId(), facotoryCodeMap);
 		}
 		model.addAttribute("map", map);
-		
+		model.addAttribute("replyDate", Common.fromDateY());
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("cloths", cloths);
@@ -149,7 +151,9 @@ public class SampleProcessController extends BaseController{
 			}
 			String type=request.getParameter("type");
 			if("1".equals(type)){
-				sampleInput.setStatus(4);
+				SampleInput si=new SampleInput();
+				si.setMyCompanyCode(sampleInput.getMyCompanyCode());
+				
 			}
 			sampleInputService.saveTemp(request, sampleInput);
 			
