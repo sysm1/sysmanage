@@ -42,6 +42,9 @@
 		<if test="factoryColor != null and ffactoryColor != ''">
 			and factory_color = #{factoryColor}
 		</if>
+		<if test="type != null and type != ''">
+			and type = #{type}
+		</if>
 		</where>
 		order by id desc
 	</select>
@@ -49,12 +52,13 @@
 
 	<insert id="add" parameterType="SampleAdditional" useGeneratedKeys="true" keyProperty="id">
 		insert into sample_additional (
-			sample_id, factory_code, factory_color
+			sample_id, factory_code, factory_color,type
 		)
 		values(
 			#{sampleId},
 			#{factoryCode},
-			#{factoryColor}
+			#{factoryColor},
+			#{type}
 		)
 	</insert>
 	
