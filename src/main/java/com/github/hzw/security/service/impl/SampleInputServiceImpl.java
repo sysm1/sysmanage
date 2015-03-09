@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.FlowerAdditional;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.SampleAdditional;
 import com.github.hzw.security.entity.SampleInput;
 import com.github.hzw.security.mapper.SampleInputMapper;
 import com.github.hzw.security.service.SampleInputService;
 import com.github.hzw.security.service.SampleAdditionalService;
-
+import com.github.hzw.security.service.FlowerInfoService;   
+import com.github.hzw.security.service.FlowerAdditionalService;
 @Transactional
 @Service("sampleInputService")
 public class SampleInputServiceImpl implements SampleInputService {
@@ -26,6 +29,12 @@ public class SampleInputServiceImpl implements SampleInputService {
 	
 	@Autowired
 	private SampleAdditionalService sampleAdditionalService;
+	
+	@Autowired
+	private FlowerInfoService flowerInfoService;
+	
+	@Autowired
+	private FlowerAdditionalService flowerAdditionalService;
 	
 	@Override
 	public PageView query(PageView pageView, SampleInput t) {
@@ -66,13 +75,9 @@ public class SampleInputServiceImpl implements SampleInputService {
 	 * @param t
 	 * @return 
 	 */
-	public PageView queryXinBan(PageView pageView,SampleInput t){
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("paging", pageView);
-		map.put("t", t);
-		List<SampleInput> list = sampleInputMapper.queryReplay(map);
-		pageView.setRecords(list);
-		return pageView;
+	public List<FlowerInfo> queryXinBan(PageView pageView,FlowerInfo t){
+		List<FlowerInfo> list = flowerInfoService.queryAll(t);
+		return list;
 	}
 	
 	@Override
@@ -110,61 +115,37 @@ public class SampleInputServiceImpl implements SampleInputService {
 		if(null!=sampleInput.getMyCompanyCode()){
 			bean.setMyCompanyCode(sampleInput.getMyCompanyCode());
 		}
-		
 		String factoryCode1=request.getParameter("factoryCode1");
 		String factoryCode2=request.getParameter("factoryCode2");
 		String[] colors=request.getParameterValues("factoryColor1");
 		String[] colors2=request.getParameterValues("factoryColor2");
 		
-		
-		//已回时 判断其状态 从花号基本资料里判断
-		
+		//点击已回按钮时 判断其状态    从花号基本资料里判断		
 		if("1".equals(type)){
 			//判断新版
-			SampleInput si=new SampleInput();
-			si.setMyCompanyCode(sampleInput.getMyCompanyCode());
-			List<SampleInput> slist= queryList(si);
-			SampleAdditional add=new SampleAdditional();
-			add.setMyCompanyCode(sampleInput.getMyCompanyCode());
-			List<SampleAdditional> salist=sampleAdditionalService.queryByMyCompCode(add);
+			FlowerInfo t=new FlowerInfo();
+			t.setMyCompanyCode(sampleInput.getMyCompanyCode());
+			List<FlowerInfo> flist = flowerInfoService.queryAll(t);
 			
-			if(salist.size()==0){//新版  先判断新版 再到后面判断是否是其他状态
+			if(flist.size()==0){//新版  先判断新版 再到后面判断是否是其他状态
 				bean.setStatus(1);
 			}else{
-				//判断其他状态
-				for(SampleAdditional sa:salist){
-					
-				}
-				
-				
-				
-				
-				SampleAdditional sampleAdd=new SampleAdditional();
-				sampleAdd.setFactoryCode(factoryCode1);
-				sampleAdd.setType(1);
-				sampleAdd.setSampleId(sampleInput.getId());
-				List<SampleAdditional> list=sampleAdditionalService.queryAll(sampleAdd);
-				if(list.size()>0){
-					boolean newColor=true;
-					if(!checkNewColor(list,colors)){
-						newColor=false;
-					}
-					sampleAdd.setFactoryCode(factoryCode2);
-					list=sampleAdditionalService.queryAll(sampleAdd);
-					if(list.size()==0){
-						bean.setStatus(2);//新厂
-					}else{
-						if(!checkNewColor(list,colors)){
-							newColor=false;
-						}
-					}
-					if(newColor){
-						bean.setStatus(3);//新色
+				//判断其他状态 是否是新厂
+				t.setMyCompanyCode(sampleInput.getMyCompanyCode());
+				t.setFactoryId(sampleInput.getFactoryId());
+				flist = flowerInfoService.queryAll(t);
+				if(flist.size()==0){
+					bean.setStatus(2);
+				}else{
+					FlowerAdditional fa=new FlowerAdditional();
+					Integer id=flist.get(0).getId();
+					fa.setFlowerId(id);
+					List<FlowerAdditional> falist=flowerAdditionalService.queryAll(fa);
+					if(checkNewColor(falist,colors,colors2)){
+						bean.setStatus(3);//新色			
 					}else{
 						bean.setStatus(4);//重复
 					}
-				}else{
-					bean.setStatus(2);//新厂
 				}
 			}
 		}
@@ -189,7 +170,6 @@ public class SampleInputServiceImpl implements SampleInputService {
 				if(i==0){
 					sampleAdditionalService.add(sampleAdditional);
 				}
-				
 			}if(!"".equals(factoryCode2)&&null!=factoryCode2){
 				int i=0;
 				sampleAdditional=new SampleAdditional();
@@ -209,7 +189,6 @@ public class SampleInputServiceImpl implements SampleInputService {
 			}
 			bean.setReplyDate(sampleInput.getReplyDate());
 			bean.setReplyMark(sampleInput.getReplyMark());
-			
 			update(bean);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -222,20 +201,31 @@ public class SampleInputServiceImpl implements SampleInputService {
 	 * @param stra
 	 * @return true 是新色
 	 */
-	public boolean checkNewColor(List<SampleAdditional> list,String[] stra){
-		if(list.size()!=stra.length){
-			return true;
-		}else{
-			int i=0;
-			for(SampleAdditional sm:list){
-				for(String color:stra){
-					if(sm.getFactoryColor().equals(color)){
-						i++;
+	public boolean checkNewColor(List<FlowerAdditional> list,String[] stra,String[] stra2){
+		if(null!=stra){
+			for(String str:stra){
+				int size=0;
+				for(FlowerAdditional fa:list){
+					if(!str.equals(fa.getFactoryColor())){
+						size++;
 					}
 				}
+				if(size>0){
+					return true;//新色
+				}
 			}
-			if(i!=list.size()){
-				return true;
+		}
+		if(null!=stra2){
+			for(String str:stra2){
+				int size=0;
+				for(FlowerAdditional fa:list){
+					if(!str.equals(fa.getFactoryColor())){
+						size++;
+					}
+				}
+				if(size>0){
+					return true;//新色
+				}
 			}
 		}
 		return false;

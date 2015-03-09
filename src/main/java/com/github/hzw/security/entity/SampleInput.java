@@ -18,6 +18,12 @@ public class SampleInput {
     
     /**查询条件结束时间**/
     private Date endDate;
+    
+    /**查询条件开始时间**/
+    private Date rstartDate;
+    
+    /**查询条件结束时间**/
+    private Date rendDate;
 
     private Integer factoryId;
 
@@ -274,6 +280,22 @@ public class SampleInput {
 
 	public void setMark(String mark) {
 		this.mark = mark;
+	}
+
+	public Date getRstartDate() {
+		return rstartDate;
+	}
+
+	public void setRstartDate(Date rstartDate) {
+		this.rstartDate = rstartDate;
+	}
+
+	public Date getRendDate() {
+		return rendDate;
+	}
+
+	public void setRendDate(Date rendDate) {
+		this.rendDate = rendDate;
 	}
 
 	public String getReplyMark() {

@@ -22,12 +22,4 @@ public interface SampleInputService extends BaseService<SampleInput> {
 	 */
 	public PageView queryReplay(PageView pageView,SampleInput sampleInput);
 	
-	/**
-	 * 查询新版数据  如果不存在相同的我司编号 为新版
-	 * @param pageView
-	 * @param t
-	 * @return
-	 */
-	public PageView queryXinBan(PageView pageView,SampleInput sampleInput);
-	
 }
