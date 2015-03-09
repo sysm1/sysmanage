@@ -210,13 +210,22 @@ html>body td{ font-size:13px;}
 		row=document.getElementById(id+"_tr");
 		var cells=row.getElementsByTagName("td");
 		var fileCode=cells[3].innerHTML.split('value="');
-		alert(cells[3].innerHTML);
+		//alert(cells[3].innerHTML);
 		if(fileCode[1].split('">')[0]==''){
 			alert("分色文件号不能为空！");
 			return false;
 		}
-		//var myComCode=cells[5].innerHTML.split('value="');
-		//alert(myComCode);
+		var myComCode=cells[5].innerHTML.split('value="');
+		if(myComCode[1].split('">')[0]==''){
+			alert("我司编号不能为空！");
+			return false;
+		}
+		var fatoryCode=cells[9].innerHTML.split('value="');
+		if(fatoryCode[1].split('">')[0]==''){
+			alert("我司编号不能为空！");
+			return false;
+		}
+		alert(fatoryCode[1].split('">')[0]=='');
 		
 	}
 </script>

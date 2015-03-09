@@ -67,6 +67,10 @@
 		</if>
 		<if test="t.codeValue != null and t.codeValue != ''">
 			and s.code_value like '%${t.codeValue}%'
+		</if><if test="t.startDate != null and t.startDate != ''">
+			and s.sample_date &gt;= #{t.startDate}
+		</if><if test="t.endDate != null and t.endDate != ''">
+			and s.sample_date &lt;= #{t.endDate}
 		</if>
 		
 		</where>

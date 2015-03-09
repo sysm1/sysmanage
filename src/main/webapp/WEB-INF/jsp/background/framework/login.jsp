@@ -18,10 +18,10 @@
 			<form id="loginForm" name="loginForm" method="post"
 			action="${pageContext.servletContext.contextPath }/submitlogin.html">
 				<div class="name">
-					<label>用户名</label><input type="text" class="text" id="username" placeholder="用户名" name="username" tabindex="1">
+					<label>用户名</label><input type="text" class="text" id="username" value="root" placeholder="用户名" name="username" tabindex="1">
 				</div>
 				<div class="pwd">
-					<label>密　码</label><input type="password" class="text" id="password" placeholder="密码" name="password" tabindex="2">
+					<label>密　码</label><input type="password" class="text" id="password" placeholder="密码" name="password" value="root" tabindex="2">
 					<input type="button" class="submit" tabindex="3" value="登录" onclick="checkUserForm();">
 					<div class="check"></div>
 				</div>

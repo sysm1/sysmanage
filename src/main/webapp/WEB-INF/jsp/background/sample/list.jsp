@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <!-- 开办录入查询 -->
 
 <style type="text/css">
@@ -97,9 +98,7 @@ html>body td{ font-size:13px;}
 	var grid;
 	
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid();
-	
-	
+		//grid = window.lanyuan.ui.lyGrid();
 		$("#search").click("click", function() {//绑定查询按扭
 			$('#pageNow').attr('value',1);
 			var f = $('#fenye');
@@ -233,31 +232,55 @@ html>body td{ font-size:13px;}
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
-				开版日期：
-				<input type="text" id="startDay" name="startDay" value="" style="width:97px;">
-				<input type="text" id="endDay" name="endDay" value="" style="width:98px;">
-				备注：<input type="text" id="mark" name="mark" value="">
-				编号：<input type="text" id="codeValue" name="codeValue" value="">
-				<br>
-				工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：&nbsp;
-				      <select  id="factoryId" name="factoryId">
-						<option value="">请选择工厂</option>
-						<c:forEach items="${ factoryInfos }" var = "factoryInfo">
-								<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
-							</c:forEach>
-					  </select>
-			          布种：<select id="clothId" name="clothId">
-							<option value="">请选择布种</option>
-							<c:forEach items="${ cloths }" var = "cloth">
-								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
-							</c:forEach>
-						</select>
-			          工艺：<select id="technologyId" name="technologyId">
-							<option value="">请选择工艺</option>
-							<c:forEach items="${ technologyInfos }" var = "technologyInfo">
-								<option <c:if test="${technologyInfo.id eq bean.technologyId }">selected="selected"</c:if> value="${technologyInfo.id }">${technologyInfo.name}</option>
-							</c:forEach>
-					    </select>
+<table>
+<tr>
+	<td style="width:70px;text-align: right;">
+		开版日期：
+	</td><td>
+		<input type="text" id="startDate" name="startDate" value="<fmt:formatDate value='${bean.startDate}' pattern='yyyy-MM-dd'/>" style="width:97px;" 
+			onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
+		<input type="text" id="endDate" name="endDate" value="<fmt:formatDate value='${bean.endDate}' pattern='yyyy-MM-dd'/>" style="width:98px;"
+			onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
+	</td><td style="width:70px;text-align: right;">
+		备注：
+	</td><td>
+		<input type="text" id="mark" name="mark" value="${bean.mark }">
+	</td><td style="width:70px;text-align: right;">
+		编号：
+	</td><td>
+		<input type="text" id="codeValue" name="codeValue" value="${bean.codeValue }">
+	</td>
+</tr><tr>
+	<td style="text-align: right;">
+		工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：
+	</td><td>
+      <select  id="factoryId" name="factoryId">
+		<option value="">请选择工厂</option>
+		<c:forEach items="${ factoryInfos }" var = "factoryInfo">
+				<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
+			</c:forEach>
+	  </select>
+    </td><td style="text-align: right;">
+    	布种：
+    </td><td>
+    	<select id="clothId" name="clothId">
+			<option value="">请选择布种</option>
+			<c:forEach items="${ cloths }" var = "cloth">
+				<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
+			</c:forEach>
+		</select>
+    </td><td style="text-align: right;">
+    	工艺：
+    </td><td>
+    	<select id="technologyId" name="technologyId">
+			<option value="">请选择工艺</option>
+			<c:forEach items="${ technologyInfos }" var = "technologyInfo">
+				<option <c:if test="${technologyInfo.id eq bean.technologyId }">selected="selected"</c:if> value="${technologyInfo.id }">${technologyInfo.name}</option>
+			</c:forEach>
+	    </select>
+    </td>
+</tr>         
+</table>
 			</form>
 		</div>
 		<div class="topBtn">
