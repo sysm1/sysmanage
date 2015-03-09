@@ -91,15 +91,12 @@ th.specalt {
 html>body td{ font-size:13px;}
 </style>
 
-
 <script type="text/javascript">
 	var dialog;
 	var grid;
 	
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid();
-	
-	
+		//grid = window.lanyuan.ui.lyGrid();
 		$("#search").click("click", function() {//绑定查询按扭
 			$('#pageNow').attr('value',1);
 			var f = $('#fenye');

@@ -7,8 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <!-- 开办录入查询 -->
-
 <style type="text/css">
 /* CSS Document */
 
@@ -17,9 +17,7 @@ body {
  color: #4f6b72;
 }
 
-a {
- color: #c75f3e;
-}
+a {color: #c75f3e;}
 
 #mytable {
  width: 150%;
@@ -64,9 +62,7 @@ th.nobg {
  color: #4f6b72;
 }
 
-.lanyuan_bb{
-border-bottom: 1px solid #C1DAD7;
-}
+.lanyuan_bb{border-bottom: 1px solid #C1DAD7;}
 
 td.alt {
  background: #F5FAFA;
@@ -91,15 +87,11 @@ th.specalt {
 html>body td{ font-size:13px;}
 </style>
 
-
 <script type="text/javascript">
 	var dialog;
 	var grid;
-	
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid();
-	
-	
+		//grid = window.lanyuan.ui.lyGrid();
 		$("#search").click("click", function() {//绑定查询按扭
 			$('#pageNow').attr('value',1);
 			var f = $('#fenye');
@@ -114,10 +106,6 @@ html>body td{ font-size:13px;}
 				parent.$.ligerDialog.alert("请选择一条记录修改");
 				return;
 			}
-			//if (cbox.length > 1) {
-			//	parent.$.ligerDialog.alert("一次只能修改一条记录");
-			//	return;
-			//}
 			for(var i=0;i<cbox.length;i++){
 				var f = $('#'+cbox[i]+'_form');
 				//document.getElementById(cbox[i]+'_form').target="iframet";
@@ -214,13 +202,15 @@ html>body td{ font-size:13px;}
 	<input type="hidden" id="pageNow" name="pageNow" value="">
 	<table>
 		<tr>
-			<td>开版日期：</td>
+			<td style="width:70px;text-align: right;">开版日期：</td>
 			<td>
-				<input type="text" id="startDate" name="startDate" value="" style="width:91px">至
-				<input type="text" id="endDate" name="endDate" value="" style="width:91px">
-			</td><td>备注：</td>
+				<input type="text" id="startDate" name="startDate" value="<fmt:formatDate value='${bean.startDate}' pattern='yyyy-MM-dd'/>" style="width:91px;" 
+					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">至
+				<input type="text" id="endDate" name="endDate" value="<fmt:formatDate value='${bean.endDate}' pattern='yyyy-MM-dd'/>" style="width:91px;"
+					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
+			</td><td style="width:70px;text-align: right;">备注：</td>
 			<td><input type="text" id="mark" name="mark" value="" ></td>
-			<td>工厂：</td>
+			<td style="width:70px;text-align: right;">工厂：</td>
 			<td>
 				<select  id="factoryId" name="factoryId">
 					<option value="">请选择工厂</option>
@@ -230,14 +220,16 @@ html>body td{ font-size:13px;}
 			</select>
 			</td>
 		 </tr>
-			 <td>回版日期：</td>
+			 <td style="width:70px;text-align: right;">回版日期：</td>
 			 <td>
-			 	<input type="text" id="startDate" name="startDate" value="" style="width:91px">至
-				<input type="text" id="endDate" name="endDate" value="" style="width:91px">
-			</td><td>编号：</td>
+			 	<input type="text" id="rstartDate" name="rstartDate" value="<fmt:formatDate value='${bean.rstartDate}' pattern='yyyy-MM-dd'/>" style="width:91px;" 
+					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">至
+				<input type="text" id="rendDate" name="rendDate" value="<fmt:formatDate value='${bean.rendDate}' pattern='yyyy-MM-dd'/>" style="width:91px;"
+					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
+			</td><td style="width:70px;text-align: right;">编号：</td>
 			<td>
 			    <input type="text" id="codeValue" name="codeValue" value=""/>
-			</td><td>布种：</td>
+			</td><td style="width:70px;text-align: right;">布种：</td>
 			<td>
 			    <select id="clothId" name="clothId">
 					<option value="">请选择布种</option>
@@ -247,17 +239,17 @@ html>body td{ font-size:13px;}
 				</select>
 			</td> 
 		</tr><tr>
-			<td align="right">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</td>
+			<td style="width:70px;text-align: right;">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</td>
 			<td>
-			    <select>
+			    <select id="status" name="status">
 			   	<option value="">请选择</option>
-			   	<option value="0">未回</option>
-			   	<option value="1">新版</option>
-			   	<option value="2">新厂</option>
-			   	<option value="3">新色</option>
-			   	<option value="4">重复</option>
+			   	<option value="0" <c:if test="${0 eq bean.status }">selected="selected"</c:if> >未回</option>
+			   	<option value="1" <c:if test="${1 eq bean.status }">selected="selected"</c:if> >新版</option>
+			   	<option value="2" <c:if test="${2 eq bean.status }">selected="selected"</c:if> >新厂</option>
+			   	<option value="3" <c:if test="${3 eq bean.status }">selected="selected"</c:if> >新色</option>
+			   	<option value="4" <c:if test="${4 eq bean.status }">selected="selected"</c:if> >重复</option>
 			    </select>
-			</td><td>工艺：</td>
+			</td><td style="width:70px;text-align: right;">工艺：</td>
 			<td>
 			    <select id="technologyId" name="technologyId">
 					<option value="">请选择工艺</option>
@@ -266,9 +258,7 @@ html>body td{ font-size:13px;}
 					</c:forEach>
 				</select>
 			</td>
-			<td colspan="2" align="right">
-			    <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">查询</a>
-			</td>
+			<td colspan="2" align="right">&nbsp;</td>
 		</tr>
 	</table>
 </form>
@@ -280,7 +270,7 @@ html>body td{ font-size:13px;}
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="saveTemp">
 				添加到花号基本资料
 			</a>
-			
+			 <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">查询</a>
 		</div>
 		<div id="paging" class="pagclass">
 			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
