@@ -109,6 +109,19 @@
 		</if><if test="t.codeValue != null and t.codeValue != ''">
 			and s.code_value like '%${t.codeValue}%'
 		</if>
+		<if test="t.startDate != null and t.startDate != ''">
+			and s.sample_date &gt;= #{t.startDate}
+		</if><if test="t.endDate != null and t.endDate != ''">
+			and s.sample_date &lt;= #{t.endDate}
+		</if>
+		<if test="t.rstartDate != null and t.rstartDate != ''">
+			and s.reply_date &gt;= #{t.rstartDate}
+		</if><if test="t.rendDate != null and t.rendDate != ''">
+			and s.reply_date &lt;= #{t.rendDate}
+		</if>
+		<if test="t.status != null and t.status != '' or t.status==0">
+			and s.status = #{t.status}
+		</if>
 		</where>
 		order by status,id desc
 	</select>
@@ -116,7 +129,7 @@
 	<select id="queryXinBan" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
 		select
 		<include refid="selectById" />
-		from sample_input 
+		from flower_info 
 		<where>
 			my_company_code = #{t.myCompanyCode}		
 		</where>
