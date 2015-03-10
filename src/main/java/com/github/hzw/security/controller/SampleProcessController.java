@@ -166,9 +166,11 @@ public class SampleProcessController extends BaseController{
 			if(!"".equals(cid)){
 				sl.setClothId(Integer.parseInt(cid));
 			}
+			sl.setStatus(new Integer(0));
 			pageView = sampleInputService.query(getPageView("1",null), sl);
 			List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 			List<ClothInfo> cloths = clothInfoService.queryAll(null);
+			
 			Map<Integer,Map<String,List<SampleAdditional>>> map=new HashMap<Integer,Map<String,List<SampleAdditional>>>();
 			List<SampleInputVO> plist=pageView.getRecords();
 			
@@ -186,6 +188,7 @@ public class SampleProcessController extends BaseController{
 				map.put(sample.getId(), facotoryCodeMap);
 			}
 			model.addAttribute("map", map);
+			
 			model.addAttribute("pageView", pageView);
 			model.addAttribute("factoryInfos", factoryInfos);
 			model.addAttribute("cloths", cloths);

@@ -7,6 +7,13 @@ import com.github.hzw.util.Common;
 public class BaseController {
 	PageView pageView = null;
 	public PageView getPageView(String pageNow,String pagesize) {
+		
+		if(null!=pageNow&&!"".equals(pageNow)){
+			if(Integer.parseInt(pageNow)<=0){
+				pageNow="1";
+			}
+		}
+		
 		if (Common.isEmpty(pageNow)) {
 			pageView = new PageView(1);
 		} else {

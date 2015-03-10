@@ -53,7 +53,7 @@ public class SampleProcessListController extends BaseController{
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput){
-		String pageNow=request.getParameter("pageNow");
+		String pageNow=request.getParameter("pageNow");		
 		pageView = sampleInputService.queryReplay(getPageView(pageNow,pagesize), sampleInput);
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
