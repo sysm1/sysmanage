@@ -225,7 +225,7 @@ html>body td{ font-size:13px;}
 			 	<input type="text" id="rstartDate" name="rstartDate" value="<fmt:formatDate value='${bean.rstartDate}' pattern='yyyy-MM-dd'/>" style="width:91px;" 
 					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">至
 				<input type="text" id="rendDate" name="rendDate" value="<fmt:formatDate value='${bean.rendDate}' pattern='yyyy-MM-dd'/>" style="width:91px;"
-					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
+					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 			</td><td style="width:70px;text-align: right;">编号：</td>
 			<td>
 			    <input type="text" id="codeValue" name="codeValue" value=""/>
