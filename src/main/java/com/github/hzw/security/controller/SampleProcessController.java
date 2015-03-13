@@ -23,6 +23,9 @@ import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.SampleAdditionalService;
 import com.github.hzw.security.service.SampleInputService;
 import com.github.hzw.util.Common;
+import com.github.hzw.util.CompressPic;
+import com.github.hzw.util.PropertiesUtils;
+import com.github.hzw.util.UploadFileUtils;
 
 /**
  * 开版进度
@@ -89,6 +92,19 @@ public class SampleProcessController extends BaseController{
 			bean=sampleInputService.getById(sampleInput.getId()+"");
 			if(null!=sampleInput.getMyCompanyCode()){
 				bean.setMyCompanyCode(sampleInput.getMyCompanyCode());
+			}
+			
+			String picPath=UploadFileUtils.saveUploadFile(request);
+			if(null!=picPath){
+				CompressPic compressPic=new CompressPic();
+				String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
+				String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
+				String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
+				String outputFileName=inputFileName;
+				//压缩图片
+				compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
+				sampleInput.setPicture(picPath);
+				sampleInput.setSmallPicture(outputDir+outputFileName);
 			}
 			sampleInputService.saveTemp(request, sampleInput);
 			

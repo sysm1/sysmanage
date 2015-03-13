@@ -20,6 +20,7 @@ import com.github.hzw.security.service.SampleInputService;
 import com.github.hzw.security.service.SampleAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;   
 import com.github.hzw.security.service.FlowerAdditionalService;
+import com.github.hzw.util.UploadFileUtils;
 @Transactional
 @Service("sampleInputService")
 public class SampleInputServiceImpl implements SampleInputService {
@@ -110,8 +111,10 @@ public class SampleInputServiceImpl implements SampleInputService {
 	@Override
 	public void saveTemp(HttpServletRequest request,SampleInput sampleInput){
 		String type=request.getParameter("type");
+		String picPath=UploadFileUtils.saveUploadFile(request);
 		SampleInput bean=new SampleInput();
 		bean=getById(sampleInput.getId()+"");
+		bean.setPicture(picPath);
 		if(null!=sampleInput.getMyCompanyCode()){
 			bean.setMyCompanyCode(sampleInput.getMyCompanyCode());
 		}

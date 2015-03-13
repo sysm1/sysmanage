@@ -26,6 +26,8 @@ import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.security.service.SampleInputService;
 import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
+import com.github.hzw.util.CompressPic;
+import com.github.hzw.util.PropertiesUtils;
 import com.github.hzw.util.UploadFileUtils;
 
 @Controller
@@ -122,7 +124,16 @@ public class SampleInputController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> add(HttpServletRequest request,SampleInput sampleInput) {
 		String picPath=UploadFileUtils.saveUploadFile(request);
+		CompressPic compressPic=new CompressPic();
+		String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
+		String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
+		String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
+		String outputFileName=inputFileName;
+		//压缩图片
+		compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
 		sampleInput.setPicture(picPath);
+		sampleInput.setSmallPicture(outputDir+outputFileName);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			sampleInput.setStatus(0);
@@ -171,13 +182,30 @@ public class SampleInputController extends BaseController {
 	@ResponseBody
 	@RequestMapping("update")
 	public Map<String, Object> update(Model model, SampleInput sampleInput,HttpServletRequest request) {
+		
+		String picPath=UploadFileUtils.saveUploadFile(request);
+		if(null!=picPath){
+			CompressPic compressPic=new CompressPic();
+			String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
+			String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
+			String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
+			String outputFileName=inputFileName;
+			//压缩图片
+			compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
+			sampleInput.setPicture(picPath);
+			sampleInput.setSmallPicture(outputDir+outputFileName);
+		}else{
+			SampleInput bean=new SampleInput();
+			bean=sampleInputService.getById(sampleInput.getId()+"");
+			sampleInput.setPicture(bean.getPicture());
+			sampleInput.setSmallPicture(bean.getSmallPicture());
+		}
+		
 		String copyadd= request.getParameter("copyadd");
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			if("copyadd".equals(copyadd)){//如果不为空  则此数据为复制新增的数据
 				sampleInput.setId(null);
-				String picPath=UploadFileUtils.saveUploadFile(request);
-				sampleInput.setPicture(picPath);
 				sampleInput.setStatus(0);
 				sampleInput.setCreateTime(new Date());
 				int codeType=sampleInput.getCodeType();

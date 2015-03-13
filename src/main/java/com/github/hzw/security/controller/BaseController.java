@@ -14,6 +14,10 @@ public class BaseController {
 			}
 		}
 		
+		if("-1".equals(pageNow)){
+			pageNow="1";
+		}
+		
 		if (Common.isEmpty(pageNow)) {
 			pageView = new PageView(1);
 		} else {
