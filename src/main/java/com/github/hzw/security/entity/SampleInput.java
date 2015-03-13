@@ -45,6 +45,9 @@ public class SampleInput {
     private Integer salemanId;
 
     private String picture;
+    
+    /***缩略图**/
+    private String smallPicture;
 
     private Integer status;
 
@@ -296,6 +299,14 @@ public class SampleInput {
 
 	public void setRendDate(Date rendDate) {
 		this.rendDate = rendDate;
+	}
+
+	public String getSmallPicture() {
+		return smallPicture;
+	}
+
+	public void setSmallPicture(String smallPicture) {
+		this.smallPicture = smallPicture;
 	}
 
 	public String getReplyMark() {
