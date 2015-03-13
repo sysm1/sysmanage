@@ -11,6 +11,14 @@
 <!-- 开办录入查询 -->
 
 <style type="text/css">
+.ordersearchDivCss { 
+	position: absolute; 
+	z-index: 100; 
+	display: block; 
+	background-color: #6ec1df; 
+} 
+
+
 /* CSS Document */
 
 body {
@@ -92,7 +100,14 @@ th.specalt {
 html>body td{ font-size:13px;}
 </style>
 
-
+<style type="text/css">
+		
+		#pic span.img{display:none;}
+	    #pic a{}
+	    //#pic a:hover{position:relative;}
+	    #pic a:hover span.img{display:block;position:absolute;right:130px;z-index: 100; }
+		
+	</style>
 <script type="text/javascript">
 	var dialog;
 	var grid;
@@ -200,8 +215,8 @@ html>body td{ font-size:13px;}
 		});
 	});
 	function loadGird(){
-		grid.loadData();
-		$('#pageNow').attr('value',1);
+		//grid.loadData();
+		$('#pageNow').attr('value',${pageView.pageNow });
 		var f = $('#fenye');
 		//f.attr('target','_blank');
 		f.attr('action',window.location.href);
@@ -225,6 +240,28 @@ html>body td{ font-size:13px;}
 		});
 		return arr;
 	};
+	/***显示图片**/
+	function showPic(id,sampId){
+		//alert((document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2));
+		document.getElementById(id).style.top = (document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2) + "px"; 
+		document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
+		
+	}
+	
+	function show(id,sampId){
+		document.getElementById(id).style.display="";
+		document.getElementById(id).style.top = (document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2) + "px"; 
+		document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
+	}
+	
+	function hiddenDiv(id){
+		document.getElementById(id).style.display="none";
+	}
+	
+	function test(){
+		document.getElementById('middle').style.display="block";
+		document.getElementById('surface').style.display="block";
+	}
 </script>
 </head>
 <body>
@@ -312,12 +349,12 @@ html>body td{ font-size:13px;}
 					<th class="specalt">备注</th>
 					<th class="specalt">图片</th>
 				</tr>
-				<c:forEach var="item" items="${pageView.records }">
+				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 					<tr>
 					 	<td>
 					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }">
 					 	</td>
-						<td>${item.id }</td>
+						<td onmousemove="showPic('${item.id }');">${item.id }</td>
 						<td title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>">
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
@@ -337,15 +374,18 @@ html>body td{ font-size:13px;}
 							${fn:substring(item.mark,0,10)}  
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
-						<td><img src='${item.picture }'/></td>
+						<td  id="pic" >
+								<img src='${pageContext.request.contextPath}/background/pic/getSmallPic.html?id=${item.id }'/ height="30px"
+									onmousemove="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">
+						</td>
 					<tr>
 				</c:forEach>
 				<!-- 分页 -->
-				<tr style="height: 20px">
-					<td colspan="4" style="text-align: center">
+				<tr style="height: 35px">
+					<td colspan="4" style="text-align: center;font-size: 14px;">
 						总${pageView.rowCount }条&nbsp;&nbsp;&nbsp;每页${pageView.pageSize }条&nbsp;&nbsp;&nbsp; 
 						共${pageView.pageCount }页&nbsp;&nbsp;当前${pageView.pageNow }页</td>
-					<td colspan="5" style="text-align: right">
+					<td colspan="5" style="text-align: right;font-size: 14px;">
 						<a href="javascript:page(1)">首页</a>
 						<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
 						<c:if test="${pageView.pageNow>2 }">
@@ -353,7 +393,7 @@ html>body td{ font-size:13px;}
 						</c:if><c:if test="${pageView.pageNow>1 }">					
 							<a href="javascript:page(${pageView.pageNow-1 })">${pageView.pageNow-1 }</a>
 						</c:if>	
-							<b><a href="javascript:page(${pageView.pageNow })">${pageView.pageNow }</a></b>
+							<b><a href="javascript:page(${pageView.pageNow })">[${pageView.pageNow }]</a></b>
 						<c:if test="${pageView.pageCount-1>=pageView.pageNow }">
 							<a href="javascript:page(${pageView.pageNow+1 })">${pageView.pageNow+1 }</a>
 						</c:if><c:if test="${pageView.pageCount-2>=pageView.pageNow }">
@@ -364,13 +404,12 @@ html>body td{ font-size:13px;}
 						</c:if><c:if test="${pageView.pageNow<pageView.pageCount }">
 							<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
 						</c:if>
-						<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>						
-						<a href="javascript:page(${pageView.pageCount })">尾页</a>
+						<a href="javascript:page(${pageView.pageCount })">尾页&nbsp;</a>
 					</td>
 				</tr>			
 			</table><br>
 		</div>
-		
 	</div>
+	<img  src="" class="ordersearchDivCss" id="DivMain" style="display: none;max-height:95%;" />
 </body>
 </html>	

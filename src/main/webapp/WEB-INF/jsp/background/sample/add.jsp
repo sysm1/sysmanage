@@ -112,21 +112,21 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" ></div>
 	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
-		<table style="height: 200px;" border="1">
+		<table style="height: 100%;" border="1">
 			<tbody>
 				<tr>
-					<td class="l_right">开版日期：</td>
+					<td class="l_right" >开版日期：</td>
 					<td class="l_left">
-						<input id='sampleDate' name="sampleDate" class="isNum" readonly="readonly" type="text" value="${nowDate }">
+						<input id='sampleDate' name="sampleDate" class="isNum" style="height:30px;" readonly="readonly" type="text" value="${nowDate }">
 					</td><td rowspan="9"  id="pictd">
-						<div id="imgPreview" style="width: 600px;height:300px"> 
-					    	图片预览区<img src=""/> 
+						<div id="imgPreview" style="width:600px;height:350px"> 
+					    	图片预览区&nbsp;<img src="" style="max-width:700px;"/> 
 					   </div>
 					</td>
 				</tr><tr>
-					<td>工厂：</td>
-					<td>
-						<select id="factoryId" name="factoryId">
+					<td style="height:35px;">工厂：</td>
+					<td >
+						<select id="factoryId" name="factoryId" style="height:35px;">
 							<option value="">请选择工厂</option>
 							<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 								<option value="${factoryInfo.id }">${factoryInfo.name}</option>
@@ -134,7 +134,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					    </select>
 					</td>
 				</tr><tr>
-					<td>布种：</td>
+					<td style="height:30px;">布种：</td>
 					<td>
 						<select id="clothId" name="clothId">
 							<option value="">请选择布种</option>
@@ -182,7 +182,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr><tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
-						<textarea rows="4" cols="6" id='mark' name="mark" ></textarea>
+						<textarea rows="5" cols="6" id='mark' name="mark" ></textarea>
 					</td>
 				</tr>
 				

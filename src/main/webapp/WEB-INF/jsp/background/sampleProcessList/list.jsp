@@ -10,6 +10,15 @@
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <!-- 开办录入查询 -->
 <style type="text/css">
+
+.ordersearchDivCss { 
+	position: absolute; 
+	z-index: 100; 
+	display: block; 
+	//background-color: #6ec1df; 
+	padding-left: 150px;
+}
+
 /* CSS Document */
 
 body {
@@ -193,6 +202,21 @@ html>body td{ font-size:13px;}
 		document.getElementById(st+""+flag+"factoryColor"+param).style.display='';
 		document.getElementById(st+"flag"+param).value=parseInt(document.getElementById(st+"flag"+param).value)+parseInt(1);
 	}
+	
+	/***显示图片**/
+	function show(id,sampId){
+		document.getElementById(id).style.display="";
+		var height=(document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2);
+		if(height>16){
+			height=16;
+		}
+		document.getElementById(id).style.top = height + "px"; 
+		document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
+	}
+	/***隐藏图片**/
+	function hiddenDiv(id){
+		document.getElementById(id).style.display="none";
+	}
 </script>
 </head>
 <body>
@@ -302,7 +326,7 @@ html>body td{ font-size:13px;}
 					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">
 					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">
 					 	</td>
-						<td>${item.id }</td>
+						<td onmouseover="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
 						<td>
 							<c:if test="${item.status eq 0 }">未回</c:if>
 							<c:if test="${item.status eq 1 }">新版</c:if>
@@ -351,11 +375,11 @@ html>body td{ font-size:13px;}
 				
 				</c:forEach>
 				<!-- 分页 -->
-				<tr style="height: 20px">
-					<td colspan="4" style="text-align: center">
+				<tr style="height: 35px">
+					<td colspan="4" style="text-align: center;font-size: 14px;">
 						总${pageView.rowCount }条&nbsp;&nbsp;&nbsp;每页${pageView.pageSize }条&nbsp;&nbsp;&nbsp; 
 						共${pageView.pageCount }页&nbsp;&nbsp;当前${pageView.pageNow }页</td>
-					<td colspan="6" style="text-align: right">
+					<td colspan="6" style="text-align: right;font-size: 14px;">
 						<a href="javascript:page(1)">首页</a>
 						<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
 						<c:if test="${pageView.pageNow>2 }">
@@ -363,7 +387,7 @@ html>body td{ font-size:13px;}
 						</c:if><c:if test="${pageView.pageNow>1 }">					
 							<a href="javascript:page(${pageView.pageNow-1 })">${pageView.pageNow-1 }</a>
 						</c:if>	
-							<b><a href="javascript:page(${pageView.pageNow })">${pageView.pageNow }</a></b>
+							<b><a href="javascript:page(${pageView.pageNow })">[${pageView.pageNow }]</a></b>
 						<c:if test="${pageView.pageCount-1>=pageView.pageNow }">
 							<a href="javascript:page(${pageView.pageNow+1 })">${pageView.pageNow+1 }</a>
 						</c:if><c:if test="${pageView.pageCount-2>=pageView.pageNow }">
@@ -374,13 +398,14 @@ html>body td{ font-size:13px;}
 						</c:if><c:if test="${pageView.pageNow<pageView.pageCount }">
 							<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
 						</c:if>
-						<a href="javascript:page(${pageView.pageCount })">尾页</a>
-					</td>
-				</tr>			
+						<a href="javascript:page(${pageView.pageCount })">尾页&nbsp;</a>
+					</td><td colspan="4">&nbsp;</td>
+				</tr>
 			</table><br>
 		</div>
 		
 	</div>
 </body>
-<iframe id="iframet" ></iframe>
+<img  src="" class="ordersearchDivCss" id="DivMain" style="display: none;max-height:95%;padding-left: 150px" />
+<iframe id="iframet" name="iframet" style="display: none"></iframe>
 </html>	

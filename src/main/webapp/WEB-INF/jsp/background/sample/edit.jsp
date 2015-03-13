@@ -124,7 +124,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input id='sampleDate' name="sampleDate" class="isNum" readonly="readonly" type="text" value="<fmt:formatDate value="${bean.sampleDate}" pattern="YYYY-MM-DD"/>">
 					</td><td rowspan="9" id="pictd">
 						<div id="imgPreview" style="width: 600px;height:300px" > 
-					    	<img  src=""/> 
+					    	&nbsp;<img  src="${pageContext.request.contextPath}/background/pic/getPic.html?id=${bean.id}" style="max-width:700px;"/> 
 					   </div>
 					</td>
 				</tr><tr>
@@ -171,7 +171,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr><tr>
 					<td>图片：</td>
 					<td>
-						<input type="file" id="myFile" name="myFile" style="width: 220px"  onchange="PreviewImage(this);"/>
+						<input type="file" id="myFile" name="myFile" style="width: 220px" value="${bean.picture }" onchange="PreviewImage(this);"/>
 					</td>
 				</tr><tr>
 					<td>业务员：</td>
