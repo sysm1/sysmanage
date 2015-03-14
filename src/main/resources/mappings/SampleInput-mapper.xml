@@ -14,6 +14,7 @@
     technology_id technologyId, 
     saleman_id salemanId, 
     picture, status, 
+    small_picture smallPicture,
     reply_date replyDate, 
     create_time createTime, 
     demand, mark,reply_mark replyMark
@@ -140,7 +141,7 @@
 	<insert id="add" parameterType="SampleInput" useGeneratedKeys="true" keyProperty="id">
 		insert into sample_input (
 			sample_date, factory_id, cloth_id, code_type, file_code, factory_code, my_company_code, technology_id, saleman_id, 
-			picture, status, reply_date, create_time, demand, mark, code_value
+			picture, status, reply_date, create_time, demand, mark, code_value,small_picture
 		)
 		values(
 			#{sampleDate},
@@ -158,7 +159,8 @@
 			#{createTime},
 			#{demand},
 			#{mark},
-			#{codeValue}
+			#{codeValue},
+			#{smallPicture}
 		)
 	</insert>
 	
@@ -219,7 +221,10 @@
       	<if test="mark != null and mark != ''">
         	mark=#{mark},
       	</if><if test="replyMark != null and replyMark != ''">
-        	reply_mark=#{replyMark}
+        	reply_mark=#{replyMark},
+      	</if>
+      	<if test="smallPicture!=null and smallPicture!=''">
+      		small_picture=#{smallPicture}
       	</if>
 		</set>
 		where id=#{id}
