@@ -192,4 +192,14 @@ public class FlowerAdditional {
     public void setMyCompanyColor(String myCompanyColor) {
         this.myCompanyColor = myCompanyColor;
     }
+
+	@Override
+	public String toString() {
+		return "FlowerAdditional [id=" + id + ", flowerId=" + flowerId
+				+ ", factoryCode=" + factoryCode + ", factoryColor="
+				+ factoryColor + ", myCompanyCode=" + myCompanyCode
+				+ ", myCompanyColor=" + myCompanyColor + "]";
+	}
+    
+    
 }

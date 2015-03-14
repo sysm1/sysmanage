@@ -7,18 +7,79 @@
   </sql>
   
   <sql id="selectId" >
-    id, factory_id factoryId, 
+    id, 
+    factory_id factoryId, 
+    (select factory.name from factory_info factory where factory.id = flower.factory_id ) as factoryName,
     my_company_code myCompanyCode, 
     cloth_id clothId, 
+    (select cloth.cloth_name from cloth_info cloth where cloth.id = flower.cloth_id ) as clothName, 
     file_color fileColor, 
     technology_id technologyId, 
-    picture, status
+    (select technology.name from technology_info technology where technology.id = flower.technology_id ) as technologyName,
+    picture, 
+    factory_code factoryCode,
+    status
   </sql>
+  
+  <sql id="selectIdExt" >
+    flower.id id, 
+    flower.factory_id factoryId,
+    (select factory.name from factory_info factory where factory.id = flower.factory_id ) as factoryName,
+    flower.my_company_code myCompanyCode, 
+    cloth_id clothId, 
+    (select cloth.cloth_name from cloth_info cloth where cloth.id = flower.cloth_id ) as clothName, 
+    file_color fileColor, 
+    technology_id technologyId, 
+    (select technology.name from technology_info technology where technology.id = flower.technology_id ) as technologyName,
+    picture, 
+    factory_code factoryCode,
+    status
+  </sql>
+  
+  <sql id="selectfad" >
+    a.id addId, 
+    a.flower_id flowerId, 
+    a.factory_code factoryCode, 
+    <!-- a.factory_color factoryColor,--> 
+    <!-- a.my_company_code myCompanyCode, -->
+    a.my_company_color myCompanyColor
+  </sql>
+  
+  <select id="queryFind" resultType="map" parameterType="map">
+		select
+		<include refid="selectIdExt" />
+			from flower_info flower
+		<where> <!-- flower.id = a.flower_id  -->
+		<if test="clothId != null and clothId != ''">
+			and flower.cloth_id = #{clothId}
+		</if>
+		<if test="myCompanyCode != null and myCompanyCode != ''">
+			and flower.my_company_code = #{myCompanyCode}
+		</if>
+		<if test="factoryId != null and factoryId != ''">
+			and flower.factory_id = #{factoryId}
+		</if>
+		<if test="technologyId != null and technologyId != ''">
+			and flower.technology_id = #{technologyId}
+		</if>
+		<if test="fileColor != null and fileColor != ''">
+			and flower.file_color = #{fileColor}
+		</if>
+		<if test="status != null and status != ''">
+			and flower.status = #{status}
+		</if>
+		<if test="factoryCode != null and factoryCode != ''">
+			and factory_code like '%${factoryCode}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+	
   
   <select id="query" resultType="FlowerInfo" parameterType="FlowerInfo">
 		select
 		<include refid="selectId" />
-			from flower_info
+			from flower_info flower
 		<where> 1=1
 		<if test="t.clothId != null and t.clothId != ''">
 			and cloth_id = #{t.clothId}
@@ -39,6 +100,11 @@
 		<if test="t.status != null and t.status != ''">
 			and status = #{t.status}
 		</if>
+		
+		<if test="factoryCode != null and factoryCode != ''">
+			and factory_code like '%${t.factoryCode}%'
+		</if>
+		
 		</where>
 		order by id desc
 	</select>
@@ -46,13 +112,13 @@
 	<select id="queryAll" resultType="FlowerInfo">
 		select
 		<include refid="selectId" />
-		from flower_info
+		from flower_info flower
 		order by id desc
 	</select>
 
 	<insert id="add" parameterType="FlowerInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into flower_info (
-			factory_id, my_company_code, cloth_id, file_color, technology_id, picture, status
+			factory_id, my_company_code, cloth_id, file_color, technology_id, picture, status, factory_code
 		)
 		values(
 			#{factoryId},
@@ -61,7 +127,8 @@
 			#{fileColor},
 			#{technologyId},
 			#{picture},
-			#{status}
+			#{status},
+			#{factoryCode}
 		)
 	</insert>
 	
@@ -73,33 +140,36 @@
 	<select id="getById" parameterType="String" resultType="FlowerInfo">
 		select
 		<include refid="selectId" />
-		from flower_info where id=#{id}
+		from flower_info flower where id=#{id}
 	</select>
 	
 	<update id="update" parameterType="FlowerInfo">
 		update flower_info
 		<set>
-      	<if test="factoryId != null and factoryId != ''">
-        	factory_id=#{factoryId},
-      	</if>
-      	<if test="myCompanyCode != null and myCompanyCode != ''">
-        	my_company_code=#{myCompanyCode},
-      	</if>
-      	<if test="clothId != null and clothId != ''">
-        	cloth_id=#{clothId},
-      	</if>
-      	<if test="fileColor != null and fileColor != ''">
-        	file_color=#{fileColor},
-      	</if>
-      	<if test="technologyId != null and technologyId != ''">
-        	technology_id=#{technologyId},
-      	</if>
-      	<if test="picture != null and picture != ''">
-        	picture=#{picture},
-      	</if>
-      	<if test="status != null and status != ''">
-        	status=#{status},
-      	</if>
+	      	<if test="factoryId != null and factoryId != ''">
+	        	factory_id=#{factoryId},
+	      	</if>
+	      	<if test="myCompanyCode != null and myCompanyCode != ''">
+	        	my_company_code=#{myCompanyCode},
+	      	</if>
+	      	<if test="clothId != null and clothId != ''">
+	        	cloth_id=#{clothId},
+	      	</if>
+	      	<if test="fileColor != null and fileColor != ''">
+	        	file_color=#{fileColor},
+	      	</if>
+	      	<if test="technologyId != null and technologyId != ''">
+	        	technology_id=#{technologyId},
+	      	</if>
+	      	<if test="picture != null and picture != ''">
+	        	picture=#{picture},
+	      	</if>
+	      	<if test="status != null and status != ''">
+	        	status=#{status},
+	      	</if>
+	      	<if test="factoryCode != null and factoryCode != ''">
+	        	factory_code=#{factoryCode},
+	      	</if>
 		</set>
 		where id=#{id}
 	</update>

@@ -58,5 +58,16 @@ public class FlowerAdditionalServiceImpl implements FlowerAdditionalService {
 		this.flowerAdditionalMapper.add(t);
 	}
 
+	@Override
+	public void deleteByFlowerId(String flowerId){
+		this.flowerAdditionalMapper.deleteByFlowerId(flowerId);
+	}
+	
+	@Override
+	public List<FlowerAdditional> findByFlowerId(Integer flowerId){
+		FlowerAdditional flowerAdditional = new FlowerAdditional();
+		flowerAdditional.setFlowerId(flowerId);
+		return this.flowerAdditionalMapper.queryFind(flowerAdditional);
+	}
 	
 }

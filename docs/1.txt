@@ -121,10 +121,11 @@ create table flower_info(
 	id int not null auto_increment,
 	factory_id	int not null,
 	my_company_code varchar(255),	-- 我司编号
+	factory_code	varchar(255),   -- 工厂编号
 	cloth_id	int not null,
 	file_color varchar(255),
 	technology_id int, -- 工艺id
-	picture varchar(255) not null, -- 图片(缩略图，原图)
+	picture varchar(255), -- 图片(缩略图，原图)
 	status int not null default 1, -- 0 删除 1 正常
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -134,8 +135,9 @@ create table flower_additional(
 	id int not null auto_increment,
 	flower_id int,
 	factory_code varchar(255),       -- 工厂编号
-	factory_color varchar(255) null, -- 工厂color
 	my_company_code varchar(255),	 -- 我司编号(冗余)
+	
+	factory_color varchar(255) null, -- 工厂color
 	my_company_color varchar(255),
 	PRIMARY KEY (`id`)  
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -46,6 +46,31 @@
 		order by id desc
 	</select>
 
+	<select id="queryFind" resultType="FlowerAdditional" parameterType="FlowerAdditional">
+		select
+		<include refid="selectId" />
+			from flower_additional
+		<where> 1=1
+		<if test="flowerId != null and flowerId != ''">
+			and flower_id = #{flowerId}
+		</if>
+		<if test="factoryCode != null and factoryCode != ''">
+			and factory_code = #{factoryCode}
+		</if>
+		<if test="factoryColor != null and factoryColor != ''">
+			and factory_color = #{factoryColor}
+		</if>
+		<if test="myCompanyCode != null and myCompanyCode != ''">
+			and my_company_code = #{myCompanyCode}
+		</if>
+		<if test="myCompanyColor != null and myCompanyColor != ''">
+			and my_company_color = #{myCompanyColor}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+
 	<insert id="add" parameterType="FlowerAdditional" useGeneratedKeys="true" keyProperty="id">
 		insert into flower_additional (
 			flower_id, factory_code, factory_color, my_company_code, my_company_color
@@ -62,6 +87,11 @@
 	<delete id="delete" parameterType="String">
 		delete from flower_additional where
 		id=#{id}
+	</delete>
+	
+	<delete id="deleteByFlowerId" parameterType="String">
+		delete from flower_additional where
+		flower_id = #{flowerId}
 	</delete>
 	
 	<select id="getById" parameterType="String" resultType="FlowerAdditional">

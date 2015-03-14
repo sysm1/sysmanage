@@ -2,6 +2,8 @@ package com.github.hzw.pulgin.mybatis.plugin;
 
 import java.util.List;
 
+import com.github.hzw.util.Page;
+
 /**
  * //分页封装函数
  * 
@@ -107,6 +109,39 @@ public class PageView {
 		setPageCount(this.rowCount % this.pageSize == 0 ? this.rowCount / this.pageSize : this.rowCount / this.pageSize + 1);
 	}
 
+	/**
+	public PageView end() {
+		// 1, 总页码
+		// pageCount = ((int)this.totalCount + pageSize - 1) / pageSize;
+		long pageCount = this.getPageCount();
+		// 2, startPageIndex（显示的页码列表的开始索引）与endPageIndex（显示的页码列表的结束索引）
+		// a, 总页码不大于10页
+		if (pageCount <= 10) {
+			startPageIndex = 1;
+			endPageIndex = pageCount;
+		}
+		// b, 总码大于10页
+		else {
+			// 在中间，显示前面4个，后面5个
+			startPageIndex = pageNo - 4;
+			endPageIndex = pageNo + 5;
+
+			// 前面不足4个时，显示前10个页码
+			if (startPageIndex < 1) {
+				startPageIndex = 1;
+				endPageIndex = 10;
+			}
+			// 后面不足5个时，显示后10个页码
+			else if (endPageIndex > pageCount) {
+				endPageIndex = pageCount;
+				startPageIndex = pageCount - 10 + 1;
+			}
+		}
+		return this;
+
+	}
+	**/
+	
 	public List getRecords() {
 		return records;
 	}

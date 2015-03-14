@@ -3,28 +3,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript">
 
-/**
-jQuery.validator.addMethod("checkpass", function(value, element) {
-	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
-}, "编号由6至16位字符组合构成");
-**/
+//单独验证某一个input  class="checkpass"
 
 jQuery.validator.addMethod("isNum", function(value, element) {
 	 var num = /^([0-9]+)$/;
 	 return this.optional(element) || (num.test(value));
 }, "只能输入数字");
 
+
 jQuery.validator.addMethod("isDay", function(value, element) {
 	 var num = /^(\d{4})-(\d{2})-(\d{2})$/;
 	 return this.optional(element) || (num.test(value));
 }, "只能输入日期(yyyy-MM-dd)");
 
+
+jQuery.validator.addMethod("chrnum", function(value, element) {
+	var chrnum = /^([a-zA-Z0-9]+)$/;
+	return this.optional(element) || (chrnum.test(value));
+}, "只能输入数字和字母(字符A-Z, a-z, 0-9)");
+
 	$(function() {
-		
 		$("form").validate({
 			submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
 				$(form).ajaxSubmit({//验证新增是否成功
@@ -35,42 +36,31 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.allowance.loadGird();
+								parent.flower.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
 						} else {
-							$.ligerDialog.warn("提交失败！！");
+							$.ligerDialog.warn("提交失败！！" + data.msg);
 						}
 					}
 				});
 			},
 			rules : {
-				inputDate : {
-					required : true
-				},
 				clothId : {
 					required : true
 				},
 				factoryId : {
 					required : true
-				},
-				changeSum : {
-					required : true
 				}
 			},
 			messages : {
-				inputDate : {
-					required : "日期不能为空",
-				},
+				
 				clothId : {
 					required : "布种不能为空",
 				},
 				factoryId : {
 					required : "工厂不能为空",
-				},
-				changeSum : {
-					required : "改变量不能为空",
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -84,89 +74,157 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 		});
 	});
 	
+	$(function() {
+		
+		$("#addFacotyMyCode").click("click", function() {
+			//var $d = $("#company_color_id");
+			//alert($d.html());
+			var $html = $("#company_color_id");
+			var $addH = $("<input name='myCompanyColors' type='text' style='width:100px;'/><input name='factoryColors' type='text' value='' style='width:100px;' /><br/>");
+			$html.append($addH);
+		});
+		
+		
+		$("#addFacotyMyCode2").click("click", function() {
+			var $html = $("#company_color_id2");
+			var $addH = $("<input name='myCompanyColors2' type='text' style='width:100px;'/><input name='factoryColors2' type='text' value='' style='width:100px;' /><br/>");
+			$html.append($addH);
+		});
+		
+		$("#addFacotyCodeId").click("click", function() {
+			$("#fctr2").show();
+		});
+		
+		$("#addFacotyCodeId2").click("click", function() {
+			$("#fctr2").hide();
+		});
+		
+	});
+	
 	function saveWin() {
 		$("#form").submit();
 	}
-	function closeWin() {
-		 parent.$.ligerDialog.close(); //关闭弹出窗; //关闭弹出窗
-		parent.$(".l-dialog,.l-window-mask").css("display","none"); 
-	}
-	
-	
 </script>
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
+	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/flower/update.html" method="post">
-		<input id='id' name="id" type="hidden" value="${allowance.id}">
-		<table style="width: 285px; height: 200px;">
+		<input id='id' name="id" type="hidden" value="${flower.id}">
+		<table>
 			<tbody>
-			
 			<tr>
-				<td class="l_right">日期：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-						<input id='inputDate' name="inputDate" class="isDay" type="text" value="${allowance.inputDate}">
-					</div>
+				<td>我司名称：</td>
+				<td>飞翔</td>
+				<td>工厂：</td>
+				<td>
+					<select id="factoryId" name="factoryId" style="width:100px;">
+							<option value="">请选择工厂</option>
+							<c:forEach items="${ factorys }" var = "factory">
+								<option value="${factory.id }">${factory.name}</option>
+							</c:forEach>
+						</select>
 				</td>
 			</tr>
 			
 			<tr>
-				<td class="l_right">布种：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-						<input id='clothId' name="clothId" type="hidden" value="${allowance.clothId}">
-						<input id='clothName' name="clothName" type="text" value="${allowance.clothName}" readonly="readonly">
-					</div>
-				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">工厂：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-						<input id='factoryId' name="factoryId" type="hidden" value="${allowance.factoryId}">
-						<input id='factoryName' name="factoryName" type="text" value="${allowance.factoryName}" readonly="readonly">
-					</div>
-				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">新增量：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='changeSum' name="changeSum" type="text" class="isNum" value="${allowance.changeSum}">
-					<select id="unit" name="unit">
-						<option value = "item">条</option>
-						<option value = "kg">公斤</option>
-						<option value = "cm">米</option>
-						<option value = "yard">码</option>
+				<td>我司编号：</td>
+				<td><input id='myCompanyCode' name="myCompanyCode" type="text" value="${flower.myCompanyCode}" style="width:100px;"></td>
+				<td>布种：</td>
+				<td>
+					<select id="clothId" name="clothId" style="width:100px;">
+							<option value="">请选择布种</option>
+							<c:forEach items="${ cloths }" var = "cloth">
+								<option value="${cloth.id }">${cloth.clothName}</option>
+							</c:forEach>
 					</select>
-					</div>
 				</td>
 			</tr>
 			
 			<tr>
-				<td class="l_right">备注：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='mark' name="mark" type="text" value="${allowance.mark}">
-					</div>
+				<td>工艺：</td>
+				<td>
+					<select id="technologyId" name="technologyId" style="width:100px;">
+							<option value="">请选择工艺</option>
+							<c:forEach items="${ technologys }" var = "technology">
+								<option value="${technology.id }">${technology.name}</option>
+							</c:forEach>
+					</select>
+				</td>
+
+				<td>分色文件号：</td>
+				<td>
+					<input id='fileColor' name="fileColor" type="text" value="${flower.fileColor}" style="width:100px;">
 				</td>
 			</tr>
-	
+			
 			<tr>
+				<td>工厂编号：</td>
+				<td>
+					<span class="factoryCodeInputcss" id="factoryCodeInputID">
+					<input name="factoryCodes" type="text" value="${factoryCode}" style="width:100px;"/><br/>
+					</span><span id="addFacotyCodeId"><a href="javascript:void(0);">+</a></span>
+				</td>
+				
 				<td colspan="2">
-					<div class="l_btn_centent">
-						<!-- saveWin_form   from是表单Ｉd-->
-						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
-						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
-					</div>
+					<ul>
+						<li id=company_color_id>
+							<c:forEach items="${flower.list}" var="fad">
+								<c:if test="${fad.factoryCode == factoryCode }">
+									<input name="myCompanyColors" type="text" value="${fad.myCompanyColor}" style="width:100px;"/>
+									<input name="factoryColors" type="text" value="${fad.factoryColor}" style="width:100px;"/><br/>
+								</c:if>
+							</c:forEach>
+						</li>
+						<li><span id="addFacotyMyCode"><a href="javascript:void(0);">+</a></span></li>
+					</ul>
 				</td>
 			</tr>
+
+			<tr id="fctr2" class="factoryCodeTrCss">
+				<td>工厂编号：</td>
+				<td>
+					<span class="factoryCodeInputcss" id="factoryCodeInputID2">
+					<input name="factoryCodes2" type="text" value="${factoryCode}" style="width:100px;"/><br/>
+					</span><span id="addFacotyCodeId2"><a href="javascript:void(0);">-</a></span>
+				</td>
+				
+				<td colspan="2">
+					<ul>
+						<li id=company_color_id2>
+						<c:forEach items="${flower.list}" var="fad">
+							<c:if test="${fad.factoryCode == factoryCode2 }">
+								<input name="myCompanyColors2" type="text" value="${fad.myCompanyColor}" style="width:100px;"/>
+								<input name="factoryColors2" type="text" value="${fad.factoryColor}" style="width:100px;"/><br/>
+							</c:if>
+						</c:forEach>	
+						</li>
+						<li><span id="addFacotyMyCode2"><a href="javascript:void(0);">+</a></span></li>
+					</ul>
+				</td>
+				
+			</tr>
+
+		<tr>
+			<td colspan="2" >上传图片</td>
+			<td colspan="2" >图片</td>
+		</tr>
+			
+		 <tr>
+					<td colspan="4">
+						<div class="l_btn_centent">
+								<!-- saveWin_form   from是表单Ｉd-->
+								<a class="btn btn-primary" href="javascript:void(0)"
+									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
+									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
+									onclick="closeWin()"><span>关闭</span> </a>
+							</div>
+					</td>
+				</tr>
 			</tbody>
 		</table>
+		
+		
 	</form>
 	</div>
 </body>

@@ -36,7 +36,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.allowance.loadGird();
+								parent.flower.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
@@ -47,31 +47,20 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				});
 			},
 			rules : {
-				inputDate : {
-					required : true
-				},
 				clothId : {
 					required : true
 				},
 				factoryId : {
 					required : true
-				},
-				changeSum : {
-					required : true
 				}
 			},
 			messages : {
-				inputDate : {
-					required : "日期不能为空",
-				},
+				
 				clothId : {
 					required : "布种不能为空",
 				},
 				factoryId : {
 					required : "工厂不能为空",
-				},
-				changeSum : {
-					required : "改变量不能为空",
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -84,6 +73,44 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			}
 		});
 	});
+	
+	$(function() {
+		
+		$("#addFacotyMyCode").click("click", function() {
+			//var $d = $("#company_color_id");
+			//alert($d.html());
+			var $html = $("#company_color_id");
+			var $addH = $("<input name='myCompanyColors' type='text' style='width:100px;'/><input name='factoryColors' type='text' value='' style='width:100px;' /><br/>");
+			$html.append($addH);
+		});
+		
+		
+		$("#addFacotyMyCode2").click("click", function() {
+			var $html = $("#company_color_id2");
+			var $addH = $("<input name='myCompanyColors2' type='text' style='width:100px;'/><input name='factoryColors2' type='text' value='' style='width:100px;' /><br/>");
+			$html.append($addH);
+		});
+		
+		$("#addFacotyCodeId").click("click", function() {
+			/**
+			var v = $("[name='factoryCodes']");
+			if(v.length == 1) {
+				var $html = $("#factoryCodeInputID");
+				var $addH = $("<input name='factoryCodes' type='text' value='' style='width:100px;' />");
+				$html.append($addH);
+			} else {
+				alert("只能填写两个工厂编号");
+			}
+			**/
+			$("#fctr2").show();
+		});
+		
+		$("#addFacotyCodeId2").click("click", function() {
+			$("#fctr2").hide();
+		});
+		
+	});
+	
 	function saveWin() {
 		$("#form").submit();
 	}
@@ -93,74 +120,102 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/flower/add.html" method="post">
-		<table style="width: 385px; height: 300px;">
+		<table>
 			<tbody>
 			
 			<tr>
-				<td class="l_right">日期：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-						<input id='inputDate' name="inputDate" class="isDay" type="text" value="">
-					</div>
-				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">布种：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-						<select id="clothId" name="clothId">
-							<option value="">请选择布种</option>
-							<c:forEach items="${ cloths }" var = "cloth">
-								<option value="${cloth.id }">${cloth.clothName}</option>
-							</c:forEach>
-						</select>
-					</div>
-				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">工厂：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-						<select id="factoryId" name="factoryId">
+				<td>我司名称：</td>
+				<td>飞翔</td>
+				<td>工厂：</td>
+				<td>
+					<select id="factoryId" name="factoryId" style="width:100px;">
 							<option value="">请选择工厂</option>
 							<c:forEach items="${ factorys }" var = "factory">
 								<option value="${factory.id }">${factory.name}</option>
 							</c:forEach>
 						</select>
-					</div>
 				</td>
 			</tr>
 			
-			
 			<tr>
-				<td class="l_right">新增量：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='changeSum' name="changeSum" type="text" class="isNum" value="">
-					<select id="unit" name="unit">
-						<option value="item">条</option>
-						<option value="kg">公斤</option>
-						<option value="cm">米</option>
-						<option value="yard">码</option>
+				<td>我司编号：</td>
+				<td><input id='myCompanyCode' name="myCompanyCode" type="text" value="${flower.myCompanyCode}" style="width:100px;"></td>
+				<td>布种：</td>
+				<td>
+					<select id="clothId" name="clothId" style="width:100px;">
+							<option value="">请选择布种</option>
+							<c:forEach items="${ cloths }" var = "cloth">
+								<option value="${cloth.id }">${cloth.clothName}</option>
+							</c:forEach>
 					</select>
-					</div>
 				</td>
 			</tr>
-			
 			
 			<tr>
-				<td class="l_right">备注：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='mark' name="mark" type="text" value="">
-					</div>
+				<td>工艺：</td>
+				<td>
+					<select id="technologyId" name="technologyId" style="width:100px;">
+							<option value="">请选择工艺</option>
+							<c:forEach items="${ technologys }" var = "technology">
+								<option value="${technology.id }">${technology.name}</option>
+							</c:forEach>
+					</select>
+				</td>
+
+				<td>分色文件号：</td>
+				<td>
+					<input id='fileColor' name="fileColor" type="text" value="${flower.fileColor}" style="width:100px;">
 				</td>
 			</tr>
+			
+			<tr>
+				<td>工厂编号：</td>
+				<td>
+					<span class="factoryCodeInputcss" id="factoryCodeInputID">
+					<input name="factoryCodes" type="text" value="" style="width:100px;"/><br/>
+					</span><span id="addFacotyCodeId"><a href="javascript:void(0);">+</a></span>
+				</td>
 				
-				<tr>
-					<td colspan="2">
+				<td colspan="2">
+					<ul>
+						<li id=company_color_id>
+							<input name="myCompanyColors" type="text" value="我司颜色" style="width:100px;"/>
+							<input name="factoryColors" type="text" value="工厂颜色" style="width:100px;"/>
+							<span id="addFacotyMyCode"><a href="javascript:void(0);">+</a></span><br/>
+						</li>
+						<li></li>
+					</ul>
+				</td>
+			</tr>
+
+			<tr id="fctr2" class="factoryCodeTrCss" style="display: none">
+				<td>工厂编号：</td>
+				<td>
+					<span class="factoryCodeInputcss" id="factoryCodeInputID2">
+					<input name="factoryCodes2" type="text" value="" style="width:100px;"/><br/>
+					</span><span id="addFacotyCodeId2"><a href="javascript:void(0);">-</a></span>
+				</td>
+				
+				<td colspan="2">
+					<ul>
+						<li id=company_color_id2>
+							<input name="myCompanyColors2" type="text" value="我司颜色" style="width:100px;"/>
+							<input name="factoryColors2" type="text" value="工厂颜色" style="width:100px;"/>
+							<span id="addFacotyMyCode2"><a href="javascript:void(0);">+</a></span><br/>
+						</li>
+						<li></li>
+					</ul>
+				</td>
+				
+			</tr>
+
+		<tr>
+			<td colspan="2" >上传图片</td>
+			<td colspan="2" >图片</td>
+		</tr>
+			
+		 <tr>
+					<td colspan="4">
 						<div class="l_btn_centent">
 								<!-- saveWin_form   from是表单Ｉd-->
 								<a class="btn btn-primary" href="javascript:void(0)"
@@ -168,10 +223,12 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
 									onclick="closeWin()"><span>关闭</span> </a>
 							</div>
-						</td>
+					</td>
 				</tr>
 			</tbody>
 		</table>
+		
+		
 	</form>
 	</div>
 </body>

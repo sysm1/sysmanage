@@ -1,21 +1,28 @@
 package com.github.hzw.security.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.Resources;
+import com.github.hzw.security.service.ClothInfoService;
+import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerInfoService;
+import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
 
@@ -26,8 +33,26 @@ public class FlowerInfoController extends BaseController{
 	@Inject
 	private FlowerInfoService flowerInfoService;
 	
+	@Inject
+	private ClothInfoService clothInfoService;
+	@Inject
+	private FactoryInfoService factoryInfoService;
+	@Inject
+	private TechnologyInfoService technologyInfoService;
+	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, String pageNow, HttpServletRequest request, FlowerInfo info) {
+		
+		model.addAttribute("cloths",clothInfoService.queryAll(null));
+		model.addAttribute("factorys",factoryInfoService.queryAll(null));
+		model.addAttribute("technologys", this.technologyInfoService.queryAll(null));
+		// Map<String, Object> map = new HashMap<String, Object>();
+		String pagesize = "2";
+		// pageView = flowerInfoService.queryFind(getPageView(pageNow,pagesize), map);
+		
+		pageView = flowerInfoService.query(getPageView(pageNow,pagesize), info);
+		model.addAttribute("info", info);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/flower/list";
 	}
 	
@@ -54,9 +79,46 @@ public class FlowerInfoController extends BaseController{
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(FlowerInfo info) {
+	public Map<String, Object> add(HttpServletRequest request, FlowerInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			String factoryCodes = request.getParameter("factoryCodes"); // 第1工厂编号
+			String factoryCodes2 = request.getParameter("factoryCodes2"); // 第2工厂编号
+
+			String[] myCompanyColors = request.getParameterValues("myCompanyColors"); // 第1工厂编号对应的着色
+			String[] factoryColors = request.getParameterValues("factoryColors");
+			
+			String[] myCompanyColors2 = request.getParameterValues("myCompanyColors2"); // 第2工厂编号对应的着色
+			String[] factoryColors2 = request.getParameterValues("factoryColors2");
+			
+			List<FlowerAdditional> fas = new ArrayList<FlowerAdditional>();
+			FlowerAdditional fa = null;
+			if(StringUtils.isNotEmpty(factoryCodes)) {
+				int l = myCompanyColors.length;
+				for(int i = 0; i < l; i++) {
+					fa = new FlowerAdditional();
+					fa.setFactoryCode(factoryCodes);
+					fa.setFactoryColor(factoryColors[i]);
+					fa.setMyCompanyColor(myCompanyColors[i]);
+					fa.setMyCompanyCode(info.getMyCompanyCode());
+					fas.add(fa);
+				}
+			}
+			
+			if(StringUtils.isNotEmpty(factoryCodes2)) {
+				int l = myCompanyColors2.length;
+				for(int i = 0; i < l; i++) {
+					fa = new FlowerAdditional();
+					fa.setFactoryCode(factoryCodes2);
+					fa.setFactoryColor(factoryColors2[i]);
+					fa.setMyCompanyColor(myCompanyColors2[i]);
+					fa.setMyCompanyCode(info.getMyCompanyCode());
+					fas.add(fa);
+				}
+			}
+			info.setList(fas);
+			info.setStatus(1);
+			info.setPicture(info.getPicture()==null?"http://www.baidu.com/img/bdlogo.png":info.getPicture());
 			flowerInfoService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
@@ -65,6 +127,64 @@ public class FlowerInfoController extends BaseController{
 		return map;
 	}
 
+	/**
+	 * 更新类型
+	 * 
+	 * @param model
+	 * @return
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping("update")
+	public Map<String, Object> update(Model model, FlowerInfo info, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			
+			String factoryCodes = request.getParameter("factoryCodes"); // 第1工厂编号
+			String factoryCodes2 = request.getParameter("factoryCodes2"); // 第2工厂编号
+
+			String[] myCompanyColors = request.getParameterValues("myCompanyColors"); // 第1工厂编号对应的着色
+			String[] factoryColors = request.getParameterValues("factoryColors");
+			
+			String[] myCompanyColors2 = request.getParameterValues("myCompanyColors2"); // 第2工厂编号对应的着色
+			String[] factoryColors2 = request.getParameterValues("factoryColors2");
+			
+			List<FlowerAdditional> fas = new ArrayList<FlowerAdditional>();
+			FlowerAdditional fa = null;
+			if(StringUtils.isNotEmpty(factoryCodes)) {
+				int l = myCompanyColors.length;
+				for(int i = 0; i < l; i++) {
+					fa = new FlowerAdditional();
+					fa.setFactoryCode(factoryCodes);
+					fa.setFactoryColor(factoryColors[i]);
+					fa.setMyCompanyColor(myCompanyColors[i]);
+					fa.setMyCompanyCode(info.getMyCompanyCode());
+					fas.add(fa);
+				}
+			}
+			
+			if(StringUtils.isNotEmpty(factoryCodes2)) {
+				int l = myCompanyColors2.length;
+				for(int i = 0; i < l; i++) {
+					fa = new FlowerAdditional();
+					fa.setFactoryCode(factoryCodes2);
+					fa.setFactoryColor(factoryColors2[i]);
+					fa.setMyCompanyColor(myCompanyColors2[i]);
+					fa.setMyCompanyCode(info.getMyCompanyCode());
+					fas.add(fa);
+				}
+			}
+			info.setList(fas);
+			info.setStatus(1);
+			info.setPicture(info.getPicture()==null?"http://www.baidu.com/img/bdlogo.png":info.getPicture());
+			flowerInfoService.update(info);
+			
+			map.put("flag", "true");
+		} catch (Exception e) {
+			map.put("flag", "false");
+		}
+		return map;
+	}
 	
 	/**
 	 * 跑到新增界面
@@ -73,7 +193,11 @@ public class FlowerInfoController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("addUI")
-	public String addUI() {
+	public String addUI(Model model) {
+		
+		model.addAttribute("cloths",clothInfoService.queryAll(null));
+		model.addAttribute("factorys",factoryInfoService.queryAll(null));
+		model.addAttribute("technologys", this.technologyInfoService.queryAll(null));
 		return Common.BACKGROUND_PATH+"/flower/add";
 	}
 	
@@ -86,31 +210,29 @@ public class FlowerInfoController extends BaseController{
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
+		
+		model.addAttribute("cloths",clothInfoService.queryAll(null));
+		model.addAttribute("factorys",factoryInfoService.queryAll(null));
+		model.addAttribute("technologys", this.technologyInfoService.queryAll(null));
+		
 		FlowerInfo info = flowerInfoService.getById(id);
+		String[] factoryCodes = info.getFactoryCode().split("[,]");
+		if(factoryCodes.length == 2) {
+			model.addAttribute("factoryCode", factoryCodes[0]);
+			model.addAttribute("factoryCode2", factoryCodes[1]);
+		} else if(factoryCodes.length == 1) {
+			model.addAttribute("factoryCode", factoryCodes[0]);
+			model.addAttribute("factoryCode2", null);
+		} else {
+			model.addAttribute("factoryCode", null);
+			model.addAttribute("factoryCode2", null);
+		}
 		model.addAttribute("flower", info);
 		return Common.BACKGROUND_PATH+"/flower/edit";
 	}
 	
 	
-	/**
-	 * 更新类型
-	 * 
-	 * @param model
-	 * @return
-	 * @throws Exception 
-	 */
-	@ResponseBody
-	@RequestMapping("update")
-	public Map<String, Object> update(Model model, FlowerInfo info) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			flowerInfoService.update(info);
-			map.put("flag", "true");
-		} catch (Exception e) {
-			map.put("flag", "false");
-		}
-		return map;
-	}
+	
 	
 	/**
 	 * 删除
