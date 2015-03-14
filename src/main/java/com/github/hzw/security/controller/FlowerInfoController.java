@@ -21,6 +21,7 @@ import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
@@ -39,6 +40,8 @@ public class FlowerInfoController extends BaseController{
 	private FactoryInfoService factoryInfoService;
 	@Inject
 	private TechnologyInfoService technologyInfoService;
+	@Inject
+	private FlowerAdditionalService flowerAdditionalService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow, HttpServletRequest request, FlowerInfo info) {
@@ -258,6 +261,15 @@ public class FlowerInfoController extends BaseController{
 			map.put("flag", "false");
 		}
 		return map;
+	}
+	
+	@RequestMapping("colorDetail")
+	public String colorDetail(Model model,Integer flowerId) {
+		
+		List<FlowerAdditional> list = flowerAdditionalService.findByFlowerId(flowerId);
+		model.addAttribute("list", list);
+		
+		return Common.BACKGROUND_PATH+"/flower/colorDetail";
 	}
 	
 	@RequestMapping("exportExcel")

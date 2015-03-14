@@ -111,7 +111,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/flower/update.html" method="post">
 		<input id='id' name="id" type="hidden" value="${flower.id}">
-		<table>
+		<table class="pp-list table table-striped table-bordered" style="margin-bottom: -3px;">
 			<tbody>
 			<tr>
 				<td>我司名称：</td>

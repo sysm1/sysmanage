@@ -136,6 +136,16 @@ function test(){
 	document.getElementById('surface').style.display="block";
 }
 
+function mycolor_detail(flowerId) {
+	dialog = parent.$.ligerDialog.open({
+		width : 750,
+		height : 500,
+		url : rootPath + '/background/flower/colorDetail.html?flowerId='+flowerId,
+		title : "花号查看",
+		isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+	});
+}
+
 </script>
 </head>
 <body>
@@ -240,8 +250,8 @@ function test(){
 					<td style="text-align:center;">${flower.technologyName }</td>
 					<td style="text-align:center;">${flower.factoryName }</td>
 					<td style="text-align:center;">${flower.factoryCode}</td>
-					<td style="text-align:center;">点击见详情</td>
-					<td style="text-align:center;">点击见详情</td>
+					<td style="text-align:center;"><a href="javascript:mycolor_detail('${flower.id}');">点击见详情</a></td>
+					<td style="text-align:center;"><a href="javascript:mycolor_detail('${flower.id}');">点击见详情</a></td>
 					<td style="text-align:center;">${flower.fileColor }</td>
 				</tr>
 				</c:forEach>

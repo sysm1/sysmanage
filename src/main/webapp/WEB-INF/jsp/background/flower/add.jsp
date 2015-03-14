@@ -120,7 +120,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/flower/add.html" method="post">
-		<table>
+		<table class="pp-list table table-striped table-bordered" style="margin-bottom: -3px;">
 			<tbody>
 			
 			<tr>
