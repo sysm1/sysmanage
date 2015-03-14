@@ -100,6 +100,19 @@ th.specalt {
 html>body td{ font-size:13px;}
 </style>
 
+
+<style type="text/css">
+* { margin:0; padding:0;}
+a { color:#333; text-decoration:none;}
+ul { list-style:none;}
+#pagelist {width:600px; margin:5px auto; padding:6px 0px; height:20px;}
+#pagelist ul li { float:left; border:2px solid #5d9cdf; height:23px; line-height:20px; margin:1px 3px;}
+#pagelist ul li a, .pageinfo { display:block; padding:0px 6px; background:#e6f2fe;}
+.pageinfo  { color:#555;}
+.current { background:#CCCC00; display:block; padding:0px 6px; font-weight:bold;}
+</style>
+
+
 <style type="text/css">
 		
 		#pic span.img{display:none;}
@@ -382,29 +395,44 @@ html>body td{ font-size:13px;}
 				</c:forEach>
 				<!-- 分页 -->
 				<tr style="height: 35px">
-					<td colspan="4" style="text-align: center;font-size: 14px;">
-						总${pageView.rowCount }条&nbsp;&nbsp;&nbsp;每页${pageView.pageSize }条&nbsp;&nbsp;&nbsp; 
-						共${pageView.pageCount }页&nbsp;&nbsp;当前${pageView.pageNow }页</td>
-					<td colspan="5" style="text-align: right;font-size: 14px;">
-						<a href="javascript:page(1)">首页</a>
-						<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
-						<c:if test="${pageView.pageNow>2 }">
-							...<a href="javascript:page(${pageView.pageNow-2 })">${pageView.pageNow-2 }</a>
-						</c:if><c:if test="${pageView.pageNow>1 }">					
-							<a href="javascript:page(${pageView.pageNow-1 })">${pageView.pageNow-1 }</a>
-						</c:if>	
-							<b><a href="javascript:page(${pageView.pageNow })">[${pageView.pageNow }]</a></b>
-						<c:if test="${pageView.pageCount-1>=pageView.pageNow }">
-							<a href="javascript:page(${pageView.pageNow+1 })">${pageView.pageNow+1 }</a>
-						</c:if><c:if test="${pageView.pageCount-2>=pageView.pageNow }">
-							<a href="javascript:page(${pageView.pageNow+2 })">${pageView.pageNow+2 }</a>...
-						</c:if>
-						<c:if test="${pageView.pageNow>=pageView.pageCount }">
-							<a href="javascript:page(${pageView.pageNow })">下一页</a>
-						</c:if><c:if test="${pageView.pageNow<pageView.pageCount }">
-							<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
-						</c:if>
-						<a href="javascript:page(${pageView.pageCount })">尾页&nbsp;</a>
+					<td colspan="9" style="text-align: center;font-size: 14px;">
+						<div id="pagelist">
+  <ul style="font-size: 14px;">
+  	<c:if test="${pageView.pageNow==1}">
+  		<li><a href="#">首页</a></li>
+  		<li><a href="#">上一页</a></li>
+  	</c:if><c:if test="${pageView.pageNow>1}">
+  		<li><a href="javascript:page(1)">首页</a></li>
+    	<li><a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a></li>
+  	</c:if>
+    
+    <c:if test="${pageView.pageNow>3 }"><li style="width:15px;border: 0">...</li></c:if>
+    <c:if test="${pageView.pageNow>2 }">
+		<li><a href="javascript:page(${pageView.pageNow-2 })">${pageView.pageNow-2 }</a></li>
+	</c:if><c:if test="${pageView.pageNow>1 }">					
+		<li><a href="javascript:page(${pageView.pageNow-1 })">${pageView.pageNow-1 }</a></li>
+	</c:if>	
+		<li class="current">${pageView.pageNow }</li>
+	<c:if test="${pageView.pageCount-1>=pageView.pageNow }">
+		<li><a href="javascript:page(${pageView.pageNow+1 })">${pageView.pageNow+1 }</a></li>
+	</c:if><c:if test="${pageView.pageCount-2>=pageView.pageNow }">
+		<li><a href="javascript:page(${pageView.pageNow+2 })">${pageView.pageNow+2 }</a></li>
+	</c:if><c:if test="${pageView.pageCount-3>=pageView.pageNow }">
+		<li style="width:15px;border: 0">...</li>
+	</c:if>
+    
+    <c:if test="${pageView.pageNow>=pageView.pageCount }">
+		<li><a href="#">下一页</a></li>
+		<li><a href="#">尾页</a></li>
+	</c:if><c:if test="${pageView.pageNow<pageView.pageCount }">
+		<li><a href="javascript:page(${pageView.pageNow+1 })">下一页</a></li>
+		<li><a href="javascript:page(${pageView.pageCount })">尾页</a></li>
+	</c:if>
+	
+    <li class="pageinfo">第${pageView.pageNow }页</li>
+    <li class="pageinfo">共${pageView.pageCount }页</li>
+  </ul>
+</div>
 					</td>
 				</tr>			
 			</table><br>
