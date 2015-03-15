@@ -155,6 +155,10 @@ public class FlowerInfoController extends BaseController{
 			List<FlowerAdditional> fas = new ArrayList<FlowerAdditional>();
 			FlowerAdditional fa = null;
 			if(StringUtils.isNotEmpty(factoryCodes)) {
+				if(myCompanyColors == null || factoryColors == null || myCompanyColors.length != factoryColors.length) {
+					map.put("flag", "false");
+					return map;
+				}
 				int l = myCompanyColors.length;
 				for(int i = 0; i < l; i++) {
 					fa = new FlowerAdditional();
@@ -167,6 +171,10 @@ public class FlowerInfoController extends BaseController{
 			}
 			
 			if(StringUtils.isNotEmpty(factoryCodes2)) {
+				if(myCompanyColors2 == null || factoryColors2 == null || myCompanyColors2.length != factoryColors2.length) {
+					map.put("flag", "false");
+					return map;
+				}
 				int l = myCompanyColors2.length;
 				for(int i = 0; i < l; i++) {
 					fa = new FlowerAdditional();

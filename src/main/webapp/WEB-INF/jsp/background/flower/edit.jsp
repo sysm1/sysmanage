@@ -4,6 +4,8 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
+<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
+
 <script type="text/javascript">
 
 //单独验证某一个input  class="checkpass"
@@ -99,11 +101,57 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			$("#fctr2").hide();
 		});
 		
+		$("#uploadFile").click(function () {
+			alert("dd");
+			ajaxFileUpload();
+        });
+		
+		var picture = $("#picture").val().split("|");
+		
+		$("#img1").attr("src", picture[1]);
+		
 	});
 	
 	function saveWin() {
 		$("#form").submit();
 	}
+	
+	function ajaxFileUpload() {
+        $.ajaxFileUpload(
+            {
+                url: '/background/upload.html', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'file1', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数 
+                // string res = "{ error:'" + error + "', msg:'" + msg + "',imgurl:'" + imgurl + "'}";
+                {
+                	/**
+                    $("#img1").attr("src", data.imgurl);
+                    if (typeof (data.error) != 'undefined') {
+                        if (data.error != '') {
+                            alert(data.error);
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                    **/
+                    if( data.code == '0') {
+                    	alert(data.msg);
+                    } else {
+                    	$("#img1").attr("src", data.url);
+                    	$("#picture").val(data.picture);
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert(e);
+                }
+            }
+        )
+        return false;
+    }
+	
 </script>
 </head>
 <body>
@@ -111,6 +159,8 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/flower/update.html" method="post">
 		<input id='id' name="id" type="hidden" value="${flower.id}">
+		<input id='picture' name="picture" type="hidden" value="${flower.picture}" >
+		
 		<table class="pp-list table table-striped table-bordered" style="margin-bottom: -3px;">
 			<tbody>
 			<tr>
@@ -185,7 +235,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td>工厂编号：</td>
 				<td>
 					<span class="factoryCodeInputcss" id="factoryCodeInputID2">
-					<input name="factoryCodes2" type="text" value="${factoryCode}" style="width:100px;"/><br/>
+					<input name="factoryCodes2" type="text" value="${factoryCode2}" style="width:100px;"/><br/>
 					</span><span id="addFacotyCodeId2"><a href="javascript:void(0);">-</a></span>
 				</td>
 				
@@ -206,8 +256,8 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			</tr>
 
 		<tr>
-			<td colspan="2" >上传图片</td>
-			<td colspan="2" >图片</td>
+			<td colspan="2" >上传图片:<input type="file" id="file1" name="file" /><input id="uploadFile" type="button" value="上传" /></td>
+			<td colspan="2" ><img id="img1" alt="图片预览" src="" /></td>
 		</tr>
 			
 		 <tr>
