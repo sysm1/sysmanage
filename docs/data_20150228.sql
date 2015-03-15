@@ -454,6 +454,7 @@ CREATE TABLE `sample_input` (
   `technology_id` int(11) DEFAULT NULL,
   `saleman_id` int(11) NOT NULL,
   `picture` varchar(255) NOT NULL,
+  `small_picture` varchar(255) NOT NULL,
   `demand` text,
   `mark` text,
   `return_mark` text,

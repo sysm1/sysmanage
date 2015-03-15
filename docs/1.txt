@@ -158,7 +158,7 @@ create table order_input_additional(
 	input_id int,
 	my_company_color varchar(255), -- 我司color(来自花号基本资料表)
 	num int,				-- 预录入数量
-	unit varchar(16),  -- -- kg cm yard item
+	unit varchar(16),   -- 0条 1 kg 2cm 3yard item
 	mark text,   -- 
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
