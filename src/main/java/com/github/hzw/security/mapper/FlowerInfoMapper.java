@@ -8,6 +8,6 @@ import com.github.hzw.security.entity.FlowerInfo;
 
 public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
 
-	public List<FlowerInfo> queryFind(Map<String, Object> map);
+	public List<FlowerInfo> queryFind(FlowerInfo flowerInfo);
 	
 }

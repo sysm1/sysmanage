@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.service.FlowerAdditionalService;
@@ -57,11 +56,10 @@ public class FlowerInfoServiceTest {
 	
 	@Test
 	public void testQuery() {
-		PageView pageView = new PageView(10, 1);
-		pageView = flowerInfoService.queryFind(pageView, null);
-		List list = pageView.getRecords();
+		FlowerInfo info = new FlowerInfo();
+		info.setMyCompanyCode("44");
+		List<FlowerInfo> list = flowerInfoService.queryFind(info);
 		System.out.println(list);
-		System.out.println(pageView.getRowCount());
 	}
 	
 	@Test

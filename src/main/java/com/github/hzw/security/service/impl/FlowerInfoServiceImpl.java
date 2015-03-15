@@ -27,7 +27,6 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 	@Autowired
 	private FlowerAdditionalService flowerAdditionalService;
 	
-	
 	@Override
 	public PageView query(PageView pageView, FlowerInfo t) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -95,17 +94,10 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 	}
 	
 	@Override
-	public PageView queryFind(PageView pageView, Map<String, Object> map ){
+	public List<FlowerInfo> queryFind(FlowerInfo info ){
 		
-		if(map == null) {
-			map = new HashMap<String, Object>();
-		}
+		return flowerInfoMapper.queryFind(info);
 		
-		map.put("paging", pageView);
-		
-		List<FlowerInfo> list = flowerInfoMapper.queryFind(map);
-		pageView.setRecords(list);
-		return pageView;
 	}
 	
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.github.hzw.security.mapper.FlowerInfoMapper" >
   
   <sql id="selectId1" >
-    id, factory_id, my_company_code, cloth_id, file_color, technology_id, picture, status
+    id, factory_id factoryId, myCompanyCode, clothId, fileColor, technologyId, picture, status, factory_code factoryCode
   </sql>
   
   <sql id="selectId" >
@@ -45,7 +45,7 @@
     a.my_company_color myCompanyColor
   </sql>
   
-  <select id="queryFind" resultType="map" parameterType="map">
+  <select id="queryFind" resultType="FlowerInfo" parameterType="FlowerInfo">
 		select
 		<include refid="selectIdExt" />
 			from flower_info flower
