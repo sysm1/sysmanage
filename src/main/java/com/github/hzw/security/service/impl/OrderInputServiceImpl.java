@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.mapper.OrderInputMapper;
 import com.github.hzw.security.service.OrderInputService;
@@ -21,11 +22,11 @@ public class OrderInputServiceImpl implements OrderInputService {
 	private OrderInputMapper orderInputMapper;
 	
 	@Override
-	public PageView query(PageView pageView, OrderInput t) {
+	public PageView queryVO(PageView pageView, OrderInputVO t) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("paging", pageView);
 		map.put("t", t);
-		List<OrderInput> list = orderInputMapper.query(map);
+		List<OrderInputVO> list = orderInputMapper.queryVO(map);
 		pageView.setRecords(list);
 		return pageView;
 	}
@@ -56,6 +57,12 @@ public class OrderInputServiceImpl implements OrderInputService {
 	@Override
 	public void add(OrderInput t) throws Exception {
 		this.orderInputMapper.add(t);
+	}
+
+
+	@Override
+	public PageView query(PageView pageView, OrderInput t) {
+		return null;
 	}
 
 }
