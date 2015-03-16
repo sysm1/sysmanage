@@ -3,18 +3,27 @@
 <mapper namespace="com.github.hzw.security.mapper.OrderInputMapper" >
   
   <sql id="selectId1" >
-    id, cloth_id, my_company_code, salesman_id, status, create_time
-  </sql>
-  
-   <sql id="selectId" >
     id, cloth_id clothId, my_company_code myCompanyCode, salesman_id salesmanId, status, create_time createTime
   </sql>
   
-  <select id="query" resultType="OrderInput" parameterType="OrderInput">
+   <sql id="selectId" >
+    oi.id id,
+    oi.create_time createTime,
+    cu.cloth_name clothName,
+    oi.my_company_code myCompanyCode,
+    oa.my_company_color myCompanyColor,
+    oa.num,
+    concat(num,'(',(case oa.unit WHEN 0 then '条' 	WHEN 1 THEN 'KG' WHEN 2 THEN '米' WHEN 3 THEN '码' END),')') unit,
+    oa.mark,
+    si.name saleManName
+  </sql>
+  
+  <select id="queryVO" resultType="com.github.hzw.security.VO.OrderInputVO" parameterType="com.github.hzw.security.VO.OrderInputVO">
 		select
 		<include refid="selectId" />
-			from order_input
-		<where> 1=1
+			from order_input_additional oa,order_input oi,cloth_info cu,salesman_info si 
+		<where> 
+		oa.input_id=oi.id and oi.cloth_id=cu.id and si.id=oi.salesman_id
 		<if test="t.clothId != null and t.clothId != ''">
 			and cloth_id = #{t.clothId}
 		</if>
@@ -26,6 +35,9 @@
 		</if>
 		<if test="t.status != null and t.status != ''">
 			and status = #{t.status}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+			and oa.mark  like '%${t.mark}%'
 		</if>
 		</where>
 		order by id desc
@@ -46,7 +58,7 @@
 		values(
 			#{clothId},
 			#{myCompanyCode},
-			#{salemanId},
+			#{salesmanId},
 			#{status},
 			#{createTime}
 		)
@@ -59,7 +71,7 @@
 	
 	<select id="getById" parameterType="String" resultType="OrderInput">
 		select
-		<include refid="selectId" />
+		<include refid="selectId1" />
 		from order_input where id=#{id}
 	</select>
 	
@@ -72,8 +84,8 @@
       	<if test="myCompanyCode != null and myCompanyCode != ''">
         	my_company_code=#{myCompanyCode},
       	</if>
-      	<if test="salemanId != null and salemanId != ''">
-        	saleman_id=#{salemanId},
+      	<if test="salesmanId != null and salesmanId != ''">
+        	salesman_id=#{salesmanId},
       	</if>
       	<if test="status != null and status != ''">
         	status=#{status},

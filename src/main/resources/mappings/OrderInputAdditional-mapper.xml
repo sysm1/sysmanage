@@ -28,10 +28,15 @@
 		order by id desc
 	</select>
 
-	<select id="queryAll" resultType="OrderInputAdditional">
+	<select id="queryAll" resultType="OrderInputAdditional" parameterType="OrderInputAdditional">
 		select
 		<include refid="selectId" />
 		from order_input_additional
+		<where> 1=1 
+		<if test="inputId != null and inputId != ''">
+			and input_id = #{inputId}
+		</if>
+		</where>
 		order by id desc
 	</select>
 
@@ -42,16 +47,22 @@
 		)
 		values(
 			#{inputId},
-			#{myCompanyCode},
+			#{myCompanyColor},
 			#{num},
 			#{unit},
 			#{mark}
 		)
+		
 	</insert>
 	
 	<delete id="delete" parameterType="String">
 		delete from order_input_additional where
 		id=#{id}
+	</delete>
+	
+	<delete id="deleteByInputId" parameterType="String">
+		delete from order_input_additional where
+		input_id=#{inputId}
 	</delete>
 	
 	<select id="getById" parameterType="String" resultType="OrderInputAdditional">
