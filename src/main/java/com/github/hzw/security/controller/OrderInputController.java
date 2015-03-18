@@ -94,7 +94,7 @@ public class OrderInputController extends BaseController {
 			info.setCreateTime(new Date());
 			info.setStatus(0);
 			orderInputService.add(info);
-			orderInputAdditionalService.saveAddition(request,info.getId());
+			orderInputAdditionalService.saveAddition(request,info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -165,7 +165,7 @@ public class OrderInputController extends BaseController {
 			}else{
 				orderInputService.update(info);
 			}
-			orderInputAdditionalService.saveAddition(request,info.getId());
+			orderInputAdditionalService.saveAddition(request,info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");

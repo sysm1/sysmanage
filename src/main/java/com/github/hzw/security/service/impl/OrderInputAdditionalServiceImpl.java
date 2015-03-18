@@ -11,9 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputAdditional;
+import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.mapper.OrderInputAdditionalMapper;
+import com.github.hzw.security.mapper.OrderInputSummaryMapper;
 import com.github.hzw.security.service.OrderInputAdditionalService;
+import com.github.hzw.security.service.OrderInputSummaryService;
 
 @Transactional
 @Service("orderInputAdditionalService")
@@ -22,6 +26,9 @@ public class OrderInputAdditionalServiceImpl implements
 
 	@Autowired
 	private OrderInputAdditionalMapper orderInputAdditionalMapper;
+	
+	@Autowired
+	private OrderInputSummaryMapper orderInputSummaryMapper;
 	
 	@Override
 	public PageView query(PageView pageView, OrderInputAdditional t) {
@@ -38,27 +45,44 @@ public class OrderInputAdditionalServiceImpl implements
 	 * @param request
 	 */
 	@Override
-	public void saveAddition(HttpServletRequest request,Integer inputId){
+	public void saveAddition(HttpServletRequest request,OrderInput input){
 		String[] myCompanyColors=request.getParameterValues("myCompanyColor");
 		String[] nums=request.getParameterValues("num");
 		String[] marks=request.getParameterValues("mark");
 		String[] units=request.getParameterValues("unit");
 		//删除预录入的相关附属信息
-		orderInputAdditionalMapper.deleteByInputId(inputId+"");
+		orderInputAdditionalMapper.deleteByInputId(input.getId()+"");
 		OrderInputAdditional bean=new OrderInputAdditional();
+		OrderInputSummary orderInputSummary=new OrderInputSummary();
+		List<OrderInputSummary> olist=null;
 		for(int i=0;i<myCompanyColors.length;i++){
 			bean=new OrderInputAdditional();
 			bean.setMyCompanyColor(myCompanyColors[i]);
 			bean.setNum(Integer.parseInt(nums[i]));
 			bean.setMark(marks[i]);
 			bean.setUnit(units[i]);
-			bean.setInputId(inputId);
+			bean.setInputId(input.getId());
 			try {
 				this.add(bean);
+				
+				//预录入汇总
+				orderInputSummary.setMyCompanyCode(input.getMyCompanyCode());
+				orderInputSummary.setClothId(input.getClothId());
+				orderInputSummary.setMyCompanyColor(myCompanyColors[i]);
+				olist=orderInputSummaryMapper.queryAll(orderInputSummary);
+				if(olist.size()>0){
+					orderInputSummary.setId(olist.get(0).getId());
+					orderInputSummary.setOrderIds(olist.get(0).getOrderIds()+","+bean.getId());
+					orderInputSummaryMapper.update(orderInputSummary);
+				}else{
+					orderInputSummary.setOrderIds(bean.getId()+"");
+					orderInputSummaryMapper.add(orderInputSummary);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		
 	}
 
 	

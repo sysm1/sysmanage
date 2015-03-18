@@ -44,6 +44,14 @@ public class ClothInfoController extends BaseController {
 		pageView = clothInfoService.query(getPageView(pageNow,pagesize), clothInfo);
 		return pageView;
 	}
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping("getClothUnit")
+	public String getClothUnit(ClothInfo clothInfo,String pageNow,String pagesize){
+		pageView = clothInfoService.query(getPageView(pageNow,pagesize), clothInfo);
+		List<ClothInfo> list=pageView.getRecords();
+		return list.get(0).getUnitName();
+	}
 	
 	
 	/**

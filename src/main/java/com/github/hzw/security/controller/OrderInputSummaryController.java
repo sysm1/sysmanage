@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.OrderInputSummaryService;
@@ -27,7 +28,9 @@ public class OrderInputSummaryController extends BaseController {
 	private OrderInputSummaryService orderInputSummaryService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, String pageNow,String pagesize,OrderInputSummary info) {
+		pageView = orderInputSummaryService.queryVO(getPageView(pageNow,pagesize), info);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/inputsummary/list";
 	}
 	
@@ -43,6 +46,29 @@ public class OrderInputSummaryController extends BaseController {
 		return pageView;
 	}
 	
+	/**
+	 * @param model
+	 * 存放返回界面的model
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping("queryList")
+	public List<OrderInputSummaryVO> queryList(OrderInputSummary info,String pageNow,String pagesize,String id) {
+		pageView = orderInputSummaryService.queryVO(getPageView(pageNow,"100"), info);
+		return pageView.getRecords();
+	}
+	
+	/**
+	 * @param model
+	 * 查询下单预录入详单
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryOrderInputBySummaryId")
+	public List<OrderInputSummaryVO> queryOrderInputBySummaryId(OrderInputSummary info,String pageNow,String pagesize,String id) {
+		return orderInputSummaryService.queryOrderInputBySummaryId( info);
+	}
 	
 	/**
 	 * 保存数据
