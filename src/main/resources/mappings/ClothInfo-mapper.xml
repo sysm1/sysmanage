@@ -19,6 +19,8 @@
 		</if>
 		<if test="t.mark != null and t.mark != ''">
 			and mark like '%${t.mark}%'
+		</if><if test="t.id != null and t.id != ''">
+			and id=#{t.id}
 		</if>
 		</where>
 		order by id desc
