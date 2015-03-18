@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.ClothUnit;
 import com.github.hzw.security.mapper.ClothAllowanceMapper;
 import com.github.hzw.security.service.ClothAllowanceService;
+import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.ClothUnitService;
 import com.github.hzw.util.MathUtil;
 
@@ -26,6 +28,9 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 	
 	@Autowired
 	private ClothUnitService clothUnitService;
+	@Autowired
+	private ClothInfoService clothInfoService;
+	
 	
 	@Override
 	public PageView query(PageView pageView, ClothAllowance t) {
@@ -79,15 +84,20 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 	@Override
 	public void add(ClothAllowance t) throws Exception {
 		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId());
+		ClothInfo cloth = clothInfoService.getById(t.getClothId() + "");
 		if(tm == null) {
 			t.setOldSum(0.0);
-			t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()));
+			// t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()));
+			t.setAllowance(t.getChangeSum());
+			t.setUnit(cloth.getUnit());
 			t.setCreateTime(new Date());
 			this.clothAllowanceMapper.add(t);
 		} else {
 			t.setId(tm.getId());
 			t.setOldSum(tm.getAllowance());
-			t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()) + tm.getAllowance());
+			//t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()) + tm.getAllowance());
+			t.setAllowance(t.getChangeSum() + tm.getAllowance());
+			t.setUnit(cloth.getUnit());
 			t.setCreateTime(new Date());
 			this.clothAllowanceMapper.update(t);
 		}
@@ -104,7 +114,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 	 * @param sum    量
 	 * @throws Exception 
 	 */
-	private Double changeUnit(Integer clothId, String unitname, Double sum) throws Exception {
+	public Double changeUnit(Integer clothId, String unitname, Double sum) throws Exception {
 		if(sum == null) return 0.0;
 		ClothUnit clothUnit = clothUnitService.queryClothId(clothId);
 		if(clothUnit == null) throw new Exception("没有该布种单位");

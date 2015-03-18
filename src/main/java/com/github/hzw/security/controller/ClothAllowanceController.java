@@ -73,6 +73,7 @@ public class ClothAllowanceController extends BaseController {
 		map.put("beginTime", DateUtil.str2Date(request.getParameter("beginTime"), "yyyy-MM-dd"));
 		map.put("endTime", DateUtil.str2Date(request.getParameter("endTime"), "yyyy-MM-dd"));
 		map.put("change", request.getParameter("change"));
+		map.put("unit", request.getParameter("unit"));
 		pageView = clothAllowanceService.queryByFind(getPageView(pageNow,pagesize), map);
 		return pageView;
 		

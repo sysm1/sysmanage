@@ -13,7 +13,7 @@
     (select cloth.cloth_name from cloth_info cloth where cloth.id = cloth_allowance.cloth_id ) as clothName,
     factory_id as factoryId, 
     (select factory.name from factory_info factory where factory.id = cloth_allowance.factory_id ) as factoryName,
-    allowance, unit, 
+    allowance, unit,
     old_sum as oldSum, 
     change_sum as changeSum, 
     create_time as createTime, 
@@ -66,6 +66,10 @@
       	<if test="endTime != null and endTime != ''">
 			and input_date &lt; #{endTime}
 		</if>
+		<if test="unit != null and unit != ''">
+			and unit = #{unit}
+		</if>
+		
 		<if test="change != null and change != ''">
 			<choose>
 		        <when test="change == 'positive'">  
@@ -83,7 +87,7 @@
 	    	</choose>
 		</if>
 		</where>
-		order by id desc
+		order by unit desc, id desc
 	</select>
 
 	<select id="queryAll" resultType="ClothAllowance">

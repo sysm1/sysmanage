@@ -14,7 +14,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 **/
 
 jQuery.validator.addMethod("isNum", function(value, element) {
-	 var num = /^([0-9]+)$/;
+	 var num = /^([-0-9]+)$/;
 	 return this.optional(element) || (num.test(value));
 }, "只能输入数字");
 
@@ -107,7 +107,7 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 				<td class="l_right">日期：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='inputDate' name="inputDate" class="isDay" type="text" value="${allowance.inputDate}">
+						<input id='inputDate' name="inputDate" class="isDay" type="text" value="${allowance.strInputDate}">
 					</div>
 				</td>
 			</tr>
@@ -118,6 +118,20 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 					<div class="lanyuan_input">
 						<input id='clothId' name="clothId" type="hidden" value="${allowance.clothId}">
 						<input id='clothName' name="clothName" type="text" value="${allowance.clothName}" readonly="readonly">
+					</div>
+				</td>
+			</tr>
+			<!-- 0条 1 kg 2cm 3码 -->
+			<tr>
+				<td class="l_right">单位：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+						<c:choose>
+							<c:when test="${ allowance.unit == '1' }">公斤</c:when>
+							<c:when test="${ allowance.unit == '2' }">米</c:when>
+							<c:when test="${ allowance.unit == '3' }">码</c:when>
+							<c:otherwise>条</c:otherwise>
+						</c:choose>
 					</div>
 				</td>
 			</tr>
@@ -137,12 +151,7 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='changeSum' name="changeSum" type="text" class="isNum" value="${allowance.changeSum}">
-					<select id="unit" name="unit">
-						<option value = "item">条</option>
-						<option value = "kg">公斤</option>
-						<option value = "cm">米</option>
-						<option value = "yard">码</option>
-					</select>
+					
 					</div>
 				</td>
 			</tr>

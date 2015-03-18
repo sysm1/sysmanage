@@ -20,8 +20,8 @@ create table cloth_info (
 	order_name varchar(255) not null unique, -- 下单名称
 	create_time date not null,
 	mark text,
-	unit int,
-	loss_rate int
+	unit int,   			-- /**布种单位 0条 1 kg 2cm 3码***/
+	loss_rate int 			-- 折扣率
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

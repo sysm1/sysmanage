@@ -49,7 +49,7 @@ public class ClothAllowanceServiceTest {
 		// Date temp = new Date();
 		ae.setInputDate(DateUtil.str2Date("2015-01-01", "yyyy-MM-dd"));
 		// ae.setInputDate("2015-01-01");
-		ae.setUnit("cm");
+		ae.setUnit(2);
 		clothAllowanceService.add(ae);
 	}
 	

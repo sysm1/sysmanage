@@ -87,6 +87,23 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 	function saveWin() {
 		$("#form").submit();
 	}
+	
+	// clothId  0条 1 kg 2cm 3码
+	$(function() {
+		$('#clothId').change(function(){
+			var unit = ($(this).find("option:selected").attr("runit"));
+			if(unit == '' || unit == null || unit == undefined) return;
+			if(unit == '0') {
+				$("#clothUnit").html("条");
+			} else if(unit == '1') {
+				$("#clothUnit").html("公斤");
+			} else if(unit == '2') {
+				$("#clothUnit").html("米");
+			} else if(unit == '3') {
+				$("#clothUnit").html("码");
+			} 
+		});
+	});
 </script>
 </head>
 <body>
@@ -112,10 +129,17 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 						<select id="clothId" name="clothId">
 							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
-								<option value="${cloth.id }">${cloth.clothName}</option>
+								<option runit="${cloth.unit}" value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
 					</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="l_right">单位：</td>
+				<td class="l_left">
+					<div class="lanyuan_input" id="clothUnit"></div>
 				</td>
 			</tr>
 			
@@ -125,7 +149,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					<div class="lanyuan_input">
 						<select id="factoryId" name="factoryId">
 							<option value="">请选择工厂</option>
-							<c:forEach items="${ factorys }" var = "factory">
+							<c:forEach items = "${ factorys }" var="factory">
 								<option value="${factory.id }">${factory.name}</option>
 							</c:forEach>
 						</select>
@@ -138,13 +162,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td class="l_right">新增量：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-					<input id='changeSum' name="changeSum" type="text" class="isNum" value="">
-					<select id="unit" name="unit">
-						<option value="item">条</option>
-						<option value="kg">公斤</option>
-						<option value="cm">米</option>
-						<option value="yard">码</option>
-					</select>
+						<input id='changeSum' name="changeSum" type="text" class="isNum" value="">
 					</div>
 				</td>
 			</tr>
