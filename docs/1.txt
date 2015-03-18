@@ -20,6 +20,8 @@ create table cloth_info (
 	order_name varchar(255) not null unique, -- 下单名称
 	create_time date not null,
 	mark text,
+	unit int,
+	loss_rate int
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
