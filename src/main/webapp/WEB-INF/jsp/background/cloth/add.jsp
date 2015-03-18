@@ -40,6 +40,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				},
 				orderName : {
 					required : true
+				},
+				unit : {
+					required : true
+				},
+				lossRate : {
+					required : true
 				}
 			},
 			messages : {
@@ -48,6 +54,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				},
 				orderName : {
 					required : "请输入下单名称",
+				},
+				unit : {
+					required : "请选择布种单位",
+				},
+				lossRate : {
+					required : "请输入损耗率",
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -86,6 +98,24 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<div class="lanyuan_input">
 					<input id='orderName' name="orderName" type="text" value="">
 						</div></td>
+				</tr><tr>
+					<td class="l_right">布种单位：</td>
+					<td class="l_left">
+						<select id="unit" name="unit">
+							<option value="">选择单位</option>
+							<option value="0">条</option>
+							<option value="1">KG</option>
+							<option value="2">米</option>
+							<option value="3">码</option>
+						</select>
+					</td>
+				</tr><tr>
+					<td class="l_right">损耗率：</td>
+					<td class="l_left">
+					<div class="lanyuan_input">
+						<input id='lossRate' name="lossRate" type="text" value="">
+					</div>
+					</td>
 				</tr>
 				
 				<tr>

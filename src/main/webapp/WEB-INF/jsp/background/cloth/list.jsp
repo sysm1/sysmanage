@@ -24,6 +24,12 @@
 						colkey : "orderName",
 						name : "下单名称",
 					}, {
+						colkey : "unitName",
+						name : "布种单位",
+					},{
+						colkey : "lossRate",
+						name : "损耗率",
+					},{
 						colkey : "mark",
 						name : "备注"
 					}],

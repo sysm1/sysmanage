@@ -90,6 +90,24 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td class="l_left">
 					<input id='orderName' name="orderName" type="text" value="${cloth.orderName}">
 					</td>
+				</tr><tr>
+					<td class="l_right">布种单位：</td>
+					<td class="l_left">
+						<select id="unit" name="unit">
+							<option value="">选择单位</option>
+							<option value="0" <c:if test="${cloth.unit eq 0 }">selected</c:if>>条</option>
+							<option value="1" <c:if test="${cloth.unit eq 1 }">selected</c:if>>KG</option>
+							<option value="2" <c:if test="${cloth.unit eq 2 }">selected</c:if>>米</option>
+							<option value="3" <c:if test="${cloth.unit eq 3 }">selected</c:if>>码</option>
+						</select>
+					</td>
+				</tr><tr>
+					<td class="l_right">损耗率：</td>
+					<td class="l_left">
+					<div class="lanyuan_input">
+						<input id='lossRate' name="lossRate" type="text" value="${cloth.lossRate}">
+					</div>
+					</td>
 				</tr>
 				
 				<tr>
