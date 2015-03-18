@@ -3,7 +3,7 @@
 <mapper namespace="com.github.hzw.security.mapper.ClothInfoMapper" >
 
   <sql id="selectId" >
-    id, pinyin, cloth_name as clothName, order_name as orderName, mark, create_time as createTime
+    id, pinyin, cloth_name as clothName,unit,loss_rate lossRate, order_name as orderName, mark, create_time as createTime
   </sql>
   
   <select id="query" resultType="ClothInfo" parameterType="ClothInfo">
@@ -46,14 +46,16 @@
 
 	<insert id="add" parameterType="ClothInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into cloth_info (
-			pinyin, cloth_name, order_name,mark, create_time
+			pinyin, cloth_name, order_name,mark, create_time,unit,loss_rate
 		)
 		values(
 			#{pinyin},
 			#{clothName},
 			#{orderName},
 			#{mark},
-			#{createTime}
+			#{createTime},
+			#{unit},
+			#{lossRate}
 		)
 	</insert>
 	
@@ -85,6 +87,10 @@
       	</if>
 		<if test="createTime != null" >
         	create_time=#{createTime},
+      	</if><if test="unit != null" >
+        	unit=#{unit},
+      	</if><if test="lossRate != null" >
+        	loss_rate=#{lossRate},
       	</if>
 		</set>
 		where id=#{id}

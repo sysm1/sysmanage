@@ -10,6 +10,10 @@
     id, cloth_id clothId, my_company_code myCompanyCode, my_company_color myCompanyColor, num, order_ids orderIds, mark
   </sql>
   
+  <sql id="selectIdVO" >
+    ois.id,ci.cloth_name clothName,ois.my_company_code myCompanyCode,ois.my_company_color myCompanyColor
+  </sql>
+  
   <select id="query" resultType="OrderInputSummary" parameterType="OrderInputSummary">
 		select
 		<include refid="selectId" />
@@ -36,14 +40,42 @@
 		</where>
 		order by id desc
 	</select>
-
-	<select id="queryAll" resultType="OrderInputSummary">
+	
+	<select id="queryVO" resultType="com.github.hzw.security.VO.OrderInputSummaryVO" parameterType="OrderInputSummary">
 		select
-		<include refid="selectId" />
-		from order_input_summary
+		<include refid="selectIdVO" />
+	    from order_input_summary ois,cloth_info ci  
+		<where> 
+		ois.cloth_id=ci.id
+		</where>
 		order by id desc
 	</select>
 
+	<select id="queryAll" resultType="OrderInputSummary" parameterType="OrderInputSummary">
+		select
+		<include refid="selectId" />
+		from order_input_summary
+		<where> 1=1
+		<if test="clothId != null and clothId != ''">
+			and cloth_id = #{clothId}
+		</if>
+		<if test="myCompanyCode != null and myCompanyCode != ''">
+			and my_company_code = #{myCompanyCode}
+		</if>
+		<if test="myCompanyColor != null and myCompanyColor != ''">
+			and my_company_color = #{myCompanyColor}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryOrderInputBySummaryId" parameterType="OrderInputSummary" resultType="com.github.hzw.security.VO.OrderInputSummaryVO">
+		select oi.create_time createTime,ci.cloth_name clothName,
+			oi.my_company_code myCompanyCode,oa.my_company_color myCompanyColor,oa.num,oa.mark,si.name saleManName
+		from order_input_additional oa,order_input  oi,cloth_info ci,salesman_info si
+		where INSTR((select concat(',',t.order_ids,',') from order_input_summary t where t.id=#{id}),concat(',',oa.id,','))>0
+			and oa.input_id=oi.id and oi.cloth_id=ci.id and oi.salesman_id=si.id 
+	</select>
 
 	<insert id="add" parameterType="OrderInputSummary" useGeneratedKeys="true" keyProperty="id">
 		insert into order_input_summary (
@@ -74,22 +106,22 @@
 		update order_input_summary
 		<set>
       	<if test="clothId != null and clothId != ''">
-        	and cloth_id=#{clothId},
+        	 cloth_id=#{clothId},
       	</if>
       	<if test="myCompanyCode != null and myCompanyCode != ''">
-        	and my_company_code=#{myCompanyCode},
+        	 my_company_code=#{myCompanyCode},
       	</if>
       	<if test="myCompanyColor != null and myCompanyColor != ''">
-        	and my_company_color=#{myCompanyColor},
+        	 my_company_color=#{myCompanyColor},
       	</if>
       	<if test="num != null and num != ''">
-        	and num=#{num},
+        	 num=#{num},
       	</if>
       	<if test="orderIds != null and orderIds != ''">
-        	and order_ids=#{orderIds},
+        	 order_ids=#{orderIds},
       	</if>
       	<if test="mark != null and mark != ''">
-        	and mark=#{mark},
+        	 mark=#{mark},
       	</if>
 		</set>
 		where id=#{id}
