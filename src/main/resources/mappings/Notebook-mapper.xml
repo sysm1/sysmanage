@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.NotebookMapper" >
+
+  <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.Notebook" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, userid, time, title, content, create_time createTime
+  </sql>
+  
+  <select id="query" resultType="Notebook" parameterType="Notebook">
+		select
+		<include refid="Base_Column_List" />
+			from notebook
+		<where> 1=1
+			  <if test="t.userid != null" >
+		        and userid = #{t.userid,jdbcType=INTEGER}
+		      </if>
+		      <if test="t.time != null" >
+		        and time = #{t.time,jdbcType=VARCHAR}
+		      </if>
+		      <if test="t.title != null" >
+		        and title like '%${t.title}%'
+		      </if>
+		     
+		      <if test="t.content != null" >
+		        and content like '%${t.content}%'
+		      </if>
+		</where>
+		order by id desc
+	</select>
+  
+  
+  <select id="queryAll" resultType="Notebook" parameterType="Notebook">
+		select
+		<include refid="Base_Column_List" />
+			from notebook
+		<where> 1=1
+			  <if test="userid != null" >
+		        and userid = #{userid,jdbcType=INTEGER}
+		      </if>
+		      <if test="time != null" >
+		        and time = #{time,jdbcType=VARCHAR}
+		      </if>
+		      <if test="title != null" >
+		        and title like '%${title}%'
+		      </if>
+		     
+		      <if test="content != null" >
+		        and content like '%${content}%'
+		      </if>
+		</where>
+		order by id desc
+	</select>
+	
+  
+  <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from notebook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getByTime" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from notebook
+    where time = #{time,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from notebook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="add" parameterType="com.github.hzw.security.entity.Notebook" useGeneratedKeys="true" keyProperty="id" >
+    insert into notebook (id, userid, time, 
+      title, create_time, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.github.hzw.security.entity.Notebook" >
+    insert into notebook
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.github.hzw.security.entity.Notebook" >
+    update notebook
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.github.hzw.security.entity.Notebook" >
+    update notebook
+    set userid = #{userid,jdbcType=INTEGER},
+      time = #{time,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.github.hzw.security.entity.Notebook" >
+    update notebook
+    set userid = #{userid,jdbcType=INTEGER},
+      time = #{time,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
