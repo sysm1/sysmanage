@@ -73,7 +73,7 @@ create table cloth_allowance (
 	cloth_id int not null,
 	factory_id int not null,
 	allowance double not null,    -- 现余量
-	unit varchar(32) not null, -- 单位（录入单位）
+	unit int not null, -- 单位（录入单位）-- /**布种单位 0条 1 kg 2cm 3码***/
 	old_sum double not null,      -- 前余量(单位需要统一)
 	change_sum double not null,   -- 变动量(单位需要统一)
 	input_date datetime not null,  -- 日期
