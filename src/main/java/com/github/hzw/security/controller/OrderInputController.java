@@ -121,13 +121,16 @@ public class OrderInputController extends BaseController {
 	
 
 	/**
-	 * 跑到新增界面
+	 * 跑到修改界面
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("editUI")
-	public String editUI(Model model,String id,HttpServletRequest request) {
+	public String editUI(Model model,String id,String addId,HttpServletRequest request) {
+		if(null!=addId&&!"".equals(addId)){
+			id=orderInputAdditionalService.getById(addId).getInputId()+"";
+		}
 		String type=request.getParameter("type");
 		OrderInput info = orderInputService.getById(id);
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);

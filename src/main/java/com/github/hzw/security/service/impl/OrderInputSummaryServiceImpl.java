@@ -47,8 +47,13 @@ public class OrderInputSummaryServiceImpl implements OrderInputSummaryService {
 	 * @return
 	 */
 	@Override
-	public List<OrderInputSummaryVO> queryOrderInputBySummaryId(OrderInputSummary orderInputSummary){
-		return orderInputSummaryMapper.queryOrderInputBySummaryId(orderInputSummary);
+	public PageView queryOrderInputBySummaryId(PageView pageView,OrderInputSummary t){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("paging", pageView);
+		map.put("t", t);
+		List<OrderInputSummaryVO> list = orderInputSummaryMapper.queryOrderInputBySummaryId(map);
+		pageView.setRecords(list);
+		return pageView;
 	}
 	
 	@Override

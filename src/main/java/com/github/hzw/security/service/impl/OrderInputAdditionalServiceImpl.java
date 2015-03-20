@@ -60,7 +60,6 @@ public class OrderInputAdditionalServiceImpl implements
 			bean.setMyCompanyColor(myCompanyColors[i]);
 			bean.setNum(Integer.parseInt(nums[i]));
 			bean.setMark(marks[i]);
-			bean.setUnit(units[i]);
 			bean.setInputId(input.getId());
 			try {
 				this.add(bean);
@@ -72,7 +71,7 @@ public class OrderInputAdditionalServiceImpl implements
 				olist=orderInputSummaryMapper.queryAll(orderInputSummary);
 				if(olist.size()>0){
 					orderInputSummary.setId(olist.get(0).getId());
-					orderInputSummary.setOrderIds(olist.get(0).getOrderIds()+","+bean.getId());
+					orderInputSummary.setOrderIds(orderInputSummary.getOrderIds()+","+bean.getId());
 					orderInputSummaryMapper.update(orderInputSummary);
 				}else{
 					orderInputSummary.setOrderIds(bean.getId()+"");

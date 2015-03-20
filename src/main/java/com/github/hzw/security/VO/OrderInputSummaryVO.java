@@ -1,6 +1,11 @@
 package com.github.hzw.security.VO;
 
+import java.sql.Date;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.github.hzw.util.ExcelDataMapper;
+import com.github.hzw.util.JsonDate4YYYYMMDD;
 
 /**
  * 预下单录入汇总表  关键字  inputsummary
@@ -10,13 +15,16 @@ import com.github.hzw.util.ExcelDataMapper;
 public class OrderInputSummaryVO {
     
 	private Integer id;
+	
+	/**下单汇总ID**/
+	private Integer summId;
 
     private Integer clothId;
     
     /**布种名称**/
     private String clothName;
     
-    private String createTime;
+    private Date createTime;
     
     /***我司编号**/
     private String myCompanyCode;
@@ -104,12 +112,21 @@ public class OrderInputSummaryVO {
 	public void setSaleManName(String saleManName) {
 		this.saleManName = saleManName;
 	}
-
-	public String getCreateTime() {
+	
+	@JsonSerialize(using=JsonDate4YYYYMMDD.class)
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public Integer getSummId() {
+		return summId;
+	}
+
+	public void setSummId(Integer summId) {
+		this.summId = summId;
 	}
 }
