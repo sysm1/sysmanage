@@ -74,14 +74,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				'</td>'+
 				'<td align="right"><span style="color: red">*</span>数量：</td>'+
 				'<td class="l_left">'+
-				'	<input type="text" name="num" style="width: 68%">'+
-				' <select style="width: 25%" id="unit" name="unit">'+
-				'			<option value="0">条</option>'+
-				'			<option value="1">KG</option>'+
-				'			<option value="2">米</option>'+
-				'			<option value="3">码</option>'+
-				'		</select>'+
-				'</td>'+
+				'	<input type="text" name="num" style="width: 68%">&nbsp;<span name="unitName">'+
+				$("#unitName")[0].innerHTML+
+				'</span></td>'+
 				'<td align="right">备注：</td>'+
 				'<td class="l_left">'+
 				'	<input type="text" name="mark">'+
@@ -105,6 +100,45 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		}
 	}
 	
+	/**改变布种的值时联动**/
+	function changeClothSelect(obj){
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/cloth/getClothUnit.html', //要访问的后台地址
+		    data: {id:obj.value}, //要发送的数据
+		    success: function(data){
+		    	changeUnitName(data);
+			},error : function() {    
+		          // view("异常！");    
+		          alert("异常！");    
+		     } 
+		});
+	}
+	
+	function changeUnitName(name){
+		var names=document.getElementsByName("unitName");
+		for(var i=0;i<names.length;i++){
+			names[i].innerHTML=name;
+		}
+	}
+	function initUnit(id){
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/cloth/getClothUnit.html', //要访问的后台地址
+		    data: {id:id}, //要发送的数据
+		    success: function(data){
+		    	changeUnitName(data);
+			},error : function() {    
+		          // view("异常！");    
+		          alert("异常！");    
+		     } 
+		});
+	}
+	
 </script>
 </head>
 <body>
@@ -119,7 +153,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<tr>
 					<td align="right"><span style="color: red">*</span>布种：</td>
 					<td class="l_left">
-						<select id="clothId" name="clothId">
+						<select id="clothId" name="clothId" onchange="changeClothSelect(this);">
 							<option>请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq input.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
@@ -154,12 +188,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td align="right"><span style="color: red">*</span>数量：</td>
 					<td class="l_left">
 						<input type="text" name="num" value="${addtion.num }" style="width: 68%">
-						<select style="width: 25%" id="unit" name="unit">
-							<option value="0" <c:if test="${addtion.unit eq 0 }">selected="selected"</c:if>>条</option>
-							<option value="1" <c:if test="${addtion.unit eq 1 }">selected="selected"</c:if>>KG</option>
-							<option value="2" <c:if test="${addtion.unit eq 2 }">selected="selected"</c:if>>米</option>
-							<option value="3" <c:if test="${addtion.unit eq 3 }">selected="selected"</c:if>>码</option>
-						</select>
+						<span id="unitName" name="unitName"></span>
 					</td>
 					<td align="right">备注：</td>
 					<td class="l_left">
@@ -189,4 +218,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	</form>
 	</div>
 </body>
+<script type="text/javascript">
+initUnit(${input.clothId});
+</script>
 </html>
