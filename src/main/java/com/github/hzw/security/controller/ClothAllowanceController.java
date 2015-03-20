@@ -92,8 +92,8 @@ public class ClothAllowanceController extends BaseController {
 	public Map<String, Object> add(HttpServletRequest request , HttpServletResponse response, ClothAllowance info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			
 			info.setCreateTime(new Date());
+			info.setUnitkg(1); // 公斤 
 			clothAllowanceService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {

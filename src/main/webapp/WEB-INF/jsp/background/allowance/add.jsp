@@ -58,6 +58,9 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				},
 				changeSum : {
 					required : true
+				},
+				changeSumkg: {
+					required : true
 				}
 			},
 			messages : {
@@ -72,6 +75,9 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				},
 				changeSum : {
 					required : "改变量不能为空",
+				},
+				changeSumkg : {
+					required : "kg改变量不能为空",
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -88,7 +94,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 		$("#form").submit();
 	}
 	
-	// clothId  0条 1 kg 2cm 3码
+	// clothId  0条 1 kg 2cm 3码 4包
 	$(function() {
 		$('#clothId').change(function(){
 			var unit = ($(this).find("option:selected").attr("runit"));
@@ -101,7 +107,9 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				$("#clothUnit").html("米");
 			} else if(unit == '3') {
 				$("#clothUnit").html("码");
-			} 
+			} else if(unit == '4') {
+				$("#clothUnit").html("包");
+			}
 		});
 	});
 </script>
@@ -134,7 +142,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 						</select>
 					</div>
 				</td>
-			</tr>
+			 </tr>
 			
 			<tr>
 				<td class="l_right">单位：</td>
@@ -157,7 +165,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				</td>
 			</tr>
 			
-			
 			<tr>
 				<td class="l_right">新增量：</td>
 				<td class="l_left">
@@ -167,6 +174,21 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				</td>
 			</tr>
 			
+			<tr>
+				<td class="l_right">单位：</td>
+				<td class="l_left">
+					<div class="lanyuan_input" id="clothUnit">公斤</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="l_right">新增量：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="">
+					</div>
+				</td>
+			</tr>
 			
 			<tr>
 				<td class="l_right">备注：</td>
