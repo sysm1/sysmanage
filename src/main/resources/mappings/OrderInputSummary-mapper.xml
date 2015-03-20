@@ -70,10 +70,10 @@
 	</select>
 
 	<select id="queryOrderInputBySummaryId" parameterType="OrderInputSummary" resultType="com.github.hzw.security.VO.OrderInputSummaryVO">
-		select oi.create_time createTime,ci.cloth_name clothName,
-			oi.my_company_code myCompanyCode,oa.my_company_color myCompanyColor,oa.num,oa.mark,si.name saleManName
+		select oa.id,ci.cloth_name clothName,oi.my_company_code myCompanyCode,#{t.id} summId,
+			   oa.my_company_color myCompanyColor,oa.num,si.name saleManName,oa.mark,oi.create_time createTime
 		from order_input_additional oa,order_input  oi,cloth_info ci,salesman_info si
-		where INSTR((select concat(',',t.order_ids,',') from order_input_summary t where t.id=#{id}),concat(',',oa.id,','))>0
+		where INSTR((select concat(',',t.order_ids,',') from order_input_summary t where t.id=#{t.id}),concat(',',oa.id,','))>0
 			and oa.input_id=oi.id and oi.cloth_id=ci.id and oi.salesman_id=si.id 
 	</select>
 
@@ -105,6 +105,7 @@
 	<update id="update" parameterType="OrderInputSummary">
 		update order_input_summary
 		<set>
+		order_ids=#{orderIds},
       	<if test="clothId != null and clothId != ''">
         	 cloth_id=#{clothId},
       	</if>
@@ -117,9 +118,7 @@
       	<if test="num != null and num != ''">
         	 num=#{num},
       	</if>
-      	<if test="orderIds != null and orderIds != ''">
-        	 order_ids=#{orderIds},
-      	</if>
+        	 
       	<if test="mark != null and mark != ''">
         	 mark=#{mark},
       	</if>

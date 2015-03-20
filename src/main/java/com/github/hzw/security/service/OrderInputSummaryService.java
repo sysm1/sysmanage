@@ -23,6 +23,6 @@ public interface OrderInputSummaryService extends
 	 * @param orderInputSummary
 	 * @return
 	 */
-	public List<OrderInputSummaryVO> queryOrderInputBySummaryId(OrderInputSummary orderInputSummary);
+	public PageView queryOrderInputBySummaryId(PageView pageView,OrderInputSummary orderInputSummary);
 
 }

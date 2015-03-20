@@ -3,11 +3,11 @@
 <mapper namespace="com.github.hzw.security.mapper.OrderInputAdditionalMapper" >
   
   <sql id="selectId1" >
-    id, input_id, my_company_color, num, unit, mark
+    id, input_id, my_company_color, num,  mark
   </sql>
  
  <sql id="selectId" >
-    id, input_id inputId, my_company_color myCompanyColor, num, unit, mark
+    id, input_id inputId, my_company_color myCompanyColor, num,  mark
  </sql>
   
  <select id="query" resultType="OrderInputAdditional" parameterType="OrderInputAdditional">
@@ -43,13 +43,12 @@
 
 	<insert id="add" parameterType="OrderInputAdditional" useGeneratedKeys="true" keyProperty="id">
 		insert into order_input_additional (
-			input_id, my_company_color, num, unit, mark
+			input_id, my_company_color, num, mark
 		)
 		values(
 			#{inputId},
 			#{myCompanyColor},
 			#{num},
-			#{unit},
 			#{mark}
 		)
 		
@@ -82,9 +81,6 @@
       	</if>
       	<if test="num != null and num != ''">
         	num=#{num},
-      	</if>
-      	<if test="unit != null and unit != ''">
-        	unit=#{unit},
       	</if>
       	<if test="mark != null and mark != ''">
         	mark=#{mark},

@@ -314,6 +314,9 @@ html>body td{ font-size:13px;}
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="saveTemp">
 				暂存数据
 			</a>
+			<a class="btn btn-large btn-success" href="javascript:void(0)" id="delaybtn">
+				拖延单
+			</a>
 			&nbsp;&nbsp;&nbsp;点击选择行  双击取消选择行
 		</div>
 		<div id="paging" class="pagclass">

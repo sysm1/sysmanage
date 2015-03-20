@@ -12,8 +12,8 @@
     cu.cloth_name clothName,
     oi.my_company_code myCompanyCode,
     oa.my_company_color myCompanyColor,
-    oa.num,
-    concat(num,'(',(case oa.unit WHEN 0 then '条' 	WHEN 1 THEN 'KG' WHEN 2 THEN '米' WHEN 3 THEN '码' END),')') unit,
+    concat(oa.num,
+    (select case ci.unit when 0 then '条' when 1 then 'KG' when 2 then '米' end from cloth_info ci where ci.id=cloth_id) ) unit,
     oa.mark,
     si.name saleManName
   </sql>

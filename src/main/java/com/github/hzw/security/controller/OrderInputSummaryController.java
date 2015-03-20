@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.Resources;
+import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
@@ -27,8 +29,12 @@ public class OrderInputSummaryController extends BaseController {
 	@Inject
 	private OrderInputSummaryService orderInputSummaryService;
 	
+	@Inject
+	private OrderInputService orderInputService;
+	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow,String pagesize,OrderInputSummary info) {
+	public String list(Model model, Resources menu,HttpServletRequest request, String pagesize,OrderInputSummary info) {
+		String pageNow=request.getParameter("pageNow");
 		pageView = orderInputSummaryService.queryVO(getPageView(pageNow,pagesize), info);
 		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/inputsummary/list";
@@ -55,7 +61,8 @@ public class OrderInputSummaryController extends BaseController {
 	@ResponseBody
 	@RequestMapping("queryList")
 	public List<OrderInputSummaryVO> queryList(OrderInputSummary info,String pageNow,String pagesize,String id) {
-		pageView = orderInputSummaryService.queryVO(getPageView(pageNow,"100"), info);
+		//pageView = orderInputSummaryService.queryVO(getPageView(pageNow,"100"), info);
+		pageView= orderInputSummaryService.queryOrderInputBySummaryId(getPageView(pageNow,"100"), info);
 		return pageView.getRecords();
 	}
 	
@@ -64,10 +71,12 @@ public class OrderInputSummaryController extends BaseController {
 	 * 查询下单预录入详单
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping("queryOrderInputBySummaryId")
 	public List<OrderInputSummaryVO> queryOrderInputBySummaryId(OrderInputSummary info,String pageNow,String pagesize,String id) {
-		return orderInputSummaryService.queryOrderInputBySummaryId( info);
+		pageView= orderInputSummaryService.queryOrderInputBySummaryId(getPageView(pageNow,"100"), info);
+		return pageView.getRecords();
 	}
 	
 	/**
@@ -152,9 +161,21 @@ public class OrderInputSummaryController extends BaseController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			String id[] = ids.split(",");
+			String[] idarray=new String[2];//0位存预下单ID  1位存汇总ID
+			OrderInputSummary summary=null;
 			for (String string : id) {
 				if(!Common.isEmpty(string)){
-					orderInputSummaryService.delete(string);
+					idarray=string.split("_");
+					orderInputService.delete(idarray[0]);
+					summary=orderInputSummaryService.getById(idarray[1]);
+					String orderIds=","+summary.getOrderIds()+",";
+					orderIds=orderIds.replace(","+idarray[0]+",", ",");
+					if(orderIds.equals(",")){
+						summary.setOrderIds("");
+					}else{
+						summary.setOrderIds(orderIds.substring(1, orderIds.length()-1));
+					}
+					orderInputSummaryService.update(summary);
 				}
 			}
 			map.put("flag", "true");

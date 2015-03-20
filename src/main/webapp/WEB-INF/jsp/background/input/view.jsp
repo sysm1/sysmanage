@@ -104,7 +104,27 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			}
 		}
 	}
-	
+	function changeUnitName(name){
+		var names=document.getElementsByName("unitName");
+		for(var i=0;i<names.length;i++){
+			names[i].innerHTML=name;
+		}
+	}
+	function initUnit(id){
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/cloth/getClothUnit.html', //要访问的后台地址
+		    data: {id:id}, //要发送的数据
+		    success: function(data){
+		    	changeUnitName(data);
+			},error : function() {    
+		          // view("异常！");    
+		          alert("异常！");    
+		     } 
+		});
+	}
 </script>
 </head>
 <body>
@@ -145,10 +165,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td align="right"><span style="color: red">*</span>数量：</td>
 					<td class="l_left" style="text-align: right;">
 						${addtion.num }
-							<c:if test="${addtion.unit eq 0 }">条</c:if>
-							<c:if test="${addtion.unit eq 1 }">KG</c:if>
-							<c:if test="${addtion.unit eq 2 }">米</c:if>
-							<c:if test="${addtion.unit eq 3 }">码</c:if>
+						<span id="unitName" name="unitName"></span>	
 					</td>
 					<td align="right">备注：</td>
 					<td class="l_left">
@@ -172,6 +189,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	</form>
 	<img alt="图片预览" src="http://img6.cache.netease.com/photo/0001/2015-03-13/AKJQVDIB19BR0001.jpg">
 	</div>
-	
+<script type="text/javascript">
+initUnit(${input.clothId});
+</script>
 </body>
 </html>
