@@ -56,6 +56,10 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		map.put("factoryId", factoryId);
 		return clothAllowanceMapper.queryByClothAndFactory(map);
 	}
+	@Override
+	public ClothAllowance queryByCloth(String clothId) {
+		return clothAllowanceMapper.queryByCloth(clothId);
+	}
 	
 	@Override
 	public List<ClothAllowance> queryAll(ClothAllowance t) {

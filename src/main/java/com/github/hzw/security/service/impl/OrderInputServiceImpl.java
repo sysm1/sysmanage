@@ -30,7 +30,11 @@ public class OrderInputServiceImpl implements OrderInputService {
 		pageView.setRecords(list);
 		return pageView;
 	}
-
+	@Override
+	public List<OrderInputVO> queryByIds(String ids){
+		List<OrderInputVO> list = orderInputMapper.queryByIds(ids);
+		return list;
+	}
 	
 	@Override
 	public List<OrderInput> queryAll(OrderInput t) {

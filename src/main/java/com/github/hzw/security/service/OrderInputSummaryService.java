@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.hzw.base.BaseService;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
+import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputSummary;
 
 public interface OrderInputSummaryService extends
@@ -24,5 +25,12 @@ public interface OrderInputSummaryService extends
 	 * @return
 	 */
 	public PageView queryOrderInputBySummaryId(PageView pageView,OrderInputSummary orderInputSummary);
+	
+	/**
+	 * 获取汇总对象
+	 * @param
+	 * @return
+	 */
+	public OrderInputSummaryVO getVOById(String id);
 
 }

@@ -10,6 +10,8 @@ public interface ClothAllowanceMapper extends BaseMapper<ClothAllowance>{
 	
     public ClothAllowance queryByClothAndFactory(Map<String, Integer> map);
     
+    public ClothAllowance queryByCloth(String clothId);
+    
     public List<ClothAllowance> queryByFind(Map<String, Object> map);
     
 }
