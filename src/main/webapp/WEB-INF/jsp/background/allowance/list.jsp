@@ -42,6 +42,18 @@
 						name : "新增量",
 						width : "50px"
 					},{
+						colkey : "allowancekg",
+						name : "现余量(公斤)",
+						width : "50px"
+					}, {
+						colkey : "oldSumkg",
+						name : "前余量(公斤)",
+						width : "50px"
+					}, {
+						colkey : "changeSumkg",
+						name : "新增量(公斤)",
+						width : "50px"
+					}, {
 						colkey : "mark",
 						name : "备注"
 					}],
@@ -66,7 +78,7 @@
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
 				width : 400,
-				height : 410,
+				height : 510,
 				url : rootPath + '/background/allowance/addUI.html',
 				title : "增加坯布余量",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -152,9 +164,12 @@
 				单位:
 				<select id="unit" name="unit" style="width:100px;">
 					<option value="0">条</option>
+					<!-- 
 					<option value="1">公斤</option>
 					<option value="2">米</option>
-					<option value="3">码</option>
+					<option value="3">码</option>   
+					-->
+					<option value="4">包</option>
 				</select>
 				<a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询

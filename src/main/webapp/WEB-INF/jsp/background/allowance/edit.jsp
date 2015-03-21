@@ -57,6 +57,9 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 				},
 				changeSum : {
 					required : true
+				},
+				changeSumkg : {
+					required : true
 				}
 			},
 			messages : {
@@ -71,6 +74,9 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 				},
 				changeSum : {
 					required : "改变量不能为空",
+				},
+				changeSumkg : {
+					required : "kg改变量不能为空",
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -130,6 +136,7 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 							<c:when test="${ allowance.unit == '1' }">公斤</c:when>
 							<c:when test="${ allowance.unit == '2' }">米</c:when>
 							<c:when test="${ allowance.unit == '3' }">码</c:when>
+							<c:when test="${ allowance.unit == '4' }">包</c:when>
 							<c:otherwise>条</c:otherwise>
 						</c:choose>
 					</div>
@@ -151,7 +158,15 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='changeSum' name="changeSum" type="text" class="isNum" value="${allowance.changeSum}">
-					
+					</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="l_right">新增量(公斤)：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="${allowance.changeSumkg}">
 					</div>
 				</td>
 			</tr>
