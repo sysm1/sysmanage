@@ -61,6 +61,7 @@ public class OrderSummaryController extends BaseController {
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
+			e.printStackTrace();
 		}
 		return map;
 	}

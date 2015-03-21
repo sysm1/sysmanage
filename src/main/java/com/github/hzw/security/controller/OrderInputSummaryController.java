@@ -15,12 +15,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
+import com.github.hzw.security.VO.OrderInputVO;
+import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.Resources;
+import com.github.hzw.security.entity.SalesmanInfo;
+import com.github.hzw.security.entity.TechnologyInfo;
+import com.github.hzw.security.service.ClothAllowanceService;
+import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderInputSummaryService;
+import com.github.hzw.security.service.SalesmanInfoService;
+import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
+import com.github.hzw.util.PropertiesUtils;
 
 @Controller
 @RequestMapping("/background/inputsummary/")
@@ -31,6 +41,18 @@ public class OrderInputSummaryController extends BaseController {
 	
 	@Inject
 	private OrderInputService orderInputService;
+	
+	@Inject
+	private ClothAllowanceService clothAllowanceService;
+	
+	@Inject
+	private SalesmanInfoService salesmanInfoService;
+	
+	@Inject
+	private TechnologyInfoService technologyInfoService;
+	
+	@Inject
+	private FactoryInfoService factoryInfoService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu,HttpServletRequest request, String pagesize,OrderInputSummary info) {
@@ -114,16 +136,50 @@ public class OrderInputSummaryController extends BaseController {
 	
 
 	/**
-	 * 跑到新增界面
-	 * 
+	 * 下单页面
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("editUI")
-	public String editUI(Model model,String id) {
-		OrderInputSummary info = orderInputSummaryService.getById(id);
+	@RequestMapping("order")
+	public String order(Model model,String id) {
+		String ids="";
+		String[] idsa=id.split(",");
+		for(String idss:idsa){
+			ids+=","+idss.split("_")[0];
+		}
+		String summId=idsa[0].split("_")[1];
+		OrderInputSummaryVO info = orderInputSummaryService.getVOById(summId);
+		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		List<OrderInputVO> orderInputList=orderInputService.queryByIds(ids.substring(1));
+		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
+		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		//坯布余量查询
+		ClothAllowance clothAllowance=null;//clothAllowanceService.queryByCloth(info.getClothId()+"");
+		String cloth_allowance_tiao=PropertiesUtils.findPropertiesKey("cloth_allowance_tiao");
+		//String cloth_allowance_kg=PropertiesUtils.findPropertiesKey("cloth_allowance_kg");
+		if(null!=clothAllowance){
+			if(clothAllowance.getAllowance()>Double.parseDouble(cloth_allowance_tiao)){
+				model.addAttribute("clothAllowance", "大量");
+			}else{
+				model.addAttribute("clothAllowance", clothAllowance.getAllowance());
+			}
+		}
+		int num=0;
+		for(OrderInputVO vo:orderInputList){
+			num+=vo.getNum();
+		}
+		
+		//下单编号
+		String orderNo="3333333333333333";
 		model.addAttribute("inputsummary", info);
-		return Common.BACKGROUND_PATH+"/inputsummary/edit";
+		model.addAttribute("factoryInfos", factoryInfos);
+		model.addAttribute("orderInputList", orderInputList);
+		model.addAttribute("technologyInfos", technologyInfos);
+		model.addAttribute("orderNo", orderNo);
+		model.addAttribute("num",num);
+		model.addAttribute("salesmanInfos",salesmanInfos);
+		model.addAttribute("nowDate", Common.fromDateY());
+		return Common.BACKGROUND_PATH+"/inputsummary/order";
 	}
 	
 	
