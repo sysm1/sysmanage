@@ -83,10 +83,16 @@ create table cloth_allowance (
 	cloth_id int not null,
 	factory_id int not null,
 	allowance double not null,    -- 现余量
-	unit int not null, -- 单位（录入单位）-- /**布种单位 0条 1 kg 2cm 3码***/
-	old_sum double not null,      -- 前余量(单位需要统一)
-	change_sum double not null,   -- 变动量(单位需要统一)
-	input_date datetime not null,  -- 日期
+	unit int not null, 				-- 单位（录入单位）-- /**布种单位 0条 1 kg 2cm 3码 4 包***/
+	old_sum double not null,      	-- 前余量(单位需要统一)
+	change_sum double not null,   	-- 变动量(单位需要统一)
+	
+	allowancekg double not null,    -- 现余量
+	unitkg int not null, 				-- 单位（录入单位）-- /**布种单位 0条 1 kg 2cm 3码***/
+	old_sumkg double not null,      	-- 前余量(单位需要统一)
+	change_sumkg double not null,   	-- 变动量(单位需要统一)
+	
+	input_date datetime not null,  	-- 日期
 	mark text,
 	create_time datetime not null,  -- 更新时间了
 	PRIMARY KEY (`id`),
@@ -103,7 +109,6 @@ create table sample_input(
 	factory_id	int not null,
 	cloth_id	int not null,
 	code_type	int not null, -- 0 文件分色号，1 工厂编号, 2 我司编号
-	code_value  varchar(255),
 	file_code varchar(255), -- 文件分色号
 	factory_code varchar(255),  -- -- 编号如果选择“工厂编号” 在后边会跟随一个加号  可以添加回版编号，最多两个
 	my_company_code varchar(255),	-- 我司编号
@@ -112,7 +117,7 @@ create table sample_input(
 	picture varchar(255) not null, -- 图片(缩略图，原图)
 	demand text,  -- 需求
 	mark text,  -- 备注
-	reply_mark text,  -- 回版备注
+	return_mark text,  -- 回版备注
 	status int not null,  -- 0 未回  1 新版 2 新厂 3 新色 4已回
 	reply_date datetime,  -- 回版日期
 	create_time datetime not null,
@@ -211,11 +216,6 @@ create table order_summary(
 	status varchar(255), -- 工厂不一样   ----新厂 我司编号不一样----新花 布种不一样---新布 颜色不一样----新色   红色字体 可以组合  （新厂新花) 一样的为正常   绿色字体  
 	return_status int default 0,   -- 0 未回货  1 已回货
 	create_time datetime,  -- 下单时间
-	zhiguan int,
-	kongcha int,
-	jiaodai int,
-	balance int,
-	balance_saleman_id varchar(255),
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
