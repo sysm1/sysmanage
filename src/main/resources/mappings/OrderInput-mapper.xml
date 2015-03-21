@@ -18,6 +18,16 @@
     si.name saleManName
   </sql>
   
+  <sql id="selectId2" >
+  	oa.id, 
+  	oi.cloth_id clothId, 
+  	oi.my_company_code myCompanyCode, 
+  	(select name from salesman_info where id=oi.salesman_id) saleManName,
+  	oa.num,
+  	oa.mark
+  	
+  </sql>
+  
   <select id="queryVO" resultType="com.github.hzw.security.VO.OrderInputVO" parameterType="com.github.hzw.security.VO.OrderInputVO">
 		select
 		<include refid="selectId" />
@@ -48,6 +58,13 @@
 		<include refid="selectId" />
 		from order_input
 		order by id desc
+	</select>
+	
+	<select id="queryByIds" parameterType="String" resultType="com.github.hzw.security.VO.OrderInputVO">
+		select
+		<include refid="selectId2" />
+		from order_input_additional oa,order_input oi
+		where oi.id=oa.input_id and oa.id in (#{id})
 	</select>
 
 

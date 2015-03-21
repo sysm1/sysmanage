@@ -1,4 +1,4 @@
-package com.github.hzw.security.entity;
+package com.github.hzw.security.VO;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import com.github.hzw.util.ExcelDataMapper;
 import com.github.hzw.util.JsonDate4YYYYMMDD;
 
 // 下单录入  关键字  ordersummary
-public class OrderSummary {
+public class OrderSummaryVO {
     
     private Integer id;
 

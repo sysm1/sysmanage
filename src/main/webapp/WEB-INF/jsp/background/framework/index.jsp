@@ -265,7 +265,7 @@
                 <div style="float:left; height:31px; color:#9e0905; font-weight:bold; line-height:31px; margin-left:20px; font-size:14px; ">城市天气预报</div>
                
             </div>
-	   <iframe width="400" scrolling="no" height="120" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=19&bgc=%23FFFFFF&bdc=%23&icon=1&temp=1&num=2"></iframe>
+	   <iframe width="400" scrolling="no" height="120" frameborder="0" allowtransparency="true" src="#"></iframe>
 	</div>
 	</div>
 						</div>

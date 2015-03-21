@@ -185,6 +185,15 @@
       <if test="mark != null" >
         mark,
       </if>
+      <if test="zhiguan != null" >
+        zhiguan,
+      </if>
+      <if test="kongcha != null" >
+        kongcha,
+      </if>
+      <if test="jiaodai != null" >
+        jiaodai,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -249,6 +258,15 @@
       </if>
       <if test="mark != null" >
         #{mark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="zhiguan != null" >
+        #{zhiguan,jdbcType=INTEGER},
+      </if>
+      <if test="kongcha != null" >
+        #{kongcha,jdbcType=INTEGER},
+      </if>
+      <if test="jiaodai != null" >
+        #{jiaodai,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
