@@ -56,10 +56,6 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		map.put("factoryId", factoryId);
 		return clothAllowanceMapper.queryByClothAndFactory(map);
 	}
-	@Override
-	public ClothAllowance queryByCloth(String clothId) {
-		return clothAllowanceMapper.queryByCloth(clothId);
-	}
 	
 	@Override
 	public List<ClothAllowance> queryAll(ClothAllowance t) {
@@ -90,18 +86,31 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId());
 		ClothInfo cloth = clothInfoService.getById(t.getClothId() + "");
 		if(tm == null) {
+			
+			// 按布种单位计算
 			t.setOldSum(0.0);
 			// t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()));
 			t.setAllowance(t.getChangeSum());
 			t.setUnit(cloth.getUnit());
 			t.setCreateTime(new Date());
+			
+			// 公斤
+			t.setOldSumkg(0.0);
+			t.setAllowancekg(t.getChangeSumkg());
+			
 			this.clothAllowanceMapper.add(t);
 		} else {
+			
 			t.setId(tm.getId());
 			t.setOldSum(tm.getAllowance());
 			//t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()) + tm.getAllowance());
 			t.setAllowance(t.getChangeSum() + tm.getAllowance());
 			t.setUnit(cloth.getUnit());
+			
+			// 公斤
+			t.setOldSumkg(tm.getAllowancekg());
+			t.setAllowancekg(t.getChangeSumkg() + tm.getAllowancekg());
+
 			t.setCreateTime(new Date());
 			this.clothAllowanceMapper.update(t);
 		}
