@@ -110,12 +110,16 @@
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table> 
-         --> 
-         
-         <table schema="system-manage" tableName="notebook" enableCountByExample="false" enableUpdateByExample="false"
+
+        <table schema="system-manage" tableName="notebook" enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table> 
+         --> 
+        <table schema="system-manage" tableName="cloth_price" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
         
         <!--  
         	<property name="modelOnly" value="true"/>

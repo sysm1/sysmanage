@@ -35,6 +35,17 @@ create table cloth_info (
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- 布种的价格情况
+create table cloth_price (
+	id int not null auto_increment,
+	cloth_id int not null unique,
+	price double not null,
+	standard text,
+	create_time datetime not null default now(),
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- 工艺信息  关键字technology
 create table technology_info(
 	id	int not null auto_increment,

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.ClothPriceMapper" >
+
+  <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.ClothPrice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cloth_id" property="clothId" jdbcType="INTEGER" />
+    <result column="cloth_name" property="clothName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="standard" property="standard" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, cloth_id clothId, 
+    (select cloth.cloth_name from cloth_info cloth where cloth.id = cloth_id ) as clothName,
+    price, create_time createTime, standard
+  </sql>
+  
+  <select id="query" resultType="ClothPrice" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from cloth_price
+		<where>
+		<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+		</if>
+		<if test="t.standard != null and t.standard != ''">
+			and standard like '%${t.standard}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryByClothId" resultType="ClothPrice" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from cloth_price
+		<where>
+			cloth_id = #{ClothId}
+		</where>
+	</select>
+
+	<select id="queryAll" resultType="ClothPrice">
+		select
+		<include refid="Base_Column_List" />
+		from cloth_price
+		<where>
+			<if test="clothId != null and clothId != ''">
+				and cloth_id = #{clothId}
+			</if>
+			<if test="standard != null and standard != ''">
+				and standard like '%${standard}%'
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+  
+  <select id="getById" resultType="ClothPrice" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cloth_price
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from cloth_price
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="add" parameterType="com.github.hzw.security.entity.ClothPrice" >
+    insert into cloth_price (id, cloth_id, price, 
+      create_time, standard)
+    values (#{id,jdbcType=INTEGER}, #{clothId,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{standard,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.github.hzw.security.entity.ClothPrice" >
+    insert into cloth_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="clothId != null" >
+        cloth_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="standard != null" >
+        standard,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="clothId != null" >
+        #{clothId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="standard != null" >
+        #{standard,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="update" parameterType="com.github.hzw.security.entity.ClothPrice" >
+    update cloth_price
+    <set >
+      <if test="clothId != null" >
+        cloth_id = #{clothId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="standard != null" >
+        standard = #{standard,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>
