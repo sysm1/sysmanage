@@ -8,6 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript">
+
+jQuery.validator.addMethod("isNum", function(value, element) {
+	 var num = /^([0-9]+)$/;
+	 return this.optional(element) || (num.test(value));
+}, "只能输入数字");
+
 	var dialog;
 	var grid;
 	$(function() {
@@ -62,6 +68,8 @@
 				});
 		
 		$("#seach").click("click", function() {//绑定查询按扭
+			var num = $("#num").val();
+			
 			var searchParams = $("#fenye").serialize();
 			grid.setOptions({
 				data : searchParams
@@ -170,7 +178,17 @@
 					<option value="3">码</option>   
 					-->
 					<option value="4">包</option>
+				</select><br/>
+				余量:
+				<input type="text" id="num" name="num" value="${param.num}" style="width:100px;" />
+				条件:
+				<select id="condition" name="condition" style="width:100px;">
+					<option value="gt">大于</option>
+					<option value="gte">大于等于</option>
+					<option value="it">小于</option>
+					<option value="ite">小于等于</option>
 				</select>
+				
 				<a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>

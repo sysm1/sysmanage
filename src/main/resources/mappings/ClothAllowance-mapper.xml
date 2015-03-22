@@ -93,8 +93,24 @@
 			            and change_sum = 0 
 			        </when>
 		    	</choose>
-			</if>
-		
+		</if>
+
+		<if test="num != null and num != ''">
+			<choose>
+			       <when test="condition == 'gt'">  
+			            and allowancekg > #{num}
+			        </when>  
+			        <when test="condition == 'gte'">  
+			            and allowancekg >= #{num}
+			        </when> 
+			        <when test="condition == 'it'">  
+			             and allowancekg <![CDATA[<]]> #{num}
+			        </when>
+			        <when test="condition == 'ite'">  
+			            and allowancekg <![CDATA[<=]]> #{num}
+			        </when>
+		    	</choose>
+		</if>
 		
 		</where>
 		order by id desc
