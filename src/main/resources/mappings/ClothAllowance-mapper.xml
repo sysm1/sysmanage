@@ -3,7 +3,9 @@
 <mapper namespace="com.github.hzw.security.mapper.ClothAllowanceMapper" >
   
   <sql id="selectId" >
-    id, cloth_id as clothId, factory_id as factoryId, allowance, unit, old_sum as oldSum, change_sum as changeSum, 
+    id, cloth_id as clothId, factory_id as factoryId, 
+    allowance, unit, old_sum as oldSum, change_sum as changeSum, 
+    allowancekg, unitkg, old_sumkg as oldSumkg, change_sumkg as changeSumkg,
     create_time as createTime, mark, input_date as inputDate
   </sql>
   
@@ -13,9 +15,16 @@
     (select cloth.cloth_name from cloth_info cloth where cloth.id = cloth_allowance.cloth_id ) as clothName,
     factory_id as factoryId, 
     (select factory.name from factory_info factory where factory.id = cloth_allowance.factory_id ) as factoryName,
-    allowance, unit,
+    allowance, 
+    unit,
     old_sum as oldSum, 
     change_sum as changeSum, 
+    
+    allowancekg, 
+    unitkg,
+    old_sumkg as oldSumkg, 
+    change_sumkg as changeSumkg,
+     
     create_time as createTime, 
     mark,
     input_date as inputDate
@@ -69,25 +78,42 @@
 		<if test="unit != null and unit != ''">
 			and unit = #{unit}
 		</if>
-		
 		<if test="change != null and change != ''">
-			<choose>
-		        <when test="change == 'positive'">  
-		            and change_sum > 0  
-		        </when>  
-		        <when test="change == 'negative'">  
-		             and change_sum &lt; 0 
-		        </when> 
-		        <when test="change == 'all'">  
-		             
-		        </when>
-		        <when test="change == 'zero'">  
-		            and change_sum = 0 
-		        </when>
-	    	</choose>
+				<choose>
+			        <when test="change == 'positive'">  
+			            and change_sum > 0  
+			        </when>  
+			        <when test="change == 'negative'">  
+			             and change_sum &lt; 0 
+			        </when> 
+			        <when test="change == 'all'">  
+			             
+			        </when>
+			        <when test="change == 'zero'">  
+			            and change_sum = 0 
+			        </when>
+		    	</choose>
 		</if>
+
+		<if test="num != null and num != ''">
+			<choose>
+			       <when test="condition == 'gt'">  
+			            and allowancekg > #{num}
+			        </when>  
+			        <when test="condition == 'gte'">  
+			            and allowancekg >= #{num}
+			        </when> 
+			        <when test="condition == 'it'">  
+			             and allowancekg <![CDATA[<]]> #{num}
+			        </when>
+			        <when test="condition == 'ite'">  
+			            and allowancekg <![CDATA[<=]]> #{num}
+			        </when>
+		    	</choose>
+		</if>
+		
 		</where>
-		order by unit desc, id desc
+		order by id desc
 	</select>
 
 	<select id="queryAll" resultType="ClothAllowance">
@@ -100,7 +126,7 @@
 
 	<insert id="add" parameterType="ClothAllowance" useGeneratedKeys="true" keyProperty="id">
 		insert into cloth_allowance (
-			cloth_id, factory_id, allowance, unit, old_sum, change_sum, create_time, mark, input_date
+			cloth_id, factory_id, allowance, unit, old_sum, change_sum, allowancekg, unitkg, old_sumkg, change_sumkg, create_time, mark, input_date
 		)
 		values(
 			#{clothId},
@@ -109,6 +135,10 @@
 			#{unit},
 			#{oldSum},
 			#{changeSum},
+			#{allowancekg},
+			#{unitkg},
+			#{oldSumkg},
+			#{changeSumkg},
 			#{createTime},
 			#{mark},
 			#{inputDate}
@@ -147,6 +177,20 @@
       	<if test="changeSum != null" >
         	change_sum=#{changeSum},
       	</if>
+      	
+      	<if test="allowancekg != null" >
+        	allowancekg=#{allowancekg},
+      	</if>
+      	<if test="unitkg != null" >
+        	unitkg=#{unitkg},
+      	</if>
+      	<if test="oldSumkg != null" >
+        	old_sumkg=#{oldSumkg},
+      	</if>
+      	<if test="changeSum != null" >
+        	change_sumkg=#{changeSumkg},
+      	</if>
+      	
 		<if test="mark != null" >
         	mark=#{mark},
       	</if>

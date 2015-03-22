@@ -2,10 +2,6 @@ $(function(){
 	airBalloon('div.air-balloon');
 });
 
-/*
-@function 热气球移动
-@update by julying , 2012/7/25
-*/
 function airBalloon(balloon){
 	var viewSize = [] , viewWidth = 0 , viewHeight = 0 ;
 	resize();	
