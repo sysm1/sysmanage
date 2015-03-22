@@ -1,5 +1,6 @@
 package com.github.hzw.security.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +45,8 @@ public class ClothPriceServiceImpl implements ClothPriceService {
 
 	@Override
 	public void update(ClothPrice t) throws Exception {
-		
+		t.setCreateTime(new Date());
 		this.clothPriceMapper.update(t);
-		
 	}
 
 	@Override
