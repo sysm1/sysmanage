@@ -14,23 +14,46 @@
 		grid = window.lanyuan.ui.lyGrid({
 					id : 'paging',
 					l_column : [ {
-						colkey : "id",
-						name : "id",
-						width : "50px"
+						colkey : "orderDate",
+						name : "下单日期"
 					}, {
-						colkey : "clothName",
-						name : "布种名称"
-					},{
-						colkey : "orderName",
-						name : "下单名称"
+						colkey : "orderDate",
+						name : "布种"
 					}, {
-						colkey : "unitName",
-						name : "布种单位"
-					},{
-						colkey : "mark",
+						colkey : "orderDate",
+						name : "工艺"
+					}, {
+						colkey : "orderDate",
+						name : "我司编号"
+					}, {
+						colkey : "orderDate",
+						name : "我司颜色"
+					}, {
+						colkey : "orderDate",
+						name : "工厂"
+					}, {
+						colkey : "orderDate",
+						name : "工厂编号"
+					}, {
+						colkey : "orderDate",
+						name : "工厂颜色"
+					}, {
+						colkey : "orderDate",
+						name : "数量"
+					}, {
+						colkey : "orderDate",
+						name : "规格"
+					}, {
+						colkey : "orderDate",
+						name : "包装方式"
+					}, {
+						colkey : "orderDate",
 						name : "备注"
+					}, {
+						colkey : "orderDate",
+						name : "业务员"
 					}],
-					jsonUrl : '${pageContext.request.contextPath}/background/cloth/query.html',
+					jsonUrl : '${pageContext.request.contextPath}/background/ordersummary/query.html',
 					checkbox : true
 				});
 		

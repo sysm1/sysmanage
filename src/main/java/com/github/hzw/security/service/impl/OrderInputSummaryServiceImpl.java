@@ -56,6 +56,16 @@ public class OrderInputSummaryServiceImpl implements OrderInputSummaryService {
 		return pageView;
 	}
 	
+	/**
+	 * 获取汇总对象
+	 * @param
+	 * @return
+	 */
+	@Override
+	public OrderInputSummaryVO getVOById(String id){
+		return orderInputSummaryMapper.getVOById(id);
+	}
+	
 	@Override
 	public List<OrderInputSummary> queryAll(OrderInputSummary t) {
 		return orderInputSummaryMapper.queryAll(t);

@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,17 +74,6 @@ public class ClothAllowanceController extends BaseController {
 		map.put("endTime", DateUtil.str2Date(request.getParameter("endTime"), "yyyy-MM-dd"));
 		map.put("change", request.getParameter("change"));
 		map.put("unit", request.getParameter("unit"));
-		
-		String nums = request.getParameter("num");
-		try{
-			if(StringUtils.isNotEmpty(nums)){
-				map.put("num", new Integer(nums));
-				map.put("condition", request.getParameter("condition"));
-			}
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		
 		pageView = clothAllowanceService.queryByFind(getPageView(pageNow,pagesize), map);
 		return pageView;
 		

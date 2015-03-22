@@ -147,5 +147,10 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		}
 		return MathUtil.formate(sum / rase, 2); // 返回两位小数
 	}
+
+	@Override
+	public ClothAllowance queryByCloth(String clothId) {
+		return clothAllowanceMapper.queryByCloth(clothId);
+	}
 	
 }

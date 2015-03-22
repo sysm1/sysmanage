@@ -16,5 +16,7 @@ public interface OrderInputMapper extends BaseMapper<OrderInput> {
 	 * @return
 	 */
 	public List<OrderInputVO> queryVO(Map<String, Object> map);
+	
+	public List<OrderInputVO> queryByIds(String id);
 
 }

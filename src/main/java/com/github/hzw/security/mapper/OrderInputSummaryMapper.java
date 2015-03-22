@@ -22,5 +22,7 @@ public interface OrderInputSummaryMapper extends BaseMapper<OrderInputSummary> {
 	 * @return
 	 */
 	public List<OrderInputSummaryVO> queryOrderInputBySummaryId(Map<String, Object> map);
+	
+	public OrderInputSummaryVO getVOById(String id);
 
 }

@@ -41,6 +41,13 @@ ul { list-style:none;}
 		$("#refresh").click("click", function() {
 			window.location.reload();
 		});
+		$("#order").click("click", function() {//下单录入页面
+			var cbox=getSelectedCheckbox();
+			window.location.href=rootPath + "/background/inputsummary/order.html?id="+cbox.join(",");
+			
+			
+			
+		});
 		$("#editView").click("click", function() {//绑定编辑按扭
 			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
@@ -142,7 +149,7 @@ ul { list-style:none;}
 			var td7=tr.insertCell(7);
 			var td8=tr.insertCell(8);
 			var td9=tr.insertCell(9);
-			td0.innerHTML='<input type="hidden" name="td'+pos+'" >';
+			td0.innerHTML='<input type="hidden" name="chtd'+pos+'" >';
 			td1.innerHTML='&nbsp;&nbsp;&nbsp;&nbsp;<input onclick="checkAllChild(this);" type="checkbox" ismap="'+data[i].summId+'" id="'+data[i].id+'_'+data[i].summId+'" name="childcheckId" value="'+data[i].id+'_'+data[i].summId+'">';
 			td2.innerHTML=data[i].id;
 			td3.innerHTML=data[i].createTime;
@@ -174,9 +181,10 @@ ul { list-style:none;}
 	}
 	
 	function hiddenDetail(id,inputId,index){
-		var tds=document.getElementsByName("td"+id);
+		var tds=document.getElementsByName("chtd"+id);
 		for(var i=0;i<tds.length;i++){
-			tds[i].parentNode.parentNode.style.display="none";
+			//alert(tds[i].parentNode.parentNode.nodeName);
+			//tds[i].parentNode.parentNode.style.display="none";
 		}
 		$("#td"+index)[0].innerHTML='<span onclick="showDetail('+index+','+inputId+')">+</span>';
 	}
@@ -268,10 +276,6 @@ ul { list-style:none;}
 		<div class="search">
 			<form name="fenye" id="fenye">
 			<input type="hidden" id="pageNow" name="pageNow" value="">
-				名称：<input type="text" name="name" value="${param.name}"
-					style="height: 20px" /> <a class="btn btn-primary"
-					href="javascript:void(0)" id="seach"> <span>查询</span>
-				</a>
 			</form>
 		</div>
 		<div class="topBtn">
@@ -311,7 +315,7 @@ ul { list-style:none;}
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 					<tr style="background-color:red;" id="${status.index }" >
 						<td id="td${status.index+1 }" ><span onclick="showDetail('${status.index +1}','${item.id }');">+</span></td>
-						<td style="background-color:red;">
+						<td style="background-color:red;width:50px;">
 					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll(this);">
 					 	</td>
 						<td >${item.id }</td>

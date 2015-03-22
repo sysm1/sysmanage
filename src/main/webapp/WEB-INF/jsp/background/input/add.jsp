@@ -64,28 +64,17 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		$("#form").submit();
 	}
 	
-	var i=1;
+	var i=2;
 	$(document).ready(function(){
 	    $("#addTable").click(function(){
-	    	var tr='<tr id="'+i+'" name="trow">'+
-				'<td align="right"><span style="color: red">*</span>我司颜色：</td>'+
-				'<td class="l_left">'+
-				'	<input type="text" name="myCompanyColor">'+
-				'</td>'+
-				'<td align="right"><span style="color: red">*</span>数量：</td>'+
-				'<td class="l_left">'+
-				'	<input type="text" name="num" style="width: 68%">&nbsp;<span name="unitName">'+
-				$("#unitName")[0].innerHTML+
-				'</span></td>'+
-				'<td align="right">备注：</td>'+
-				'<td class="l_left">'+
-				'	<input type="text" name="mark">'+
-				'</td><td>'+
-				'	&nbsp;<input type="button" value="删除" id="deleteTable" onclick="deleteRow('+i+')"/>'+
-				'</td>'+
-			'</tr>';
+	    	var tr=$("#table1 tr:eq(2) ");
+	    	//$(this).parent().clone(true).appendTo("#table1");
 			i++;
-	　  $("#table1").append(tr);
+	　  		//$("#table1").append("2222222222222");
+	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
+	    });
+	    $("#deleteRow").click(function(){
+	    	$(this).parent().parent().remove(); 
 	    });
 	});
 	
@@ -127,55 +116,57 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
+	<div class="l_err" style="width: 1270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/input/add.html" method="post">
-		<table id="table1">
+	<table><tr><td valign="top">
+		<table id="table1" border="1" name="table1">
 			<tbody>
 				<tr>
-					<td align="right"><span style="color: red">*</span>布种：</td>
+					<th align="right">布种</th>
+					<th align="right">我司编号</th>
+					<th align="right">我司颜色</th>
+					<th >数量</th>
+					<th>单位</th>
+					<th>备注</th>
+					<th align="right">业务员</th>
+					<th></th>
+				</tr><tr>
 					<td class="l_left">
-						<select id="clothId" name="clothId" onchange="changeClothSelect(this);">
+						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:150px;">
 							<option>请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
-					</td><td align="right"><span style="color: red">*</span>我司编号：</td>
+					</td>
 					<td>
-						<select id="myCompanyCode" name="myCompanyCode" style="width: 99%">
+						<select id="myCompanyCode" name="myCompanyCode" style="width:150px;">
 							<option>请选择</option>
 							<option id="1">1</option>
 						</select>
+					</td><td class="l_left">
+						<input type="text" name="myCompanyColor" style="width:150px;">
 					</td>
-					<td align="right"><span style="color: red">*</span>业务员：</td>
+					<td >
+						<input type="text" id="num" name="num" value="" style="width: 80px">
+					</td><td>
+						<select id="unit" name="unit" style="width: 80px;">
+							<option value="">请选择</option>
+							<option value="0">条</option>
+							<option value="1">KG</option>
+							<option value="2">米</option>
+						</select>
+					</td>
+					<td><input type="text" id="mark" name="mark" value=""></td>
 					<td>
-						<select id="salesmanId" name="salesmanId">
+						<select id="salesmanId" name="salesmanId" style="width:140px;">
 							<option>请选择</option>
 							<c:forEach items="${salesmanInfos }" var="saleman">
 								<option value="${saleman.id }">${saleman.name }</option>
 							</c:forEach>
 						</select>
-					</td>
-					<td>
-						&nbsp;
-					</td>
-				</tr>
-				
-				<tr>
-					<td align="right"><span style="color: red">*</span>我司颜色：</td>
-					<td class="l_left">
-						<input type="text" name="myCompanyColor" >
-					</td>
-					<td align="right"><span style="color: red">*</span>数量：</td>
-					<td class="l_left">
-						<input type="text" name="num" style="width: 68%">
-						<span id="unitName" name="unitName"></span>
-					</td>
-					<td align="right">备注：</td>
-					<td class="l_left">
-						<input type="text" name="mark">
 					</td><td>
-						&nbsp;<input type="button" value="增加" id="addTable"/>
+						<input type="button" id="deleteRow" name="deleteRow" value="删除" >
 					</td>
 				</tr>
 			</tbody>
@@ -186,13 +177,18 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<div class="l_btn_centent">
 						<!-- saveWin_form   from是表单Ｉd-->
 						<a class="btn btn-primary" href="javascript:void(0)"
-							id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-							class="btn btn-primary" href="javascript:void(0)" id="closeWin"
+							id="addTable" onclick="saveWin();"><span>新增</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)"
+							id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
 							onclick="closeWin()"><span>关闭</span> </a>
 					</div>
 				</td>
 			</tr>
 		</table>
+		</td><td>
+			图片预览<img alt="" src="http://d.hiphotos.baidu.com/baike/w%3D268/sign=9855e88c3912b31bc76cca2fbe1a3674/a8ec8a13632762d01cdbd074a0ec08fa503dc610.jpg">
+		</td></tr></table>
 	</form>
 	</div>
 </body>
