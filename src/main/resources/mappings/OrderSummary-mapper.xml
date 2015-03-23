@@ -46,18 +46,35 @@
   </sql>
   
   <sql id="selectId" >
-    id, order_code orderCode, order_date orderDate, cloth_id clothId, factory_id factoryId, technology_id technologyId, my_company_code myCompanyCode, 
-    my_company_color myCompanyColor, factory_code factoryCode, factory_color factoryColor, cloth_num clothNum, num, standard, packing_style packingStyle, 
-    print_status printStatus, print_num printNum, status, return_status returnStatus, create_time createTime, salesmans, mark
+    id, order_code orderCode, order_date orderDate, 
+    cloth_id clothId, 
+    (select cloth_name from cloth_info where id=cloth_id) as clothName,
+    factory_id factoryId,
+    (select name from factory_info where id=factory_id) factoryName,
+    technology_id technologyId,
+    (select name from technology_info where id=technology_id ) technologyName,
+    my_company_code myCompanyCode, 
+    my_company_color myCompanyColor,
+    factory_code factoryCode,
+    factory_color factoryColor,
+    cloth_num clothNum, num,
+    standard,zhiguan,kongcha,jiaodai,
+    packing_style packingStyle, 
+    print_status printStatus, print_num printNum,
+    status, return_status returnStatus,
+    create_time createTime, salesmans, mark
   </sql>
   
-  <select id="query" resultType="OrderSummary" parameterType="OrderSummary">
+  <select id="query" resultType="com.github.hzw.security.VO.OrderSummaryVO" parameterType="OrderSummary">
 		select
 		<include refid="selectId" />
 			from order_summary
 		<where> 1=1
-		<if test="t.orderCode != null and t.orderCode != ''">
-			and order_code = #{t.orderCode}
+		<if test="t.startDate != null and t.startDate != ''">
+			and order_code &gt;= #{t.startDate}
+		</if>
+		<if test="t.endDate != null and t.endDate != ''">
+			and order_code &lt;= #{t.endDate}
 		</if>
 		<if test="t.clothId != null and t.clothId != ''">
 			and cloth_id = #{t.clothId}
@@ -83,9 +100,6 @@
 		<if test="t.clothNum != null and t.clothNum != ''">
 			and cloth_num = #{t.clothNum}
 		</if>
-		<if test="t.num != null and t.num != ''">
-			and num = #{t.num}
-		</if>
 		<if test="t.standard != null and t.standard != ''">
 			and standard = #{t.standard}
 		</if>
@@ -106,6 +120,12 @@
 		</if>
 		<if test="t.mark != null and t.mark != ''">
 			and mark like '%${t.mark}%'
+		</if>
+		<if test="t.oprator != null and t.oprator != '' and t.oprator == 1">
+				and num  &gt;=#{t.num}
+		</if>
+		<if test="t.oprator != null and t.oprator != '' and t.oprator == 2 ">
+				and num &lt;=#{t.num}
 		</if>
 		</where>
 		order by id desc
