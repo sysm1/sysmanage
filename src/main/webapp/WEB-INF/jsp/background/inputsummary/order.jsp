@@ -23,9 +23,9 @@ var delarr = [];
 $(function() {
 	$("#search").click("click", function() {//绑定查询按扭
 		dialog = parent.$.ligerDialog.open({
-			width : 700,
+			width : 750,
 			height : 450,
-			url : rootPath + '/background/input/editUI.html?addId=1',
+			url : rootPath + '/background/ordersummary/list.html?flag=1&clothId=${inputsummary.clothId }&myCompanyCode=${inputsummary.myCompanyCode }&myCompanyColor=${inputsummary.myCompanyColor }',
 			title : "修改下单预录入",
 			isHidden : true
 		});
@@ -227,7 +227,7 @@ $(function() {
 							<select id='technologyId' name="technologyId">
 								<option>请选择</option>
 								<c:forEach var="item" items="${technologyInfos }">
-								<option value="${item.id }">${item.name }</option>
+								<option value="${item.id }" >${item.name }</option>
 								</c:forEach>
 							</select>
 						</div>
