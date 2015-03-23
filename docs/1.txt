@@ -178,6 +178,10 @@ create table order_input(
 	my_company_code varchar(255), -- 我司编号(来自花号基本资料表)
 	salesman_id int,
 	status int default 0,   -- 0 未下单 1 已下单
+	my_company_color varchar(255), -- 我司color(来自花号基本资料表)
+	num int,				-- 预录入数量
+	unit int,   -- 0条 1 kg 2cm 3yard item
+	mark text,   -- 
 	create_time datetime,
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
