@@ -13,6 +13,7 @@ import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.mapper.OrderInputSummaryMapper;
 import com.github.hzw.security.service.OrderInputSummaryService;
+import com.github.hzw.util.Common;
 
 @Transactional
 @Service("orderInputSummaryService")
@@ -54,6 +55,17 @@ public class OrderInputSummaryServiceImpl implements OrderInputSummaryService {
 		List<OrderInputSummaryVO> list = orderInputSummaryMapper.queryOrderInputBySummaryId(map);
 		pageView.setRecords(list);
 		return pageView;
+	}
+	
+	/**
+	 * 获取订单号
+	 * @return
+	 */
+	@Override
+	public String getOrderNo(){
+		String word="FX";
+		String time=Common.fromDateY();
+		return word+time;
 	}
 	
 	/**

@@ -32,5 +32,11 @@ public interface OrderInputSummaryService extends
 	 * @return
 	 */
 	public OrderInputSummaryVO getVOById(String id);
+	
+	/**
+	 * 获取订单号
+	 * @return
+	 */
+	public String getOrderNo();
 
 }

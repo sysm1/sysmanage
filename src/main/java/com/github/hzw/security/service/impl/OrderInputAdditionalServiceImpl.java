@@ -70,7 +70,7 @@ public class OrderInputAdditionalServiceImpl implements
 				orderInputSummary.setMyCompanyColor(myCompanyColors[i]);
 				olist=orderInputSummaryMapper.queryAll(orderInputSummary);
 				if(olist.size()>0){
-					orderInputSummary.setId(olist.get(0).getId());
+					orderInputSummary.setId(orderInputSummary.getId());
 					orderInputSummary.setOrderIds(orderInputSummary.getOrderIds()+","+bean.getId());
 					orderInputSummaryMapper.update(orderInputSummary);
 				}else{

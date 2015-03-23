@@ -108,7 +108,14 @@ public class OrderInputVO {
 
 	/***单位 0条 1KG 2米 3码**/
 	public String getUnit() {
-		return unit;
+		if("0".equals(unit)){
+			unit="条";
+		}if("1".equals(unit)){
+			unit="KG";
+		}if("2".equals(unit)){
+			unit="米";
+		}
+		return num+unit;
 	}
 	/***单位 0条 1KG 2米 3码**/
 	public void setUnit(String unit) {

@@ -88,12 +88,17 @@ public class OrderInputController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(HttpServletRequest request,OrderInput info) {
+	public Map<String, Object> add(HttpServletRequest request) {
+		OrderInput info=new OrderInput();
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			info.setCreateTime(new Date());
 			info.setStatus(0);
-			orderInputService.add(info);
+			info.setClothId(Integer.parseInt(request.getParameterValues("clothId")[0]));
+			info.setSalesmanId(Integer.parseInt(request.getParameterValues("salesmanId")[0]));
+			info.setMyCompanyCode(request.getParameterValues("myCompanyCode")[0]);
+			
+			orderInputService.addOrderInput(request);
 			orderInputAdditionalService.saveAddition(request,info);
 			map.put("flag", "true");
 		} catch (Exception e) {

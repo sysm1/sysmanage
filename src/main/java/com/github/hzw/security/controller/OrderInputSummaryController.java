@@ -18,12 +18,16 @@ import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.FactoryInfo;
+import com.github.hzw.security.entity.FlowerAdditional;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.FlowerAdditionalService;
+import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
@@ -44,6 +48,12 @@ public class OrderInputSummaryController extends BaseController {
 	
 	@Inject
 	private ClothAllowanceService clothAllowanceService;
+	
+	@Inject
+	private FlowerInfoService flowerInfoService;
+	
+	@Inject
+	private FlowerAdditionalService flowerAdditionalService;
 	
 	@Inject
 	private SalesmanInfoService salesmanInfoService;
@@ -150,7 +160,7 @@ public class OrderInputSummaryController extends BaseController {
 		String summId=idsa[0].split("_")[1];
 		OrderInputSummaryVO info = orderInputSummaryService.getVOById(summId);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
-		List<OrderInputVO> orderInputList=orderInputService.queryByIds(ids.substring(1));
+		List<OrderInputVO> orderInputList=orderInputService.queryByIds(ids.substring(1).split(","));//ids.substring(1).split(",")
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		//坯布余量查询
@@ -169,8 +179,21 @@ public class OrderInputSummaryController extends BaseController {
 			num+=vo.getNum();
 		}
 		
+		//****判断我司编号和我司颜色是否在花号基本资料中存在 不存在标记为红色****/
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setMyCompanyCode(info.getMyCompanyCode());
+		if(flowerInfoService.queryFind(flowerInfo).size()==0){
+			model.addAttribute("codeRed", "red;font-weight:bold");
+		}
+		FlowerAdditional flowerAdditional=new FlowerAdditional();
+		flowerAdditional.setMyCompanyColor(info.getMyCompanyColor());
+		if(flowerAdditionalService.queryAll(flowerAdditional).size()==0){
+			model.addAttribute("colorRed", "red;font-weight:bold");
+		}
+		//***颜色判断结束****//
+		
 		//下单编号
-		String orderNo="3333333333333333";
+		String orderNo=orderInputSummaryService.getOrderNo();
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("orderInputList", orderInputList);
