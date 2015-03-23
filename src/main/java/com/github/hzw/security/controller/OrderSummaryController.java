@@ -1,5 +1,6 @@
 package com.github.hzw.security.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.ClothInfo;
+import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
+import com.github.hzw.security.entity.SalesmanInfo;
+import com.github.hzw.security.entity.TechnologyInfo;
+import com.github.hzw.security.service.ClothInfoService;
+import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
+import com.github.hzw.security.service.SalesmanInfoService;
+import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
 
@@ -26,8 +35,39 @@ public class OrderSummaryController extends BaseController {
 	@Inject
 	private OrderSummaryService orderSummaryService;
 	
+	@Inject
+	private FactoryInfoService factoryInfoService;
+	
+	@Inject
+	private SalesmanInfoService salesmanInfoService;
+	
+	@Inject
+	private ClothInfoService clothInfoService;
+	
+	@Inject
+	private TechnologyInfoService technologyInfoService;
+	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, String pageNow,OrderSummary info,String flag) {
+		if("1".equals(flag)){
+			model.addAttribute("startDate", Common.fromDateY());
+			model.addAttribute("endDate", Common.fromDateY());
+			model.addAttribute("flag", flag);//从下单录入汇总页面跳转到此页面
+			info.setStartDate(new Date());
+			info.setEndDate(new Date());
+		}
+		pageView = orderSummaryService.query(getPageView(pageNow,null), info);
+		List<ClothInfo> cloths = clothInfoService.queryAll(null);
+		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
+		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		model.addAttribute("pageView", pageView);
+		model.addAttribute("cloths", cloths);
+		model.addAttribute("salesmanInfos", salesmanInfos);
+		model.addAttribute("bean", info);
+		model.addAttribute("factoryInfos", factoryInfos);
+		model.addAttribute("technologyInfos", technologyInfos);
+		
 		return Common.BACKGROUND_PATH+"/ordersummary/list";
 	}
 	

@@ -13,8 +13,15 @@ public class OrderSummary {
     private Integer id;
 
     private String orderCode;
+    
+    private Date startDate;
+    
+    private Date endDate;
 
     private Date orderDate;
+    
+    /**符号  1大于等于  2小于等于**/
+    private Integer oprator;
 
     private Integer clothId;
 
@@ -334,6 +341,30 @@ public class OrderSummary {
 
 	public void setMark(String mark) {
 		this.mark = mark;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public Integer getOprator() {
+		return oprator;
+	}
+
+	public void setOprator(Integer oprator) {
+		this.oprator = oprator;
 	}
 
 	@Override
