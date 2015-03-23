@@ -3,19 +3,20 @@
 <mapper namespace="com.github.hzw.security.mapper.OrderInputMapper" >
   
   <sql id="selectId1" >
-    id, cloth_id clothId, my_company_code myCompanyCode, salesman_id salesmanId, status, create_time createTime
+    id, cloth_id clothId, my_company_code myCompanyCode, salesman_id salesmanId, 
+    my_company_color myCompanyColor,status, create_time createTime,num,unit,mark
   </sql>
   
    <sql id="selectId" >
     oi.id id,
     oi.create_time createTime,
-    cu.cloth_name clothName,
     oi.my_company_code myCompanyCode,
-    oa.my_company_color myCompanyColor,
-    concat(oa.num,
-    (select case ci.unit when 0 then '条' when 1 then 'KG' when 2 then '米' end from cloth_info ci where ci.id=cloth_id) ) unit,
-    oa.mark,
-    si.name saleManName
+    oi.my_company_color myCompanyColor,
+    (select cloth_name from cloth_info where id=cloth_id) clothName,
+    (select name from salesman_info where id=salesman_id) saleManName,
+    oi.num,
+    oi.unit,
+    oi.mark
   </sql>
   
   <sql id="selectId2" >
@@ -31,9 +32,8 @@
   <select id="queryVO" resultType="com.github.hzw.security.VO.OrderInputVO" parameterType="com.github.hzw.security.VO.OrderInputVO">
 		select
 		<include refid="selectId" />
-			from order_input_additional oa,order_input oi,cloth_info cu,salesman_info si 
-		<where> 
-		oa.input_id=oi.id and oi.cloth_id=cu.id and si.id=oi.salesman_id
+			from order_input oi
+		<where> 1=1
 		<if test="t.clothId != null and t.clothId != ''">
 			and cloth_id = #{t.clothId}
 		</if>
@@ -60,24 +60,44 @@
 		order by id desc
 	</select>
 	
-	<select id="queryByIds" parameterType="String" resultType="com.github.hzw.security.VO.OrderInputVO">
+	<select id="queryByIds" resultType="com.github.hzw.security.VO.OrderInputVO">
 		select
-		<include refid="selectId2" />
-		from order_input_additional oa,order_input oi
-		where oi.id=oa.input_id and oa.id in (#{id})
+			oi.id, 
+  			oi.cloth_id clothId, 
+  			oi.my_company_code myCompanyCode, 
+  			(select name from salesman_info where id=oi.salesman_id) saleManName,
+  			oi.num,
+  			oi.mark
+		from order_input oi
+		where oi.id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+		 #{item} 
+		</foreach> 
 	</select>
 
 
 	<insert id="add" parameterType="OrderInput" useGeneratedKeys="true" keyProperty="id">
 		insert into order_input (
-			cloth_id, my_company_code, salesman_id, status, create_time
+			cloth_id, 
+			my_company_code, 
+			salesman_id, 
+			status, 
+			create_time,
+			my_company_color,
+			num,
+			unit,
+			mark
 		)
 		values(
 			#{clothId},
 			#{myCompanyCode},
 			#{salesmanId},
 			#{status},
-			#{createTime}
+			#{createTime},
+			#{myCompanyColor},
+			#{num},
+			#{unit},
+			#{mark}
 		)
 	</insert>
 	

@@ -16,8 +16,7 @@
     file_color fileColor, 
     technology_id technologyId, 
     (select technology.name from technology_info technology where technology.id = flower.technology_id ) as technologyName,
-    picture, 
-    factory_code factoryCode,
+    picture,     
     status
   </sql>
   
@@ -32,7 +31,6 @@
     technology_id technologyId, 
     (select technology.name from technology_info technology where technology.id = flower.technology_id ) as technologyName,
     picture, 
-    factory_code factoryCode,
     status
   </sql>
   

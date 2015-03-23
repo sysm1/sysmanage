@@ -69,12 +69,31 @@
 		order by id desc
 	</select>
 
-	<select id="queryOrderInputBySummaryId" parameterType="OrderInputSummary" resultType="com.github.hzw.security.VO.OrderInputSummaryVO">
-		select oa.id,ci.cloth_name clothName,oi.my_company_code myCompanyCode,#{t.id} summId,
+	<!-- 
+	select oa.id,ci.cloth_name clothName,oi.my_company_code myCompanyCode,#{t.id} summId,
 			   oa.my_company_color myCompanyColor,oa.num,si.name saleManName,oa.mark,oi.create_time createTime
 		from order_input_additional oa,order_input  oi,cloth_info ci,salesman_info si
-		where INSTR((select concat(',',t.order_ids,',') from order_input_summary t where t.id=#{t.id}),concat(',',oa.id,','))>0
-			and oa.input_id=oi.id and oi.cloth_id=ci.id and oi.salesman_id=si.id 
+		where INSTR((select concat(',',t.order_ids,',') 
+		from order_input_summary t where t.id=#{t.id}),concat(',',oa.id,','))>0
+			and oa.input_id=oi.id and oi.cloth_id=ci.id and oi.salesman_id=si.id
+	
+	 -->
+	<select id="queryOrderInputBySummaryId" parameterType="OrderInputSummary" resultType="com.github.hzw.security.VO.OrderInputSummaryVO">
+			
+		select 
+			oi.id,
+			(select cloth_name from cloth_info where id=oi.cloth_id) clothName,
+			oi.my_company_code myCompanyCode,
+			#{t.id} summId,
+			my_company_color myCompanyColor,
+			num,
+			(select name from salesman_info where id=salesman_id) saleManName,
+			create_time createTime
+		from order_input oi
+		where INSTR((select concat(',',t.order_ids,',') 
+		from order_input_summary t where t.id=#{t.id}),concat(',',oi.id,','))>0	
+			
+			
 	</select>
 
 	<insert id="add" parameterType="OrderInputSummary" useGeneratedKeys="true" keyProperty="id">
