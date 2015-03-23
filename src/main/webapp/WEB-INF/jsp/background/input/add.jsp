@@ -68,25 +68,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	$(document).ready(function(){
 	    $("#addTable").click(function(){
 	    	var tr=$("#table1 tr:eq(2) ");
-	    	//$(this).parent().clone(true).appendTo("#table1");
 			i++;
-	　  		//$("#table1").append("2222222222222");
 	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
-	    });
-	    $("#deleteRow").click(function(){
-	    	$(this).parent().parent().remove(); 
 	    });
 	});
 	
 	/***删除一行**/
-	function deleteRow(index){
-		var trow=document.getElementsByName("trow");
-		for(var i=0;i<=trow.length;i++){
-			if(index==trow[i].id){
-				document.getElementById('table1').deleteRow(i+2);
-				return true;
-			}
-		}
+	function deleteRow1(obj){
+		obj.parentNode.parentNode.parentNode.removeChild(obj.parentNode.parentNode);
 	}
 	/**改变布种的值时联动**/
 	function changeClothSelect(obj){
@@ -166,7 +155,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</c:forEach>
 						</select>
 					</td><td>
-						<input type="button" id="deleteRow" name="deleteRow" value="删除" >
+						<input type="button" id="deleteRowTr" name="deleteRowTr" value="删除" onclick="deleteRow1(this);">
 					</td>
 				</tr>
 			</tbody>
@@ -176,12 +165,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<td>
 					<div class="l_btn_centent">
 						<!-- saveWin_form   from是表单Ｉd-->
-						<a class="btn btn-primary" href="javascript:void(0)"
-							id="addTable" onclick="saveWin();"><span>新增</span> </a>
-						<a class="btn btn-primary" href="javascript:void(0)"
-							id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
-						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-							onclick="closeWin()"><span>关闭</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>删除</span> </a>
 					</div>
 				</td>
 			</tr>

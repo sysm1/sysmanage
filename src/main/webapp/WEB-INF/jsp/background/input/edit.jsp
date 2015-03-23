@@ -64,30 +64,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		$("#form").submit();
 	}
 	
-	var i=${ fn:length(addtionlist)}+1;
-	$(document).ready(function(){
-	    $("#addTable").click(function(){
-	    	var tr='<tr id="'+i+'" name="trow">'+
-				'<td align="right"><span style="color: red">*</span>我司颜色：</td>'+
-				'<td class="l_left">'+
-				'	<input type="text" name="myCompanyColor">'+
-				'</td>'+
-				'<td align="right"><span style="color: red">*</span>数量：</td>'+
-				'<td class="l_left">'+
-				'	<input type="text" name="num" style="width: 68%">&nbsp;<span name="unitName">'+
-				$("#unitName")[0].innerHTML+
-				'</span></td>'+
-				'<td align="right">备注：</td>'+
-				'<td class="l_left">'+
-				'	<input type="text" name="mark">'+
-				'</td><td>'+
-				'	&nbsp;&nbsp;<input type="button" value="删除" id="deleteTable" onclick="deleteRow('+i+')"/>'+
-				'</td>'+
-			'</tr>';
-			i++;
-	　  $("#table1").append(tr);
-	    });
-	});
 	
 	/***删除一行**/
 	function deleteRow(index){
@@ -139,67 +115,76 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		});
 	}
 	
+	var i=2;
+	$(document).ready(function(){
+	    $("#addTable").click(function(){
+	    	var tr=$("#table1 tr:eq(2) ");
+			i++;
+	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
+	    });
+	});
+	
+	/***删除一行**/
+	function deleteRow1(obj){
+		obj.parentNode.parentNode.parentNode.removeChild(obj.parentNode.parentNode);
+	}
+	
 </script>
 </head>
 <body>
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/input/update.html" method="post">
-		<c:if test="${type==null }">
-			<input type="hidden" id="id" name="id" value="${input.id }">
-		</c:if>
-		<table id="table1">
+	<form name="form" id="form" action="${ctx}/background/input/add.html" method="post">
+		<table id="table1" border="1" name="table1">
 			<tbody>
 				<tr>
-					<td align="right"><span style="color: red">*</span>布种：</td>
+					<th align="right">布种</th>
+					<th align="right">我司编号</th>
+					<th align="right">我司颜色</th>
+					<th >数量</th>
+					<th>单位</th>
+					<th>备注</th>
+					<th align="right">业务员</th>
+					<th></th>
+				</tr><tr>
 					<td class="l_left">
-						<select id="clothId" name="clothId" onchange="changeClothSelect(this);">
+						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:150px;">
 							<option>请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq input.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
-					</td><td align="right"><span style="color: red">*</span>我司编号：</td>
+					</td>
 					<td>
-						<select id="myCompanyCode" name="myCompanyCode">
+						<select id="myCompanyCode" name="myCompanyCode" style="width:150px;">
 							<option>请选择</option>
 							<option id="1">1</option>
 						</select>
+					</td><td class="l_left">
+						<input type="text" name="myCompanyColor" id="myCompanyColor" style="width:150px;" value="${input.myCompanyColor }">
 					</td>
-					<td align="right"><span style="color: red">*</span>业务员：</td>
-					<td>
-						<select id="salesmanId" name="salesmanId">
-							<option>请选择</option>
-							<c:forEach items="${salesmanInfos }" var="saleman">
-								<option value="${saleman.id }" <c:if test="${saleman.id==input.salesmanId }">selected="selected"</c:if>>${saleman.name }</option>
-							</c:forEach>
+					<td >
+						<input type="text" id="num" name="num" value="${input.num }" style="width: 80px">
+					</td><td>
+						<select id="unit" name="unit" style="width: 80px;">
+							<option value="">请选择</option>
+							<option value="0">条</option>
+							<option value="1">KG</option>
+							<option value="2">米</option>
 						</select>
 					</td>
+					<td><input type="text" id="mark" name="mark" value="${input.mark }"></td>
 					<td>
-						&nbsp;
-					</td>
-				</tr>
-				<c:forEach var="addtion" items="${addtionlist }" varStatus="status">
-				<tr id="${status.index }" name="trow">
-					<td align="right"><span style="color: red">*</span>我司颜色：</td>
-					<td class="l_left">
-						<input type="text" name="myCompanyColor" value="${addtion.myCompanyColor }">
-					</td>
-					<td align="right"><span style="color: red">*</span>数量：</td>
-					<td class="l_left">
-						<input type="text" name="num" value="${addtion.num }" style="width: 68%">
-						<span id="unitName" name="unitName"></span>
-					</td>
-					<td align="right">备注：</td>
-					<td class="l_left">
-						<input type="text" name="mark" value="${addtion.mark }">
+						<select id="salesmanId" name="salesmanId" style="width:140px;">
+							<option>请选择</option>
+							<c:forEach items="${salesmanInfos }" var="saleman">
+								<option value="${saleman.id }" <c:if test="${saleman.id==input.salesmanId }">selected="selected"</c:if> >${saleman.name }</option>
+							</c:forEach>
+						</select>
 					</td><td>
-						&nbsp;
-						<c:if test="${status.index==0 }"><input type="button" value="增加" id="addTable"/></c:if>
-						<c:if test="${status.index>=1 }"><input type="button" value="删除" id="deleteTable" onclick="deleteRow(${status.index})"/></c:if>
+						<input type="button" id="deleteRowTr" name="deleteRowTr" value="删除" onclick="deleteRow1(this);">
 					</td>
 				</tr>
-				</c:forEach>
 			</tbody>
 		</table>
 		<table width="850px">
@@ -207,10 +192,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<td>
 					<div class="l_btn_centent">
 						<!-- saveWin_form   from是表单Ｉd-->
-						<a class="btn btn-primary" href="javascript:void(0)"
-							id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-							class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-							onclick="closeWin()"><span>关闭</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
+						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
 					</div>
 				</td>
 			</tr>

@@ -96,7 +96,7 @@
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 950,
+				width : 1350,
 				height :550,
 				url : rootPath + '/background/input/editUI.html?id='+cbox+"&type=copy",
 				title : "复制新增下单预录入",
@@ -213,17 +213,17 @@
 				class="icon-zoom-in icon-white" id="View"></i> 复制新增
 			</a>
 			
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
+			<!--a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
 				class="icon-edit icon-white"></i> 修改
-			</a> 
+			</a--> 
 			
 			<!--<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete-->
 			</a>
 			
-			<a class="btn btn-large btn-success" href="javascript:void(0)" id="view">
+			<!--a class="btn btn-large btn-success" href="javascript:void(0)" id="view">
 				查看
-			</a>
+			</a-->
 			<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询</a>
 		</div>
 		<div id="paging" class="pagclass"></div>

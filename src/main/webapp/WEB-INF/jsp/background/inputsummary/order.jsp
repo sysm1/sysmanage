@@ -156,19 +156,28 @@ $(function() {
 		$("#form").submit();
 	}
 	function changeNum(obj){
-		var beforNum=$("#num").val();
+		var beforNum=$("#num1").val();
 		var nowNum=obj.value;
+		if(nowNum==''){
+			$("#num").attr("value",beforNum);
+		}
 		var chae=parseInt(nowNum)-parseInt(beforNum);
 		if(chae>0){
 			$("#balancetext").show();
 			$("#balance").attr("value",chae);
 			$("#ywy").show();
 			$("#ywy2").show();
-		}else{
+		}else if(chae<0){
+			alert("修改后的数量不能小于当前数量！");
+			$("#num").attr("value",beforNum);
 			$("#balancetext").hide();
 			$("#ywy").hide();
 			$("#ywy2").hide();
 		}
+	}
+	
+	function addtoflower(code){
+		alert("添加到花号基本资料");
 	}
 </script>
 </head>
@@ -179,7 +188,7 @@ $(function() {
 		<input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }">
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
-		<input type="hidden" id="num" name="num" value="${num }">
+		<input type="hidden" id="num1" name="num1" value="${num }">
 		<table style=" height: 200px;" border="1">
 			<tbody>
 				<tr style="text-align: center;height: 30px;"><td colspan="6">下单录入汇总页面</td></tr>
@@ -217,7 +226,9 @@ $(function() {
 				</tr><tr>
 					<td class="l_right">我司编号:</td>
 					<td class="l_left" colspan="2">
-						<div class="lanyuan_input">
+						<div class="lanyuan_input" 
+							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyCode }');" style="color: ${codeRed};cursor:pointer;" </c:if> 
+						>
 							${inputsummary.myCompanyCode }
 						</div>
 					</td>
@@ -243,7 +254,7 @@ $(function() {
 					</td>
 					<td class="l_right">我司颜色:</td>
 					<td class="l_left" colspan="2">
-						<div class="lanyuan_input"> 
+						<div class="lanyuan_input" style="color: ${colorRed};"> 
 							${inputsummary.myCompanyColor }
 						</div>
 					</td>
