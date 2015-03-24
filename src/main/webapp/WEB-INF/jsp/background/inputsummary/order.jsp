@@ -225,7 +225,7 @@ $(function() {
 					</td>
 				</tr><tr>
 					<td class="l_right">我司编号:</td>
-					<td class="l_left" colspan="2">
+					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if> >
 						<div class="lanyuan_input" 
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyCode }');" style="color: ${codeRed};cursor:pointer;" </c:if> 
 						>
@@ -253,8 +253,10 @@ $(function() {
 						</div>
 					</td>
 					<td class="l_right">我司颜色:</td>
-					<td class="l_left" colspan="2">
-						<div class="lanyuan_input" style="color: ${colorRed};"> 
+					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if>>
+						<div class="lanyuan_input" 
+							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyColor }');" style="color: ${codeRed};cursor:pointer;" </c:if>
+						> 
 							${inputsummary.myCompanyColor }
 						</div>
 					</td>
@@ -291,12 +293,28 @@ $(function() {
 								</c:forEach>
 							</select>
 						</div></td>
+				</tr><tr style="height: 30px;text-align: center;">
+					<td colspan="6">规格</td>
 				</tr><tr>
-					<td class="l_right">规格:</td>
-					<td class="l_left" colspan="6">
-						<div class="lanyuan_input">
-							<input id='standard' name="standard" class="checkdesc" type="text" value="" style="width: 553px;">
-						</div>
+					<td class="l_right">幅宽:</td>
+					<td colspan="2">
+						<input id='kuanfu' name="kuanfu" class="checkdesc" type="text" value="" style="width: 80px;">&nbsp;CM&nbsp;
+						<select id="kuanfufs" name="kuanfufs" style="width: 60px;">
+							<option value="0">包边</option>
+							<option value="1">实用</option>
+						</select>
+					</td><td  class="l_right">克重:</td>
+					<td colspan="2">
+						<input id='kezhong' name="kezhong" class="checkdesc" type="text" value="" style="width: 70px;">
+						<select id="kezhongUnit" name="kezhongUnit" style="width: 60px;">
+							<option value="0">G/M2</option>
+							<option value="1">G/Y</option>
+							<option value="2">G/M</option>
+						</select>
+						<select id="kezhongfs" name="kezhongfs" style="width: 60px;">
+							<option value="0">回后</option>
+							<option value="1">出机</option>
+						</select>
 					</td>
 				</tr><tr>
 					<td  colspan="6" style="height: 30px;text-align: center;">
