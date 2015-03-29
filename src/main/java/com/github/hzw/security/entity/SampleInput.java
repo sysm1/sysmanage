@@ -31,6 +31,9 @@ public class SampleInput {
 
     private Integer codeType;
     
+    /**拖延单天数**/
+    private Integer delayDates;
+    
     /**编号值**/
     private String codeValue;
     
@@ -315,6 +318,14 @@ public class SampleInput {
 	@ExcelDataMapper(title="回版备注",order=11)
 	public void setReplyMark(String replyMark) {
 		this.replyMark = replyMark;
+	}
+
+	public Integer getDelayDates() {
+		return delayDates;
+	}
+
+	public void setDelayDates(Integer delayDates) {
+		this.delayDates = delayDates;
 	}
 
 	@Override
