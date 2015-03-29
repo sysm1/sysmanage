@@ -28,6 +28,9 @@ public class OrderSummaryVO {
 
     private Integer technologyId;
     
+    /***回货数量**/
+    private int returnNum;
+    
     /***工艺名称**/
     private String technologyName;
 
@@ -70,8 +73,16 @@ public class OrderSummaryVO {
     private Integer printNum;
 
     private String status;
+    
+    /***回货日期**/
+    private Date returnDate;
+    
+    /**回货颜色**/
+    private String returnColor;
 
     private Integer returnStatus;
+    
+    private String returnStatusName;
 
     private Date createtime;
 
@@ -322,6 +333,43 @@ public class OrderSummaryVO {
 
 	public void setFactoryName(String factoryName) {
 		this.factoryName = factoryName;
+	}
+
+	public String getReturnStatusName() {
+		if(returnStatus==0){
+			returnStatusName="未回";
+		}else if(returnStatus==1){
+			returnStatusName="已回";
+		}
+		return returnStatusName;
+	}
+
+	public void setReturnStatusName(String returnStatusName) {
+		this.returnStatusName = returnStatusName;
+	}
+
+	public Date getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
+	}
+
+	public String getReturnColor() {
+		return returnColor;
+	}
+
+	public void setReturnColor(String returnColor) {
+		this.returnColor = returnColor;
+	}
+
+	public int getReturnNum() {
+		return returnNum;
+	}
+
+	public void setReturnNum(int returnNum) {
+		this.returnNum = returnNum;
 	}
 
 	@Override
