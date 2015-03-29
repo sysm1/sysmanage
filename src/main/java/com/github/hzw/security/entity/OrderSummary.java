@@ -202,6 +202,7 @@ public class OrderSummary {
         this.clothNum = clothNum;
     }
 
+    /**下单数量**/
     public Integer getNum() {
         return num;
     }
