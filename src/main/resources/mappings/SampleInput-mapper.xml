@@ -73,6 +73,9 @@
 		</if><if test="t.endDate != null and t.endDate != ''">
 			and s.sample_date &lt;= #{t.endDate}
 		</if>
+		<if test="t.delayDates!=null and t.delayDates!=''">
+			and datediff(NOW(),sample_date) >#{t.delayDates}
+		</if>
 		
 		</where>
 		order by id desc
@@ -229,6 +232,12 @@
 		</set>
 		where id=#{id}
 	</update>
+	
+	<!-- 开版 拖延单总数 -->
+	<select id="queryDelayDates" parameterType="String" resultType="java.lang.String">
+		select count(1) from sample_input 
+		where datediff(NOW(),sample_date) >#{_parameter} and status=0  
+	</select>
 	
   
 </mapper>

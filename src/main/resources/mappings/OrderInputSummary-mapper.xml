@@ -46,7 +46,7 @@
 		<include refid="selectIdVO" />
 	    from order_input_summary ois,cloth_info ci  
 		<where> 
-		ois.cloth_id=ci.id
+		ois.cloth_id=ci.id and ois.order_ids is not null  and ois.order_ids &lt;&gt;''
 		</where>
 		order by id desc
 	</select>
