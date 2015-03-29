@@ -173,19 +173,19 @@ public class OrderInputSummaryController extends BaseController {
 		}
 		
 		//****判断我司编号和我司颜色是否在花号基本资料中存在 不存在标记为红色****/
-		List<String> myCompanyCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
-		if(myCompanyCodes.size()==0){
+		List<String> factoryCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
+		if(factoryCodes.size()==0){
 			model.addAttribute("codeRed", "red;font-weight:bold");
-			myCompanyCodes=flowerAdditionalService.queryFactoryCode(null);
+			factoryCodes=flowerAdditionalService.queryFactoryCode(null);
 		}
-		model.addAttribute("myCompanyCodes",myCompanyCodes);
+		model.addAttribute("factoryCodes",factoryCodes);
 		
-		List<String> myCompanyColors=flowerAdditionalService.queryFactoryColor(info.getMyCompanyColor());
-		if(myCompanyColors.size()==0){
+		List<String> factoryColors=flowerAdditionalService.queryFactoryColor(info.getMyCompanyColor());
+		if(factoryColors.size()==0){
 			model.addAttribute("colorRed", "red;font-weight:bold");
-			myCompanyColors=flowerAdditionalService.queryFactoryColor(null);
+			factoryColors=flowerAdditionalService.queryFactoryColor(null);
 		}
-		model.addAttribute("myCompanyColors",myCompanyColors);
+		model.addAttribute("factoryColors",factoryColors);
 		//***颜色判断结束****//
 		
 		//下单编号
@@ -198,6 +198,8 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("num",num);
 		model.addAttribute("salesmanInfos",salesmanInfos);
 		model.addAttribute("nowDate", Common.fromDateY());
+		model.addAttribute("inputIds",ids.substring(1));
+		model.addAttribute("summId",summId);
 		return Common.BACKGROUND_PATH+"/inputsummary/order";
 	}
 	
