@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -33,33 +34,40 @@ public class UploadFileUtils {
 	 * @param request
 	 * @return
 	 */
-	public static String saveUploadFile(HttpServletRequest request){
+	public static String[] saveUploadFile(HttpServletRequest request){
 		MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;  
         //  获得第1张图片（根据前台的name名称得到上传的文件）   
-        MultipartFile myFile =  multipartRequest.getFile("myFile");
-        if(null==myFile){
-        	return null;
-        }
+        List<MultipartFile> myFiles =  multipartRequest.getFiles("myFile");
+        String[] destPaths=new String[myFiles.size()];
+        int size=0;
+        
         final int BUFFER_SIZE = 16 * 1024 ;
         OutputStream out = null ;
         InputStream in=null;
         File  dst=null;
         //图片保存目标路径
         String dstPath=PropertiesUtils.findPropertiesKey("pic_path");
-        File path=new File(dstPath);
-        if(!path.exists()){
-        	path.mkdirs();
-        }
-        String picName=myFile.getOriginalFilename();
-        String dstPicPath=dstPath+picName;
-        dst=new File(dstPicPath);
         try {
-        	in =myFile.getInputStream();
-        	out = new BufferedOutputStream( new FileOutputStream(dst), BUFFER_SIZE);
-        	byte [] buffer = new byte [BUFFER_SIZE];
-        	while (in.read(buffer) > 0 ) {
-        		out.write(buffer);
-        	}
+	        for(MultipartFile myFile:myFiles){
+	        	if(null==myFile){
+	            	return null;
+	            }
+	            File path=new File(dstPath);
+	            if(!path.exists()){
+	            	path.mkdirs();
+	            }
+	            String picName=myFile.getOriginalFilename();
+	            String dstPicPath=dstPath+picName;
+	            dst=new File(dstPicPath);
+	            
+            	in =myFile.getInputStream();
+            	out = new BufferedOutputStream( new FileOutputStream(dst), BUFFER_SIZE);
+            	byte [] buffer = new byte [BUFFER_SIZE];
+            	while (in.read(buffer) > 0 ) {
+            		out.write(buffer);
+            	}
+            	destPaths[size++]=dstPicPath;
+            }
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}finally{
@@ -74,7 +82,7 @@ public class UploadFileUtils {
 				e.printStackTrace();
 			}
 		}
-        return dstPicPath;
+        return destPaths;
 	}
 	
 	 
