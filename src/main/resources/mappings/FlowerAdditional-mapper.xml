@@ -69,6 +69,22 @@
 		</where>
 		order by id desc
 	</select>
+	
+	<select id="queryFactoryCode" parameterType="String" resultType="java.lang.String">
+		select DISTINCT factory_code factoryCode
+		from flower_additional 
+		<if test="_parameter != null and _parameter != ''">
+			where my_company_code = #{_parameter}
+		</if>
+	</select>
+	
+	<select id="queryFactoryColor" parameterType="String" resultType="java.lang.String">
+		select DISTINCT factory_color factoryColor
+		from flower_additional 
+		<if test="_parameter != null and _parameter != ''">
+			where my_company_color = #{_parameter}
+		</if>
+	</select>
 
 
 	<insert id="add" parameterType="FlowerAdditional" useGeneratedKeys="true" keyProperty="id">

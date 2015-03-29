@@ -213,6 +213,16 @@
       </if>
       <if test="jiaodai != null" >
         jiaodai,
+      </if><if test="kuanfu != null" >
+        kuanfu,
+      </if><if test="kuanfufs != null" >
+        kuanfufs,
+      </if><if test="kezhong != null" >
+        kezhong,
+      </if><if test="kezhongUnit != null" >
+        kezhongUnit,
+      </if><if test="kezhongfs != null" >
+        kezhongfs,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -287,6 +297,16 @@
       </if>
       <if test="jiaodai != null" >
         #{jiaodai,jdbcType=INTEGER},
+      </if><if test="kuanfu != null" >
+        #{kuanfu,jdbcType=INTEGER},
+      </if><if test="kuanfufs != null" >
+        #{kuanfufs,jdbcType=INTEGER},
+      </if><if test="kezhong != null" >
+        #{kezhong,jdbcType=INTEGER},
+      </if><if test="kezhongUnit != null" >
+        #{kezhongUnit,jdbcType=INTEGER},
+      </if><if test="kezhongfs != null" >
+        #{kezhongfs,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

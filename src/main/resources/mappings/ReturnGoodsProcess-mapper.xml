@@ -36,7 +36,7 @@
 		<if test="t.summaryId != null and t.summaryId != ''">
 			and summary_id = #{t.summaryId}
 		</if>
-		<if test="t.freturnDate != null and t.returnDate != ''">
+		<if test="t.returnDate != null and t.returnDate != ''">
 			and	return_date = #{t.returnDate}
 		</if>
 		<if test="t.returnNum != null and t.returnNum != ''">
@@ -56,6 +56,28 @@
 		</if>
 		</where>
 		order by id desc
+	</select>
+	
+	<select id="queryVO" resultType="com.github.hzw.security.VO.OrderSummaryVO" parameterType="java.util.Map">
+		select 
+			os.return_status returnStatus,			
+			os.id,
+			os.order_date orderDate,
+			(select name from factory_info where id=os.factory_id) factoryName,
+			os.factory_code factoryCode,
+			(select cloth_name from cloth_info where id=cloth_id) clothName,
+			(select name from technology_info where id=os.technology_id) technologyName,
+			os.my_company_code myCompanyCode,
+			pro.return_date returnDate,
+			os.num,
+			pro.return_num returnNum,
+			os.my_company_color myCompanyColor,
+			pro.return_color returnColor,
+			os.mark
+		from order_summary os,return_goods_process pro
+		<where> os.id=pro.summary_id
+		
+		</where>
 	</select>
   
   <select id="queryAll" resultType="ReturnGoodsProcess">
