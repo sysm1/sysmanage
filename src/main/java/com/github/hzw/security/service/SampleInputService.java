@@ -22,4 +22,11 @@ public interface SampleInputService extends BaseService<SampleInput> {
 	 */
 	public PageView queryReplay(PageView pageView,SampleInput sampleInput);
 	
+	/**
+	 * 查询拖延单数
+	 * @param dates
+	 * @return
+	 */
+	public String queryDelayDates(String dates);
+	
 }

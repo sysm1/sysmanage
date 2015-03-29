@@ -53,6 +53,15 @@ public class SampleInputServiceImpl implements SampleInputService {
 		List<SampleInput> list = sampleInputMapper.query(map);
 		return list;
 	}
+	
+	/**
+	 * 查询拖延单数
+	 * @param dates
+	 * @return
+	 */
+	public String queryDelayDates(String dates){
+		return sampleInputMapper.queryDelayDates(dates);
+	}
 
 	/**
 	 * 查询已回开版进度
@@ -111,10 +120,10 @@ public class SampleInputServiceImpl implements SampleInputService {
 	@Override
 	public void saveTemp(HttpServletRequest request,SampleInput sampleInput){
 		String type=request.getParameter("type");
-		String picPath=UploadFileUtils.saveUploadFile(request);
 		SampleInput bean=new SampleInput();
 		bean=getById(sampleInput.getId()+"");
-		bean.setPicture(picPath);
+		bean.setPicture(sampleInput.getPicture());
+		bean.setFileCode(sampleInput.getFileCode());
 		if(null!=sampleInput.getMyCompanyCode()){
 			bean.setMyCompanyCode(sampleInput.getMyCompanyCode());
 		}
