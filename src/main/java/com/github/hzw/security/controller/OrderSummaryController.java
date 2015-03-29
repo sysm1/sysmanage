@@ -17,13 +17,16 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerInfo;
+import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
+import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.security.service.TechnologyInfoService;
@@ -36,6 +39,9 @@ public class OrderSummaryController extends BaseController {
 
 	@Inject
 	private OrderSummaryService orderSummaryService;
+	
+	@Inject
+	private OrderInputSummaryService orderInputSummaryService;
 	
 	@Inject
 	private FactoryInfoService factoryInfoService;
@@ -51,6 +57,9 @@ public class OrderSummaryController extends BaseController {
 	
 	@Inject
 	private FlowerInfoService flowerInfoService;
+	
+	@Inject
+	private FlowerAdditionalService flowerAdditionalService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow,OrderSummary info,String flag) {
@@ -101,10 +110,20 @@ public class OrderSummaryController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(OrderSummary info) {
+	public Map<String, Object> add(OrderSummary info,String inputIds,String summId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			orderSummaryService.add(info);
+			OrderInputSummary orderInputSummary=orderInputSummaryService.getById(summId);
+			String orderIds=orderInputSummary.getOrderIds();
+			orderIds=","+orderIds;
+			String [] idsa=inputIds.split(",");
+			for(String id:idsa){
+				orderIds=orderIds.replace(","+id, "");
+			}
+			orderInputSummary.setOrderIds(orderIds);
+			orderInputSummaryService.update(orderInputSummary);
+			//修改坯布余量
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -127,15 +146,36 @@ public class OrderSummaryController extends BaseController {
 	
 
 	/**
-	 * 跑到新增界面
+	 * 跑到修改界面
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
+		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		List<ClothInfo> clothInfos=clothInfoService.queryAll(null);
+		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		OrderSummary info = orderSummaryService.getById(id);
-		model.addAttribute("summary", info);
+		
+		List<String> factoryCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
+		if(factoryCodes.size()==0){
+			model.addAttribute("codeRed", "red;font-weight:bold");
+			factoryCodes=flowerAdditionalService.queryFactoryCode(null);
+		}
+		model.addAttribute("factoryCodes",factoryCodes);
+		
+		List<String> factoryColors=flowerAdditionalService.queryFactoryColor(info.getMyCompanyColor());
+		if(factoryColors.size()==0){
+			model.addAttribute("colorRed", "red;font-weight:bold");
+			factoryColors=flowerAdditionalService.queryFactoryColor(null);
+		}
+		model.addAttribute("factoryColors",factoryColors);
+		
+		model.addAttribute("inputsummary", info);
+		model.addAttribute("factoryInfos", factoryInfos);
+		model.addAttribute("clothInfos",clothInfos);
+		model.addAttribute("technologyInfos", technologyInfos);
 		return Common.BACKGROUND_PATH+"/ordersummary/edit";
 	}
 	
