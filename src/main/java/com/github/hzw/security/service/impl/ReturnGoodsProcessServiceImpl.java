@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.OrderSummaryVO;
 import com.github.hzw.security.entity.ReturnGoodsProcess;
 import com.github.hzw.security.mapper.ReturnGoodsProcessMapper;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
@@ -26,6 +27,23 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		map.put("paging", pageView);
 		map.put("t", t);
 		List<ReturnGoodsProcess> list = returnGoodsProcessMapper.query(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
+	
+	/**
+	 * 返回分页后的数据
+	 * @param pageView
+	 * @param t
+	 * @return
+	 */
+	@Override
+	public PageView queryVO(PageView pageView,Map<String,String> map1){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("paging", pageView);
+		map.put("factoryId", map1.get("factoryId"));
+		map.put("code", map1.get("code"));
+		List<OrderSummaryVO> list = returnGoodsProcessMapper.queryVO(map);
 		pageView.setRecords(list);
 		return pageView;
 	}

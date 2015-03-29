@@ -35,6 +35,29 @@ public class FlowerAdditionalServiceImpl implements FlowerAdditionalService {
 	public List<FlowerAdditional> queryAll(FlowerAdditional t) {
 		return flowerAdditionalMapper.queryAll(t);
 	}
+	
+	@Override
+	public List<FlowerAdditional> queryFind(FlowerAdditional flowerAdditional){
+		return flowerAdditionalMapper.queryFind(flowerAdditional);
+	}
+	
+	/**
+	 * 根据我司编号 查询工厂编号
+	 * @param myCompanyCode
+	 * @return
+	 */
+	public List<String> queryFactoryCode(String  myCompanyCode){
+		return flowerAdditionalMapper.queryFactoryCode(myCompanyCode);
+	}
+	
+	/**
+	 * 根据我司颜色 查询工厂颜色
+	 * @param myCompanyColor
+	 * @return
+	 */
+	public List<String> queryFactoryColor(String  myCompanyColor){
+		return flowerAdditionalMapper.queryFactoryColor(myCompanyColor);
+	}
 
 	@Override
 	public void delete(String id) throws Exception {
