@@ -127,12 +127,11 @@ ul { list-style:none;}
 		}
 		if(targ.tagName=="SPAN"){//to adjust whether the element is tabledata 
 			pos = targ.parentNode.parentNode.rowIndex+1;
+		}else if(targ.tagName=="INPUT"){ 
+			pos = targ.parentNode.parentNode.rowIndex+1;
+		}else{
+			pos=0;
 		}
-		else if(targ.tagName=="INPUT"){ 
-		//to do nothing 
-		} else{ 
-			pos =0;
-		} 
 		//alert(pos+post);
 	} 
 	//to insert a row in the place 
@@ -184,9 +183,10 @@ ul { list-style:none;}
 		var tds=document.getElementsByName("chtd"+id);
 		for(var i=0;i<tds.length;i++){
 			//alert(tds[i].parentNode.parentNode.nodeName);
-			//tds[i].parentNode.parentNode.style.display="none";
+			tds[i].parentNode.parentNode.style.display="none";
 		}
 		$("#td"+index)[0].innerHTML='<span onclick="showDetail('+index+','+inputId+')">+</span>';
+		$('#'+inputId)[0].checked=false;
 	}
 	
 	function addTr(tab, row, trHtml){
@@ -234,8 +234,14 @@ ul { list-style:none;}
 	}
 	
 	/**全选 当前父节点下的子节点**/
-	function checkAll(obj){
-		var summId=obj.value;		
+	function checkAll(index,obj){
+		var summId=obj.value;
+		if(obj.checked){
+			if($("#td"+index)[0].innerHTML.split('+').length>1){
+				showDetail(index,summId);//加载子节点
+			}
+			
+		}
 		var childcheckId=document.getElementsByName("childcheckId");
 		var childValue="";
 		for(var i=0;i<childcheckId.length;i++){
@@ -316,7 +322,7 @@ ul { list-style:none;}
 					<tr style="background-color:#1FFF" id="${status.index }" >
 						<td id="td${status.index+1 }" style="background:#FFE4B5;"><span onclick="showDetail('${status.index +1}','${item.id }');">+</span></td>
 						<td style="background:#FFE4B5;width:50px;">
-					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll(this);">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll('${status.index +1}',this);">
 					 	</td>
 						<td style="background:#FFE4B5;">${item.id }</td>
 						<td style="background:#FFE4B5;"></td>
@@ -331,7 +337,7 @@ ul { list-style:none;}
 				
 				<!-- 分页 -->
 				<tr style="height: 35px">
-					<td colspan="9" style="text-align: center;font-size: 14px;">
+					<td colspan="10" style="text-align: center;font-size: 14px;">
 						<div id="pagelist">
   <ul style="font-size: 14px;">
   	<c:if test="${pageView.pageNow==1}">

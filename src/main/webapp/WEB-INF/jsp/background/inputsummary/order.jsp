@@ -153,7 +153,28 @@ $(function() {
 			$("#factoryColor").focus();
 			return false;
 		}
-		$("#form").submit();
+		//$("#form").submit();
+		
+		$("#form").ajaxSubmit({//验证新增是否成功
+			type : "post",
+			dataType:"json",
+			success : function(data) {
+				if (data.flag == "true") {
+					$.ligerDialog.success('提交成功!', '提示', function() {
+						//这个是调用同一个页面趾两个iframe里的js方法
+						//account是iframe的id
+						window.location.href=rootPath + "/background/inputsummary/list.html";
+						//parent.input.loadGird();
+						//closeWin();
+					});
+					//parent.window.document.getElementById("username").focus();
+				} else {
+					$.ligerDialog.warn("提交失败！！");
+				}
+			}
+		});
+		
+		
 	}
 	function changeNum(obj){
 		var beforNum=$("#num1").val();
@@ -206,6 +227,9 @@ $(function() {
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
 		<input type="hidden" id="num1" name="num1" value="${num }">
+		<input type="hidden" id="status" name="status" value="1">
+		<input type="hidden" id="inputIds" name="inputIds" value="${inputIds }">
+		<input type="hidden" id="summId" name="summId" value="${summId }">
 		<table style=" height: 200px;" border="1">
 			<tbody>
 				<tr style="text-align: center;height: 30px;"><td colspan="6">下单录入汇总页面</td></tr>
@@ -266,7 +290,7 @@ $(function() {
 						<div class="lanyuan_input">
 							<select id="factoryCode" name="factoryCode">
 								<option value="">请选择</option>
-								<c:forEach var="code" items="${myCompanyCodes }">
+								<c:forEach var="code" items="${factoryCodes }">
 									<option value="${code }">${code }</option>
 								</c:forEach>
 							</select>
@@ -290,7 +314,7 @@ $(function() {
 						<div class="lanyuan_input">
 							<select id="factoryColor">
 								<option value="">请选择</option>
-								<c:forEach var="color" items="${myCompanyColors }">
+								<c:forEach var="color" items="${factoryColors }">
 									<option value="${color}">${color }</option>
 								</c:forEach>
 							</select>
@@ -308,7 +332,7 @@ $(function() {
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id="ywy2" style="display: none" id="balanceSalemanId" name="balanceSalemanId">
-								<option>请选择</option>
+								<option value="0">请选择</option>
 								<c:forEach var="saleman" items="${salesmanInfos }">
 								<option value="${saleman.id }">${saleman.name }</option>
 								</c:forEach>

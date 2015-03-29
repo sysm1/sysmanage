@@ -64,6 +64,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		$("#form").submit();
 	}
 	
+	
 	var i=2;
 	$(document).ready(function(){
 	    $("#addTable").click(function(){
@@ -71,12 +72,17 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			i++;
 	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
 	    });
+	    $("#deleteTable").click(function(){
+	    	var checkId=document.getElementsByName("checkId");
+	    	for(var i=checkId.length-1;i>=0;i--){
+	    		if(checkId[i].checked){
+	    			checkId[i].parentNode.parentNode.parentNode.removeChild(checkId[i].parentNode.parentNode);
+	    		}
+	    	}
+	    });
 	});
 	
-	/***删除一行**/
-	function deleteRow1(obj){
-		obj.parentNode.parentNode.parentNode.removeChild(obj.parentNode.parentNode);
-	}
+	
 	/**改变布种的值时联动**/
 	function changeClothSelect(obj){
 		$.ajax({
@@ -111,6 +117,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		<table id="table1" border="1" name="table1">
 			<tbody>
 				<tr>
+					<th>
+						<input type="checkbox" id="checkAll" name="checkAll">
+					</th>
 					<th align="right">布种</th>
 					<th align="right">我司编号</th>
 					<th align="right">我司颜色</th>
@@ -118,8 +127,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th>单位</th>
 					<th>备注</th>
 					<th align="right">业务员</th>
-					<th></th>
 				</tr><tr>
+					<td>
+						<input type="checkbox" id="checkId" name="checkId" value="1">
+					</td>
 					<td class="l_left">
 						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:150px;">
 							<option>请选择布种</option>
@@ -154,8 +165,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 								<option value="${saleman.id }">${saleman.name }</option>
 							</c:forEach>
 						</select>
-					</td><td>
-						<input type="button" id="deleteRowTr" name="deleteRowTr" value="删除" onclick="deleteRow1(this);">
 					</td>
 				</tr>
 			</tbody>
@@ -170,7 +179,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
 						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>删除</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
 					</div>
 				</td>
 			</tr>

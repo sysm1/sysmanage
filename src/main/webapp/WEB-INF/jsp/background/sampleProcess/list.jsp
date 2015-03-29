@@ -107,6 +107,7 @@ html>body td{ font-size:13px;}
 		//grid = window.lanyuan.ui.lyGrid();
 		$("#search").click("click", function() {//绑定查询按扭
 			$('#pageNow').attr('value',1);
+			$("#delay").attr('value','');
 			var f = $('#fenye');
 			//f.attr('target','_blank');
 			f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/list.html');
@@ -142,23 +143,13 @@ html>body td{ font-size:13px;}
 				}
 			}
 		});
-		$("#editView").click("click", function() {//绑定编辑按扭
-			var cbox=getSelectedCheckbox();
-			if(cbox==""){
-				parent.$.ligerDialog.alert("请选择一条记录修改");
-				return;
-			}
-			if (cbox.length > 1) {
-				parent.$.ligerDialog.alert("一次只能修改一条记录");
-				return;
-			}
-			dialog = parent.$.ligerDialog.open({
-				width : 950,
-				height : 500,
-				url : rootPath + '/background/sample/editUI.html?id='+cbox,
-				title : "修改开版录入",
-				isHidden : false
-			});
+		$("#delaybtn").click("click", function() {//绑定编辑按扭
+			$('#pageNow').attr('value',1);
+			$("#delay").attr('value',1);
+			var f = $('#fenye');
+			//f.attr('target','_blank');
+			f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/list.html');
+			f.submit();
 		});
 	});
 	function loadGird(){
@@ -289,6 +280,7 @@ html>body td{ font-size:13px;}
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
 				<input type="hidden" id="status" name="status" value="0">
+				<input type="hidden" id="delay" name="delay" value="">
 				工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：&nbsp;
 				      <select  id="factoryId" name="factoryId">
 						<option value="">请选择工厂</option>
@@ -310,12 +302,12 @@ html>body td{ font-size:13px;}
 		<div class="topBtn">
 			<a class="btn btn-large btn-primary" href="javascript:void(0)" id="answer">
 				已回
-			</a>
+			</a>&nbsp;
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="saveTemp">
 				暂存数据
-			</a>
-			<a class="btn btn-large btn-success" href="javascript:void(0)" id="delaybtn">
-				拖延单
+			</a>&nbsp;
+			<a class="btn btn-large btn-success" href="javascript:void(0)" id="delaybtn" title="拖延单：${delayDates }单">
+				拖延&nbsp;<span style="color: red">${delayDates }</span>&nbsp;单
 			</a>
 			&nbsp;&nbsp;&nbsp;点击选择行  双击取消选择行
 		</div>

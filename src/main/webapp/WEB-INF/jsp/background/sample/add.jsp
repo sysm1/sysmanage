@@ -116,7 +116,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	    });
 	    $("#deleteTable").click(function(){
 	    	var checkId=document.getElementsByName("checkId");
-	    	alert(checkId.length);
 	    	for(var i=checkId.length-1;i>=0;i--){
 	    		if(checkId[i].checked){
 	    			checkId[i].parentNode.parentNode.parentNode.removeChild(checkId[i].parentNode.parentNode);
