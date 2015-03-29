@@ -126,6 +126,7 @@ public class FlowerInfoController extends BaseController{
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
+			e.printStackTrace();
 		}
 		return map;
 	}
@@ -285,5 +286,6 @@ public class FlowerInfoController extends BaseController{
 		 List<FlowerInfo> acs = flowerInfoService.queryAll(info);
 		POIUtils.exportToExcel(response, "花号报表", acs, FlowerInfo.class, "花号", acs.size());
 	}
+	
 	
 }

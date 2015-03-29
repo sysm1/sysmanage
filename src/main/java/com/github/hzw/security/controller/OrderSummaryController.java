@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.security.service.TechnologyInfoService;
@@ -47,6 +49,9 @@ public class OrderSummaryController extends BaseController {
 	@Inject
 	private TechnologyInfoService technologyInfoService;
 	
+	@Inject
+	private FlowerInfoService flowerInfoService;
+	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow,OrderSummary info,String flag) {
 		if("1".equals(flag)){
@@ -57,15 +62,17 @@ public class OrderSummaryController extends BaseController {
 			info.setEndDate(new Date());
 		}
 		pageView = orderSummaryService.query(getPageView(pageNow,null), info);
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setMyCompanyCode(info.getMyCompanyCode());
+		
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
-		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("bean", info);
-		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("technologyInfos", technologyInfos);
 		
 		return Common.BACKGROUND_PATH+"/ordersummary/list";

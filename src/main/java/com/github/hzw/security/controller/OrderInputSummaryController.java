@@ -1,6 +1,7 @@
 package com.github.hzw.security.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -165,31 +166,26 @@ public class OrderInputSummaryController extends BaseController {
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		//坯布余量查询
 		ClothAllowance clothAllowance=null;//clothAllowanceService.queryByCloth(info.getClothId()+"");
-		String cloth_allowance_tiao=PropertiesUtils.findPropertiesKey("cloth_allowance_tiao");
-		//String cloth_allowance_kg=PropertiesUtils.findPropertiesKey("cloth_allowance_kg");
-		if(null!=clothAllowance){
-			if(clothAllowance.getAllowance()>Double.parseDouble(cloth_allowance_tiao)){
-				model.addAttribute("clothAllowance", "大量");
-			}else{
-				model.addAttribute("clothAllowance", clothAllowance.getAllowance());
-			}
-		}
+		
 		int num=0;
 		for(OrderInputVO vo:orderInputList){
 			num+=vo.getNum();
 		}
 		
 		//****判断我司编号和我司颜色是否在花号基本资料中存在 不存在标记为红色****/
-		FlowerInfo flowerInfo=new FlowerInfo();
-		flowerInfo.setMyCompanyCode(info.getMyCompanyCode());
-		if(flowerInfoService.queryFind(flowerInfo).size()==0){
+		List<String> myCompanyCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
+		if(myCompanyCodes.size()==0){
 			model.addAttribute("codeRed", "red;font-weight:bold");
+			myCompanyCodes=flowerAdditionalService.queryFactoryCode(null);
 		}
-		FlowerAdditional flowerAdditional=new FlowerAdditional();
-		flowerAdditional.setMyCompanyColor(info.getMyCompanyColor());
-		if(flowerAdditionalService.queryAll(flowerAdditional).size()==0){
+		model.addAttribute("myCompanyCodes",myCompanyCodes);
+		
+		List<String> myCompanyColors=flowerAdditionalService.queryFactoryColor(info.getMyCompanyColor());
+		if(myCompanyColors.size()==0){
 			model.addAttribute("colorRed", "red;font-weight:bold");
+			myCompanyColors=flowerAdditionalService.queryFactoryColor(null);
 		}
+		model.addAttribute("myCompanyColors",myCompanyColors);
 		//***颜色判断结束****//
 		
 		//下单编号

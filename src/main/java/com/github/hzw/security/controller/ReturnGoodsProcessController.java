@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,11 @@ public class ReturnGoodsProcessController extends BaseController {
 	private ReturnGoodsProcessService returnGoodsProcessService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, String pageNow,HttpServletRequest request) {
+		Map<String,String> map=new HashMap<String,String>();
+		pageView = returnGoodsProcessService.queryVO(getPageView(pageNow,null), map);
+		model.addAttribute("pageView", pageView);
+		model.addAttribute("returnDate", Common.fromDateY());
 		return Common.BACKGROUND_PATH+"/process/list";
 	}
 	

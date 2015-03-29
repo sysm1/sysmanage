@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
@@ -23,6 +24,7 @@ import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
+import com.github.hzw.util.PropertiesUtils;
 
 @Controller
 @RequestMapping("/background/allowance/")
@@ -54,6 +56,41 @@ public class ClothAllowanceController extends BaseController {
 	public PageView query(ClothAllowance info,String pageNow,String pagesize) {
 		pageView = clothAllowanceService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
+	}
+	
+	/**
+	 * @param model
+	 * 存放返回界面的model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryByClothAndFactory")
+	public String queryByClothAndFactory(Integer clothId,Integer factoryId) {
+		ClothInfo clothInfo=new ClothInfo();
+		clothInfo.setId(clothId);
+		clothInfo=clothInfoService.queryAll(clothInfo).get(0);
+		ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(clothId, factoryId);
+		String cloth_allowance_tiao="";
+		String cloth_allowance_kg="";
+		//确定布种的单位
+		if(null!=clothAllowance){
+			if(clothInfo.getUnit()==0){
+				cloth_allowance_tiao=PropertiesUtils.findPropertiesKey("cloth_allowance_tiao");
+				if(clothAllowance.getAllowance()>Double.parseDouble(cloth_allowance_tiao)){
+					return "大量 "+clothInfo.getUnitName();
+				}else{
+					return clothAllowance.getAllowance()+" "+clothInfo.getUnitName();
+				}
+			}else if(clothInfo.getUnit()==1){
+				cloth_allowance_kg=PropertiesUtils.findPropertiesKey("cloth_allowance_kg");
+				if(clothAllowance.getAllowance()>Double.parseDouble(cloth_allowance_kg)){
+					return "大量 "+clothInfo.getUnitName();
+				}else{
+					return clothAllowance.getAllowance()+" "+clothInfo.getUnitName();
+				}
+			}
+		}
+		return "无坯布";
 	}
 	
 	

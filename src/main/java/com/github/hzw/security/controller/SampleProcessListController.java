@@ -197,5 +197,50 @@ public class SampleProcessListController extends BaseController{
 		}
 		return Common.BACKGROUND_PATH+"/sampleProcess/list";
 	}
+	
+	/**
+	 * 跑到新增界面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("addtoFlowerUI")
+	public String addtoFlowerUI(Model model,String id) {
+		SampleInput sampleInput=new SampleInput();
+		sampleInput.setId(Integer.parseInt(id));
+		pageView = sampleInputService.queryReplay(getPageView("1","1"), sampleInput);
+		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
+		
+		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		List<ClothInfo> cloths = clothInfoService.queryAll(null);
+		if(pageView.getPageNow()>pageView.getPageCount()){
+			pageView.setPageNow(Integer.parseInt(pageView.getPageCount()+""));
+		}
+		//解析颜色  存放到map中
+		List<SampleInputVO> plist=pageView.getRecords();
+		
+		Map<String,List<SampleAdditional>> facotoryCodeMap=new HashMap<String,List<SampleAdditional>>();
+		SampleAdditional sampleAdditional=new SampleAdditional();
+		sampleAdditional.setSampleId(sampleInput.getId());
+		List<SampleAdditional> list=sampleAdditionalService.queryAll(sampleAdditional);
+		for(SampleAdditional samp:list){
+			if(null==facotoryCodeMap.get(samp.getFactoryCode())){
+				facotoryCodeMap.put(samp.getFactoryCode(), new ArrayList<SampleAdditional>());
+			}
+			facotoryCodeMap.get(samp.getFactoryCode()).add(samp);
+		}
+		model.addAttribute("facotoryCodeMap", facotoryCodeMap);
+		model.addAttribute("technologyInfos", technologyInfos);
+		model.addAttribute("bean", plist.get(0));
+		model.addAttribute("factoryInfos", factoryInfos);
+		model.addAttribute("cloths", cloths);
+		
+		
+		
+		model.addAttribute("cloths",clothInfoService.queryAll(null));
+		model.addAttribute("factorys",factoryInfoService.queryAll(null));
+		model.addAttribute("technologys", this.technologyInfoService.queryAll(null));
+		return Common.BACKGROUND_PATH+"/sampleProcessList/addtoFlower";
+	}
 
 }
