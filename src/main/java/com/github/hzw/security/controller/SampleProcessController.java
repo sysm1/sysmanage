@@ -50,8 +50,11 @@ public class SampleProcessController extends BaseController{
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput){
+	public String list(Model model,String delay, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput){
 		String pageNow=request.getParameter("pageNow");
+		if(""!=delay&&null!=delay){
+			sampleInput.setDelayDates(Integer.parseInt(PropertiesUtils.findPropertiesKey("sample_delay_dates")));
+		}
 		sampleInput.setStatus(new Integer(0));
 		pageView = sampleInputService.query(getPageView(pageNow,pagesize), sampleInput);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
@@ -76,15 +79,24 @@ public class SampleProcessController extends BaseController{
 			}
 			map.put(sample.getId(), facotoryCodeMap);
 		}
+		//获取拖延单数
+		String delayDates=sampleInputService.queryDelayDates(PropertiesUtils.findPropertiesKey("sample_delay_dates"));
 		model.addAttribute("map", map);
 		model.addAttribute("replyDate", Common.fromDateY());
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("bean", sampleInput);
+		model.addAttribute("delayDates",delayDates);
 		return Common.BACKGROUND_PATH+"/sampleProcess/list";
 	}
-	@SuppressWarnings("unchecked")
+	
+	/**
+	 * 暂存数据
+	 * @param model
+	 * @param sampleInput
+	 * @param request
+	 */
 	@RequestMapping("saveTemp")
 	public void saveTemp(Model model,SampleInput sampleInput,HttpServletRequest request){
 		SampleInput bean=new SampleInput();
@@ -94,8 +106,10 @@ public class SampleProcessController extends BaseController{
 				bean.setMyCompanyCode(sampleInput.getMyCompanyCode());
 			}
 			
-			String picPath=UploadFileUtils.saveUploadFile(request);
-			if(null!=picPath){
+			String[] picPaths=UploadFileUtils.saveUploadFile(request);
+			String picPath=null;
+			if(null!=picPaths){
+				picPath=picPaths[0];
 				CompressPic compressPic=new CompressPic();
 				String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
 				String inputFileName=picPath.substring(picPath.lastIndexOf("/"));

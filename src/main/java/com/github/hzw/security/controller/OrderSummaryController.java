@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerInfo;
@@ -22,6 +23,7 @@ import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
+import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
@@ -57,6 +59,9 @@ public class OrderSummaryController extends BaseController {
 	
 	@Inject
 	private FlowerInfoService flowerInfoService;
+	
+	@Inject
+	private ClothAllowanceService clothAllowanceService;
 	
 	@Inject
 	private FlowerAdditionalService flowerAdditionalService;
@@ -123,7 +128,15 @@ public class OrderSummaryController extends BaseController {
 			}
 			orderInputSummary.setOrderIds(orderIds);
 			orderInputSummaryService.update(orderInputSummary);
-			//修改坯布余量
+			
+			//修改坯布余量 ？？？？？
+			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(info.getClothId(), info.getFactoryId());
+			Double allowance=clothAllowance.getAllowance();
+			allowance=allowance-info.getNum();
+			clothAllowance.setAllowance(allowance);
+			clothAllowanceService.update(clothAllowance);
+			//坯布余量修改完成
+			
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
