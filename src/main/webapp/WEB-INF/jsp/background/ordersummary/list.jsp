@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>下单录入汇总查询</title>
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <style type="text/css">
@@ -152,16 +153,16 @@ ul { list-style:none;}
 		});
 		
 		$("#editView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
-				height : 310,
-				url : rootPath + '/background/cloth/editUI.html?id='+cbox,
-				title : "修改布种信息",
+				width : 700,
+				height : 510,
+				url : rootPath + '/background/ordersummary/editUI.html?id='+cbox,
+				title : "下单录入汇总修改页面",
 				isHidden : false
 			});
 		});
@@ -194,6 +195,16 @@ ul { list-style:none;}
 			});
 		});
 	});
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+		});
+		return arr;
+	};
 	function loadGird(){
 		grid.loadData();
 	}
@@ -291,16 +302,16 @@ ul { list-style:none;}
 			</form>
 		</div>
 		<div class="topBtn">
-			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>下单预录入修改</span>
+			<a class="btn btn-primary" href="javascript:void(0)" id="add"> 
+				<i class="icon-zoom-add icon-white"></i> <span>下单预录入修改</span>
 			</a> 
 			
 			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
 				class="icon-zoom-in icon-white" id="View"></i> View
 			</a> --> 
 			
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> 下单汇总修改
+			<a class="btn btn-info" href="javascript:void(0)" id="editView"> 
+				<i class="icon-edit icon-white"></i> 下单汇总修改
 			</a> 
 			
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="search"> 

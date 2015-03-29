@@ -179,6 +179,23 @@ $(function() {
 	function addtoflower(code){
 		alert("添加到花号基本资料");
 	}
+	
+	function changeFactory(obj){
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/allowance/queryByClothAndFactory.html?factoryId='+obj.value+'&clothId=${inputsummary.clothId }', //要访问的后台地址
+		    data: {}, //要发送的数据
+		    success: function(data){
+		    	$('#clothAllowance')[0].innerHTML=data;
+			},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+				alert(XMLHttpRequest.status);
+				alert(XMLHttpRequest.readyState);
+				alert(data);  
+		     }
+		});
+	}
 </script>
 </head>
 <body>
@@ -209,7 +226,7 @@ $(function() {
 					<td class="l_right">工厂:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryId" name="factoryId">
+							<select id="factoryId" name="factoryId" onchange="changeFactory(this);">
 								<option value="">请选择</option>
 								<c:forEach var="item" items="${factoryInfos }" varStatus="status">
 								<option value="${item.id }">${item.name }</option>
@@ -249,6 +266,9 @@ $(function() {
 						<div class="lanyuan_input">
 							<select id="factoryCode" name="factoryCode">
 								<option value="">请选择</option>
+								<c:forEach var="code" items="${myCompanyCodes }">
+									<option value="${code }">${code }</option>
+								</c:forEach>
 							</select>
 						</div>
 					</td>
@@ -263,15 +283,16 @@ $(function() {
 				</tr><tr>
 					<td class="l_right">工厂坯布数量:</td>
 					<td class="l_left" colspan="2">
-						<div class="lanyuan_input">
-							${clothAllowance }
-						</div>
+						<div class="lanyuan_input" id="clothAllowance"></div>
 					</td>
 					<td class="l_right">工厂颜色:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id="factoryColor">
 								<option value="">请选择</option>
+								<c:forEach var="color" items="${myCompanyColors }">
+									<option value="${color}">${color }</option>
+								</c:forEach>
 							</select>
 						</div>
 					</td>

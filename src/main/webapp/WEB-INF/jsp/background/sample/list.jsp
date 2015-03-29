@@ -142,7 +142,7 @@ ul { list-style:none;}
 		});
 		$("#add").click("click", function() {//绑定新增按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 950,
+				width : 1150,
 				height : 500,
 				url : rootPath + '/background/sample/addUI.html',
 				title : "开版录入",

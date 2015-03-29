@@ -105,97 +105,118 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		        document.getElementById("imgPreview").innerHTML = "<img src='"+path+"'/>"; 
 	     	} 
 	    } 
-	} 
+	}
+	
+	var i=2;
+	$(document).ready(function(){
+	    $("#addTable").click(function(){
+	    	var tr=$("#table1 tr:eq(2) ");
+			i++;
+	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
+	    });
+	    $("#deleteTable").click(function(){
+	    	var checkId=document.getElementsByName("checkId");
+	    	alert(checkId.length);
+	    	for(var i=checkId.length-1;i>=0;i--){
+	    		if(checkId[i].checked){
+	    			checkId[i].parentNode.parentNode.parentNode.removeChild(checkId[i].parentNode.parentNode);
+	    		}
+	    	}
+	    });
+	});
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this));
+		});
+		return arr;
+	};
 </script>
 </head>
 <body>
 <div class="divdialog">
 	<div class="l_err" ></div>
 	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
-		<table style="height: 100%;" border="1">
+		<table style="height: 100%;" id="table1" border="1" name="table1">
 			<tbody>
 				<tr>
-					<td class="l_right" >开版日期：</td>
-					<td class="l_left">
-						<input id='sampleDate' name="sampleDate" class="isNum" style="height:30px;" readonly="readonly" type="text" value="${nowDate }">
-					</td><td rowspan="9"  id="pictd">
-						<div id="imgPreview" style="width:600px;height:350px"> 
-					    	图片预览区&nbsp;<img src="" style="max-width:700px;"/> 
-					   </div>
+					<td>
+						<input type="checkbox" id="checkAll" name="checkAll">
 					</td>
-				</tr><tr>
-					<td style="height:35px;">工厂：</td>
-					<td >
-						<select id="factoryId" name="factoryId" style="height:35px;">
+					<td>开版日期</td>
+					<td>工厂</td>
+					<td>布种</td>
+					<td>编号类型</td>
+					<td>编号值</td>
+					<td>工艺</td>
+					<td>图片</td>
+					<td>业务员</td>
+					<td>备注</td>
+				</tr>
+			
+				<tr id="1">
+					<td>
+						<input type="checkbox" id="checkId" name="checkId" value="1">
+					</td><td>
+						<input id='sampleDate' name="sampleDate" class="isNum" style="height:20px;width: 70px;" 
+							readonly="readonly" type="text" value="${nowDate }">
+					</td><td >
+						<select id="factoryId" name="factoryId" style="width: 100px;">
 							<option value="">请选择工厂</option>
 							<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 								<option value="${factoryInfo.id }">${factoryInfo.name}</option>
 							</c:forEach>
 					    </select>
-					</td>
-				</tr><tr>
-					<td style="height:30px;">布种：</td>
-					<td>
-						<select id="clothId" name="clothId">
+					</td><td>
+						<select id="clothId" name="clothId" style="width: 100px;">
 							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
-					</td>
-				</tr><tr>
-					<td>
+					</td><td>
 						<select id="codeType" name="codeType" style="width:90px">
 							<option value="">编号类型</option>
 							<option value="0">分色文件号</option>
 							<option value="1">工厂编号</option>
 							<option value="2">我司编号</option>
-					    </select></td>
-					<td>
-						<input id='codeValue' name="codeValue" class="isNum" type="text" value="">
-					</td>
-				</tr><tr>
-					<td>工艺：</td>
-					<td>
-						<select id="technologyId" name="technologyId">
+					    </select>
+					</td><td>
+						<input id='codeValue' name="codeValue" class="isNum" type="text" value="" style="width: 100px;">
+					</td><td>
+						<select id="technologyId" name="technologyId" style="width: 100px;">
 							<option value="">请选择工艺</option>
 							<c:forEach items="${ technologyInfos }" var = "technologyInfo">
 								<option value="${technologyInfo.id }">${technologyInfo.name}</option>
 							</c:forEach>
 					    </select>
-					</td>
-				</tr><tr>
-					<td>图片：</td>
-					<td>
-						<input type="file" id="myFile" name="myFile" style="width: 220px"  onchange="PreviewImage(this);"/>
-					</td>
-				</tr><tr>
-					<td>业务员：</td>
-					<td>
-						<select id="salemanId" name="salemanId">
+					</td><td>
+						<input type="file" id="myFile" name="myFile" style="width: 150px"  onchange="PreviewImage(this);"/>
+					</td><td>
+						<select id="salemanId" name="salemanId" style="width: 100px;">
 							<option value="">请选择</option>
 							<c:forEach items="${ salesmanInfos }" var = "salesmanInfo">
 								<option value="${salesmanInfo.id }">${salesmanInfo.name}</option>
 							</c:forEach>
 					    </select>
-					</td>
-				</tr><tr>
-					<td class="l_right">备注：</td>
-					<td class="l_left">
-						<textarea rows="5" cols="6" id='mark' name="mark" ></textarea>
+					</td><td >
+						<input type="text" id="mark" name="mark" value="">
 					</td>
 				</tr>
-				
+			</table><table width="700px;">	
 				<tr>
-					<td colspan="2">
+					<td >
 						<div class="l_btn_centent">
-								<!-- saveWin_form   from是表单Ｉd-->
-								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-									onclick="closeWin()"><span>关闭</span> </a>
-							</div>
-						</td>
+							<a class="btn btn-primary" href="javascript:void(0)" id="copyone" onclick="copy_one();"><span>复制新增</span></a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="addTable" ><span>新增一行</span></a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span></a> 
+							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
+						</div>
+					</td>
 				</tr>
 			</tbody>
 		</table>

@@ -313,19 +313,19 @@ ul { list-style:none;}
 				</tr>
 				
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
-					<tr style="background-color:red;" id="${status.index }" >
-						<td id="td${status.index+1 }" ><span onclick="showDetail('${status.index +1}','${item.id }');">+</span></td>
-						<td style="background-color:red;width:50px;">
+					<tr style="background-color:#1FFF" id="${status.index }" >
+						<td id="td${status.index+1 }" style="background:#FFE4B5;"><span onclick="showDetail('${status.index +1}','${item.id }');">+</span></td>
+						<td style="background:#FFE4B5;width:50px;">
 					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll(this);">
 					 	</td>
-						<td >${item.id }</td>
-						<td></td>
-						<td>${item.clothName }</td>
-						<td>${item.myCompanyCode }</td>
-						<td>${item.myCompanyColor }</td>
-						<td>${item.num }</td>
-						<td>见明细</td>
-						<td>业务员</td>
+						<td style="background:#FFE4B5;">${item.id }</td>
+						<td style="background:#FFE4B5;"></td>
+						<td style="background:#FFE4B5;">${item.clothName }</td>
+						<td style="background:#FFE4B5;">${item.myCompanyCode }</td>
+						<td style="background:#FFE4B5;">${item.myCompanyColor }</td>
+						<td style="background:#FFE4B5;">${item.num }</td>
+						<td style="background:#FFE4B5;">见明细</td>
+						<td style="background:#FFE4B5;">业务员</td>
 					<tr>
 				</c:forEach>
 				

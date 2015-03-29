@@ -29,9 +29,9 @@ body {
 a {color: #c75f3e;}
 
 #mytable {
- width: 150%;
- padding: 0;
- margin: 0;
+	width:1300px;
+ 	padding: 0;
+ 	margin: 0;
 }
 
 caption {
@@ -50,7 +50,7 @@ th {
  letter-spacing: 2px;
  text-transform: uppercase;
  text-align: left;
- padding: 6px 6px 6px 12px;
+ padding: 3px 6px 6px 3px;
 }
 
 th.nobg {
@@ -67,7 +67,7 @@ th.nobg {
  border-top: 1px solid #C1DAD7;
  background: #fff;
  font-size:12px;
- padding: 2px 6px 2px 12px;
+ padding: 3px 6px 2px 3px;
  color: #4f6b72;
 }
 
@@ -95,7 +95,16 @@ th.specalt {
 /*---------for IE 5.x bug*/
 html>body td{ font-size:13px;}
 </style>
-
+<style type="text/css">
+* { margin:0; padding:0;}
+a { color:#333; text-decoration:none;}
+ul { list-style:none;}
+#pagelist {width:600px; margin:5px auto; padding:6px 0px; height:20px;}
+#pagelist ul li { float:left; border:2px solid #5d9cdf; height:23px; line-height:20px; margin:1px 3px;}
+#pagelist ul li a, .pageinfo { display:block; padding:0px 6px; background:#e6f2fe;}
+.pageinfo  { color:#555;}
+.current { background:#CCCC00; display:block; padding:0px 6px; font-weight:bold;}
+</style>
 <script type="text/javascript">
 	var dialog;
 	var grid;
@@ -124,6 +133,22 @@ html>body td{ font-size:13px;}
 			}
 			alert("数据暂存成功");
 		});
+		
+		$("#addtoFlower").click("click",function(){
+			var cbox=getSelectedCheckbox();
+			if(cbox.length==1){
+				dialog = parent.$.ligerDialog.open({
+					width : 750,
+					height : 500,
+					url : rootPath + '/background/sampleProcessList/addtoFlowerUI.html?id='+cbox[0],
+					title : "花号修改",
+					isHidden : false
+				});
+			}else{
+				alert("选择一条记录添加到花号基本资料");
+			}
+		});
+		
 		$("#answer").click("click", function() {//绑定新增按扭
 			var cbox=getSelectedCheckbox();
 			
@@ -220,7 +245,7 @@ html>body td{ font-size:13px;}
 </script>
 </head>
 <body>
-<div class="divBody" style="width: 1800px">
+<div class="divBody" >
 		<div class="search">
 <form name="fenye" id="fenye">
 	<input type="hidden" id="pageNow" name="pageNow" value="">
@@ -291,7 +316,7 @@ html>body td{ font-size:13px;}
 			<a class="btn btn-large btn-primary" href="javascript:void(0)" id="answer">
 				修改
 			</a>
-			<a class="btn btn-large btn-success" href="javascript:void(0)" id="saveTemp">
+			<a class="btn btn-large btn-success" href="javascript:void(0)" id="addtoFlower">
 				添加到花号基本资料
 			</a>
 			 <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">查询</a>
@@ -299,29 +324,29 @@ html>body td{ font-size:13px;}
 		<div id="paging" class="pagclass">
 			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
 				<tr >
-					<th class="specalt" style="width:15px">
-						<input type="checkbox" id="checkIds" name="checkIds">
+					<th style="width:20px">
+						<input type="checkbox" id="checkIds" name="checkIds" style="width:18px">
 					</th>
-					<th class="specalt" style="width:50px">id</th>
-					<th class="specalt" style="width:50px">状态</th>
-					<th class="specalt" style="width:45px">日期</th>
+					<th class="specalt" >id</th>
+					<th class="specalt" style="width:40px">状态</th>
+					<th class="specalt" style="width:40px">日期</th>
 					<th class="specalt" style="width:75px">分色文件号</th>
-					<th class="specalt" style="width:75px">布种</th>
+					<th >布种</th>
 					<th class="specalt" style="width:105px">我司编号</th>
 					<th class="specalt" style="width:100px">工厂</th>
 					<th class="specalt" style="width:75px">工艺</th>
 					<th class="specalt" style="width:110px">开版录入备注</th>
-					<th class="specalt" style="width:110px">工厂编号</th>
-					<th class="specalt" >工厂颜色</th>
-					<th class="specalt" style="width:80px">回版日期</th>
-					<th class="specalt">备注</th>
+					<th class="specalt" >工厂编号</th>
+					<th  >工厂颜色</th>
+					<th >回版日期</th>
+					<th >备注</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<% int i=0; %>
 					<tr>
 					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 					 	<td>
-					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }">
+					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" style="width:18px">
 					 		<input type="hidden" id="id" name="id" value="${item.id }">
 					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">
 					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">
@@ -376,30 +401,44 @@ html>body td{ font-size:13px;}
 				</c:forEach>
 				<!-- 分页 -->
 				<tr style="height: 35px">
-					<td colspan="4" style="text-align: center;font-size: 14px;">
-						总${pageView.rowCount }条&nbsp;&nbsp;&nbsp;每页${pageView.pageSize }条&nbsp;&nbsp;&nbsp; 
-						共${pageView.pageCount }页&nbsp;&nbsp;当前${pageView.pageNow }页</td>
-					<td colspan="6" style="text-align: right;font-size: 14px;">
-						<a href="javascript:page(1)">首页</a>
-						<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
-						<c:if test="${pageView.pageNow>2 }">
-							...<a href="javascript:page(${pageView.pageNow-2 })">${pageView.pageNow-2 }</a>
-						</c:if><c:if test="${pageView.pageNow>1 }">					
-							<a href="javascript:page(${pageView.pageNow-1 })">${pageView.pageNow-1 }</a>
-						</c:if>	
-							<b><a href="javascript:page(${pageView.pageNow })">[${pageView.pageNow }]</a></b>
-						<c:if test="${pageView.pageCount-1>=pageView.pageNow }">
-							<a href="javascript:page(${pageView.pageNow+1 })">${pageView.pageNow+1 }</a>
-						</c:if><c:if test="${pageView.pageCount-2>=pageView.pageNow }">
-							<a href="javascript:page(${pageView.pageNow+2 })">${pageView.pageNow+2 }</a>...
-						</c:if>
-						<c:if test="${pageView.pageNow>=pageView.pageCount }">
-							<a href="javascript:page(${pageView.pageNow })">下一页</a>
-						</c:if><c:if test="${pageView.pageNow<pageView.pageCount }">
-							<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
-						</c:if>
-						<a href="javascript:page(${pageView.pageCount })">尾页&nbsp;</a>
-					</td><td colspan="4">&nbsp;</td>
+					<td colspan="7" style="text-align: center;font-size: 14px;">
+						<div id="pagelist">
+  <ul style="font-size: 14px;">
+  	<c:if test="${pageView.pageNow==1}">
+  		<li><a href="#">首页</a></li>
+  		<li><a href="#">上一页</a></li>
+  	</c:if><c:if test="${pageView.pageNow>1}">
+  		<li><a href="javascript:page(1)">首页</a></li>
+    	<li><a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a></li>
+  	</c:if>
+    
+    <c:if test="${pageView.pageNow>3 }"><li style="width:15px;border: 0">...</li></c:if>
+    <c:if test="${pageView.pageNow>2 }">
+		<li><a href="javascript:page(${pageView.pageNow-2 })">${pageView.pageNow-2 }</a></li>
+	</c:if><c:if test="${pageView.pageNow>1 }">					
+		<li><a href="javascript:page(${pageView.pageNow-1 })">${pageView.pageNow-1 }</a></li>
+	</c:if>	
+		<li class="current">${pageView.pageNow }</li>
+	<c:if test="${pageView.pageCount-1>=pageView.pageNow }">
+		<li><a href="javascript:page(${pageView.pageNow+1 })">${pageView.pageNow+1 }</a></li>
+	</c:if><c:if test="${pageView.pageCount-2>=pageView.pageNow }">
+		<li><a href="javascript:page(${pageView.pageNow+2 })">${pageView.pageNow+2 }</a></li>
+	</c:if><c:if test="${pageView.pageCount-3>=pageView.pageNow }">
+		<li style="width:15px;border: 0">...</li>
+	</c:if>
+    
+    <c:if test="${pageView.pageNow>=pageView.pageCount }">
+		<li><a href="#">下一页</a></li>
+		<li><a href="#">尾页</a></li>
+	</c:if><c:if test="${pageView.pageNow<pageView.pageCount }">
+		<li><a href="javascript:page(${pageView.pageNow+1 })">下一页</a></li>
+		<li><a href="javascript:page(${pageView.pageCount })">尾页</a></li>
+	</c:if>
+	
+    <li class="pageinfo">第${pageView.pageNow }页</li>
+    <li class="pageinfo">共${pageView.pageCount }页</li>
+  </ul>
+</div></td>
 				</tr>
 			</table><br>
 		</div>

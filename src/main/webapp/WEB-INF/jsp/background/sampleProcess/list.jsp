@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <%@ include file="/common/header.jsp"%>
-<!-- 开办录入查询 -->
+<!-- 开办进度查询 -->
 
 <style type="text/css">
 .ordersearchDivCss { 
@@ -355,7 +355,7 @@ html>body td{ font-size:13px;}
 						<td title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>">
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
-						<td>
+						<td style="width:75px">
 							<input type="text" id="fileCode" name="fileCode" style="width:100px" value="${item.fileCode }" 
 								onchange="changeValue(this,'${item.id }fileCode')">
 						</td>
