@@ -209,35 +209,47 @@ create table order_input_summary(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 下单录入  关键字  ordersummary
-create table order_summary(
-	id int not null auto_increment,  
-	order_code varchar(255), 			-- 以“YXD”开头后面以当天日期加4为数字结尾，例如YXD201501150001为当日的第一张单
-	order_date datetime,
-	cloth_id int not null,
-	factory_id	int not null,
-	technology_id int, 				-- 工艺id
-	my_company_code varchar(255),  -- 我司编号
-	my_company_color varchar(255), -- 我司color
-	factory_code varchar(255),     -- 根据编号 从花号基本表里查找(如何选取，从哪里来)
-	factory_color varchar(255),    -- 根据编号 从花号基本表里查找(如何选取，从哪里来)
-	cloth_num int,  				-- 工厂布种余量
-	num int,        				-- 下单数量(单位为条)
-	standard varchar(255), 			-- 规格
-	packing_style  varchar(255),	 -- 包装方式
-    salesmans text,					 -- 多业务员id，备注组合
-	mark text,  					-- 备注
-	print_status int default 0,  					-- 状态 (0 未打印  1 打印)
-	zhiguan int,
-	kongcha int,
-	jiaodai int,
-	balance int,
-	balanceSalemanId int,
-	print_num int,						-- 打印次数
-	status varchar(255), -- 工厂不一样   ----新厂 我司编号不一样----新花 布种不一样---新布 颜色不一样----新色   红色字体 可以组合  （新厂新花) 一样的为正常   绿色字体  
-	return_status int default 0,   -- 0 未回货  1 已回货
-	create_time datetime,  -- 下单时间
-	PRIMARY KEY (`id`) 
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `order_summary` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`order_code`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+`order_date`  datetime NULL DEFAULT NULL COMMENT '以“YXD”开头后面以当天日期加4为数字结尾，例如YXD201501150001为当日的第一张单' ,
+`cloth_id`  int(11) NOT NULL ,
+`factory_id`  int(11) NOT NULL ,
+`technology_id`  int(11) NULL DEFAULT NULL COMMENT '工艺id' ,
+`my_company_code`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '我司编号' ,
+`my_company_color`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '我司颜色' ,
+`factory_code`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '根据编号 从花号基本表里查找 工厂编号' ,
+`factory_color`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂颜色 根据编号 从花号基本表里查找' ,
+`cloth_num`  int(11) NULL DEFAULT NULL COMMENT '工厂布种余量' ,
+`num`  int(11) NULL DEFAULT NULL COMMENT '下单数量(单位为条)' ,
+`standard`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+`packing_style`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '包装方式' ,
+`salesmans`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '多业务员id，备注组合' ,
+`mark`  text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '备注' ,
+`print_status`  int(11) NULL DEFAULT 0 COMMENT '状态 (0 未打印  1 打印)' ,
+`print_num`  int(11) NULL DEFAULT NULL COMMENT '打印次数' ,
+`status`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂不一样   ----新厂 我司编号不一样----新花 布种不一样---新布 颜色不一样----新色   红色字体 可以组合  （新厂新花) 一样的为正常   绿色字体 ' ,
+`return_status`  int(11) NULL DEFAULT 0 COMMENT '0 未回货  1 已回货' ,
+`create_time`  datetime NULL DEFAULT NULL COMMENT '下单时间' ,
+`zhiguan`  int(11) NULL DEFAULT NULL COMMENT '纸管' ,
+`kongcha`  int(11) NULL DEFAULT NULL COMMENT '空差' ,
+`jiaodai`  int(11) NULL DEFAULT NULL COMMENT '胶袋' ,
+`balance`  int(11) NULL DEFAULT NULL COMMENT '差额' ,
+`balance_saleman_id`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '差额业务员' ,
+`kuanfu`  int(11) NULL DEFAULT NULL COMMENT '宽幅' ,
+`kuanfufs`  int(11) NULL DEFAULT NULL COMMENT '宽幅方式 0包边  1实用' ,
+`kezhong`  int(11) NULL DEFAULT NULL COMMENT '克重' ,
+`kezhongUnit`  int(11) NULL DEFAULT NULL COMMENT '克重单位 0G/M2 1G/Y 2G/M' ,
+`kezhongfs`  int(11) NULL DEFAULT NULL COMMENT '克重方式 0回后 1出机' ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=4
+ROW_FORMAT=COMPACT
+;
+
+
 
 -- 回货进度 关键字  process
 create table return_goods_process(
