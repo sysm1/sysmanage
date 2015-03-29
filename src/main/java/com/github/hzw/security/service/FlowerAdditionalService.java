@@ -11,4 +11,20 @@ public interface FlowerAdditionalService extends BaseService<FlowerAdditional> {
 	
 	public List<FlowerAdditional> findByFlowerId(Integer flowerId);
 	
+	public List<FlowerAdditional> queryFind(FlowerAdditional flowerAdditional); 
+	
+	/**
+	 * 根据我司编号 查询工厂编号
+	 * @param myCompanyCode
+	 * @return
+	 */
+	public List<String> queryFactoryCode(String  myCompanyCode);
+	
+	/**
+	 * 根据我司颜色 查询工厂颜色
+	 * @param myCompanyColor
+	 * @return
+	 */
+	public List<String> queryFactoryColor(String  myCompanyColor);
+	
 }
