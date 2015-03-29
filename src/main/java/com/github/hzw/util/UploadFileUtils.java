@@ -57,6 +57,9 @@ public class UploadFileUtils {
 	            	path.mkdirs();
 	            }
 	            String picName=myFile.getOriginalFilename();
+	            if("".equals(picName)){
+	            	return null;
+	            }
 	            String dstPicPath=dstPath+picName;
 	            dst=new File(dstPicPath);
 	            
