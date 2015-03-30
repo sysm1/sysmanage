@@ -203,6 +203,7 @@ create table order_input_summary(
 	my_company_code varchar(255), -- 我司code
 	my_company_color varchar(255), -- 我司color
 	num int,					  -- 单位为条(从相应的余量表中减去该数)
+	unit int,                     --下单单位
 	mark text,   				-- 如果有“备注”则显示“见明细”，如果所有的“备注”都为空则显示“无”
 	order_ids varchar(255),  	-- order_id组合，以,分隔
 	PRIMARY KEY (`id`) 
@@ -222,6 +223,7 @@ CREATE TABLE `order_summary` (
 `factory_color`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂颜色 根据编号 从花号基本表里查找' ,
 `cloth_num`  int(11) NULL DEFAULT NULL COMMENT '工厂布种余量' ,
 `num`  int(11) NULL DEFAULT NULL COMMENT '下单数量(单位为条)' ,
+ unit   int,                     --下单单位
 `standard`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `packing_style`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '包装方式' ,
 `salesmans`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '多业务员id，备注组合' ,
