@@ -434,6 +434,38 @@ public class DateUtil {
 	}
 
 	/**
+	 * 某天的装晨 0点0分0秒
+	 * @param tmp
+	 * @return
+	 */
+	public static Date beginDate(Date tmp) {
+		Calendar calendar = Calendar.getInstance();;
+		if(tmp != null) {
+			calendar.setTime(tmp);
+		}
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		return calendar.getTime();
+	}
+	
+	/**
+	 * 某天的装晨 0点0分0秒
+	 * @param tmp
+	 * @return
+	 */
+	public static Date endDate(Date tmp) {
+		Calendar calendar = Calendar.getInstance();;
+		if(tmp != null) {
+			calendar.setTime(tmp);
+		}
+		calendar.set(Calendar.HOUR_OF_DAY, 24);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		return calendar.getTime();
+	}
+	
+	/**
 	 * 获取当前时间小时和下个小时
 	 * 
 	 * @return

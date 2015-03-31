@@ -84,7 +84,7 @@ public class OrderSummaryVO {
     
     private String returnStatusName;
 
-    private Date createtime;
+    private Date createTime;
 
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -283,12 +283,12 @@ public class OrderSummaryVO {
         this.returnStatus = returnStatus;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
     
     private String salesmans;
@@ -383,7 +383,7 @@ public class OrderSummaryVO {
 				+ ", num=" + num + ", standard=" + standard + ", packingStyle="
 				+ packingStyle + ", printStatus=" + printStatus + ", printNum="
 				+ printNum + ", status=" + status + ", returnStatus="
-				+ returnStatus + ", createtime=" + createtime + ", salesmans="
+				+ returnStatus + ", createTime=" + createTime + ", salesmans="
 				+ salesmans + ", mark=" + mark + "]";
 	}
     

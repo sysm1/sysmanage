@@ -23,7 +23,7 @@
     <result column="print_num" property="printNum" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="return_status" property="returnStatus" jdbcType="INTEGER" />
-    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="salesmans" property="salesmans" jdbcType="LONGVARCHAR" />
     <result column="mark" property="mark" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -32,7 +32,7 @@
   <sql id="Base_Column_List" >
     id, order_code, order_date, cloth_id, factory_id, technology_id, my_company_code, 
     my_company_color, factory_code, factory_color, cloth_num, num, standard, packing_style, 
-    print_status, print_num, status, return_status, createTime
+    print_status, print_num, status, return_status, create_time
   </sql>
   
   <sql id="Blob_Column_List" >
@@ -58,12 +58,35 @@
     factory_code factoryCode,
     factory_color factoryColor,
     cloth_num clothNum, num,
-    standard,zhiguan,kongcha,jiaodai,
+    standard,
     packing_style packingStyle, 
     print_status printStatus, print_num printNum,
     status, return_status returnStatus,
-    create_time createTime, salesmans, mark
+    create_time createTime, salesmans, mark, 
+    zhiguan, kongcha, jiaodai, balance, balance_saleman_id balanceSalemanId, kuanfu, kuanfufs, kezhong,
+    kezhongUnit, kezhongfs
   </sql>
+  
+  <select id="queryPrint" resultType="OrderSummary" parameterType="map">
+  	select
+		<include refid="selectId" />
+			from order_summary
+		<where> 1=1
+			<if test="printNum != null and printNum != ''">
+				and print_num = 0
+			</if>
+			<if test="beginTime != null and beginTime != ''">
+				and create_time &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and create_time &lt;= #{endTime}
+			</if>
+			<if test="printStatus != null and printStatus != ''">
+				and print_status &lt; 2
+			</if>
+		</where>
+		order by id desc
+  </select>
   
   <select id="query" resultType="com.github.hzw.security.VO.OrderSummaryVO" parameterType="OrderSummary">
 		select
@@ -196,8 +219,8 @@
       <if test="returnStatus != null" >
         return_status,
       </if>
-      <if test="createtime != null" >
-        createTime,
+      <if test="createTime != null" >
+        create_time,
       </if>
       <if test="salesmans != null" >
         salesmans,
@@ -280,8 +303,8 @@
       <if test="returnStatus != null" >
         #{returnStatus,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="salesmans != null" >
         #{salesmans,jdbcType=LONGVARCHAR},
@@ -376,8 +399,8 @@
       <if test="returnStatus != null" >
         return_status = #{returnStatus,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="salesmans != null" >
         salesmans = #{salesmans,jdbcType=LONGVARCHAR},
@@ -385,6 +408,32 @@
       <if test="mark != null" >
         mark = #{mark,jdbcType=LONGVARCHAR},
       </if>
+      
+      <if test="zhiguan != null" >
+        #{zhiguan,jdbcType=INTEGER},
+      </if>
+      <if test="kongcha != null" >
+        #{kongcha,jdbcType=INTEGER},
+      </if>
+      <if test="jiaodai != null" >
+        #{jiaodai,jdbcType=INTEGER},
+      </if>
+      <if test="kuanfu != null" >
+        #{kuanfu,jdbcType=INTEGER},
+      </if>
+      <if test="kuanfufs != null" >
+        #{kuanfufs,jdbcType=INTEGER},
+      </if>
+      <if test="kezhong != null" >
+        #{kezhong,jdbcType=INTEGER},
+      </if>
+      <if test="kezhongUnit != null" >
+        #{kezhongUnit,jdbcType=INTEGER},
+      </if>
+      <if test="kezhongfs != null" >
+        #{kezhongfs,jdbcType=INTEGER},
+      </if>
+      
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -411,7 +460,7 @@
       factory_color, cloth_num, num, 
       standard, packing_style, print_status, 
       print_num, status, return_status, 
-      createTime, salesmans, mark
+      create_time, salesmans, mark
       )
     values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderDate,jdbcType=TIMESTAMP}, 
       #{clothId,jdbcType=INTEGER}, #{factoryId,jdbcType=INTEGER}, #{technologyId,jdbcType=INTEGER}, 
@@ -419,7 +468,7 @@
       #{factoryColor,jdbcType=VARCHAR}, #{clothNum,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
       #{standard,jdbcType=VARCHAR}, #{packingStyle,jdbcType=VARCHAR}, #{printStatus,jdbcType=INTEGER}, 
       #{printNum,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{returnStatus,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{salesmans,jdbcType=LONGVARCHAR}, #{mark,jdbcType=LONGVARCHAR}
+      #{createTime,jdbcType=TIMESTAMP}, #{salesmans,jdbcType=LONGVARCHAR}, #{mark,jdbcType=LONGVARCHAR}
       )
   </insert>
   
@@ -443,7 +492,7 @@
       print_num = #{printNum,jdbcType=INTEGER},
       status = #{status,jdbcType=VARCHAR},
       return_status = #{returnStatus,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       salesmans = #{salesmans,jdbcType=LONGVARCHAR},
       mark = #{mark,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -468,7 +517,7 @@
       print_num = #{printNum,jdbcType=INTEGER},
       status = #{status,jdbcType=VARCHAR},
       return_status = #{returnStatus,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=TIMESTAMP}
+      createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   

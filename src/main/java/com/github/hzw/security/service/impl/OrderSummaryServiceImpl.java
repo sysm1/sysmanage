@@ -58,4 +58,13 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 		this.orderSummaryMapper.add(t);
 	}
 
+
+	@Override
+	public PageView queryPrint(PageView pageView, Map<String, Object> map) {
+		map.put("paging", pageView);
+		List<OrderSummary> list = orderSummaryMapper.queryPrint(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
+
 }

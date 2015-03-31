@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.ExcelDataMapper;
 import com.github.hzw.util.JsonDate4YYYYMMDD;
 
@@ -25,10 +26,14 @@ public class OrderSummary {
 
     private Integer clothId;
 
+    private String clothName;
+    
     private Integer factoryId;
-
+    private String factoryName;
+    
     private Integer technologyId;
-
+    private String technologyName;
+    
     private String myCompanyCode;
 
     private String myCompanyColor;
@@ -83,7 +88,9 @@ public class OrderSummary {
 
     private Integer returnStatus;
 
-    private Date createtime;
+    private Date createTime;
+    
+    private String createTimeStr;
 
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -275,12 +282,13 @@ public class OrderSummary {
         this.returnStatus = returnStatus;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+        this.setCreateTimeStr(DateUtil.date2Str(createTime, "yyyy-MM-dd"));
     }
     
     private String salesmans;
@@ -381,9 +389,42 @@ public class OrderSummary {
 				+ ", num=" + num + ", standard=" + standard + ", packingStyle="
 				+ packingStyle + ", printStatus=" + printStatus + ", printNum="
 				+ printNum + ", status=" + status + ", returnStatus="
-				+ returnStatus + ", createtime=" + createtime + ", salesmans="
+				+ returnStatus + ", createTime=" + createTime + ", salesmans="
 				+ salesmans + ", mark=" + mark + "]";
 	}
+
+	public String getCreateTimeStr() {
+		return createTimeStr;
+	}
+
+	public void setCreateTimeStr(String createTimeStr) {
+		this.createTimeStr = createTimeStr;
+	}
+
+	public String getClothName() {
+		return clothName;
+	}
+
+	public void setClothName(String clothName) {
+		this.clothName = clothName;
+	}
+
+	public String getFactoryName() {
+		return factoryName;
+	}
+
+	public void setFactoryName(String factoryName) {
+		this.factoryName = factoryName;
+	}
+
+	public String getTechnologyName() {
+		return technologyName;
+	}
+
+	public void setTechnologyName(String technologyName) {
+		this.technologyName = technologyName;
+	}
     
+	
     
 }
