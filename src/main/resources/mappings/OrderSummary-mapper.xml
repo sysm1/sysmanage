@@ -57,7 +57,7 @@
     my_company_color myCompanyColor,
     factory_code factoryCode,
     factory_color factoryColor,
-    cloth_num clothNum, num,
+    cloth_num clothNum, num,unit,
     standard,zhiguan,kongcha,jiaodai,
     packing_style packingStyle, 
     print_status printStatus, print_num printNum,
