@@ -263,6 +263,9 @@ create table return_goods_process(
 	statistics_num int,      -- 换算单位后数量(条)
 	return_color varchar(255),  -- 实到颜色
 	mark text,  -- 备注
+	zhiguan  int(11) NULL DEFAULT NULL COMMENT '纸管' ,
+	kongcha  int(11) NULL DEFAULT NULL COMMENT '空差' ,
+	jiaodai  int(11) NULL DEFAULT NULL COMMENT '胶袋' ,
 	create_time datetime,
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
