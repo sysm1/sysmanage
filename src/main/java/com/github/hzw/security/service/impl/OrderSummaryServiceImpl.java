@@ -29,7 +29,17 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 		pageView.setRecords(list);
 		return pageView;
 	}
-
+	
+	@Override
+	public void saveOrderSummary(OrderSummary info){
+		try {
+			//判断下单的状态
+			
+			this.add(info);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public List<OrderSummary> queryAll(OrderSummary t) {
