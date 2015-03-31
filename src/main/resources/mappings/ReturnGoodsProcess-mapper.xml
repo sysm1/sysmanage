@@ -70,21 +70,30 @@
 			os.my_company_code myCompanyCode,
 			pro.return_date returnDate,
 			os.num,
+			os.unit,
 			pro.return_num returnNum,
 			os.my_company_color myCompanyColor,
-			pro.return_color returnColor,
-			os.mark
-		from order_summary os,return_goods_process pro
-		<where> os.id=pro.summary_id
-		
-		</where>
+			pro.return_color returnColor,pro.mark
+		from order_summary os left join return_goods_process pro
+			on os.id=pro.summary_id
 	</select>
   
-  <select id="queryAll" resultType="ReturnGoodsProcess">
+  	<select id="queryAll" resultType="ReturnGoodsProcess">
 		select
 		<include refid="selectId" />
 		from return_goods_process
 		order by id desc
+	</select>
+	
+	<select id="queryBySummaryId" resultType="ReturnGoodsProcess"  parameterType="String">
+		select
+		 	return_date returnDate,
+		 	return_num returnNum,
+		 	return_color returnColor,
+		 	mark,zhiguan,
+		 	kongcha,jiaodai
+		from return_goods_process where summary_id=#{summaryId}
+		order by id
 	</select>
   
   <select id="getById" parameterType="String" resultType="ReturnGoodsProcess" >
@@ -94,9 +103,14 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <delete id="delete" parameterType="String">
+  	<delete id="delete" parameterType="String">
 		delete from return_goods_process where
 		id=#{id}
+	</delete>
+	
+	<delete id="deleteBySummaryId" parameterType="String">
+		delete from return_goods_process where
+		summary_id=#{summaryId}
 	</delete>
   
   <insert id="insert2" parameterType="ReturnGoodsProcess" >
@@ -137,6 +151,13 @@
       <if test="mark != null" >
         mark,
       </if>
+      <if test="zhiguan != null" >
+        zhiguan,
+      </if><if test="kongcha != null" >
+        kongcha,
+      </if><if test="jiaodai != null" >
+        jiaodai,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="summaryId != null" >
@@ -162,6 +183,12 @@
       </if>
       <if test="mark != null" >
         #{mark,jdbcType=LONGVARCHAR},
+      </if><if test="zhiguan != null" >
+        #{zhiguan,jdbcType=INTEGER},
+      </if><if test="kongcha != null" >
+        #{kongcha,jdbcType=INTEGER},
+      </if><if test="jiaodai != null" >
+        #{jiaodai,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

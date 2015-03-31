@@ -27,6 +27,7 @@ import com.github.hzw.security.service.SampleInputService;
 import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.CompressPic;
+import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.PropertiesUtils;
 import com.github.hzw.util.UploadFileUtils;
 
@@ -122,35 +123,56 @@ public class SampleInputController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(HttpServletRequest request,SampleInput sampleInput) {
-		String picPath=UploadFileUtils.saveUploadFile(request);
-		CompressPic compressPic=new CompressPic();
-		String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
-		String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
-		String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
-		String outputFileName=inputFileName;
-		//压缩图片
-		compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
-		sampleInput.setPicture(picPath);
-		sampleInput.setSmallPicture(outputDir+outputFileName);
-		
+	public Map<String, Object> add(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			sampleInput.setStatus(0);
-			sampleInput.setCreateTime(new Date());
-			int codeType=sampleInput.getCodeType();
-			if(codeType==0){
-				sampleInput.setFileCode(sampleInput.getCodeValue());
-			}else if(codeType==1){
-				sampleInput.setFactoryCode(sampleInput.getCodeValue());
-			}else if(codeType==2){
-				sampleInput.setMyCompanyCode(sampleInput.getCodeValue());
+		String[] picPaths=UploadFileUtils.saveUploadFile(request);
+		String[] sampleDates=request.getParameterValues("sampleDate");
+		String[] factoryIds=request.getParameterValues("factoryId");
+		String[] clothIds=request.getParameterValues("clothId");
+		String[] codeTypes=request.getParameterValues("codeType");
+		String[] codeValues=request.getParameterValues("codeValue");
+		String[] technologyIds=request.getParameterValues("technologyId");
+		String[] salemanIds=request.getParameterValues("salemanId");
+		String[] marks=request.getParameterValues("mark");
+		String picPath="";
+		SampleInput sampleInput=new SampleInput();
+		for(int i=0;i<picPaths.length;i++){
+			picPath=picPaths[i];
+			sampleInput=new SampleInput();
+			CompressPic compressPic=new CompressPic();
+			String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
+			String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
+			String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
+			String outputFileName=inputFileName;
+			//压缩图片
+			compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
+			try {
+				sampleInput.setPicture(picPath);
+				sampleInput.setClothId(Integer.parseInt(clothIds[i]));
+				sampleInput.setSmallPicture(outputDir+outputFileName);
+				sampleInput.setCodeType(Integer.parseInt(codeTypes[i]));
+				sampleInput.setFactoryId(Integer.parseInt(factoryIds[i]));
+				sampleInput.setSampleDate(DateUtil.str2Date(sampleDates[i],"YYYY-MM-DD"));
+				sampleInput.setCodeValue(codeValues[i]);
+				sampleInput.setTechnologyId(Integer.parseInt(technologyIds[i]));
+				sampleInput.setSalemanId(Integer.parseInt(salemanIds[i]));
+				sampleInput.setMark(marks[i]);
+				sampleInput.setStatus(0);
+				sampleInput.setCreateTime(new Date());
+				int codeType=sampleInput.getCodeType();
+				if(codeType==0){
+					sampleInput.setFileCode(sampleInput.getCodeValue());
+				}else if(codeType==1){
+					sampleInput.setFactoryCode(sampleInput.getCodeValue());
+				}else if(codeType==2){
+					sampleInput.setMyCompanyCode(sampleInput.getCodeValue());
+				}
+				sampleInputService.add(sampleInput);
+				map.put("flag", "true");
+			} catch (Exception e) {
+				map.put("flag", "false");
+				e.printStackTrace();
 			}
-			sampleInputService.add(sampleInput);
-			map.put("flag", "true");
-		} catch (Exception e) {
-			map.put("flag", "false");
-			e.printStackTrace();
 		}
 		return map;
 	}

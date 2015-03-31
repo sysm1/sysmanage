@@ -17,6 +17,14 @@ public interface ReturnGoodsProcessMapper extends
 	 * @return
 	 */
 	public List<OrderSummaryVO> queryVO(Map<String, Object> map);
+	
+	/**
+	 * 删除下单相关的附属
+	 * @param summaryId
+	 */
+	public void deleteBySummaryId(String summaryId);
+	
+	public List<ReturnGoodsProcess> queryBySummaryId(String summaryId);
 
 	
 }

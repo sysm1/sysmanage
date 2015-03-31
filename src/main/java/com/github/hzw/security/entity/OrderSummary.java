@@ -46,6 +46,9 @@ public class OrderSummary {
 
     private Integer num;
     
+    /**下单单位**/
+    private Integer unit;
+    
     /***包装方式 纸管**/
     private Integer zhiguan;
     
@@ -376,6 +379,14 @@ public class OrderSummary {
 
 	public void setKezhongfs(Integer kezhongfs) {
 		this.kezhongfs = kezhongfs;
+	}
+
+	public Integer getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
 	}
 
 	@Override

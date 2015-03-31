@@ -46,6 +46,12 @@ public class OrderSummaryVO {
 
     private Integer num;
     
+    /**下单单位**/
+    private Integer unit;
+    
+    /**下单单位名称**/
+    private String unitName;
+    
     /***包装方式 纸管**/
     private Integer zhiguan;
     
@@ -370,6 +376,38 @@ public class OrderSummaryVO {
 
 	public void setReturnNum(int returnNum) {
 		this.returnNum = returnNum;
+	}
+
+	public Integer getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
+	}
+
+	/****布种单位 0条 1 kg 2cm 3码 4 包*****/
+	public String getUnitName() {
+		if(null==unit){
+			unitName="条";
+		}else if(0==unit){
+			unitName="条";
+		}else if(1==unit){
+			unitName="KG";
+		}else if(2==unit){
+			unitName="米";
+		}else if(3==unit){
+			unitName="码";
+		}else if(4==unit){
+			unitName="包";
+		}else{
+			unitName="条";
+		}
+		return unitName;
+	}
+
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
 	}
 
 	@Override
