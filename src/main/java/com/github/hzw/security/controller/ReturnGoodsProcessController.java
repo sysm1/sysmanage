@@ -15,11 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.OrderSummaryVO;
+import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.ReturnGoodsProcess;
+import com.github.hzw.security.entity.SampleInput;
+import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
 import com.github.hzw.util.Common;
+import com.github.hzw.util.CompressPic;
+import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
+import com.github.hzw.util.PropertiesUtils;
+import com.github.hzw.util.UploadFileUtils;
 
 @Controller
 @RequestMapping("/background/process/")
@@ -28,12 +36,24 @@ public class ReturnGoodsProcessController extends BaseController {
 	@Inject
 	private ReturnGoodsProcessService returnGoodsProcessService;
 	
+	@Inject
+	private OrderSummaryService orderSummaryService;
+	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow,HttpServletRequest request) {
-		Map<String,String> map=new HashMap<String,String>();
-		pageView = returnGoodsProcessService.queryVO(getPageView(pageNow,null), map);
+		OrderSummary OrderSummary=new OrderSummary();
+		pageView=orderSummaryService.query(getPageView(pageNow,null),OrderSummary);
+		List<OrderSummaryVO> list=pageView.getRecords();
+		List<ReturnGoodsProcess> rlist=null;
+		Map<Integer,List<ReturnGoodsProcess>> map=new HashMap<Integer,List<ReturnGoodsProcess>>();
+		Integer summaryId=0;
+		for(OrderSummaryVO os:list){
+			summaryId=os.getId();
+			rlist=returnGoodsProcessService.queryBySummaryId(summaryId+"");
+			map.put(summaryId, rlist);
+		}
 		model.addAttribute("pageView", pageView);
-		model.addAttribute("returnDate", Common.fromDateY());
+		model.addAttribute("map", map);
 		return Common.BACKGROUND_PATH+"/process/list";
 	}
 	
@@ -72,6 +92,18 @@ public class ReturnGoodsProcessController extends BaseController {
 		return map;
 	}
 
+	/**
+	 * 保存数据
+	 * @param model
+	 * @param sampleInput
+	 * @param request
+	 */
+	@RequestMapping("save")
+	public void save(HttpServletRequest request,String summaryId,String status){
+		OrderSummary orderSummary=orderSummaryService.getById(summaryId);
+		orderSummary.setStatus(status);
+		returnGoodsProcessService.save(request, orderSummary);
+	}
 	
 	/**
 	 * 跑到新增界面
