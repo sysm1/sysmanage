@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.hzw.security.mapper.MarkMapper">
+
+	<!--mybatis ehcache缓存配置 -->
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 <cache type="org.mybatis.caches.ehcache.LoggingEhcache" 
+		/> -->
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		type,
+		content
+	</sql>
+	
+	<select id="query" resultType="Mark" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from mark
+		<where>
+			<if test="t.type != null and t.type != ''">
+				type =#{type}
+			</if>
+		</where>
+	</select>
+	
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="queryAll" resultType="Mark" parameterType="Mark">
+		select
+		<include refid="selectId" />
+		from mark
+		<where> 1=1
+		<if test="t.id != null and t.id  != ''">
+			and id=#{id}
+		</if>
+		<if test="t.type != null and t.type != ''">
+			and type =#{type}
+		</if>
+		</where>
+	</select>
+
+	<!-- 增加备注 -->
+	<insert id="add" parameterType="Mark" useGeneratedKeys="true" keyProperty="id">
+		insert into mark (type,content )
+		values (#{type},#{content})
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from mark where
+		id=#{id}
+	</delete>
+
+	<select id="getById" parameterType="String" resultType="Mark">
+		select
+		<include refid="selectId" />
+		from mark where id=#{id}
+	</select>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="Mark">
+		update mark
+		<set>
+			<if test="type != null and type != ''">
+				type=#{type},
+			</if>
+			<if test="content != null and content != ''">
+				content=#{content},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+</mapper>
