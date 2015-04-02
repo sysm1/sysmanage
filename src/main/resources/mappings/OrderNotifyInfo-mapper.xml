@@ -7,17 +7,12 @@
     <result column="no" property="no" jdbcType="VARCHAR" />
     <result column="summary_ids" property="summaryIds" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  
-  <resultMap id="ResultMapWithBLOBs" type="com.github.hzw.security.entity.OrderNotifyInfo" extends="BaseResultMap" >
     <result column="mark" property="mark" jdbcType="LONGVARCHAR" />
   </resultMap>
   
+  
   <sql id="Base_Column_List" >
-    id, no, summary_ids, create_time
-  </sql>
-  <sql id="Blob_Column_List" >
-    mark
+    id, no, summary_ids summaryIds, create_time createTime, mark
   </sql>
   
   <sql id="selectId" >

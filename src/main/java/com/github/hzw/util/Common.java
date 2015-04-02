@@ -371,4 +371,21 @@ public class Common {
         return b1.divide(b2,scale,BigDecimal.ROUND_HALF_UP).doubleValue();
     }
   
+    /**
+     * 在src上补全capacity位，超长返回，不够补0
+     * capacity 位数
+     * src 源数
+     * @return
+     */
+    public static String prefixFillChar(int capacity, String src, String fillChar) {
+    	if(src.length() >= capacity) return src;
+    	int i = capacity - src.length();
+    	StringBuffer sb = new StringBuffer();
+    	for(int m = 0; m < i; m++) {
+    		sb.append(fillChar);
+    	}
+    	sb.append(src);
+    	return sb.toString();
+    }
+    
 }

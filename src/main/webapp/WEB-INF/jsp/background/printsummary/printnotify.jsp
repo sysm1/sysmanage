@@ -37,7 +37,7 @@
 				</tr>
 				
 				<tr>
-					<td colspan="2">加工单位：**</td>
+					<td colspan="2">加工单位：${factory.name }</td>
 				</tr>
 			</table>
 			
