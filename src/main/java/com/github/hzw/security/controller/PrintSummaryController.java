@@ -1,6 +1,7 @@
 package com.github.hzw.security.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.FactoryInfo;
+import com.github.hzw.security.entity.OrderNotifyInfo;
 import com.github.hzw.security.entity.OrderSummary;
+import com.github.hzw.security.service.DateVersionService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.OrderNotifyInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.DateUtil;
@@ -32,6 +37,13 @@ public class PrintSummaryController extends BaseController {
 	
 	@Inject
 	private FactoryInfoService factoryInfoService;
+	
+	@Inject
+	private OrderNotifyInfoService orderNotifyInfoService;
+	@Inject
+	private DateVersionService dateVersionService;
+	
+	private final String DEFAULTPAGE = "100";
 	
 	/**
 	@RequestMapping("list")
@@ -57,7 +69,7 @@ public class PrintSummaryController extends BaseController {
 		}
 		
 		if(StringUtils.isEmpty(pagesize)) {
-			pagesize = "100";
+			pagesize = DEFAULTPAGE;
 		}
 		
 		pageView = orderSummaryService.queryPrint(getPageView(pageNow,pagesize), map);
@@ -78,7 +90,7 @@ public class PrintSummaryController extends BaseController {
 		}
 		
 		if(StringUtils.isEmpty(pagesize)) {
-			pagesize = "100";
+			pagesize = DEFAULTPAGE;
 		}
 		
 		map.put("printNum", 0);
@@ -87,6 +99,8 @@ public class PrintSummaryController extends BaseController {
 		map.put("endTime", DateUtil.endDate(null));
 		
 		map.put("printStatus", "2");
+		
+		map.put("printDate", DateUtil.date2Str(new Date(), "yyyy-MM-dd"));
 		
 		pageView = orderSummaryService.queryPrint(getPageView(pageNow,pagesize), map);
 		return pageView;
@@ -118,19 +132,31 @@ public class PrintSummaryController extends BaseController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("factory", factoryInfoService.getById(factoryId));
+		model.addAttribute("printDate", DateUtil.date2Str(new Date(), "yyyy-MM-dd"));
 		
 		return Common.BACKGROUND_PATH+"/printsummary/printnotify";
 	}
 	
 	
 	@RequestMapping("printsave")
-	public String printsave(Model model, HttpServletRequest request, HttpServletResponse response) {
-		
+	public String printsave(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("printsave...");
 		String ids = request.getParameter("ids");
 		String mark = request.getParameter("mark");
-		System.out.println("ids:" + ids);
-		System.out.println("mark:" + mark);
+		String factoryId = request.getParameter("factoryId");
+		// 生成订单
+		int no = dateVersionService.getValue("printsummary", DateUtil.date2Str(new Date(), "yyyyMMdd"));
+		OrderNotifyInfo info = new OrderNotifyInfo();
+		info.setCreateTime(new Date());
+		FactoryInfo factory = factoryInfoService.getById(factoryId);
+		info.setCreateTime(new Date());
+		info.setFactoryId(factory.getId());
+		info.setFactoryName(factory.getName());
+		info.setMark(mark);
+		info.setSummaryIds(ids);
+		info.setNo(no + "");
+		
+		orderNotifyInfoService.save(info);
 		
 		return this.list(model, request, response, "1", "100");
 	}

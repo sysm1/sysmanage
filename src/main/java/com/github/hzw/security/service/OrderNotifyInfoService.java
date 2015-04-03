@@ -5,4 +5,5 @@ import com.github.hzw.security.entity.OrderNotifyInfo;
 
 public interface OrderNotifyInfoService extends BaseService<OrderNotifyInfo> {
 
+	public void save(OrderNotifyInfo info) throws Exception;
 }

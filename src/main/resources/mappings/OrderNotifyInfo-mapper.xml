@@ -5,6 +5,7 @@
   <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.OrderNotifyInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="no" property="no" jdbcType="VARCHAR" />
+    <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
     <result column="summary_ids" property="summaryIds" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="mark" property="mark" jdbcType="LONGVARCHAR" />
@@ -12,11 +13,11 @@
   
   
   <sql id="Base_Column_List" >
-    id, no, summary_ids summaryIds, create_time createTime, mark
+    id, no,factory_id factoryId, summary_ids summaryIds, create_time createTime, mark
   </sql>
   
   <sql id="selectId" >
-    id, no, summary_ids summaryIds, create_time createTime, mark
+    id, no, factory_id factoryId, summary_ids summaryIds, create_time createTime, mark
   </sql>
   
   
@@ -25,14 +26,15 @@
 		<include refid="selectId" />
 		from order_notify_info
 		<where> 1=1
-		<if test="t.no != null and t.no != ''">
-			and no = #{t.no}
-		</if>
-		
-		<if test="t.mark != null and t.mark != ''">
-			and mark like '%${t.mark}%'
-		</if>
-		
+			<if test="t.no != null and t.no != ''">
+				and no = #{t.no}
+			</if>
+			<if test="t.factoryId != null and t.factoryId != ''">
+				and factory_id = #{t.factoryId}
+			</if>
+			<if test="t.mark != null and t.mark != ''">
+				and mark like '%${t.mark}%'
+			</if>
 		</where>
 		order by id desc
 	</select>
@@ -57,9 +59,9 @@
   </delete>
   
   <insert id="insert" parameterType="com.github.hzw.security.entity.OrderNotifyInfo" >
-    insert into order_notify_info (id, no, summary_ids, 
+    insert into order_notify_info (id, no, factory_id, summary_ids, 
       create_time, mark)
-    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR}, #{summaryIds,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR}, #{factoryId,jdbcType=INTEGER}, #{summaryIds,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{mark,jdbcType=LONGVARCHAR})
   </insert>
   
@@ -71,6 +73,9 @@
       </if>
       <if test="no != null" >
         no,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
       </if>
       <if test="summaryIds != null" >
         summary_ids,
@@ -89,8 +94,11 @@
       <if test="no != null" >
         #{no,jdbcType=VARCHAR},
       </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=INTEGER},
+      </if>
       <if test="summaryIds != null" >
-        #{summaryIds,jdbcType=VARCHAR},
+        #{summaryIds,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},

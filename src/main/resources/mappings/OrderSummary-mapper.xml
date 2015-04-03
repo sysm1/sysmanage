@@ -84,7 +84,7 @@
 				and create_time &lt;= #{endTime}
 			</if>
 			<if test="printStatus != null and printStatus != ''">
-				and print_status &lt; 2
+				and print_status &lt; 1
 			</if>
 		</where>
 		order by id desc
