@@ -343,9 +343,11 @@ public class OrderSummaryVO {
 
 	public String getReturnStatusName() {
 		if(returnStatus==0){
-			returnStatusName="未回";
+			returnStatusName="未回货";
 		}else if(returnStatus==1){
-			returnStatusName="已回";
+			returnStatusName="未回完";
+		}else if(returnStatus==2){
+			returnStatusName="已回货";
 		}
 		return returnStatusName;
 	}

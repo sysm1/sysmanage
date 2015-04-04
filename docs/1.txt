@@ -231,7 +231,7 @@ CREATE TABLE `order_summary` (
 `print_status`  int(11) NULL DEFAULT 0 COMMENT '状态 (-1 撤销打印 0 未打印  1 打印)' ,
 `print_num`  int(11) NULL DEFAULT NULL COMMENT '打印次数' ,
 `status`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂不一样   ----新厂 我司编号不一样----新花 布种不一样---新布 颜色不一样----新色   红色字体 可以组合  （新厂新花) 一样的为正常   绿色字体 ' ,
-`return_status`  int(11) NULL DEFAULT 0 COMMENT '0 未回货  1 已回货' ,
+`return_status`  int(11) NULL DEFAULT 0 COMMENT '0 未回货  1 未回完  2已回货' ,
 `create_time`  datetime NULL DEFAULT NULL COMMENT '下单时间' ,
 `zhiguan`  int(11) NULL DEFAULT NULL COMMENT '纸管' ,
 `kongcha`  int(11) NULL DEFAULT NULL COMMENT '空差' ,

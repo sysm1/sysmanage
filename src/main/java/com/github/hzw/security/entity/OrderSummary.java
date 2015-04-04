@@ -95,6 +95,8 @@ public class OrderSummary {
     private String status;
 
     private Integer returnStatus;
+    
+    private String returnStatusName;
 
     private Date createTime;
     
@@ -455,6 +457,21 @@ public class OrderSummary {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getReturnStatusName() {
+		if(returnStatus==0){
+			returnStatusName="未回";
+		}else if(returnStatus==1){
+			returnStatusName="未回完";
+		}else if(returnStatus==2){
+			returnStatusName="已回";
+		}
+		return returnStatusName;
+	}
+
+	public void setReturnStatusName(String returnStatusName) {
+		this.returnStatusName = returnStatusName;
 	}
     
 }

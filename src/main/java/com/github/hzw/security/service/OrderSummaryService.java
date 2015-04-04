@@ -16,4 +16,6 @@ public interface OrderSummaryService extends BaseService<OrderSummary> {
 
 	public PageView queryPrint(PageView pageView, Map<String, Object> map );
 	
+	public PageView queryVO(PageView pageView, OrderSummary t);
+	
 }
