@@ -1,6 +1,8 @@
 package com.github.hzw.security.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +59,7 @@ public class PrintSummaryController extends BaseController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("printNum", 0);
+		// map.put("printNum", 0);
 		
 		map.put("beginTime", DateUtil.beginDate(null));
 		map.put("endTime", DateUtil.endDate(null));
@@ -113,6 +115,7 @@ public class PrintSummaryController extends BaseController {
 		return Common.BACKGROUND_PATH+"/printsummary/demo";
 	}
 	
+	
 	@RequestMapping("printnotify")
 	public String printnotify(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
@@ -141,20 +144,27 @@ public class PrintSummaryController extends BaseController {
 	@RequestMapping("printsave")
 	public String printsave(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("printsave...");
-		String ids = request.getParameter("ids");
+		String[] ids = request.getParameterValues("ids");
 		String mark = request.getParameter("mark");
 		String factoryId = request.getParameter("factoryId");
 		// 生成订单
-		int no = dateVersionService.getValue("printsummary", DateUtil.date2Str(new Date(), "yyyyMMdd"));
+		String tmp = DateUtil.date2Str(new Date(), "yyyyMMdd");
+		int no = dateVersionService.getValue("printsummary", tmp);
+		String noString = tmp + Common.prefixFillChar(4, no + "", "0");
+		
 		OrderNotifyInfo info = new OrderNotifyInfo();
-		info.setCreateTime(new Date());
 		FactoryInfo factory = factoryInfoService.getById(factoryId);
 		info.setCreateTime(new Date());
 		info.setFactoryId(factory.getId());
 		info.setFactoryName(factory.getName());
 		info.setMark(mark);
-		info.setSummaryIds(ids);
-		info.setNo(no + "");
+		StringBuffer tmpIds = new StringBuffer();
+		for(String id : ids) {
+			tmpIds.append(id).append(",");
+		}
+		
+		info.setSummaryIds(tmpIds.toString());
+		info.setNo(noString);
 		
 		orderNotifyInfoService.save(info);
 		

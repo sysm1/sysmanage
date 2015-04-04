@@ -34,6 +34,15 @@
 		});
 		return arr;
 	};
+	
+	function page(pageNO){
+		$('#pageNow').attr('value',pageNO);
+		var f = $('#fenye');
+		//f.attr('target','_blank');
+		f.attr('action','${pageContext.request.contextPath}/background/printsummary/list.html');
+		f.submit();
+	}
+	
 </script>
 
 </head>
@@ -41,6 +50,7 @@
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
+				<input type="hidden" id="pageNow" name="pageNow" value="1">
 				<a class="btn btn-primary" href="javascript:void(0)"
 					id="printSummary"> 打印 </a> 
 				<a class="btn btn-primary"
@@ -64,7 +74,7 @@
 			<table id="rowspan" cellspacing="0" class="tablesorter">
 				<thead>
 					<tr>
-						<td>序号</td>
+						<th></th>
 						<th>下单日期</th>
 						<th>工厂</th>
 						<th>布种</th>

@@ -95,6 +95,11 @@ public class OrderSummary {
     
     private String createTimeStr;
 
+    private int notifyId;
+    private Date notifyTime;
+    private String no;
+    private String notifyTimeStr; // 
+    
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
         return id;
@@ -389,21 +394,6 @@ public class OrderSummary {
 		this.unit = unit;
 	}
 
-	@Override
-	public String toString() {
-		return "OrderSummary [id=" + id + ", orderCode=" + orderCode
-				+ ", orderDate=" + orderDate + ", clothId=" + clothId
-				+ ", factoryId=" + factoryId + ", technologyId=" + technologyId
-				+ ", myCompanyCode=" + myCompanyCode + ", myCompanyColor="
-				+ myCompanyColor + ", factoryCode=" + factoryCode
-				+ ", factoryColor=" + factoryColor + ", clothNum=" + clothNum
-				+ ", num=" + num + ", standard=" + standard + ", packingStyle="
-				+ packingStyle + ", printStatus=" + printStatus + ", printNum="
-				+ printNum + ", status=" + status + ", returnStatus="
-				+ returnStatus + ", createTime=" + createTime + ", salesmans="
-				+ salesmans + ", mark=" + mark + "]";
-	}
-
 	public String getCreateTimeStr() {
 		return createTimeStr;
 	}
@@ -434,6 +424,65 @@ public class OrderSummary {
 
 	public void setTechnologyName(String technologyName) {
 		this.technologyName = technologyName;
+	}
+
+	public int getNotifyId() {
+		return notifyId;
+	}
+
+	public void setNotifyId(int notifyId) {
+		this.notifyId = notifyId;
+	}
+
+	public Date getNotifyTime() {
+		return notifyTime;
+	}
+
+	public void setNotifyTime(Date notifyTime) {
+		this.notifyTime = notifyTime;
+		this.setNotifyTimeStr(DateUtil.date2Str(notifyTime, "yyyy-MM-dd"));
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderSummary [id=" + id + ", orderCode=" + orderCode
+				+ ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", orderDate=" + orderDate + ", oprator=" + oprator
+				+ ", clothId=" + clothId + ", clothName=" + clothName
+				+ ", factoryId=" + factoryId + ", factoryName=" + factoryName
+				+ ", technologyId=" + technologyId + ", technologyName="
+				+ technologyName + ", myCompanyCode=" + myCompanyCode
+				+ ", myCompanyColor=" + myCompanyColor + ", factoryCode="
+				+ factoryCode + ", factoryColor=" + factoryColor
+				+ ", clothNum=" + clothNum + ", num=" + num + ", unit=" + unit
+				+ ", zhiguan=" + zhiguan + ", kongcha=" + kongcha
+				+ ", jiaodai=" + jiaodai + ", balance=" + balance
+				+ ", balanceSalemanId=" + balanceSalemanId + ", kuanfu="
+				+ kuanfu + ", kuanfufs=" + kuanfufs + ", kezhong=" + kezhong
+				+ ", kezhongUnit=" + kezhongUnit + ", kezhongfs=" + kezhongfs
+				+ ", standard=" + standard + ", packingStyle=" + packingStyle
+				+ ", printStatus=" + printStatus + ", printNum=" + printNum
+				+ ", status=" + status + ", returnStatus=" + returnStatus
+				+ ", createTime=" + createTime + ", createTimeStr="
+				+ createTimeStr + ", notifyId=" + notifyId + ", notifyTime="
+				+ notifyTime + ", no=" + no + ", salesmans=" + salesmans
+				+ ", mark=" + mark + "]";
+	}
+
+	public String getNotifyTimeStr() {
+		return notifyTimeStr;
+	}
+
+	public void setNotifyTimeStr(String notifyTimeStr) {
+		this.notifyTimeStr = notifyTimeStr;
 	}
     
 	

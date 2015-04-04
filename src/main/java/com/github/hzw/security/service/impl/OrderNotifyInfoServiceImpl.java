@@ -65,17 +65,39 @@ public class OrderNotifyInfoServiceImpl implements OrderNotifyInfoService {
 	// 
 	public void save(OrderNotifyInfo info) throws Exception {
 		String ids = info.getSummaryIds();
-		String[] tmp = ids.split("[,]");
+		String[] tmp = ids.split("[, ]");
 		OrderSummary summary = null;
+		this.add(info);
+		
 		for(String id : tmp) {
 			summary = orderSummaryService.getById(id);
 			summary.setPrintStatus(1); // 改变状态为已打印
 			summary.setPrintNum(summary.getPrintNum() + 1);
+			summary.setNotifyId(info.getId());
+			summary.setNotifyTime(info.getCreateTime());
+			summary.setNo(info.getNo());
 			orderSummaryService.update(summary);
 		}
-		this.add(info);
+		
 	}
 	
+	public PageView queryFind(PageView pageView, Map<String, Object> map ){
+		map.put("paging", pageView);
+		List<OrderNotifyInfo> list = orderNotifyInfoMapper.queryFind(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
 	
+	// 撤销打印
+	public void cancel(String[] ids) throws Exception {
+		
+		if(ids == null || ids.length == 0) return;
+		
+		for(String id : ids) {
+			orderNotifyInfoMapper.delete(id);
+			orderSummaryService.cancel(id);
+		}
+		
+	}
 	
 }

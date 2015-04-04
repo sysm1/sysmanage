@@ -66,7 +66,10 @@
     status, return_status returnStatus,
     create_time createTime, salesmans, mark, 
     zhiguan, kongcha, jiaodai, balance, balance_saleman_id balanceSalemanId, kuanfu, kuanfufs, kezhong,
-    kezhongUnit, kezhongfs
+    kezhongUnit, kezhongfs,
+    notify_id notifyId,
+    notify_time notifyTime,
+    no
   </sql>
   
   <select id="queryPrint" resultType="OrderSummary" parameterType="map">
@@ -88,6 +91,52 @@
 			</if>
 		</where>
 		order by id desc
+  </select>
+  
+  
+    <select id="queryNotify" resultType="OrderSummary" parameterType="map">
+  	select
+		<include refid="selectId" />
+			from order_summary
+		<where>
+			<if test="printStatus != null and printStatus != ''">
+				and print_status = #{printStatus}
+			</if>
+			<if test="beginTime != null and beginTime != ''">
+				and notify_time &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and notify_time &lt;= #{endTime}
+			</if>
+			<if test="clothId != null and clothId != ''">
+				and cloth_id = #{clothId}
+			</if>
+			<if test="factoryId != null and factoryId != ''">
+				and factory_id = #{factoryId}
+			</if>
+			<if test="technologyId != null and technologyId != ''">
+				and technology_id = #{technologyId}
+			</if>
+			<if test="factoryCode != null and factoryCode != ''">
+				and factory_code like '%${factoryCode}%'
+			</if>
+			<if test="factoryColor != null and factoryColor != ''">
+				and factory_color like '%${factoryColor}%'
+			</if>
+			<if test="notifyId != null and notifyId != ''">
+				and notify_id #{notifyId}
+			</if>
+		</where>
+		GROUP BY notify_id order by notify_id DESC
+  </select>
+  
+  
+  <select id="queryByNotifyId" resultType="OrderSummary" parameterType="String">
+  		select
+			<include refid="selectId" />
+		from order_summary
+		where notify_id = #{notifyId}
+		order by notify_id DESC
   </select>
   
   <select id="query" resultType="com.github.hzw.security.VO.OrderSummaryVO" parameterType="OrderSummary">
@@ -249,6 +298,15 @@
       </if><if test="kezhongfs != null" >
         kezhongfs,
       </if>
+      <if test="notifyId != null" >
+        notify_id,
+      </if>
+      <if test="notifyTime != null" >
+        notify_time,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -333,6 +391,15 @@
       </if><if test="kezhongfs != null" >
         #{kezhongfs,jdbcType=INTEGER},
       </if>
+      <if test="notifyId != null" >
+        #{notifyId,jdbcType=INTEGER},
+      </if>
+      <if test="notifyTime != null" >
+        #{notifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   
@@ -412,35 +479,46 @@
       </if>
       
       <if test="zhiguan != null" >
-        #{zhiguan,jdbcType=INTEGER},
+       zhiguan =  #{zhiguan,jdbcType=INTEGER},
       </if>
       <if test="kongcha != null" >
-        #{kongcha,jdbcType=INTEGER},
+       kongcha = #{kongcha,jdbcType=INTEGER},
       </if>
       <if test="jiaodai != null" >
-        #{jiaodai,jdbcType=INTEGER},
+       jiaodai = #{jiaodai,jdbcType=INTEGER},
       </if>
       <if test="kuanfu != null" >
-        #{kuanfu,jdbcType=INTEGER},
+        kuanfu = #{kuanfu,jdbcType=INTEGER},
       </if>
       <if test="kuanfufs != null" >
-        #{kuanfufs,jdbcType=INTEGER},
+        kuanfufs = #{kuanfufs,jdbcType=INTEGER},
       </if>
       <if test="kezhong != null" >
-        #{kezhong,jdbcType=INTEGER},
+        kezhong = #{kezhong,jdbcType=INTEGER},
       </if>
       <if test="kezhongUnit != null" >
-        #{kezhongUnit,jdbcType=INTEGER},
+        kezhongUnit = #{kezhongUnit,jdbcType=INTEGER},
       </if>
       <if test="kezhongfs != null" >
-        #{kezhongfs,jdbcType=INTEGER},
+        kezhongfs = #{kezhongfs,jdbcType=INTEGER},
       </if>
-      
+      <if test="notifyId != null" >
+        notify_id = #{notifyId,jdbcType=INTEGER},
+      </if>
+      <if test="notifyTime != null" >
+        notify_time = #{notifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="no != null" >
+        no = #{no,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
 	
-	
+  <update id="updateCancel" parameterType="java.lang.String">
+    update order_summary set print_status = -1, notify_id = null, notify_time = null, no = null
+    where notify_id = #{notifyId,jdbcType=INTEGER}
+   </update>
 	
 	
   <select id="selectByPrimaryKey" resultType="OrderSummary" parameterType="java.lang.Integer" >

@@ -2,6 +2,7 @@ package com.github.hzw.service.test;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -68,4 +69,17 @@ public class OrderSummaryTest {
 		
 	}
 
+	@Test
+	public void testCancel() {
+		orderSummaryService.cancel("10");
+	}
+	
+	
+	@Test
+	public void testQueryList() {
+		
+		List<OrderSummary> list = orderSummaryService.query("13");
+		System.out.println(list);
+	}
+	
 }

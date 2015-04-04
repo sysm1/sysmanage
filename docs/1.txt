@@ -243,6 +243,8 @@ CREATE TABLE `order_summary` (
 `kezhong`  int(11) NULL DEFAULT NULL COMMENT '克重' ,
 `kezhongUnit`  int(11) NULL DEFAULT NULL COMMENT '克重单位 0G/M2 1G/Y 2G/M' ,
 `kezhongfs`  int(11) NULL DEFAULT NULL COMMENT '克重方式 0回后 1出机' ,
+ notify_time datetime, -- 通知时间
+ notify_id	int(11),  -- 通知id
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

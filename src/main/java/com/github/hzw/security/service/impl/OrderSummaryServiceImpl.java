@@ -76,5 +76,25 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 		pageView.setRecords(list);
 		return pageView;
 	}
+	
+	// 打印通知
+	public PageView queryNotify(PageView pageView, Map<String, Object> map ){
+		map.put("paging", pageView);
+		List<OrderSummary> list = orderSummaryMapper.queryNotify(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
+	
+	// 取消打印
+	public void cancel(String notifyId){
+		orderSummaryMapper.updateCancel(notifyId);
+	}
 
+	// 返回打印通知里的所有明细
+	public List<OrderSummary> query(String notifyId ){
+		List<OrderSummary> list = orderSummaryMapper.queryByNotifyId(notifyId);
+		return list;
+	}
+	
+	
 }

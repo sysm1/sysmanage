@@ -17,9 +17,32 @@
   </sql>
   
   <sql id="selectId" >
-    id, no, factory_id factoryId, summary_ids summaryIds, create_time createTime, mark
+    id, no, factory_id factoryId, 
+    (select factory.name from factory_info factory where factory.id = order_notify_info.factory_id ) as factoryName,
+    summary_ids summaryIds, create_time createTime, mark
   </sql>
   
+  <select id="queryFind" resultType="OrderNotifyInfo" parameterType="map">
+		select
+		<include refid="selectId" />
+		from order_notify_info
+		<where> 
+	      	<if test="factoryId != null and factoryId != ''" >
+	        	and factory_id = #{factoryId}
+	      	</if>
+	      	<if test="beginTime != null and beginTime != ''">
+				and create_time &gt; #{beginTime}
+			</if>
+	      	<if test="endTime != null and endTime != ''">
+				and create_time &lt; #{endTime}
+			</if>
+			<if test="no != null and no != ''">
+				and no = #{no}
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
   
   <select id="query" resultType="OrderNotifyInfo" parameterType="OrderNotifyInfo">
 		select
