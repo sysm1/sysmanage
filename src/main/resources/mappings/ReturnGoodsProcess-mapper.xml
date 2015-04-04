@@ -95,13 +95,19 @@
 		from return_goods_process where summary_id=#{summaryId}
 		order by id
 	</select>
+	
+	<!-- 回货 拖延单总数 -->
+	<select id="queryDelayDates" parameterType="String" resultType="java.lang.String">
+		select count(DISTINCT os.id) from return_goods_process gp,order_summary os 
+		where os.id = gp.summary_id and datediff(NOW(),gp.return_date) >#{_parameter}
+	</select>
   
-  <select id="getById" parameterType="String" resultType="ReturnGoodsProcess" >
-    select 
-    <include refid="selectId" />
-    from return_goods_process
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+	<select id="getById" parameterType="String" resultType="ReturnGoodsProcess" >
+	    select 
+	    <include refid="selectId" />
+	    from return_goods_process
+	    where id = #{id,jdbcType=INTEGER}
+	</select>
   
   	<delete id="delete" parameterType="String">
 		delete from return_goods_process where

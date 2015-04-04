@@ -22,6 +22,7 @@
 <script type="text/javascript" src="${ctx}/ligerUI/js/plugins/ligerDialog.js"></script>
  <script src="${ctx}/js/lyGrid.js" type="text/javascript"></script>
 <link href="${ctx}/css/lanyuan.css" rel="stylesheet">
+<link href="${ctx}/css/page.css" rel="stylesheet">
 <script type="text/javascript">
 var rootPath = "${ctx}";
 // document.oncontextmenu=new Function('event.returnValue=false;');

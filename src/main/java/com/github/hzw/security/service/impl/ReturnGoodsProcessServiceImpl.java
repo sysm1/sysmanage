@@ -56,6 +56,15 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		pageView.setRecords(list);
 		return pageView;
 	}
+	
+	/**
+	 * 查询拖延单数
+	 * @param dates
+	 * @return
+	 */
+	public String queryDelayDates(String dates){
+		return returnGoodsProcessMapper.queryDelayDates(dates);
+	}
 
 	
 	@Override
@@ -80,6 +89,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 	 * @param request
 	 * @param summaryId
 	 */
+	@Override
 	public void save(HttpServletRequest request,OrderSummary orderSummary){
 		String[] returnDates=request.getParameterValues("returnDate");
 		String[] returnNums=request.getParameterValues("returnNum");

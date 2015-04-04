@@ -23,6 +23,11 @@ public class OrderSummary {
     
     /**符号  1大于等于  2小于等于**/
     private Integer oprator;
+    
+    /**拖延单天数**/
+    private Integer delayDates;
+    
+    private String code;
 
     private Integer clothId;
 
@@ -90,6 +95,8 @@ public class OrderSummary {
     private String status;
 
     private Integer returnStatus;
+    
+    private String returnStatusName;
 
     private Date createTime;
     
@@ -486,5 +493,35 @@ public class OrderSummary {
 	}
     
 	
-    
+	public Integer getDelayDates() {
+		return delayDates;
+	}
+
+	public void setDelayDates(Integer delayDates) {
+		this.delayDates = delayDates;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getReturnStatusName() {
+		if(returnStatus==0){
+			returnStatusName="未回";
+		}else if(returnStatus==1){
+			returnStatusName="未回完";
+		}else if(returnStatus==2){
+			returnStatusName="已回";
+		}
+		return returnStatusName;
+	}
+
+	public void setReturnStatusName(String returnStatusName) {
+		this.returnStatusName = returnStatusName;
+	}
+   
 }

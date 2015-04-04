@@ -25,6 +25,13 @@ public interface ReturnGoodsProcessMapper extends
 	public void deleteBySummaryId(String summaryId);
 	
 	public List<ReturnGoodsProcess> queryBySummaryId(String summaryId);
+	
+	/**
+	 * 查询拖延单数
+	 * @param dates
+	 * @return
+	 */
+	public String queryDelayDates(String dates);
 
 	
 }

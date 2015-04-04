@@ -27,8 +27,8 @@ import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PropertiesUtils;
 
 @Controller
-@RequestMapping("/background/process/")
-public class ReturnGoodsProcessController extends BaseController {
+@RequestMapping("/background/processList/")
+public class ReturnGoodsProcessListController extends BaseController {
 
 	@Inject
 	private ReturnGoodsProcessService returnGoodsProcessService;
@@ -41,20 +41,8 @@ public class ReturnGoodsProcessController extends BaseController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
-	public String list(Model model,String delay, String pageNow,HttpServletRequest request) {
-		String factoryId=request.getParameter("factoryId");
-		String code=request.getParameter("code");
-		OrderSummary orderSummary=new OrderSummary();
-		if(""!=delay&&null!=delay){
-			orderSummary.setDelayDates(Integer.parseInt(PropertiesUtils.findPropertiesKey("process_delay_dates")));
-		}if(!"".equals(code)&&null!=code){
-			orderSummary.setCode(code);
-		}
-		orderSummary.setStatus("0");
-		if(null!=factoryId&&!"".equals(factoryId)){
-			orderSummary.setFactoryId(Integer.parseInt(factoryId));
-		}
-		pageView=orderSummaryService.query(getPageView(pageNow,null),orderSummary);
+	public String list(Model model,String delay, String pageNow,OrderSummary orderSummary) {
+		pageView=orderSummaryService.queryVO(getPageView(pageNow,null),orderSummary);
 		List<OrderSummaryVO> list=pageView.getRecords();
 		List<ReturnGoodsProcess> rlist=null;
 		Map<Integer,List<ReturnGoodsProcess>> map=new HashMap<Integer,List<ReturnGoodsProcess>>();
@@ -71,7 +59,7 @@ public class ReturnGoodsProcessController extends BaseController {
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("delayDates",delayDates);
 		model.addAttribute("bean", orderSummary);
-		return Common.BACKGROUND_PATH+"/process/list";
+		return Common.BACKGROUND_PATH+"/processList/list";
 	}
 	
 	/**
@@ -109,23 +97,6 @@ public class ReturnGoodsProcessController extends BaseController {
 		return map;
 	}
 
-	/**
-	 * 保存数据
-	 * @param model
-	 * @param sampleInput
-	 * @param request
-	 */
-	@RequestMapping("save")
-	public String save(Model model,HttpServletRequest request,String summaryId,String status){
-		OrderSummary orderSummary=orderSummaryService.getById(summaryId);
-		orderSummary.setStatus(status);
-		returnGoodsProcessService.save(request, orderSummary);
-		if("1".equals(status)){
-			
-			return list(model,null, "1", request);
-		}
-		return null;
-	}
 	
 	/**
 	 * 跑到新增界面

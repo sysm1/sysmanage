@@ -11,20 +11,6 @@
 	var dialog;
 	var grid;
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid({
-					id : 'paging',
-					l_column : [ {
-						colkey : "id",
-						name : "id",
-						width : "50px"
-					}, {
-						colkey : "content",
-						name : "备注内容",
-						width:"70px"
-					} ],
-					jsonUrl : '${pageContext.request.contextPath}/background/mark/query.html',
-					checkbox : true
-				});
 		$("#seach").click("click", function() {//绑定查询按扭
 			var searchParams = $("#fenye").serialize();
 			grid.setOptions({
@@ -32,10 +18,9 @@
 			}); 
 		});
 		$("#ok").click("click", function() {//绑定查询按扭
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			}); 
+			var cbox=getSelectedCheckbox();
+			window.returnValue=cbox;
+			window.close();
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
@@ -136,6 +121,13 @@
 	function loadGird(){
 		grid.loadData();
 	}
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+		});
+		return arr;
+	};
 </script>
 </head>
 <body>
@@ -149,18 +141,26 @@
 				</a>
 			</form>
 		</div>
-		<div class="topBtn">
-			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>add</span>
-			</a> <!-- <a class="btn btn-success" href="javascript:void(0)"> <i
-				class="icon-zoom-in icon-white" id="View"></i> View
-			</a> --> <a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> Edit
-			</a> <a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> Delete
-			</a>
+		<div id="paging" class="pagclass">
+			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
+				<tr>
+					<th></th>
+					<th>备注内容</th>
+				</tr>
+				<c:forEach var="bean" items="${pageView.records }" varStatus="status">
+				<tr>
+					<td>
+						<input type="checkbox" name="checkId" value="${bean.content }">						
+					</td><td>
+						${bean.content }
+					</td>
+				</tr>
+				</c:forEach>
+				
+				
+			</table>
+		
 		</div>
-		<div id="paging" class="pagclass"></div>
 	</div>
 </body>
 </html>

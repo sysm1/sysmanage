@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.OrderSummaryVO;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.mapper.OrderSummaryMapper;
 import com.github.hzw.security.service.OrderSummaryService;
@@ -26,6 +27,16 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 		map.put("paging", pageView);
 		map.put("t", t);
 		List<OrderSummary> list = orderSummaryMapper.query(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
+	
+	@Override
+	public PageView queryVO(PageView pageView, OrderSummary t) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("paging", pageView);
+		map.put("t", t);
+		List<OrderSummaryVO> list = orderSummaryMapper.queryVO(map);
 		pageView.setRecords(list);
 		return pageView;
 	}

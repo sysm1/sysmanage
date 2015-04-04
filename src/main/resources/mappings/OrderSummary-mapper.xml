@@ -139,7 +139,7 @@
 		order by notify_id DESC
   </select>
   
-  <select id="query" resultType="com.github.hzw.security.VO.OrderSummaryVO" parameterType="OrderSummary">
+  <select id="query" resultType="OrderSummary" parameterType="OrderSummary">
 		select
 		<include refid="selectId" />
 			from order_summary
@@ -161,6 +161,9 @@
 		</if>
 		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
 			and my_company_code = #{t.myCompanyCode}
+		</if>
+		<if test="t.code !=null and t.code !='' ">
+			and (my_company_code like '%${t.code}%' or factory_code like '%${t.code}%'  )
 		</if>
 		<if test="t.myCompanyColor != null and t.myCompanyColor != ''">
 			and my_company_color = #{t.myCompanyColor}
@@ -201,8 +204,83 @@
 		<if test="t.oprator != null and t.oprator != '' and t.oprator == 2 ">
 				and num &lt;=#{t.num}
 		</if>
+		<if test="t.delayDates!=null and t.delayDates!=''">
+			and datediff(NOW(),order_code) >#{t.delayDates}
+		</if>
 		</where>
 		order by id desc
+	</select>
+	
+	<select id="queryVO" resultType="com.github.hzw.security.VO.OrderSummaryVO" parameterType="OrderSummary">
+		select
+		<include refid="selectId" />
+			from order_summary
+		<where> 1=1
+		<if test="t.startDate != null and t.startDate != ''">
+			and order_code &gt;= #{t.startDate}
+		</if>
+		<if test="t.endDate != null and t.endDate != ''">
+			and order_code &lt;= #{t.endDate}
+		</if>
+		<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+		</if>
+		<if test="t.factoryId != null and t.factoryId != ''">
+			and factory_id = #{t.factoryId}
+		</if>
+		<if test="t.technologyId != null and t.technologyId != ''">
+			and technology_id = #{t.technologyId}
+		</if>
+		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
+			and my_company_code = #{t.myCompanyCode}
+		</if>
+		<if test="t.code !=null and t.code !='' ">
+			and (my_company_code like '%${t.code}%' or factory_code like '%${t.code}%'  )
+		</if>
+		<if test="t.myCompanyColor != null and t.myCompanyColor != ''">
+			and my_company_color = #{t.myCompanyColor}
+		</if>
+		<if test="t.factoryCode != null and t.factoryCode != ''">
+			and factory_code = #{t.factoryCode}
+		</if>
+		<if test="t.factoryColor != null and t.factoryColor != ''">
+			and factory_color = #{t.factoryColor}
+		</if>
+		<if test="t.clothNum != null and t.clothNum != ''">
+			and cloth_num = #{t.clothNum}
+		</if>
+		<if test="t.standard != null and t.standard != ''">
+			and standard = #{t.standard}
+		</if>
+		<if test="t.packingStyle != null and t.packingStyle != ''">
+			and	packing_style like '%${t.packingStyle}%'
+		</if>
+		<if test="t.printStatus != null and t.printStatus != ''">
+			and print_status = #{t.printStatus}
+		</if>
+		<if test="t.printNum != null and t.printNum != ''">
+			and print_num = #{t.printNum}
+		</if>
+		<if test="t.status != null and t.status != ''">
+			and status = #{t.status}
+		</if>
+		<if test="t.returnStatus != null and t.returnStatus != ''">
+			and return_status = #{t.returnStatus}
+		</if>
+		<if test="t.mark != null and t.mark != ''">
+			and mark like '%${t.mark}%'
+		</if>
+		<if test="t.oprator != null and t.oprator != '' and t.oprator == 1">
+				and num  &gt;=#{t.num}
+		</if>
+		<if test="t.oprator != null and t.oprator != '' and t.oprator == 2 ">
+				and num &lt;=#{t.num}
+		</if>
+		<if test="t.delayDates!=null and t.delayDates!=''">
+			and datediff(NOW(),order_code) >#{t.delayDates}
+		</if>
+		</where>
+		order by return_status, id desc
 	</select>
 
 	<select id="queryAll" resultType="OrderSummary">
@@ -479,25 +557,36 @@
       </if>
       
       <if test="zhiguan != null" >
-       zhiguan =  #{zhiguan,jdbcType=INTEGER},
+       	zhiguan =  #{zhiguan,jdbcType=INTEGER},
       </if>
       <if test="kongcha != null" >
+
        kongcha = #{kongcha,jdbcType=INTEGER},
+
       </if>
       <if test="jiaodai != null" >
-       jiaodai = #{jiaodai,jdbcType=INTEGER},
+
+        jiaodai=#{jiaodai,jdbcType=INTEGER},
+
       </if>
       <if test="kuanfu != null" >
-        kuanfu = #{kuanfu,jdbcType=INTEGER},
+
+        kuanfu=#{kuanfu,jdbcType=INTEGER},
+
       </if>
       <if test="kuanfufs != null" >
-        kuanfufs = #{kuanfufs,jdbcType=INTEGER},
+
+        kuanfufs=#{kuanfufs,jdbcType=INTEGER},
+
       </if>
       <if test="kezhong != null" >
+
         kezhong = #{kezhong,jdbcType=INTEGER},
+
       </if>
       <if test="kezhongUnit != null" >
-        kezhongUnit = #{kezhongUnit,jdbcType=INTEGER},
+
+        kezhongUnit=#{kezhongUnit,jdbcType=INTEGER},
       </if>
       <if test="kezhongfs != null" >
         kezhongfs = #{kezhongfs,jdbcType=INTEGER},
