@@ -27,8 +27,15 @@ public class MarkController extends BaseController{
 	private MarkService markService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, String pageNow,String addFlag) {
 		return Common.BACKGROUND_PATH+"/mark/list";
+	}
+	
+	@RequestMapping("addlist")
+	public String addlist(Model model,Mark mark, String pageNow) {
+		pageView = markService.query(getPageView(pageNow,"100"), mark);
+		model.addAttribute("pageView", pageView);
+		return Common.BACKGROUND_PATH+"/mark/addlist";
 	}
 	
 	/**
