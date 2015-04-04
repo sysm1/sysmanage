@@ -18,6 +18,7 @@
 </head>
 <body>
 <form name="fenye" id="fenye">
+	<input name="factoryId" type="hidden" value="${factory.id}" />
 	<div class="divBody">
 		<div class="">
 			
@@ -28,7 +29,7 @@
 					<td>
 						<table width="100%">
 							<tr><td colspan="2">地址：</td><td>NO:XD198484866</td></tr>
-							<tr><td>电话：038-12345678</td><td>传真：0334-1235678</td><td>下单日期：2015-01-09</td></tr>
+							<tr><td>电话：038-12345678</td><td>传真：0334-1235678</td><td>下单日期：${printDate}</td></tr>
 						</table>
 					</td>
 					<td>
@@ -37,7 +38,7 @@
 				</tr>
 				
 				<tr>
-					<td colspan="2">加工单位：**</td>
+					<td colspan="2">加工单位：${factory.name }</td>
 				</tr>
 			</table>
 			

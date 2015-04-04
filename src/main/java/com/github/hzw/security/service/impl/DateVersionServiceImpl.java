@@ -58,5 +58,28 @@ public class DateVersionServiceImpl implements DateVersionService {
 		this.dateVersionMapper.add(t);
 	}
 	
+	/**
+	 * category : printsummary
+	 * dateK  yyyy-MM-dd
+	 */
+	public int getValue(String category, String dateK) throws Exception{
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("category", category);
+		map.put("dateK", dateK);
+		DateVersion dv = dateVersionMapper.getByCategoryAndDate(map);
+		if(dv != null) {
+			dv.setValueV(dv.getValueV() + 1);
+			this.dateVersionMapper.update(dv);
+		}else{
+			dv = new DateVersion();
+			dv.setCategory(category);
+			dv.setDateK(dateK);
+			dv.setValueV(1);
+			this.add(dv);
+		}
+		return dv.getValueV();
+	}
+	
 
 }

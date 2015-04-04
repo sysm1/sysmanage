@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.OrderNotifyInfo;
+import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.mapper.OrderNotifyInfoMapper;
 import com.github.hzw.security.service.OrderNotifyInfoService;
+import com.github.hzw.security.service.OrderSummaryService;
 
 @Transactional
 @Service("orderNotifyInfoService")
@@ -19,6 +21,8 @@ public class OrderNotifyInfoServiceImpl implements OrderNotifyInfoService {
 
 	@Autowired
 	private OrderNotifyInfoMapper orderNotifyInfoMapper;
+	@Autowired
+	private OrderSummaryService orderSummaryService;
 	
 	@Override
 	public PageView query(PageView pageView, OrderNotifyInfo t) {
@@ -58,4 +62,20 @@ public class OrderNotifyInfoServiceImpl implements OrderNotifyInfoService {
 		this.orderNotifyInfoMapper.add(t);
 	}
 
+	// 
+	public void save(OrderNotifyInfo info) throws Exception {
+		String ids = info.getSummaryIds();
+		String[] tmp = ids.split("[,]");
+		OrderSummary summary = null;
+		for(String id : tmp) {
+			summary = orderSummaryService.getById(id);
+			summary.setPrintStatus(1); // 改变状态为已打印
+			summary.setPrintNum(summary.getPrintNum() + 1);
+			orderSummaryService.update(summary);
+		}
+		this.add(info);
+	}
+	
+	
+	
 }

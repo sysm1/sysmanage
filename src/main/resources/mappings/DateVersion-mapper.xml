@@ -4,15 +4,16 @@
 
   <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.DateVersion" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
     <result column="date_k" property="dateK" jdbcType="VARCHAR" />
     <result column="value_v" property="valueV" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, date_k, value_v
+    id, category, date_k, value_v
   </sql>
   
   <sql id="selectId" >
-    id, date_k dateK, value_v valueV
+    id, category, date_k dateK, value_v valueV
   </sql>
   
   <select id="query" resultType="DateVersion" parameterType="DateVersion">
@@ -20,11 +21,29 @@
 		<include refid="selectId" />
 		from date_version
 		<where> 1=1
+		<if test="t.category != null and t.category != ''">
+			and category = #{t.category}
+		</if>
 		<if test="t.dateK != null and t.dateK != ''">
 			and date_k = #{t.dateK}
 		</if>
 		<if test="t.valueV != null and t.valueV != ''">
 			and	value_v = #{t.valueV}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="getByCategoryAndDate" resultType="DateVersion" parameterType="map">
+		select
+		<include refid="selectId" />
+		from date_version
+		<where> 1=1
+		<if test="category != null and category != ''">
+			and category = #{category}
+		</if>
+		<if test="dateK != null and dateK != ''">
+			and date_k = #{dateK}
 		</if>
 		</where>
 		order by id desc
@@ -37,7 +56,7 @@
 		order by id desc
 	</select>
   
-  <select id="getById" parameterType="String" resultType="ClothAllowance" >
+  <select id="getById" parameterType="String" resultType="DateVersion" >
    
     select 
     <include refid="selectId" />
@@ -52,9 +71,9 @@
   
   <insert id="insert" parameterType="com.github.hzw.security.entity.DateVersion" >
     
-    insert into date_version (id, date_k, value_v
+    insert into date_version (id, category,  date_k, value_v
       )
-    values (#{id,jdbcType=INTEGER}, #{dateK,jdbcType=VARCHAR}, #{valueV,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, #{dateK,jdbcType=VARCHAR}, #{valueV,jdbcType=INTEGER}
       )
   </insert>
   
@@ -63,6 +82,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="category != null" >
+        category,
       </if>
       <if test="dateK != null" >
         date_k,
@@ -74,6 +96,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
       </if>
       <if test="dateK != null" >
         #{dateK,jdbcType=VARCHAR},
@@ -87,6 +112,9 @@
   <update id="update" parameterType="DateVersion" >
     update date_version
     <set >
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
       <if test="dateK != null" >
         date_k = #{dateK,jdbcType=VARCHAR},
       </if>
