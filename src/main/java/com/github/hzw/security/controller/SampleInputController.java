@@ -205,7 +205,7 @@ public class SampleInputController extends BaseController {
 	@RequestMapping("update")
 	public Map<String, Object> update(Model model, SampleInput sampleInput,HttpServletRequest request) {
 		
-		String picPath=UploadFileUtils.saveUploadFile(request);
+		String picPath=UploadFileUtils.saveUploadFile(request)[0];
 		if(null!=picPath){
 			CompressPic compressPic=new CompressPic();
 			String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));

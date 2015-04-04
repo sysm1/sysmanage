@@ -96,10 +96,12 @@ th.specalt {
 	var grid;
 	$(function() {
 		$("#seach").click("click", function() {//绑定查询按扭
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			});
+			$('#pageNow').attr('value',1);
+			$("#delay").attr('value','');
+			var f = $('#fenye');
+			//f.attr('target','_blank');
+			f.attr('action','${pageContext.request.contextPath}/background/process/list.html');
+			f.submit();
 		});
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
@@ -124,13 +126,13 @@ th.specalt {
 			}
 			alert("数据暂存成功");
 		});
-		$("#permissions").click("click", function() {
-			var cbox=grid.getSelectedCheckbox();
-			if (cbox.length > 1||cbox=="") {
-				parent.$.ligerDialog.alert("只能选中一个");
-				return;
-			}
-			parent.addTabEvent("permissions", "分配权限", rootPath + '/background/resources/aution.html?roleId='+cbox);
+		$("#delaybtn").click("click", function() {
+			$('#pageNow').attr('value',1);
+			$("#delay").attr('value',1);
+			var f = $('#fenye');
+			//f.attr('target','_blank');
+			f.attr('action','${pageContext.request.contextPath}/background/process/list.html');
+			f.submit();
 		});
 		$("#save").click("click", function() {//绑定查询按扭
 			var cbox=getSelectedCheckbox();
@@ -144,6 +146,8 @@ th.specalt {
 				f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
 				f.submit();
 			}
+			alert("数据已回");
+			//location.reload();
 		});
 		$("#deleteView").click("click", function() {//绑定查询按扭
 			var cbox=grid.getSelectedCheckbox();
@@ -255,6 +259,7 @@ th.specalt {
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
+				<input type="hidden" id="delay" name="delay" value="">
 				<table>
 					<tr>
 						<td>工厂：</td>
@@ -264,10 +269,10 @@ th.specalt {
 								<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 									<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
 								</c:forEach>
-							  </select>
+							</select>
 						</td><td>&nbsp;&nbsp;编号：</td>
 						<td>
-							<input type="text" id="code" name="code" value="">
+							<input type="text" id="code" name="code" value="${bean.code }">
 						</td><td>
 							&nbsp;&nbsp;<a class="btn btn-primary" href="javascript:void(0)" id="seach"> <span>查询</span></a>
 						</td>
@@ -282,8 +287,8 @@ th.specalt {
 			<a class="btn btn-info" href="javascript:void(0)" id="save"> 
 				<i class="icon-edit icon-white"></i> 已回
 			</a>
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> 
-				<i class="icon-edit icon-white"></i> 拖延单
+			<a class="btn btn-info" href="javascript:void(0)" id="delaybtn"> 
+				<i class="icon-edit icon-white"></i> 拖延${delayDates }单
 			</a>
 		</div>
 		<div id="paging" class="pagclass" >

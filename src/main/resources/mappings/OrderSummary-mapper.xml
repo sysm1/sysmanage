@@ -113,6 +113,9 @@
 		<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
 			and my_company_code = #{t.myCompanyCode}
 		</if>
+		<if test="t.code !=null and t.code !='' ">
+			and (my_company_code like '%${t.code}%' or factory_code like '%${t.code}%'  )
+		</if>
 		<if test="t.myCompanyColor != null and t.myCompanyColor != ''">
 			and my_company_color = #{t.myCompanyColor}
 		</if>
@@ -151,6 +154,9 @@
 		</if>
 		<if test="t.oprator != null and t.oprator != '' and t.oprator == 2 ">
 				and num &lt;=#{t.num}
+		</if>
+		<if test="t.delayDates!=null and t.delayDates!=''">
+			and datediff(NOW(),order_code) >#{t.delayDates}
 		</if>
 		</where>
 		order by id desc
@@ -412,28 +418,28 @@
       </if>
       
       <if test="zhiguan != null" >
-        #{zhiguan,jdbcType=INTEGER},
+        zhiguan=#{zhiguan,jdbcType=INTEGER},
       </if>
       <if test="kongcha != null" >
-        #{kongcha,jdbcType=INTEGER},
+        kongcha=#{kongcha,jdbcType=INTEGER},
       </if>
       <if test="jiaodai != null" >
-        #{jiaodai,jdbcType=INTEGER},
+        jiaodai=#{jiaodai,jdbcType=INTEGER},
       </if>
       <if test="kuanfu != null" >
-        #{kuanfu,jdbcType=INTEGER},
+        kuanfu=#{kuanfu,jdbcType=INTEGER},
       </if>
       <if test="kuanfufs != null" >
-        #{kuanfufs,jdbcType=INTEGER},
+        kuanfufs=#{kuanfufs,jdbcType=INTEGER},
       </if>
       <if test="kezhong != null" >
-        #{kezhong,jdbcType=INTEGER},
+        kezhong=#{kezhong,jdbcType=INTEGER},
       </if>
       <if test="kezhongUnit != null" >
-        #{kezhongUnit,jdbcType=INTEGER},
+        kezhongUnit=#{kezhongUnit,jdbcType=INTEGER},
       </if>
       <if test="kezhongfs != null" >
-        #{kezhongfs,jdbcType=INTEGER},
+        kezhongfs=#{kezhongfs,jdbcType=INTEGER},
       </if>
       
     </set>

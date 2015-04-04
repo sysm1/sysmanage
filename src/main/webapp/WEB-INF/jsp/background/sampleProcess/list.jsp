@@ -285,8 +285,8 @@ html>body td{ font-size:13px;}
 				      <select  id="factoryId" name="factoryId">
 						<option value="">请选择工厂</option>
 						<c:forEach items="${ factoryInfos }" var = "factoryInfo">
-								<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
-							</c:forEach>
+							<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
+						</c:forEach>
 					  </select>
 			          布种：<select id="clothId" name="clothId">
 							<option value="">请选择布种</option>

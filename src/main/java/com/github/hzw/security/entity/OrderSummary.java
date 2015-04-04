@@ -23,6 +23,11 @@ public class OrderSummary {
     
     /**符号  1大于等于  2小于等于**/
     private Integer oprator;
+    
+    /**拖延单天数**/
+    private Integer delayDates;
+    
+    private String code;
 
     private Integer clothId;
 
@@ -435,7 +440,21 @@ public class OrderSummary {
 	public void setTechnologyName(String technologyName) {
 		this.technologyName = technologyName;
 	}
-    
-	
+
+	public Integer getDelayDates() {
+		return delayDates;
+	}
+
+	public void setDelayDates(Integer delayDates) {
+		this.delayDates = delayDates;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
     
 }
