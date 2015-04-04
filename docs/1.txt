@@ -291,6 +291,18 @@ create table date_version(
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+---开版和下单预录入备注内容
+CREATE TABLE `mark` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`type`  int(11) NULL DEFAULT NULL COMMENT '类型 0开版录入 1下单预录入' ,
+`content`  varchar(512) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '备注内容' ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_bin
+AUTO_INCREMENT=1
+ROW_FORMAT=COMPACT
+;
 
 
 -- 联想查询： 布种，工厂，工艺, 我司编号 我司color,
