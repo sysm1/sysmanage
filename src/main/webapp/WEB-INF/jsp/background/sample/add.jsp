@@ -134,10 +134,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		return arr;
 	};
 	
-	function pop(){
-		var arr = showModalDialog("${ctx}/background/mark/list.html?addFlag=1", "", "dialogWidth:40.08em; dialogHeight:15.83em; status:0");
-		if (arr != null){
-			alert(arr);
+	function pop(obj){
+		var arr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:40.08em; dialogHeight:15.83em; status:0");
+		if (arr != null&&arr!=''){
+			obj.value=arr;
 		}
 	}
 
@@ -211,9 +211,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</c:forEach>
 					    </select>
 					</td><td >
-						<input type="text" id="mark" name="mark" value="" style="width:200px;">
-					</td><td>
-						<input type="button" value="点我弹出窗口" onclick="pop()" />
+						<input type="text" id="mark" name="mark" style="width:200px;" value="双击选择备注信息" ondblclick="pop(this)">
 					</td>
 				</tr>
 			</table><table width="700px;">	

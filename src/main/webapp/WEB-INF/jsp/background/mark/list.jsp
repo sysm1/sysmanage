@@ -31,6 +31,12 @@
 				data : searchParams
 			}); 
 		});
+		$("#ok").click("click", function() {//绑定查询按扭
+			var searchParams = $("#fenye").serialize();
+			grid.setOptions({
+				data : searchParams
+			}); 
+		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
 			f.attr('target','_blank');
@@ -137,8 +143,9 @@
 		<div class="search">
 			<form name="fenye" id="fenye">
 				名称：<input type="text" name="accountName" value="${param.name}"
-					style="height: 20px" /> <a class="btn btn-primary"
-					href="javascript:void(0)" id="seach"> 查询
+					style="height: 20px" /> 
+					<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询
+					<a class="btn btn-primary" href="javascript:void(0)" id="ok"> 确定
 				</a>
 			</form>
 		</div>
