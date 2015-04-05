@@ -13,6 +13,9 @@ public class FlowerAdditional {
     private String myCompanyCode;
 
     private String myCompanyColor;
+    
+    private String mark;
+    
 
     public Integer getId() {
         return id;
@@ -68,6 +71,14 @@ public class FlowerAdditional {
 				+ ", factoryCode=" + factoryCode + ", factoryColor="
 				+ factoryColor + ", myCompanyCode=" + myCompanyCode
 				+ ", myCompanyColor=" + myCompanyColor + "]";
+	}
+
+	public String getMark() {
+		return mark;
+	}
+
+	public void setMark(String mark) {
+		this.mark = mark;
 	}
     
     

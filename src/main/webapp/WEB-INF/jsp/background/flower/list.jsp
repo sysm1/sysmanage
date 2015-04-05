@@ -134,10 +134,10 @@ function mycolor_detail(flowerId) {
 				<table>
 					<tr>
 						<td>我司编号: </td>
-						<td><input type="text" id="myCompanyCode"  name="myCompanyCode" value="${info.myCompanyCode }"></td>
+						<td><input type="text" id="myCompanyCode"  name="myCompanyCode" value="${info.myCompanyCode }" style="width:100px;"></td>
 						<td>布种: </td>
 						<td>
-							<select id="clothId" name="clothId">
+							<select id="clothId" name="clothId" style="width:110px;">
 								<option value="">请选择布种</option>
 								<c:forEach items="${ cloths }" var = "cloth">
 									<option value="${cloth.id }">${cloth.clothName}</option>
@@ -146,7 +146,7 @@ function mycolor_detail(flowerId) {
 						</td>
 						<td>工厂: </td>
 						<td>
-							<select id="factoryId" name="factoryId">
+							<select id="factoryId" name="factoryId" style="width:110px;">
 								<option value="">请选择工厂</option>
 								<c:forEach items="${ factorys }" var = "factory">
 									<option value="${factory.id }">${factory.name}</option>
@@ -157,23 +157,24 @@ function mycolor_detail(flowerId) {
 					
 					<tr>
 						<td>工厂编号: </td>
-						<td><input type="text" id="factoryCode"  name="factoryCode" value="${info.factoryCode }"></td>
+						<td><input type="text" id="factoryCode"  name="factoryCode" value="${info.factoryCode }" style="width:100px;"></td>
 						<td>分色文件号: </td>
 						<td>
-							<input type="text" id="fileColor"  name="fileColor" value="${info.fileColor}">
+							<input type="text" id="fileColor"  name="fileColor" value="${info.fileColor}" style="width:100px;">
 						</td>
 						<td>工艺: </td>
 						<td>
-							<select id="technologyId" name="technologyId">
+							<select id="technologyId" name="technologyId" style="width:110px;">
 								<option value="">请选择工艺</option>
 								<c:forEach items="${ technologys }" var = "technology">
 									<option value="${technology.id }">${technology.name}</option>
 								</c:forEach>
 							</select>
+							<a class="btn btn-primary" href="javascript:void(0)" id="search"> 查询</a>
 						</td>
 					</tr>
 				</table>
-				<a class="btn btn-primary" href="javascript:void(0)" id="search"> 查询</a>
+				
 			</form>
 		</div>
 		

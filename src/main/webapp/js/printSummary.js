@@ -46,4 +46,24 @@ $(function () {
 			
 		});
 		
+	
+		/**
+		$(".reduce").live("click", function() {
+			var rid = $(this).attr("rid");
+			// alert($(this).html());
+			// $(this).parent("span").remove();
+		});
+		**/
+		
 	});
+
+
+function reduce( h ) {
+	// alert($(this).attr("rid"));
+	alert(this);
+	// alert($(h).text());
+	// alert($(this).text());
+	// $(this).parent().remove();
+}
+
+

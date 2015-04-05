@@ -172,6 +172,7 @@ create table flower_additional(
 	
 	factory_color varchar(255) null, -- 工厂color
 	my_company_color varchar(255),
+	mark varchar(255),   -- 备注
 	PRIMARY KEY (`id`)  
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -6,6 +6,8 @@
 <%@ include file="/common/header.jsp"%>
 
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="${ctx}/js/printSummary.js"></script>
+
 
 <script type="text/javascript">
 
@@ -81,14 +83,14 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 		
 		$("#addFacotyMyCode").click("click", function() {
 			var $html = $("#company_color_id");
-			var $addH = $("<input name='myCompanyColors' type='text' style='width:100px;'/><input name='factoryColors' type='text' value='' style='width:100px;' /><br/>");
+			var $addH = $("<span><input name='myCompanyColors' type='text' value='我司颜色' style='width:100px;'/><input name='factoryColors' type='text' value='工厂颜色' style='width:100px;' /><input name='marks' type='text' value='备注' style='width:100px;'/> <a href='javascript:reduce(this)' rid=2 class='reduce'>-</a></span><br/>");
 			$html.append($addH);
 		});
 		
 		
 		$("#addFacotyMyCode2").click("click", function() {
 			var $html = $("#company_color_id2");
-			var $addH = $("<input name='myCompanyColors2' type='text' style='width:100px;'/><input name='factoryColors2' type='text' value='' style='width:100px;' /><br/>");
+			var $addH = $("<span><input name='myCompanyColors2' type='text' value='我司颜色' style='width:100px;'/><input name='factoryColors2' type='text' value='' style='width:100px;' /><input name='marks2' type='text' value='备注' style='width:100px;'/> <a href='javascript:reduce(this)' rid=2 class='reduce'>-</a></span><br/>");
 			$html.append($addH);
 		});
 		
@@ -111,9 +113,10 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 		});
 		
 		$("#uploadFile").click(function () {
-			alert("dd");
+			// alert("dd");
 			ajaxFileUpload();
         });
+		
 
 	});
 	
@@ -217,15 +220,14 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td>工厂编号：</td>
 				<td>
 					<span class="factoryCodeInputcss" id="factoryCodeInputID">
-					<input name="factoryCodes" type="text" value="" style="width:100px;"/><br/>
+					<input name="factoryCodes" type="text" value="" style="width:100px;"/>
 					</span><span id="addFacotyCodeId"><a href="javascript:void(0);">+</a></span>
 				</td>
 				
 				<td colspan="2">
 					<ul>
 						<li id=company_color_id>
-							<input name="myCompanyColors" type="text" value="我司颜色" style="width:100px;"/>
-							<input name="factoryColors" type="text" value="工厂颜色" style="width:100px;"/>
+							<span><input name="myCompanyColors" type="text" value="我司颜色" style="width:100px;"/><input name="factoryColors" type="text" value="工厂颜色" style="width:100px;"/><input name="marks" type="text" value="备注" style="width:100px;"/></span>
 							<span id="addFacotyMyCode"><a href="javascript:void(0);">+</a></span><br/>
 						</li>
 						<li></li>
@@ -236,16 +238,13 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			<tr id="fctr2" class="factoryCodeTrCss" style="display: none">
 				<td>工厂编号：</td>
 				<td>
-					<span class="factoryCodeInputcss" id="factoryCodeInputID2">
-					<input name="factoryCodes2" type="text" value="" style="width:100px;"/><br/>
-					</span><span id="addFacotyCodeId2"><a href="javascript:void(0);">-</a></span>
+					<span class="factoryCodeInputcss" id="factoryCodeInputID2"><input name="factoryCodes2" type="text" value="" style="width:100px;"/></span><span id="addFacotyCodeId2"> <a href="javascript:void(0);">-</a></span>
 				</td>
 				
 				<td colspan="2">
 					<ul>
 						<li id=company_color_id2>
-							<input name="myCompanyColors2" type="text" value="我司颜色" style="width:100px;"/>
-							<input name="factoryColors2" type="text" value="工厂颜色" style="width:100px;"/>
+							<span><input name="myCompanyColors2" type="text" value="我司颜色" style="width:100px;"/><input name="factoryColors2" type="text" value="工厂颜色" style="width:100px;"/><input name="marks2" type="text" value="备注" style="width:100px;"/></span>
 							<span id="addFacotyMyCode2"><a href="javascript:void(0);">+</a></span><br/>
 						</li>
 						<li></li>
