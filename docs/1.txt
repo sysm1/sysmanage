@@ -245,6 +245,7 @@ CREATE TABLE `order_summary` (
 `kezhongfs`  int(11) NULL DEFAULT NULL COMMENT '克重方式 0回后 1出机' ,
  notify_time datetime, -- 通知时间
  notify_id	int(11),  -- 通知id
+ no varchar(255), -- 通知id
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
