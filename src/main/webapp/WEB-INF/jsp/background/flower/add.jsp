@@ -83,14 +83,14 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 		
 		$("#addFacotyMyCode").click("click", function() {
 			var $html = $("#company_color_id");
-			var $addH = $("<span><input name='myCompanyColors' type='text' value='我司颜色' style='width:100px;'/><input name='factoryColors' type='text' value='工厂颜色' style='width:100px;' /><input name='marks' type='text' value='备注' style='width:100px;'/> <a href='javascript:reduce(this)' rid=2 class='reduce'>-</a></span><br/>");
+			var $addH = $("<span><input name='myCompanyColors' type='text' value='我司颜色' style='width:100px;'/><input name='factoryColors' type='text' value='工厂颜色' style='width:100px;' /><input name='marks' type='text' value='备注' style='width:100px;'/> <a href='javascript:void(0)' onclick='javascript:reduce(this)' rid=2 class='reduce'>-</a><br/></span>");
 			$html.append($addH);
 		});
 		
 		
 		$("#addFacotyMyCode2").click("click", function() {
 			var $html = $("#company_color_id2");
-			var $addH = $("<span><input name='myCompanyColors2' type='text' value='我司颜色' style='width:100px;'/><input name='factoryColors2' type='text' value='' style='width:100px;' /><input name='marks2' type='text' value='备注' style='width:100px;'/> <a href='javascript:reduce(this)' rid=2 class='reduce'>-</a></span><br/>");
+			var $addH = $("<span><input name='myCompanyColors2' type='text' value='我司颜色' style='width:100px;'/><input name='factoryColors2' type='text' value='' style='width:100px;' /><input name='marks2' type='text' value='备注' style='width:100px;'/> <a href='javascript:void(0)' onclick='javascript:reduce(this)' rid=2 class='reduce'>-</a><br/></span>");
 			$html.append($addH);
 		});
 		

@@ -60,10 +60,11 @@ $(function () {
 
 function reduce( h ) {
 	// alert($(this).attr("rid"));
-	alert(this);
+	// alert(this);
 	// alert($(h).text());
 	// alert($(this).text());
-	// $(this).parent().remove();
+	// $(this[0]).parent().remove();
+	$(h).parent().remove();
 }
 
 
