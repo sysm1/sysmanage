@@ -7,6 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link rel="stylesheet" href="${ctx}/themes/blue/style.css"
+	type="text/css" id="" media="print, projection, screen" />
+<script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 
 jQuery.validator.addMethod("isNum", function(value, element) {
@@ -145,32 +148,56 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-				布种：
-				<select id="clothId" name="clothId" style="width:100px;">
+				<table style="margin: 2px">
+				<tr>
+				<td width="10%">布种：</td>
+				<td width="20%">
+				<select id="clothId" name="clothId" style="width:110px;">
 					<option value="">请选择布种</option>
 					<c:forEach items="${ cloths }" var = "cloth">
 						<option value="${cloth.id }">${cloth.clothName}</option>
 					</c:forEach>
 				</select> 
-				工厂:
-				<select id="factoryId" name="factoryId" style="width:100px;">
+				</td>
+				<td width="10%">工厂:</td>
+				<td width="20%">
+				<select id="factoryId" name="factoryId" style="width:110px;">
 					<option value="">请选择工厂</option>
 					<c:forEach items="${ factorys }" var = "factory">
 						<option value="${factory.id }">${factory.name}</option>
 					</c:forEach>
 				</select>
-				备注:<input type="text" name="mark" value="${param.mark}" style="width:100px;" /><br/>
-				开始日期:<input type="text" name="beginTime" value="${param.beginTime}" style="width:100px;" />
-				结束日期:<input type="text" name="endTime" value="${param.endTime}" style="width:100px;" />
-				新增量:
-				<select id="change" name="change" style="width:100px;">
+				</td>
+				<td width="10%">备注:</td>
+				<td >
+				<input type="text" name="mark" value="${param.mark}" style="width:100px;" />
+				</td>
+				</tr>
+				
+				<tr>
+				<td>开始日期:</td>
+				<td>
+					<input type="text" name="beginTime" value="${param.beginTime}" style="width:100px;" onfocus="WdatePicker({isShowClear:true,readOnly:true})"/>
+				</td>
+				<td>结束日期:</td>
+				<td>
+					<input type="text" name="endTime" value="${param.endTime}" style="width:100px;" onfocus="WdatePicker({isShowClear:true,readOnly:true})"/>
+				</td>
+				<td>新增量:</td>
+				<td>
+				<select id="change" name="change" style="width:110px;">
 					<option value="all">全部</option>
 					<option value="positive">正数</option>
 					<option value="negative">负数</option>
 					<option value="zero">0</option>
 				</select>
-				单位:
-				<select id="unit" name="unit" style="width:100px;">
+				</td>
+				</tr>
+				
+				<tr>
+				<td>单位:</td>
+				<td>
+				<select id="unit" name="unit" style="width:110px;">
 					<option value="0">条</option>
 					<!-- 
 					<option value="1">公斤</option>
@@ -178,20 +205,26 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 					<option value="3">码</option>   
 					-->
 					<option value="4">包</option>
-				</select><br/>
-				余量:
+				</select>
+				</td>
+				<td>余量:</td>
+				<td>
 				<input type="text" id="num" name="num" value="${param.num}" style="width:100px;" />
-				条件:
-				<select id="condition" name="condition" style="width:100px;">
+				</td>
+				<td>条件:</td>
+				<td>
+				<select id="condition" name="condition" style="width:110px;">
 					<option value="gt">大于</option>
 					<option value="gte">大于等于</option>
 					<option value="it">小于</option>
 					<option value="ite">小于等于</option>
 				</select>
-				
 				<a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>
+				</td>
+				</tr>
+				</table>
 			</form>
 		</div>
 		<div class="topBtn">
@@ -210,10 +243,11 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete
 			</a>
-			
+			<!--  
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
 				导出excel
 			</a>
+			-->
 		</div>
 		<div id="paging" class="pagclass"></div>
 	</div>

@@ -29,7 +29,7 @@ public class ClothPriceServiceTest {
 			price.setClothId(i);
 			price.setCreateTime(new Date());
 			price.setPrice(2.0 + i);
-			price.setStandard("stand...." + i);
+			// price.setStandard("stand...." + i);
 			clothPriceService.add(price);
 		}
 	}
@@ -38,7 +38,7 @@ public class ClothPriceServiceTest {
 	public void testQuery() {
 		ClothPrice price = new ClothPrice();
 		// price.setClothId(1);
-		price.setStandard("stand");
+		// price.setStandard("stand");
 		PageView pageview = clothPriceService.query(new PageView(5,1), price);
 		System.out.println(pageview.getRowCount());
 		System.out.println(pageview.getRecords());
@@ -55,7 +55,7 @@ public class ClothPriceServiceTest {
 	public void testQueryAll() {
 		ClothPrice price = null;
 		price = new ClothPrice();
-		price.setStandard("stand....2");
+		// price.setStandard("stand....2");
 		List<ClothPrice> list = clothPriceService.queryAll(price);
 		System.out.println(list);
 	}

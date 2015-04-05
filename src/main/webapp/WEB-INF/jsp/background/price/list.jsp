@@ -22,8 +22,17 @@
 						colkey : "price",
 						name : "价格",
 					}, {
-						colkey : "standard",
-						name : "规格",
+						colkey : "kuanfu",
+						name : "宽幅",
+					}, {
+						colkey : "kuanfufsStr",
+						name : "宽幅方式",
+					}, {
+						colkey : "kezhong",
+						name : "克重",
+					}, {
+						colkey : "kezhongUnitStr",
+						name : "克重单位",
 					}],
 					jsonUrl : '${pageContext.request.contextPath}/background/price/query.html',
 					checkbox : true
@@ -46,7 +55,7 @@
 		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
+				width : 400,
 				height : 310,
 				url : rootPath + '/background/price/addUI.html',
 				title : "增加日志信息",
@@ -61,7 +70,7 @@
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
+				width : 400,
 				height : 310,
 				url : rootPath + '/background/price/editUI.html?id='+cbox,
 				title : "修改布种信息",
@@ -108,7 +117,7 @@
 			<form name="fenye" id="fenye">
 				布种：
 				<select id="clothId" name="clothId" style="width:100px;">
-					<option value="-1">请选择布种</option>
+					<option value="">请选择布种</option>
 					<c:forEach items="${ cloths }" var = "cloth">
 						<option value="${cloth.id }">${cloth.clothName}</option>
 					</c:forEach>
@@ -134,10 +143,11 @@
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete
 			</a>
-			
+			<!-- 
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
 				导出excel
 			</a>
+			 -->
 		</div>
 		<div id="paging" class="pagclass"></div>
 	</div>

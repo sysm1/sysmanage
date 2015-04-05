@@ -10,7 +10,7 @@ public interface ClothAllowanceService extends BaseService<ClothAllowance> {
 
 	public ClothAllowance queryByClothAndFactory(Integer clothId, Integer factoryId);
 	
-	public ClothAllowance queryByCloth(String clothId);
+	// public ClothAllowance queryByCloth(String clothId);
 	
 	public PageView queryByFind(PageView pageView, Map<String, Object> map );
 	

@@ -40,7 +40,11 @@ create table cloth_price (
 	id int not null auto_increment,
 	cloth_id int not null unique,
 	price double not null,
-	standard text,
+	-- standard text,
+	`kuanfu`  int(11) NULL DEFAULT NULL COMMENT '宽幅' ,
+	`kuanfufs`  int(11) NULL DEFAULT NULL COMMENT '宽幅方式 0包边  1实用' ,
+	`kezhong`  int(11) NULL DEFAULT NULL COMMENT '克重' ,
+	`kezhong_unit`  int(11) NULL DEFAULT NULL COMMENT '克重单位 0 G/M2 1 G/Y 2 G/M' ,
 	create_time datetime not null default now(),
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

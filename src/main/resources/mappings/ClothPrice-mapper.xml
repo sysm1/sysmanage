@@ -8,13 +8,20 @@
     <result column="cloth_name" property="clothName" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DOUBLE" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <!--  
     <result column="standard" property="standard" jdbcType="LONGVARCHAR" />
+    -->
+    <result column="kuanfu" property="kuanfu" jdbcType="INTEGER" />
+    <result column="kuanfufs" property="kuanfufs" jdbcType="INTEGER" />
+    <result column="kezhong" property="kezhong" jdbcType="INTEGER" />
+    <result column="kezhong_unit" property="kezhongUnit" jdbcType="INTEGER" />
+    
   </resultMap>
   
   <sql id="Base_Column_List" >
     id, cloth_id clothId, 
     (select cloth.cloth_name from cloth_info cloth where cloth.id = cloth_id ) as clothName,
-    price, create_time createTime, standard
+    price, create_time createTime, kuanfu, kuanfufs, kezhong, kezhong_unit kezhongUnit
   </sql>
   
   <select id="query" resultType="ClothPrice" parameterType="map">
@@ -25,9 +32,7 @@
 		<if test="t.clothId != null and t.clothId != ''">
 			and cloth_id = #{t.clothId}
 		</if>
-		<if test="t.standard != null and t.standard != ''">
-			and standard like '%${t.standard}%'
-		</if>
+		
 		</where>
 		order by id desc
 	</select>
@@ -37,7 +42,7 @@
 		<include refid="Base_Column_List" />
 		from cloth_price
 		<where>
-			cloth_id = #{ClothId}
+			cloth_id = #{clothId}
 		</where>
 	</select>
 
@@ -49,9 +54,7 @@
 			<if test="clothId != null and clothId != ''">
 				and cloth_id = #{clothId}
 			</if>
-			<if test="standard != null and standard != ''">
-				and standard like '%${standard}%'
-			</if>
+			
 		</where>
 		order by id desc
 	</select>
@@ -71,9 +74,13 @@
   
   <insert id="add" parameterType="com.github.hzw.security.entity.ClothPrice" >
     insert into cloth_price (id, cloth_id, price, 
-      create_time, standard)
+      create_time, kuanfu, kuanfufs, kezhong, kezhong_unit)
     values (#{id,jdbcType=INTEGER}, #{clothId,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{standard,jdbcType=LONGVARCHAR})
+      #{createTime,jdbcType=TIMESTAMP}, 
+      #{kuanfu,jdbcType=INTEGER}, 
+      #{kuanfufs,jdbcType=INTEGER}, 
+      #{kezhong,jdbcType=INTEGER}, 
+      #{kezhongUnit,jdbcType=INTEGER})
   </insert>
   
   <insert id="insertSelective" parameterType="com.github.hzw.security.entity.ClothPrice" >
@@ -91,8 +98,17 @@
       <if test="createTime != null" >
         create_time,
       </if>
-      <if test="standard != null" >
-        standard,
+      <if test="kuanfu != null" >
+        kuanfu,
+      </if>
+      <if test="kuanfufs != null" >
+        kuanfufs,
+      </if>
+      <if test="kezhong != null" >
+        kezhong,
+      </if>
+      <if test="kezhongUnit != null" >
+        kezhong_unit,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -108,9 +124,19 @@
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="standard != null" >
-        #{standard,jdbcType=LONGVARCHAR},
+     <if test="kuanfu != null" >
+        #{kuanfu,jdbcType=INTEGER},
       </if>
+      <if test="kuanfufs != null" >
+        #{kuanfufs,jdbcType=INTEGER},
+      </if>
+      <if test="kezhong != null" >
+         #{kezhong,jdbcType=INTEGER},
+      </if>
+      <if test="kezhongUnit != null" >
+         #{kezhongUnit,jdbcType=INTEGER},
+      </if>
+     
     </trim>
   </insert>
   
@@ -127,8 +153,17 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="standard != null" >
-        standard = #{standard,jdbcType=LONGVARCHAR},
+      <if test="kuanfu != null" >
+        kuanfu = #{kuanfu,jdbcType=INTEGER},
+      </if>
+       <if test="kuanfufs != null" >
+        kuanfufs = #{kuanfufs,jdbcType=INTEGER},
+      </if>
+       <if test="kezhong != null" >
+        kezhong = #{kezhong,jdbcType=INTEGER},
+      </if>
+       <if test="kezhongUnit != null" >
+        kezhong_unit = #{kezhongUnit,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

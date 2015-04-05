@@ -39,9 +39,6 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				},
 				price : {
 					required : true
-				},
-				standard : {
-					required : true
 				}
 			},
 			messages : {
@@ -50,9 +47,6 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				},
 				price : {
 					required : "请填写价格",
-				},
-				standard : {
-					required : "请输入规格",
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -74,11 +68,11 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/price/add.html" method="post">
-		<table style="width: 285px; height: 200px;">
+		<table style="width: 385px; height: 200px;">
 			<tbody>
 			
-				<tr>
-				<td class="l_right">布种：</td>
+			<tr>
+				<td class="l_right" style="width: 61px;">布种：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 						<select id="clothId" name="clothId">
@@ -92,17 +86,35 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 			 </tr>
 			 
 			<tr>
-				<td class="l_right">布种价格</td>
+				<td class="l_right">布种价格:</td>
 				<td class="l_left">
 					<input id='price' name="price" type="text" class="isNum" value="">
 				</td>
 			</tr>
 			
 			<tr>
-				<td class="l_right">规格：</td>
+				<td class="l_right">宽幅：</td>
 				<td class="l_left">
 				<div class="lanyuan_input">
-					<input id='standard' name="standard" type="text" value="">
+					<input id='kuanfu' name="kuanfu" type="text" value="" />cm
+					<select name="kuanfufs">
+						<option value="0">包边</option>
+						<option value="1">实用</option>
+					</select>
+				</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="l_right">克重：</td>
+				<td class="l_left">
+				<div class="lanyuan_input">
+					<input id='kezhong' name="kezhong" type="text" value="" />
+					<select name="kezhongUnit">
+						<option value="0">G/M2</option>
+						<option value="1">G/Y</option>
+						<option value="2">G/M</option>
+					</select>
 				</div>
 				</td>
 			</tr>

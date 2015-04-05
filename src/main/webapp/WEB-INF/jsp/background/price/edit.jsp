@@ -40,9 +40,6 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				},
 				price : {
 					required : true
-				},
-				standard : {
-					required : true
 				}
 			},
 			messages : {
@@ -51,9 +48,6 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				},
 				price : {
 					required : "请填写价格",
-				},
-				standard : {
-					required : "请输入规格",
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -101,12 +95,32 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 					</td>
 				</tr>
 				
-				<tr>
-					<td class="l_right">规格：</td>
-					<td class="l_left">
-						<input id='standard' name="standard" type="text" class="checkdesc" value="${price.standard}">
-					</td>
-				</tr>
+			<tr>
+				<td class="l_right">宽幅：</td>
+				<td class="l_left">
+				<div class="lanyuan_input">
+					<input id='kuanfu' name="kuanfu" type="text" value="" />cm
+					<select name="kuanfufs">
+						<option value="0">包边</option>
+						<option value="1">实用</option>
+					</select>
+				</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="l_right">克重：</td>
+				<td class="l_left">
+				<div class="lanyuan_input">
+					<input id='kezhong' name="kezhong" type="text" value="" />
+					<select name="kezhongUnit">
+						<option value="0">G/M2</option>
+						<option value="1">G/Y</option>
+						<option value="2">G/M</option>
+					</select>
+				</div>
+				</td>
+			</tr>
 
 				<tr>
 					<td colspan="2">

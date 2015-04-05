@@ -49,10 +49,11 @@ public class ClothPriceController extends BaseController {
 		if(info == null) {
 			info = new ClothPrice();
 		}
+		/**
 		if(info.getClothId() == null) {
 			info.setClothId(-1);
 		}
-		
+		**/
 		pageView = clothPriceService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
 	}
