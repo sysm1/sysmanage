@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.security.VO.SampleInputVO;
 import com.github.hzw.security.entity.ClothInfo;
@@ -227,6 +228,18 @@ public class SampleProcessController extends BaseController{
 			e.printStackTrace();
 		}
 		return Common.BACKGROUND_PATH+"/sampleProcess/list";
+	}
+	
+	/**
+	 * 获取状态
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryStatus")
+	public Integer queryStatus(String id){
+		SampleInput sampleInput=sampleInputService.getById(id);
+		return sampleInput.getStatus();
 	}
 
 }

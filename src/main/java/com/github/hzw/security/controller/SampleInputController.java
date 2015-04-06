@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.SampleInput;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.security.service.SampleInputService;
 import com.github.hzw.security.service.TechnologyInfoService;
@@ -46,6 +48,9 @@ public class SampleInputController extends BaseController {
 	
 	@Inject
 	private TechnologyInfoService technologyInfoService;
+	
+	@Inject
+	private FlowerInfoService flowerInfoService;
 	
 	@Inject
 	private SalesmanInfoService salesmanInfoService;
@@ -168,7 +173,7 @@ public class SampleInputController extends BaseController {
 					sampleInput.setMyCompanyCode(sampleInput.getCodeValue());
 				}
 				sampleInputService.add(sampleInput);
-				map.put("flag", "true");
+				map.put("flag", "保存成功");
 			} catch (Exception e) {
 				map.put("flag", "false");
 				e.printStackTrace();

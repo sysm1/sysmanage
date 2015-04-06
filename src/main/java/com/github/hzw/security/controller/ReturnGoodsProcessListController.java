@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderSummaryVO;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.ReturnGoodsProcess;
+import com.github.hzw.security.entity.TechnologyInfo;
+import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
+import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PropertiesUtils;
@@ -39,6 +43,12 @@ public class ReturnGoodsProcessListController extends BaseController {
 	@Inject
 	private FactoryInfoService factoryInfoService;
 	
+	@Inject
+	private TechnologyInfoService technologyInfoService;
+	
+	@Inject
+	private ClothInfoService clothInfoService;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
 	public String list(Model model,String delay, String pageNow,OrderSummary orderSummary) {
@@ -53,9 +63,13 @@ public class ReturnGoodsProcessListController extends BaseController {
 			map.put(summaryId, rlist);
 		}
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		List<TechnologyInfo> technologys= technologyInfoService.queryAll(null);
+		List<ClothInfo> cloths=clothInfoService.queryAll(null);
 		String delayDates=returnGoodsProcessService.queryDelayDates(PropertiesUtils.findPropertiesKey("process_delay_dates"));
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("map", map);
+		model.addAttribute("cloths", cloths);
+		model.addAttribute("technologys", technologys);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("delayDates",delayDates);
 		model.addAttribute("bean", orderSummary);
@@ -72,6 +86,16 @@ public class ReturnGoodsProcessListController extends BaseController {
 	public PageView query(ReturnGoodsProcess info,String pageNow,String pagesize) {
 		pageView = returnGoodsProcessService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
+	}
+	
+	/**
+	 * 查询布种信息
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryCloths")
+	public List<ClothInfo> queryCloths(){
+		return clothInfoService.queryAll(null);
 	}
 	
 	
