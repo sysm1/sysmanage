@@ -74,6 +74,16 @@
 		order by id desc
 	</select>
 	
+	<select id="queryColor" resultType="FlowerInfo" parameterType="map">
+		select
+		<include refid="selectIdExt" />
+			from flower_info flower
+		<where> 
+		 	my_company_code like '%${code}%'
+		 	or factory_code like '%${code}%'
+		</where>
+		order by flower.my_company_code desc
+	</select>
   
   <select id="query" resultType="FlowerInfo" parameterType="FlowerInfo">
 		select
@@ -138,7 +148,7 @@
 	
 	<select id="getById" parameterType="String" resultType="FlowerInfo">
 		select
-		<include refid="selectId" />
+		<include refid="selectIdExt" />
 		from flower_info flower where id=#{id}
 	</select>
 	

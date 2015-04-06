@@ -37,6 +37,15 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 		return pageView;
 	}
 
+	public PageView queryCode(PageView pageView, String code){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("code", code);
+		map.put("paging", pageView);
+		List<FlowerInfo> list = flowerInfoMapper.queryColor(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
+	
 	@Override
 	public List<FlowerInfo> queryAll(FlowerInfo t) {
 		return flowerInfoMapper.queryAll(t);
