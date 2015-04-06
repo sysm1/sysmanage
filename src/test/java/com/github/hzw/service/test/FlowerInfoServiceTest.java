@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.service.FlowerAdditionalService;
@@ -93,4 +94,27 @@ public class FlowerInfoServiceTest {
 		System.out.println(info);
 	}
 	
+	@Test
+	public void testQueryColor() {
+		// Map<String, Object> map = new HashMap<String, Object>();
+		// map.put("color", "2");
+		PageView pageView = new PageView(2, 1);
+		pageView = flowerInfoService.queryCode(pageView, "2");
+		System.out.println(pageView.getPageCount());
+		System.out.println(pageView.getRowCount());
+		System.out.println(pageView.getRecords());
+		
+	}
+	
+	
+	@Test
+	public void testQueryFindAdd() {
+		
+		FlowerAdditional addition = new FlowerAdditional();
+		addition.setFactoryCode("44");
+		
+		List<FlowerAdditional> list = flowerAdditionalService.queryFind(addition);
+		System.out.println(list);
+		
+	}
 }
