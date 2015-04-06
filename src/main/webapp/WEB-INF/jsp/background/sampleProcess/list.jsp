@@ -129,19 +129,31 @@ html>body td{ font-size:13px;}
 		});
 		$("#answer").click("click", function() {//绑定新增按扭
 			var cbox=getSelectedCheckbox();
-			
 			if(cbox==""){
 				parent.$.ligerDialog.alert("请选择一条记录修改");
 				return;
 			}
+			var flag='true';
 			for(var i=0;i<cbox.length;i++){
-				if(check(cbox[i])=='true'){
+				//alert(check(cbox[i]));
+				if(!check(cbox[i])){
+					flag='false';
+					break;
+				}
+			}
+			if(flag=='false'){
+				return false;
+			}
+			for(var i=0;i<cbox.length;i++){
+				//alert(check(cbox[i]));
+				if(check(cbox[i])){
 					var f = $('#'+cbox[i]+'_form');
 					f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/answer.html?type=1');
 					f.submit();
-					//alert("开版进度已回成功");
 				}
 			}
+			alert("已回成功");
+			//location.reload();
 		});
 		$("#delaybtn").click("click", function() {//绑定编辑按扭
 			$('#pageNow').attr('value',1);
@@ -438,7 +450,7 @@ html>body td{ font-size:13px;}
 							</div>
 						<%} %>
 						</td><td>
-							<c:if test="${item.replyDate ==null }">
+							<c:if test="${item.replyDate ==null ||item.replyDate==''}">
 								<input type="text" id="replyDate" name="replyDate" style="width:70px" value="${replyDate }"
 									onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 							</c:if><c:if test="${item.replyDate !=null }">

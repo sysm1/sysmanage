@@ -7,6 +7,98 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+
+<style type="text/css">
+.ordersearchDivCss { 
+	position: absolute; 
+	z-index: 100; 
+	display: block; 
+	background-color: #6ec1df; 
+} 
+
+
+/* CSS Document */
+
+body {
+ font: normal 13px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+ color: #4f6b72;
+}
+
+a {
+ color: #c75f3e;
+}
+
+#mytable {
+ width: 100%;
+ padding: 0;
+ margin: 0;
+}
+
+caption {
+ padding: 0 0 5px 0;
+ width: 660px;  
+ font: italic 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+ text-align: right;
+}
+
+th {
+ font: bold 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+ color: #4f6b72;
+ border-right: 1px solid #C1DAD7;
+ border-bottom: 1px solid #C1DAD7;
+ border-top: 1px solid #C1DAD7;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ text-align: left;
+ padding: 6px 6px 6px 12px;
+}
+
+th.nobg {
+ border-top: 0;
+ border-left: 0;
+ border-right: 1px solid #C1DAD7;
+ background: none;
+}
+
+#mytable td {
+ border-left: 1px solid #C1DAD7;
+ border-right: 1px solid #C1DAD7;
+ border-bottom: 1px solid #C1DAD7;
+ border-top: 1px solid #C1DAD7;
+ background: #fff;
+ font-size:12px;
+ padding: 2px 6px 2px 12px;
+ color: #4f6b72;
+}
+
+.lanyuan_bb{
+border-bottom: 1px solid #C1DAD7;
+}
+
+td.alt {
+ background: #F5FAFA;
+ color: #797268;
+}
+
+th.spec {
+ border-left: 1px solid #C1DAD7;
+ border-top: 0;
+ background: #fff ;
+ font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+th.specalt {
+ border-left: 1px solid #C1DAD7;
+ border-top: 1px solid #C1DAD7;
+ background: #f5fafa ;
+ font: bold 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+ color: #797268;
+}
+/*---------for IE 5.x bug*/
+html>body td{ font-size:13px;}
+</style>
+
+
 <script type="text/javascript">
 	var dialog;
 	var grid;
@@ -19,6 +111,7 @@
 		});
 		$("#ok").click("click", function() {//绑定查询按扭
 			var cbox=getSelectedCheckbox();
+			//parent.addMark(cbox);
 			window.returnValue=cbox;
 			window.close();
 		});
