@@ -50,9 +50,9 @@ public class FlowerInfoController extends BaseController{
 		model.addAttribute("factorys",factoryInfoService.queryAll(null));
 		model.addAttribute("technologys", this.technologyInfoService.queryAll(null));
 		// Map<String, Object> map = new HashMap<String, Object>();
-		String pagesize = "2";
+		// String pagesize = "2";
 		// pageView = flowerInfoService.queryFind(getPageView(pageNow,pagesize), map);
-		
+		String pagesize = "10";
 		pageView = flowerInfoService.query(getPageView(pageNow,pagesize), info);
 		model.addAttribute("info", info);
 		model.addAttribute("pageView", pageView);
