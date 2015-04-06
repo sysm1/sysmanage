@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -31,8 +30,8 @@ import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PropertiesUtils;
 
 @Controller
-@RequestMapping("/background/processList/")
-public class ReturnGoodsProcessListController extends BaseController {
+@RequestMapping("/background/processListMs/")
+public class ReturnGoodsProcessListMsController extends BaseController {
 
 	@Inject
 	private ReturnGoodsProcessService returnGoodsProcessService;
@@ -73,7 +72,7 @@ public class ReturnGoodsProcessListController extends BaseController {
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("delayDates",delayDates);
 		model.addAttribute("bean", orderSummary);
-		return Common.BACKGROUND_PATH+"/processList/list";
+		return Common.BACKGROUND_PATH+"/processListMs/list";
 	}
 	
 	/**
@@ -86,16 +85,6 @@ public class ReturnGoodsProcessListController extends BaseController {
 	public PageView query(ReturnGoodsProcess info,String pageNow,String pagesize) {
 		pageView = returnGoodsProcessService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
-	}
-	
-	/**
-	 * 查询布种信息
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping("queryCloths")
-	public List<ClothInfo> queryCloths(){
-		return clothInfoService.queryAll(null);
 	}
 	
 	

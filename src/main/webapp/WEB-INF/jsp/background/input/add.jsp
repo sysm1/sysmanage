@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<title>下单预录入</title>
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
@@ -92,7 +93,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		    url: rootPath + '/background/cloth/getClothUnit.html', //要访问的后台地址
 		    data: {id:obj.value}, //要发送的数据
 		    success: function(data){
-		    	changeUnitName(data);
+		    	changeUnitName(data,obj);
 			},error : function() {    
 		          // view("异常！");    
 		          alert("异常！");    
@@ -100,11 +101,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		});
 	}
 	
-	function changeUnitName(name){
-		var names=document.getElementsByName("unitName");
-		for(var i=0;i<names.length;i++){
-			names[i].innerHTML=name;
-		}
+	function changeUnitName(name,obj){
+		obj.parentNode.parentNode.children[5].innerHTML=name;
 	}
 	
 </script>
@@ -150,12 +148,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td >
 						<input type="text" id="num" name="num" value="" style="width: 80px">
 					</td><td>
-						<select id="unit" name="unit" style="width: 80px;">
-							<option value="">请选择</option>
-							<option value="0">条</option>
-							<option value="1">KG</option>
-							<option value="2">米</option>
-						</select>
+						条
 					</td>
 					<td><input type="text" id="mark" name="mark" value=""></td>
 					<td>

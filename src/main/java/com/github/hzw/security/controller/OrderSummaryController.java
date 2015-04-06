@@ -80,10 +80,11 @@ public class OrderSummaryController extends BaseController {
 		flowerInfo.setMyCompanyCode(info.getMyCompanyCode());
 		
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
-		
+		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		model.addAttribute("pageView", pageView);
+		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("bean", info);

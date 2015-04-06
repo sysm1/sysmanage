@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>回货进度查询</title>
+<title>回货进度查询门市</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
@@ -96,13 +96,12 @@ th.specalt {
 	var dialog;
 	var grid;
 	$(function() {
-		
 		$("#search").click("click", function() {//绑定查询按扭
 			$('#pageNow').attr('value',1);
 			$("#delay").attr('value','');
 			var f = $('#fenye');
 			//f.attr('target','_blank');
-			f.attr('action','${pageContext.request.contextPath}/background/processList/list.html');
+			f.attr('action','${pageContext.request.contextPath}/background/processListMs/list.html');
 			f.submit();
 		});
 		$("#add").click("click", function() {//绑定查询按扭
@@ -114,20 +113,6 @@ th.specalt {
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 			});
 		});
-		$("#edit").click("click", function() {//绑定修改按扭
-			var cbox=getSelectedCheckbox();
-			if(cbox==""){
-				parent.$.ligerDialog.alert("请选择一条记录修改");
-				return;
-			}
-			for(var i=0;i<cbox.length;i++){
-				var f = $('#'+cbox[i]+'_form');
-				f.attr('target','iframe');
-				f.attr('action','${pageContext.request.contextPath}/background/process/save.html?');
-				f.submit();
-			}
-			alert("数据暂存成功");
-		});
 		$("#delaybtn").click("click", function() {
 			$('#pageNow').attr('value',1);
 			$("#delay").attr('value',1);
@@ -136,128 +121,22 @@ th.specalt {
 			f.attr('action','${pageContext.request.contextPath}/background/process/list.html');
 			f.submit();
 		});
-		$("#save").click("click", function() {//绑定查询按扭
-			var cbox=getSelectedCheckbox();
-			if(cbox==""){
-				parent.$.ligerDialog.alert("请选择一条记录修改");
-				return;
-			}
-			for(var i=0;i<cbox.length;i++){
-				var f = $('#'+cbox[i]+'_form');
-				f.attr('target','');
-				f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
-				f.submit();
-			}
-			alert("数据已回");
-			//location.reload();
-		});
-		$("#deleteView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
-			if (cbox=="") {
-				parent.$.ligerDialog.alert("请选择删除项！！");
-				return;
-			}
-			parent.$.ligerDialog.confirm('删除后不能恢复，确定删除吗？', function(confirm) {
-				if (confirm) {
-					$.ajax({
-					    type: "post", //使用get方法访问后台
-					    dataType: "json", //json格式的数据
-					    async: false, //同步   不写的情况下 默认为true
-					    url: rootPath + '/background/role/deleteById.html', //要访问的后台地址
-					    data: {ids:cbox.join(",")}, //要发送的数据
-					    success: function(data){
-					    	if (data.flag == "true") {
-					    		parent.$.ligerDialog.success('删除成功!', '提示', function() {
-					    			loadGird();//重新加载表格数据
-								});
-							}else{
-								parent.$.ligerDialog.warn("删除失败！！");
-							}
-						}
-					});
-				}
-			});
-		});
 	});
 	function loadGird(){
 		grid.loadData();
 	}
 	
-	/***增加一行**/
-	var index=1;
-	var newId=2;
-	function addOneRow(itemId){
-		$('#'+itemId+'returnDate').before('<input type="text"  name="returnDate" style="width:70px" value=""'+
-				'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
-		$('#'+itemId+'returnNum').before('<input type="text"  name="returnNum" value="" style="width: 60px"><br>');
-		$('#'+itemId+'returnColor').before('<input type="text"  name="returnColor" value="" style="width: 60px"><br>');
-		$('#'+itemId+'mark').before('<input type="text"  name="mark" value="" ><br>');
-		$('#'+itemId+'zhiguan').before('<input type="text"  name="zhiguan" value="" style="width: 45px"><br>');
-		$('#'+itemId+'kongcha').before('<input type="text"  name="kongcha" value="" style="width: 45px"><br>');
-		$('#'+itemId+'jiaodai').before('<input type="text"  name="jiaodai" value="" style="width: 45px"><br>');
-		index++;
-		newId++;
-	}
-	
-	/**
-	 * 获取选中的值
-	 */
-	function getSelectedCheckbox() {
-		var arr = [];
-		$('input[name="checkId"]:checked').each(function() {
-			arr.push($(this).val());
-		});
-		return arr;
-	};
-	
 	function page(pageNO){
 		$('#pageNow').attr('value',pageNO);
 		var f = $('#fenye');
 		//f.attr('target','_blank');
-		f.attr('action','${pageContext.request.contextPath}/background/processList/list.html');
+		f.attr('action','${pageContext.request.contextPath}/background/processListMs/list.html');
 		f.submit();
-	}
-	/***点击**/
-	function onclickTr(id){
-		//obj.style.backgroundColor ="#EEDC82";
-		for(var i=0;i<=16;i++){
-			document.getElementById(i+""+id).style.backgroundColor ="#EEDC82";
-		}
-		document.getElementById(id+"checkId").checked=true;
-	}
-	/***选择一个checkbox**/
-	function clickCheckId(id){
-		var checkFlag=document.getElementById(id+"checkId").checked;
-		if(checkFlag){
-			for(var i=0;i<=16;i++){
-				document.getElementById(i+""+id).style.backgroundColor ="#EEDC82";
-			}
-		}else{
-			for(var i=0;i<=16;i++){
-				document.getElementById(i+""+id).style.backgroundColor ="";
-			}
-		}
-	}
-	/**全选checkbox**/
-	function checkAllIds(obj){
-		var falg=obj.checked;
-		var checkIds=document.getElementsByName("checkId");
-		for(var i=0;i<checkIds.length;i++){
-			checkIds[i].checked=falg;
-			clickCheckId(checkIds[i].value);
-		}
-	}
-	/**去除颜色**/
-	function clearColor(id){
-		for(var i=0;i<=16;i++){
-			document.getElementById(i+""+id).style.backgroundColor ="";
-		}
-		document.getElementById(id+"checkId").checked=false;
 	}
 </script>
 </head>
 <body>
-	<div class="divBody" style="width:1500px;">
+	<div class="divBody" style="width:100%;">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
@@ -288,7 +167,7 @@ th.specalt {
 									<option value="${cloth.id }" <c:if test="${bean.clothId eq cloth.id }" >selected='selected'</c:if> >${cloth.clothName}</option>
 								</c:forEach>
 							</select>
-						</td>
+						</td><td></td>
 					</tr><tr>
 						<td>&nbsp;&nbsp;编号：</td>
 						<td>
@@ -301,12 +180,13 @@ th.specalt {
 						</td><td>工艺:</td>
 						<td>
 							<select id="technologyId" name="technologyId">
-								<option value="">请选择</option>
+								<option>请选择</option>
 								<c:forEach items="${ technologys }" var = "technology">
 									<option value="${technology.id }" <c:if test="${bean.technologyId eq cloth.id }" >selected='selected'</c:if> >${technology.name}</option>
 								</c:forEach>
 							</select>
 						</td>
+						<td></td>
 					</tr><tr>
 						<td>回货日期：</td>
 						<td>
@@ -326,9 +206,7 @@ th.specalt {
 						<td>
 							<input type="text" id="mark" name="mark">
 						</td>		
-					</tr><tr>	
 						<td colspan="6" align="center">
-							<a class="btn btn-primary" href="javascript:void(0)" id="edit"> <span>修改</span></a>
 							&nbsp;&nbsp;<a class="btn btn-primary" href="javascript:void(0)" id="search"> <span>查询</span></a>
 						</td>
 					</tr>
@@ -338,18 +216,11 @@ th.specalt {
 		<div id="paging" class="pagclass" >
 			<table border="1" id="mytable">
 				<tr>
-					<th class="specalt">
-						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
-					</th>
-					<th>&nbsp;状态&nbsp;</th>
 					<th>序号</th>
-					<th>下单日期</th>
-					<th style="min-width: 60px;">工&nbsp;厂</th>
-					<th>工厂编号</th>
-					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
-					<th>&nbsp;工&nbsp;艺&nbsp;</th>
+					<th width="60px;">下单日期</th>
+					<th style="min-width:60px;">&nbsp;布种&nbsp;</th>
 					<th>我司编号</th>
-					<th  style="min-width:50px;">回货日期</th>
+					<th width="80px;">回货日期</th>
 					<th>下单数量</th>
 					<th>实到数量</th>
 					<th>纸管</th>
@@ -357,26 +228,19 @@ th.specalt {
 					<th>胶袋</th>
 					<th>我司颜色</th>
 					<th>实到颜色</th>
-					<th>备注</th>
+					<th width="120px;">备注</th>
+					<th>&nbsp;状态&nbsp;</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 				<tr id="${item.id }">
-					<td style="text-align: center;" id="0${item.id }">
-						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
-						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
-					</td>
-					<td id="1${item.id }">${item.returnStatusName }</td>
 					<td id="2${item.id }">${item.id }</td>
 					<td  title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
 					</td>
-					<td id="3${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
-					<td id="4${item.id }">${item.factoryCode }</td>
 					<td id="5${item.id }">${item.clothName }</td>
-					<td id="6${item.id }">${item.technologyName }</td>
-					<td id="7${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
-					<td id="8${item.id }" >
+					<td id="7${item.id }">${item.myCompanyCode }</td>
+					<td id="8${item.id }" width="80px;">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/><br>
 						</c:forEach>
@@ -386,31 +250,35 @@ th.specalt {
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							${item1.returnNum }<br>
 						</c:forEach>
-					</td><td id="11${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="11${item.id }">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							${item1.zhiguan }<br>
 						</c:forEach>
-					</td><td id="12${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="12${item.id }">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							${item1.kongcha }<br>
 						</c:forEach>
 						<span id="${item.id}kongcha" ></span>
-					</td><td id="13${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="13${item.id }">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							${item1.jiaodai }<br>
 						</c:forEach>
 					</td>
-					<td id="14${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
-					<td onclick="onclickTr(${item.id })">
+					<td id="14${item.id }" >${item.myCompanyColor }</td>
+					<td >
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							${item1.returnColor }<br>
 						</c:forEach>
 					</td>
-					<td id="15${item.id }" onclick="onclickTr(${item.id })">
+					<td id="15${item.id }">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-							${item1.mark }<br>
+							<span title="${item1.mark }">
+								${fn:substring(item1.mark,0,8)}  
+								<c:if test="${fn:length(item1.mark)>8}">...</c:if>
+							</span><br>
 						</c:forEach>
 					</td>
+					<td id="1${item.id }">${item.returnStatusName }</td>
 				</tr>
 				</form>
 				</c:forEach>

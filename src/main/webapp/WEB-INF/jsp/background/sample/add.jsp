@@ -10,56 +10,121 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	 	return this.optional(element) || ((value.length <= 16) && (value.length>=6));
 	}, "编号由6至16位字符组合构成");
 
-	$(function() {
-		$("form").validate({
-			submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
-				$(form).ajaxSubmit({//验证新增是否成功
-					type : "post",
-					dataType:"json",
-					success : function(data) {
-						if (data.flag == "true") {
-							$.ligerDialog.success('提交成功!', '提示', function() {
-								//这个是调用同一个页面趾两个iframe里的js方法
-								//account是iframe的id
-								parent.sample.loadGird();
-								closeWin();
-							});
-							//parent.window.document.getElementById("username").focus();
-						} else {
-							$.ligerDialog.warn("提交失败！！");
-						}
+$(function() {
+	$("form").validate({
+		submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
+			$(form).ajaxSubmit({//验证新增是否成功
+				type : "post",
+				dataType:"json",
+				success : function(data) {
+					if (data.flag == "true") {
+						$.ligerDialog.success('提交成功!', '提示', function() {
+							//这个是调用同一个页面趾两个iframe里的js方法
+							//account是iframe的id
+							parent.sample.loadGird();
+							closeWin();
+						});
+						//parent.window.document.getElementById("username").focus();
+					} else {
+						$.ligerDialog.warn("提交失败！！");
 					}
-				});
-			},
-			rules : {
-				name : {
-					required : true,
-					remote:{ //异步验证是否存在
-						type:"POST",
-						url: rootPath + '/background/salesman/isExist.html',
-						data:{
-							name:function(){return $("#name").val();}
-						 }
-						}
 				}
-			},
-			messages : {
-				name : {
-					required : "请输入业务员名称",
-				    remote:"该名称已经存在"
-				}
-			},
-			errorPlacement : function(error, element) {//自定义提示错误位置
-				$(".l_err").css('display','block');
-				//element.css('border','3px solid #FFCCCC');
-				$(".l_err").html(error.html());
-			},
-			success: function(label) {//验证通过后
-				$(".l_err").css('display','none');
+			});
+		},
+		rules : {
+			name : {
+				required : true,
+				remote:{ //异步验证是否存在
+					type:"POST",
+					url: rootPath + '/background/salesman/isExist.html',
+					data:{
+						name:function(){return $("#name").val();}
+					 }
+					}
 			}
-		});
+		},
+		messages : {
+			name : {
+				required : "请输入业务员名称",
+			    remote:"该名称已经存在"
+			}
+		},
+		errorPlacement : function(error, element) {//自定义提示错误位置
+			$(".l_err").css('display','block');
+			//element.css('border','3px solid #FFCCCC');
+			$(".l_err").html(error.html());
+		},
+		success: function(label) {//验证通过后
+			$(".l_err").css('display','none');
+		}
 	});
+});
+
 	function saveWin() {
+		var factoryIds =document.getElementsByName("factoryId");
+		for(var i=0;i<factoryIds.length;i++){
+			if(factoryIds[i].value==""){
+				alert("请选择工厂");
+				factoryIds[i].focus();
+				return false;
+			}
+		}
+		var clothId =document.getElementsByName("clothId");
+		for(var i=0;i<clothId.length;i++){
+			if(clothId[i].value==""){
+				alert("请选择布种");
+				clothId[i].focus();
+				return false;
+			}
+		}
+		var codeType =document.getElementsByName("codeType");
+		for(var i=0;i<codeType.length;i++){
+			if(codeType[i].value==""){
+				alert("请选择编号类型");
+				codeType[i].focus();
+				return false;
+			}
+		}
+		var codeValue =document.getElementsByName("codeValue");
+		for(var i=0;i<codeValue.length;i++){
+			if(codeValue[i].value==""){
+				alert("请填写编号值");
+				codeValue[i].focus();
+				return false;
+			}
+		}
+		var technologyId =document.getElementsByName("technologyId");
+		for(var i=0;i<technologyId.length;i++){
+			if(technologyId[i].value==""){
+				alert("请选择工艺");
+				technologyId[i].focus();
+				return false;
+			}
+		}
+		var myFile =document.getElementsByName("myFile");
+		for(var i=0;i<myFile.length;i++){
+			if(myFile[i].value==""){
+				alert("请上传图片");
+				myFile[i].focus();
+				return false;
+			}
+		}
+		var salemanId =document.getElementsByName("salemanId");
+		for(var i=0;i<salemanId.length;i++){
+			if(salemanId[i].value==""){
+				alert("请选择业务员");
+				salemanId[i].focus();
+				return false;
+			}
+		}
+		var mark =document.getElementsByName("mark");
+		for(var i=0;i<mark.length;i++){
+			if(mark[i].value==""||mark[i].value=="双击选择备注信息"){
+				alert("请填写备注");
+				mark[i].focus();
+				return false;
+			}
+		}
 		$("#form").submit();
 	}
 	
@@ -135,16 +200,40 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	};
 	
 	function pop(obj){
-		var arr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:40.08em; dialogHeight:15.83em; status:0");
+		var dialog;
+		/**dialog = parent.$.ligerDialog.open({
+			width : 650,
+			height : 500,
+			url : rootPath + '/background/mark/addlist.html',
+			title : "开版备注选择",
+			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+		});
+		*/
+		
+		var arr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:500px; dialogHeight:400px; status:0");
 		if (arr != null&&arr!=''){
 			obj.value=arr;
 		}
+		
 	}
-
+	function addMark(data){
+		alert(data);
+	}
 	
+	function clearText(obj){
+		if(obj.value=="双击选择备注信息"){
+			obj.value="";
+		}
+	}
+	
+	function blurValue(obj){
+		if(obj.value==''){
+			obj.value="双击选择备注信息";
+		}
+	}
 </script>
 </head>
-<body>
+<body style="width: 1100px;">
 <div class="divdialog">
 	<div class="l_err" ></div>
 	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
@@ -211,7 +300,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</c:forEach>
 					    </select>
 					</td><td >
-						<input type="text" id="mark" name="mark" style="width:200px;" value="双击选择备注信息" ondblclick="pop(this)">
+						<input type="text" id="mark" name="mark" style="width:200px;" value="双击选择备注信息" onblur="blurValue(this);" onclick="clearText(this);" ondblclick="pop(this)">
 					</td>
 				</tr>
 			</table><table width="700px;">	

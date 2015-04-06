@@ -137,6 +137,7 @@ ul { list-style:none;}
 		$("#addtoFlower").click("click",function(){
 			var cbox=getSelectedCheckbox();
 			if(cbox.length==1){
+				
 				dialog = parent.$.ligerDialog.open({
 					width : 750,
 					height : 500,
@@ -242,9 +243,32 @@ ul { list-style:none;}
 	function hiddenDiv(id){
 		document.getElementById(id).style.display="none";
 	}
+	
+	function changeCheckId(obj){
+		var id=obj.value;
+		if(obj.checked){
+			$.ajax({
+			    type: "post", //使用get方法访问后台
+			    dataType: "json", //json格式的数据
+			    async: false, //同步   不写的情况下 默认为true
+			    url: rootPath + '/background/sampleProcess/queryStatus.html', //要访问的后台地址
+			    data: {id:id}, //要发送的数据
+			    success: function(data){
+			    	if(data==0){
+			    		$('#addtoFlower').hide();
+			    		
+			    	}else{
+			    		$('#addtoFlower').show();
+			    	}
+				}
+			});
+		}else{
+			$('#addtoFlower').show();
+		}
+	}
 </script>
 </head>
-<body>
+<body style="width: 1200px;">
 <div class="divBody" >
 		<div class="search">
 <form name="fenye" id="fenye">
@@ -346,7 +370,7 @@ ul { list-style:none;}
 					<tr>
 					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 					 	<td>
-					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" style="width:18px">
+					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" onclick="changeCheckId(this);" style="width:18px">
 					 		<input type="hidden" id="id" name="id" value="${item.id }">
 					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">
 					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">

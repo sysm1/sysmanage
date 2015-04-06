@@ -8,6 +8,29 @@
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 
+$(function() {
+	$("form").validate({
+		submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
+			$(form).ajaxSubmit({//验证新增是否成功
+				type : "post",
+				dataType:"json",
+				success : function(data) {
+					if (data.flag == "true") {
+						$.ligerDialog.success('提交成功!', '提示', function() {
+							//这个是调用同一个页面趾两个iframe里的js方法
+							//account是iframe的id
+							//parent.sample.loadGird();
+							closeWin();
+						});
+					} else {
+						$.ligerDialog.warn("提交失败！！");
+					}
+				}
+			});
+		}
+	});
+});
+
 	$(function(){
 		$("#uploadFile").click(function () {
 			ajaxFileUpload();

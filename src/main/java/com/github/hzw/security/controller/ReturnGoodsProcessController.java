@@ -54,7 +54,7 @@ public class ReturnGoodsProcessController extends BaseController {
 		if(null!=factoryId&&!"".equals(factoryId)){
 			orderSummary.setFactoryId(Integer.parseInt(factoryId));
 		}
-		pageView=orderSummaryService.query(getPageView(pageNow,null),orderSummary);
+		pageView=orderSummaryService.queryVO(getPageView(pageNow,null),orderSummary);
 		List<OrderSummaryVO> list=pageView.getRecords();
 		List<ReturnGoodsProcess> rlist=null;
 		Map<Integer,List<ReturnGoodsProcess>> map=new HashMap<Integer,List<ReturnGoodsProcess>>();
