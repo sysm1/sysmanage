@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputVO;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.mapper.OrderInputMapper;
 import com.github.hzw.security.mapper.OrderInputSummaryMapper;
+import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.OrderInputService;
 
 @Transactional
@@ -28,6 +31,9 @@ public class OrderInputServiceImpl implements OrderInputService {
 	
 	@Autowired
 	private OrderInputSummaryMapper orderInputSummaryMapper;
+	
+	@Inject
+	private ClothInfoService clothInfoService;
 	
 	@Override
 	public PageView queryVO(PageView pageView, OrderInputVO t) {
@@ -50,7 +56,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 		String[] myCompanyCode=request.getParameterValues("myCompanyCode");
 		String[] myCompanyColor=request.getParameterValues("myCompanyColor");
 		String[] num=request.getParameterValues("num");
-		String[] unit=request.getParameterValues("unit");
+		//String[] unit=request.getParameterValues("unit");
 		String[] mark=request.getParameterValues("mark");
 		String[] salesmanId=request.getParameterValues("salesmanId");
 		OrderInputSummary inputSummary=new OrderInputSummary();
@@ -65,7 +71,12 @@ public class OrderInputServiceImpl implements OrderInputService {
 			bean.setNum(Integer.parseInt(num[i]));
 			bean.setSalesmanId(Integer.parseInt(salesmanId[i]));
 			bean.setStatus(0);
-			bean.setUnit(Integer.parseInt(unit[i]));
+			ClothInfo clothInfo=new ClothInfo();
+			clothInfo.setId(bean.getClothId());
+			List<ClothInfo> list=clothInfoService.queryAll(clothInfo);
+			if(list.size()>0){
+				bean.setUnit(list.get(0).getId());
+			}
 			try {
 				this.add(bean);
 				
