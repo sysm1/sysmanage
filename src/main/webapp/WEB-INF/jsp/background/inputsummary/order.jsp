@@ -199,6 +199,14 @@ $(function() {
 	
 	function addtoflower(code){
 		alert("添加到花号基本资料");
+		var cbox=getSelectedCheckbox();
+		dialog = parent.$.ligerDialog.open({
+			width : 750,
+			height : 500,
+			url : rootPath + '/background/sampleProcessList/addtoFlowerUI.html?id='+cbox[0],
+			title : "花号修改",
+			isHidden : false
+		});
 	}
 	
 	function changeFactory(obj){
@@ -353,6 +361,7 @@ $(function() {
 						<input id='kezhong' name="kezhong" class="checkdesc" type="text" value="" style="width: 70px;">
 						<select id="kezhongUnit" name="kezhongUnit" style="width: 60px;">
 							<option value="0">G/M2</option>
+							<option value="3">M/KG</option>
 							<option value="1">G/Y</option>
 							<option value="2">G/M</option>
 						</select>

@@ -99,6 +99,19 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		          alert("异常！");    
 		     } 
 		});
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
+		    data: {clothId:obj.value}, //要发送的数据
+		    success: function(data){
+		    	alert(data);
+			},error : function() {    
+		          // view("异常！");    
+		          alert("异常！");    
+		     } 
+		});
 	}
 	
 	function changeUnitName(name,obj){
@@ -130,7 +143,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input type="checkbox" id="checkId" name="checkId" value="1">
 					</td>
 					<td class="l_left">
-						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:150px;">
+						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:110px;">
 							<option>请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>

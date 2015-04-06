@@ -136,8 +136,7 @@ ul { list-style:none;}
 		
 		$("#addtoFlower").click("click",function(){
 			var cbox=getSelectedCheckbox();
-			if(cbox.length==1){
-				
+			if(cbox.length==1){				
 				dialog = parent.$.ligerDialog.open({
 					width : 750,
 					height : 500,
@@ -268,7 +267,7 @@ ul { list-style:none;}
 	}
 </script>
 </head>
-<body style="width: 1200px;">
+<body style="width: 1250px;">
 <div class="divBody" >
 		<div class="search">
 <form name="fenye" id="fenye">
@@ -351,12 +350,12 @@ ul { list-style:none;}
 					<th style="width:20px">
 						<input type="checkbox" id="checkIds" name="checkIds" style="width:18px">
 					</th>
-					<th class="specalt" >id</th>
+					<th class="specalt"  style="width:35px">id</th>
 					<th class="specalt" style="width:40px">状态</th>
 					<th class="specalt" style="width:40px">日期</th>
 					<th class="specalt" style="width:75px">分色文件号</th>
-					<th >布种</th>
-					<th class="specalt" style="width:105px">我司编号</th>
+					<th  style="width:75px">布种</th>
+					<th class="specalt" style="width:85px">我司编号</th>
 					<th class="specalt" style="width:100px">工厂</th>
 					<th class="specalt" style="width:75px">工艺</th>
 					<th class="specalt" style="width:110px">开版录入备注</th>
@@ -425,7 +424,7 @@ ul { list-style:none;}
 				</c:forEach>
 				<!-- 分页 -->
 				<tr style="height: 35px">
-					<td colspan="7" style="text-align: center;font-size: 14px;">
+					<td colspan="14" style="text-align: center;font-size: 14px;">
 						<div id="pagelist">
   <ul style="font-size: 14px;">
   	<c:if test="${pageView.pageNow==1}">
