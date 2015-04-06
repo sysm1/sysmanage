@@ -274,4 +274,18 @@ public class SampleInputController extends BaseController {
 		}
 		return map;
 	}
+	
+	/**
+	 * 根据布种 关联我司编号
+	 * @param clothId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryMycompanyCodeByCloth")
+	public List<FlowerInfo> queryMycompanyCodeByCloth(Integer clothId){
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setClothId(clothId);
+		List<FlowerInfo> list=flowerInfoService.queryAll(flowerInfo);
+		return list;
+	}
 }

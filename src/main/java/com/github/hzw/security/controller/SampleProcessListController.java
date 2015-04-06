@@ -96,44 +96,9 @@ public class SampleProcessListController extends BaseController{
 			}
 			sampleInputService.saveTemp(request, sampleInput);
 			
-//			//再次查询
-//			String fid=request.getParameter("fid");
-//			String cid=request.getParameter("cid");
-//			SampleInput sl=new SampleInput();
-//			if(!"".equals(fid)){
-//				sl.setFactoryId(Integer.parseInt(fid));
-//			}
-//			if(!"".equals(cid)){
-//				sl.setClothId(Integer.parseInt(cid));
-//			}
-//			pageView = sampleInputService.query(getPageView("1",null), sl);
-//			List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
-//			List<ClothInfo> cloths = clothInfoService.queryAll(null);
-//			Map<Integer,Map<String,List<SampleAdditional>>> map=new HashMap<Integer,Map<String,List<SampleAdditional>>>();
-//			List<SampleInputVO> plist=pageView.getRecords();
-//			
-//			for(SampleInputVO sample:plist){
-//				Map<String,List<SampleAdditional>> facotoryCodeMap=new HashMap<String,List<SampleAdditional>>();
-//				SampleAdditional sampleAdditional=new SampleAdditional();
-//				sampleAdditional.setSampleId(sample.getId());
-//				List<SampleAdditional> list=sampleAdditionalService.queryAll(sampleAdditional);
-//				for(SampleAdditional samp:list){
-//					if(null==facotoryCodeMap.get(samp.getFactoryCode())){
-//						facotoryCodeMap.put(samp.getFactoryCode(), new ArrayList<SampleAdditional>());
-//					}
-//					facotoryCodeMap.get(samp.getFactoryCode()).add(samp);
-//				}
-//				map.put(sample.getId(), facotoryCodeMap);
-//			}
-//			model.addAttribute("map", map);
-//			model.addAttribute("pageView", pageView);
-//			model.addAttribute("factoryInfos", factoryInfos);
-//			model.addAttribute("cloths", cloths);
-//			model.addAttribute("bean", sampleInput);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//return Common.BACKGROUND_PATH+"/sampleProcess/list";
 	}
 	
 	/**
@@ -217,6 +182,7 @@ public class SampleProcessListController extends BaseController{
 			pageView.setPageNow(Integer.parseInt(pageView.getPageCount()+""));
 		}
 		//解析颜色  存放到map中
+		@SuppressWarnings("unchecked")
 		List<SampleInputVO> plist=pageView.getRecords();
 		
 		Map<String,List<SampleAdditional>> facotoryCodeMap=new HashMap<String,List<SampleAdditional>>();
@@ -234,8 +200,6 @@ public class SampleProcessListController extends BaseController{
 		model.addAttribute("bean", plist.get(0));
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("cloths", cloths);
-		
-		
 		
 		model.addAttribute("cloths",clothInfoService.queryAll(null));
 		model.addAttribute("factorys",factoryInfoService.queryAll(null));
