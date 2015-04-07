@@ -152,6 +152,18 @@ ul { list-style:none;}
 			});
 		});
 		
+		$("#out2order").click("click", function() {//绑定查询按扭
+			var cbox=getSelectedCheckbox();
+			if (cbox.length > 1||cbox=="") {
+				parent.$.ligerDialog.alert("只能选中一个");
+				return;
+			}
+			//alert(cbox.parent());
+			//alert($('#'+cbox).parent().parent().children().length);
+			parent.inputsummary.overrideText($('#'+cbox).parent().parent().children());
+			closeWin();
+		});
+		
 		$("#editView").click("click", function() {//绑定查询按扭
 			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
@@ -222,6 +234,7 @@ ul { list-style:none;}
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
+				<input type="hidden" id="flag" name="flag" value="${flag }">
 				<table border="1">
 					<tr>
 						<td style="width:70px;text-align: right;">下单日期：</td>
@@ -259,7 +272,7 @@ ul { list-style:none;}
 							<input type="text" id="factoryCode" name="factoryCode" value="${bean.factoryCode}">
 						</td><td style="width:70px;text-align: right;">我司编号：</td>
 						<td>
-							<select>
+							<select id="myCompanyCode" name="myCompanyCode">
 								<option value="">请选择</option>
 							</select>
 						</td>
@@ -303,6 +316,7 @@ ul { list-style:none;}
 			</form>
 		</div>
 		<div class="topBtn">
+			<c:if test="${flag eq null }">
 			<a class="btn btn-primary" href="javascript:void(0)" id="add"> 
 				<i class="icon-zoom-add icon-white"></i> <span>下单预录入修改</span>
 			</a> 
@@ -314,13 +328,13 @@ ul { list-style:none;}
 			<a class="btn btn-info" href="javascript:void(0)" id="editView"> 
 				<i class="icon-edit icon-white"></i> 下单汇总修改
 			</a> 
-			
+			</c:if>
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="search"> 
 				<i class="icon-trash icon-white"></i> 查询
 			</a>
 			
 			<c:if test="${flag eq 1 }">
-				<a class="btn btn-large btn-success" href="javascript:void(0)" id="fororder">
+				<a class="btn btn-large btn-success" href="javascript:void(0)" id="out2order">
 					<i class="icon-trash icon-white"></i>输出到汇总页面
 				</a>
 			</c:if>
@@ -355,7 +369,7 @@ ul { list-style:none;}
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 					<tr>
 					 	<td>
-					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }">
+					 		<input type="checkbox" id="${item.id }" name="checkId" value="${item.id }">
 					 	</td><td>
 					 		${item.id }
 					 	</td>

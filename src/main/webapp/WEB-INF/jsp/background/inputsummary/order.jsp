@@ -25,7 +25,8 @@ $(function() {
 		dialog = parent.$.ligerDialog.open({
 			width : 750,
 			height : 450,
-			url : rootPath + '/background/ordersummary/list.html?flag=1&clothId=${inputsummary.clothId }&myCompanyCode=${inputsummary.myCompanyCode }&myCompanyColor=${inputsummary.myCompanyColor }',
+			url : rootPath + '/background/ordersummary/list.html?flag=1&clothId=${inputsummary.clothId }&myCompanyCode=${inputsummary.myCompanyCode }'+
+						'&myCompanyColor=${inputsummary.myCompanyColor }',
 			title : "修改下单预录入",
 			isHidden : true
 		});
@@ -198,12 +199,13 @@ $(function() {
 	}
 	
 	function addtoflower(code){
-		alert("添加到花号基本资料");
-		var cbox=getSelectedCheckbox();
+		var factoryId=$('#factoryId').val();
+		var clothId=$('#clothId').val();
+		alert(factoryId);
 		dialog = parent.$.ligerDialog.open({
 			width : 750,
 			height : 500,
-			url : rootPath + '/background/sampleProcessList/addtoFlowerUI.html?id='+cbox[0],
+			url : rootPath + '/background/inputsummary/addtoFlowerUI.html?factoryId='+factoryId,
 			title : "花号修改",
 			isHidden : false
 		});
@@ -224,6 +226,40 @@ $(function() {
 				alert(data);  
 		     }
 		});
+	}
+	
+	function overrideText(data){
+		var technology=data[4].innerHTML;
+		var factory=data[7].innerHTML;//工厂名称
+		var factoryCode=data[8].innerHTML;//工厂编号
+		var factoryColor=data[9].innerHTML;//工厂颜色
+		var fac=document.getElementById("factoryId");
+		var tec=document.getElementById("technologyId");//工艺
+		var facCode=document.getElementById("factoryCode");//工厂编号 
+		var facColor=document.getElementById("factoryColor");
+		for(var i=0;i<fac.options.length;i++){
+			if(fac.options[i].text.trim()==factory.trim()){
+				fac.options[i].selected='selected';
+			}
+		}
+		//设定工艺
+		for(var i=0;i<tec.options.length;i++){
+			if(tec.options[i].text.trim()==technology.trim()){
+				tec.options[i].selected='selected';
+			}
+		}
+		//设定工厂编号
+		for(var i=0;i<facCode.options.length;i++){
+			if(facCode.options[i].text.trim()==factoryCode.trim()){
+				facCode.options[i].selected='selected';
+			}
+		}
+		//设定工厂颜色
+		for(var i=0;i<facColor.options.length;i++){
+			if(facColor.options[i].text.trim()==factoryColor.trim()){
+				facColor.options[i].selected='selected';
+			}
+		}
 	}
 </script>
 </head>
@@ -320,7 +356,7 @@ $(function() {
 					<td class="l_right">工厂颜色:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryColor">
+							<select id="factoryColor" name="factoryColor">
 								<option value="">请选择</option>
 								<c:forEach var="color" items="${factoryColors }">
 									<option value="${color}">${color }</option>
@@ -413,8 +449,9 @@ $(function() {
 									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
 									onclick="javascript:history.go(-1);"><span>取消</span> </a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="search"
-									onclick="closeWin()"><span>查询</span> </a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="search">
+								<span>查询</span>
+							</a>
 						</div>
 					</td>
 				</tr>
