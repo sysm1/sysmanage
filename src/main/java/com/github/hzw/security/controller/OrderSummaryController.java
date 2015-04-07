@@ -69,11 +69,11 @@ public class OrderSummaryController extends BaseController {
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow,OrderSummary info,String flag) {
 		if("1".equals(flag)){
-			model.addAttribute("startDate", Common.fromDateY());
-			model.addAttribute("endDate", Common.fromDateY());
+			//model.addAttribute("startDate", Common.fromDateY());
+			//model.addAttribute("endDate", Common.fromDateY());
 			model.addAttribute("flag", flag);//从下单录入汇总页面跳转到此页面
-			info.setStartDate(new Date());
-			info.setEndDate(new Date());
+			//info.setStartDate(new Date());
+			//info.setEndDate(new Date());
 		}
 		pageView = orderSummaryService.query(getPageView(pageNow,null), info);
 		FlowerInfo flowerInfo=new FlowerInfo();

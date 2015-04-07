@@ -261,6 +261,21 @@ public class OrderInputSummaryController extends BaseController {
 		}
 		return map;
 	}
+	/**
+	 * 添加到花号基本资料
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("addtoFlowerUI")
+	public String addtoFlowerUI(Model model,HttpServletRequest request){
+		FactoryInfo factoryInfo=factoryInfoService.getById(request.getParameter("factoryId"));
+		model.addAttribute("factoryInfo",factoryInfo);
+		model.addAttribute("clothId", request.getParameter("clothId"));
+		model.addAttribute("factoryId", request.getParameter("factoryId"));
+		model.addAttribute("factoryId", request.getParameter("factoryId"));
+		return Common.BACKGROUND_PATH+"/inputsummary/addtoFlower";
+	}
 	
 	@RequestMapping("exportExcel")
 	public void exportExcel(HttpServletResponse response,OrderInputSummary info) {
