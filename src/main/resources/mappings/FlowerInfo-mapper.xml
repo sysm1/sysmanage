@@ -118,10 +118,15 @@
 		order by id desc
 	</select>
 
-	<select id="queryAll" resultType="FlowerInfo">
+	<select id="queryAll" resultType="FlowerInfo" parameterType="FlowerInfo">
 		select
 		<include refid="selectId" />
 		from flower_info flower
+		<where> 1=1
+		<if test="clothId != null and clothId != ''">
+			and flower.cloth_id = #{clothId}
+		</if>
+		</where>
 		order by id desc
 	</select>
 
