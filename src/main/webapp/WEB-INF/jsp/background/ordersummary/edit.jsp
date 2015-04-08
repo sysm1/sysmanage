@@ -185,10 +185,11 @@ $(function() {
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/ordersummary/add.html" method="post">
-		<input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }">
+		<!--input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }"-->
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
 		<input type="hidden" id="num1" name="num1" value="${num }">
+		<input type="hidden" id="summId" name="summId" value="${inputsummary.id }">
 		<table style=" height: 200px;" border="1">
 			<tbody>
 				<tr style="text-align: center;height: 30px;"><td colspan="6">下单录入汇总页面</td></tr>
@@ -220,7 +221,7 @@ $(function() {
 					<td class="l_right">布种:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<select>
+							<select id="clothId" name="clothId">
 							<c:forEach var="cloth" items="${clothInfos }">
 								<option value="${cloth.id }" <c:if test="${cloth.id eq summary.clothId }">selected="selected"</c:if>>${cloth.clothName }</option>
 							</c:forEach>
@@ -240,7 +241,7 @@ $(function() {
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id='technologyId' name="technologyId">
-								<option>请选择</option>
+								<option value="">请选择</option>
 								<c:forEach var="item" items="${technologyInfos }">
 								<option value="${item.id }" <c:if test="${item.id eq inputsummary.technologyId }">selected="selected" </c:if>>${item.name }</option>
 								</c:forEach>
@@ -297,7 +298,7 @@ $(function() {
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id="ywy2" style="display: none" id="balanceSalemanId" name="balanceSalemanId">
-								<option>请选择</option>
+								<option value="">请选择</option>
 								<c:forEach var="saleman" items="${salesmanInfos }">
 								<option value="${saleman.id }">${saleman.name }</option>
 								</c:forEach>
@@ -371,9 +372,9 @@ $(function() {
 							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="javascript:history.go(-1);">
 								<span>取消</span> 
 							</a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="search" onclick="closeWin()">
+							<!--a class="btn btn-primary" href="javascript:void(0)" id="search" onclick="closeWin()">
 								<span>查询</span> 
-							</a>
+							</a-->
 						</div>
 					</td>
 				</tr>

@@ -147,30 +147,38 @@ $(function() {
 	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/flower/add.html" method="post">
 		<input id='picture' name="picture" type="hidden" value="" >
-		<input id='factoryId' name="factoryId" type="hidden" value="${factoryInfo.id }" >
-		<input id='clothId' name="clothId" type="hidden" value="${bean.clothId }" >
+		<input id='clothId' name="clothId" type="hidden" value="${clothInfo.id }" >
 		<table class="pp-list table table-striped table-bordered" style="margin-bottom: -3px;" id="addtable">
 			<tbody>
 			<tr>
 				<td>我司名称：</td>
 				<td>飞翔</td>
 				<td>工厂：</td>
-				<td>${factoryInfo.name}</td>
+				<td>
+					<select id="factoryId" name="factoryId" onchange="changeFactory(this);">
+						<option value="">请选择</option>
+						<c:forEach var="item" items="${factoryInfos }" varStatus="status">
+						<option value="${item.id }" <c:if test="${item.id eq factoryInfo.id }">selected="selected"</c:if>  >${item.name }</option>
+						</c:forEach>
+					</select>
+				</td>
 			</tr><tr>
 				<td>我司编号：</td>
 				<td>
-					<select id="myCompanyCode" name="myCompanyCode">
-						<option value="">请选择</option>
-						<option <c:if test="${bean.myCompanyCode eq fx2020202}"></c:if> value="fx2020202">fx2020202</option>
-						<option value="fx3020232">fx3020232</option>
-						<option value="fx4020242">fx4020242</option>
-					</select>
+					${myCompanyCode }
 				</td>
 				<td>布种：</td>
-				<td>${bean.clothName }</td>
+				<td>${clothInfo.clothName }</td>
 			</tr><tr>
 				<td>工艺：</td>
-				<td>${bean.technologyName }</td>
+				<td>
+					<select id='technologyId' name="technologyId">
+						<option>请选择</option>
+						<c:forEach var="item" items="${technologyInfos }">
+						<option value="${item.id }" <c:if test="${item.id eq technologyId }"> selected="selected"</c:if> >${item.name }</option>
+						</c:forEach>
+					</select>
+				</td>
 				<td>分色文件号：</td>
 				<td>
 					<input id='fileColor' name="fileColor" type="text" value="${bean.fileCode}" style="width:100px;">
@@ -182,34 +190,30 @@ $(function() {
 					工厂颜色&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp; 备注</td>
 			</tr>
-			<c:forEach var="item" items="${facotoryCodeMap}" varStatus="status1">
 			<tr>
 				<td>工厂编号：</td>
 				<td>				
 					<span class="factoryCodeInputcss" id="factoryCodeInputID">
-					<input name="factoryCodes" type="text" value="${item.key }" />
+					<input name="factoryCodes" type="text" value="${factoryCode}" />
 					</span>
 					<span id="addonerow"><a onclick="addOneRow();">++</a></span>
 				</td>
 				<td colspan="2">
-					<c:forEach var="item2" items="${item.value}" varStatus="status2">
 						<div id="colors0">
 						<input name="myCompanyColors" type="text" onclick="clickText(this,'我司颜色');" 
-							onblur="changeValue(this,'我司颜色');" value="我司颜色" style="width:100px;"/>
+							onblur="changeValue(this,'我司颜色');" value="${myCompanyColor }" style="width:100px;"/>
 						<input name="factoryColors" type="text"  value="${item2.factoryColor }" style="width:100px;"/>
 						<input name="mark" type="text" value="备注" onclick="clickText(this,'备注');" 
 							onblur="changeValue(this,'备注');" style="width:100px;"/>
 						<span id="addFacotyMyCode"><a onclick="addcolors();">+</a></span>
 					</div>
-					</c:forEach>
 				</td>
 			</tr>
-			</c:forEach>
 			<tr id="fctr2" class="factoryCodeTrCss" style="display: none">
 				<td>工厂编号：</td>
 				<td>
 					<span class="factoryCodeInputcss" id="factoryCodeInputID2">
-					<input name="factoryCodes" type="text" value="" style="width:100px;"/><br/>
+					<input name="factoryCodes" type="text" value="工厂编号" style="width:100px;"/><br/>
 					</span><span id="addFacotyCodeId2"><a href="javascript:void(0);">-</a></span>
 				</td>
 				<td colspan="2">
