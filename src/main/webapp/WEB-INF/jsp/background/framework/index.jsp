@@ -329,37 +329,28 @@
 					
 					</td>
 					</tr>
-					
-					
 					</table>
-							
-							
-							</div>
-
+					</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="leafSet" style="display: none;">
 				<div class="cl_body"
-					style="background: none repeat scroll 0 0 #FAFAFA; overflow: auto;">
+					style="background: none repeat scroll 0 0 #FAFAFA; ">
 					<div id="divHeght">
 						<div class="leftTree">
 							<jsp:include page="/menu.jsp"></jsp:include>
 						</div>
-						<div style="float: right; width: 83%;" id="framecenter">
+						<div style="float: left; width: 82%;" id="framecenter">
 							<div class="box-content" tabid="home" title=" 我的主页">
-
 								
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
-
-
 
 	</div>
 
