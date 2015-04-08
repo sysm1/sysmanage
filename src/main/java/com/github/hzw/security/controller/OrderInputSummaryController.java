@@ -18,6 +18,7 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
@@ -26,6 +27,7 @@ import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothAllowanceService;
+import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
@@ -64,6 +66,9 @@ public class OrderInputSummaryController extends BaseController {
 	
 	@Inject
 	private FactoryInfoService factoryInfoService;
+	
+	@Inject
+	private ClothInfoService clothInfoService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu,HttpServletRequest request, String pagesize,OrderInputSummary info) {
@@ -270,10 +275,18 @@ public class OrderInputSummaryController extends BaseController {
 	@RequestMapping("addtoFlowerUI")
 	public String addtoFlowerUI(Model model,HttpServletRequest request){
 		FactoryInfo factoryInfo=factoryInfoService.getById(request.getParameter("factoryId"));
-		model.addAttribute("factoryInfo",factoryInfo);
-		model.addAttribute("clothId", request.getParameter("clothId"));
+		ClothInfo clothInfo=clothInfoService.getById(request.getParameter("clothId"));
+		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
+		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		model.addAttribute("factoryInfos",factoryInfos);
+		model.addAttribute("clothInfo", clothInfo);
+		model.addAttribute("factoryInfo", factoryInfo);
+		model.addAttribute("technologyInfos", technologyInfos);
 		model.addAttribute("factoryId", request.getParameter("factoryId"));
-		model.addAttribute("factoryId", request.getParameter("factoryId"));
+		model.addAttribute("myCompanyCode", request.getParameter("myCompanyCode"));
+		model.addAttribute("myCompanyColor", request.getParameter("myCompanyColor"));
+		model.addAttribute("technologyId", request.getParameter("technologyId"));
+		model.addAttribute("factoryCode", request.getParameter("factoryCode"));
 		return Common.BACKGROUND_PATH+"/inputsummary/addtoFlower";
 	}
 	
