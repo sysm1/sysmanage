@@ -173,7 +173,7 @@ public class SampleInputController extends BaseController {
 					sampleInput.setMyCompanyCode(sampleInput.getCodeValue());
 				}
 				sampleInputService.add(sampleInput);
-				map.put("flag", "保存成功");
+				map.put("flag", "true");
 			} catch (Exception e) {
 				map.put("flag", "false");
 				e.printStackTrace();
