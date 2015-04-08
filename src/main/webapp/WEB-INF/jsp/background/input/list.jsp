@@ -226,7 +226,7 @@
 			</a-->
 			<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询</a>
 		</div>
-		<div id="paging" class="pagclass"></div>
+		<div id="paging" class="pagclass"  ></div>
 	</div>
 </body>
 </html>

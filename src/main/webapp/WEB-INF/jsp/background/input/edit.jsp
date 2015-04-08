@@ -85,7 +85,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		    url: rootPath + '/background/cloth/getClothUnit.html', //要访问的后台地址
 		    data: {id:obj.value}, //要发送的数据
 		    success: function(data){
-		    	changeUnitName(data);
+		    	changeUnitName(data,obj);
 			},error : function() {    
 		          // view("异常！");    
 		          alert("异常！");    
@@ -93,11 +93,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		});
 	}
 	
-	function changeUnitName(name){
-		var names=document.getElementsByName("unitName");
-		for(var i=0;i<names.length;i++){
-			names[i].innerHTML=name;
-		}
+	function changeUnitName(name,obj){
+		obj.parentNode.parentNode.children[5].innerHTML=name;
 	}
 	function initUnit(id){
 		$.ajax({
@@ -165,13 +162,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 					<td >
 						<input type="text" id="num" name="num" value="${input.num }" style="width: 80px">
-					</td><td>
-						<select id="unit" name="unit" style="width: 80px;">
-							<option value="">请选择</option>
-							<option value="0">条</option>
-							<option value="1">KG</option>
-							<option value="2">米</option>
-						</select>
+					</td><td id="unit">
+						条
 					</td>
 					<td><input type="text" id="mark" name="mark" value="${input.mark }"></td>
 					<td>
@@ -205,5 +197,23 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </body>
 <script type="text/javascript">
 initUnit(${input.clothId});
+</script>
+<script type="text/javascript">
+	$.ajax({
+	    type: "post", //使用get方法访问后台
+	    dataType: "json", //json格式的数据
+	    async: false, //同步   不写的情况下 默认为true
+	    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
+	    data: {clothId:$('#clothId').val()}, //要发送的数据
+	    success: function(data){
+	    	$("#myCompanyCode").empty();
+	    	for(var i=0;i<data.length;i++){
+	    		$("#myCompanyCode").append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
+	    	}
+		},error : function() {    
+	          // view("异常！");    
+	          alert("异常！");    
+	     } 
+	});
 </script>
 </html>

@@ -210,11 +210,8 @@ $(function() {
 		});
 		*/
 		
-		var arr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:500px; dialogHeight:400px; status:0");
-		if (arr != null&&arr!=''){
-			obj.value=arr;
-		}
-		
+		var rarr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:500px; dialogHeight:400px; status:0");
+		obj.value=rarr;
 	}
 	function addMark(data){
 		alert(data);
@@ -307,7 +304,7 @@ $(function() {
 				<tr>
 					<td >
 						<div class="l_btn_centent">
-							<a class="btn btn-primary" href="javascript:void(0)" id="copyone" onclick="copy_one();"><span>复制新增</span></a>
+							<!--  a class="btn btn-primary" href="javascript:void(0)" id="copyone" onclick="copy_one();"><span>复制新增</span></a>-->
 							<a class="btn btn-primary" href="javascript:void(0)" id="addTable" ><span>新增一行</span></a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span></a> 

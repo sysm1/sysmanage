@@ -106,7 +106,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
 		    data: {clothId:obj.value}, //要发送的数据
 		    success: function(data){
-		    	alert(data);
+		    	$("#myCompanyCode").empty();
+		    	for(var i=0;i<data.length;i++){
+		    		$("#myCompanyCode").append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
+		    	}
 			},error : function() {    
 		          // view("异常！");    
 		          alert("异常！");    
@@ -196,4 +199,5 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	</form>
 	</div>
 </body>
+
 </html>
