@@ -170,13 +170,17 @@ ul { list-style:none;}
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
 			}
+			
+			window.location.href=rootPath +'/background/ordersummary/editUI.html?id='+cbox;
+			
+			/**
 			dialog = parent.$.ligerDialog.open({
 				width : 700,
 				height : 510,
 				url : rootPath + '/background/ordersummary/editUI.html?id='+cbox,
 				title : "下单录入汇总修改页面",
 				isHidden : false
-			});
+			});*/
 		});
 		
 		$("#deleteView").click("click", function() {//绑定查询按扭
@@ -218,7 +222,7 @@ ul { list-style:none;}
 		return arr;
 	};
 	function loadGird(){
-		grid.loadData();
+		location.reload();
 	}
 	function page(pageNO){
 		$('#pageNow').attr('value',pageNO);

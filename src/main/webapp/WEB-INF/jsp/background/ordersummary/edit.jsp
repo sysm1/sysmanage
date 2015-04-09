@@ -113,8 +113,9 @@ $(function() {
 						$.ligerDialog.success('提交成功!', '提示', function() {
 							//这个是调用同一个页面趾两个iframe里的js方法
 							//account是iframe的id
-							parent.sample.loadGird();
-							closeWin();
+							//parent.ordersummary.loadGird();
+							//closeWin();
+							window.location.href=rootPath + "/background/ordersummary/list.html";
 						});
 						//parent.window.document.getElementById("username").focus();
 					} else {
@@ -177,22 +178,37 @@ $(function() {
 	}
 	
 	function addtoflower(code){
-		alert("添加到花号基本资料");
+		var factoryId=$('#factoryId').val();
+		var clothId=$('#clothId').val();
+		var myCompanyCode=$('#myCompanyCode').val();
+		var myCompanyColor=$('#myCompanyColor').val();
+		var technologyId=$('#technologyId').val();
+		var factoryCode=$('#factoryCode').val();
+		dialog = parent.$.ligerDialog.open({
+			width : 750,
+			height : 500,
+			url : rootPath + '/background/inputsummary/addtoFlowerUI.html?factoryId='+factoryId+
+					"&myCompanyCode="+myCompanyCode+"&clothId="+clothId+"&myCompanyColor="+myCompanyColor+
+					'&technologyId='+technologyId+"&factoryCode="+factoryCode,
+			title : "花号修改",
+			isHidden : false
+		});
 	}
 </script>
 </head>
 <body>
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/ordersummary/add.html" method="post">
+	<form name="form" id="form" action="${ctx}/background/ordersummary/update.html" method="post">
 		<!--input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }"-->
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
 		<input type="hidden" id="num1" name="num1" value="${num }">
 		<input type="hidden" id="summId" name="summId" value="${inputsummary.id }">
+		<input type="hidden" id="id" name="id" value="${inputsummary.id }">
 		<table style=" height: 200px;" border="1">
 			<tbody>
-				<tr style="text-align: center;height: 30px;"><td colspan="6">下单录入汇总页面</td></tr>
+				<tr style="text-align: center;height: 30px;"><td colspan="6">222下单录入汇总页面</td></tr>
 				<tr style="height: 30px;text-align: center;">
 					<td class="l_right">单号：</td>
 					<td class="l_left" colspan="2">
@@ -278,7 +294,7 @@ $(function() {
 					<td class="l_right">工厂颜色:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryColor">
+							<select id="factoryColor" name="factoryColor">
 								<option value="">请选择</option>
 								<c:forEach var="color" items="${factoryColors }">
 									<option value="${color}"  <c:if test="${color eq inputsummary.factoryColor }">selected="selected"</c:if>  >${color }</option>

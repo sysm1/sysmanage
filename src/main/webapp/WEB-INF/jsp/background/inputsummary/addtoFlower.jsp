@@ -77,7 +77,7 @@ $(function() {
         return false;
     }
 	function addOneRow(){
-		var tr=document.getElementById('addtable').insertRow(4);
+		var tr=document.getElementById('addtable').insertRow(5);
 		var td0=tr.insertCell(0);
 		var td1=tr.insertCell(1);
 		var td2=tr.insertCell(2);
