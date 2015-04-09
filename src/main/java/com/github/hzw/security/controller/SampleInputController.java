@@ -131,7 +131,7 @@ public class SampleInputController extends BaseController {
 	public Map<String, Object> add(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String[] picPaths=UploadFileUtils.saveUploadFile(request);
-		String[] sampleDates=request.getParameterValues("sampleDate");
+		//String[] sampleDates=request.getParameterValues("sampleDate");
 		String[] factoryIds=request.getParameterValues("factoryId");
 		String[] clothIds=request.getParameterValues("clothId");
 		String[] codeTypes=request.getParameterValues("codeType");
@@ -157,7 +157,8 @@ public class SampleInputController extends BaseController {
 				sampleInput.setSmallPicture(outputDir+outputFileName);
 				sampleInput.setCodeType(Integer.parseInt(codeTypes[i]));
 				sampleInput.setFactoryId(Integer.parseInt(factoryIds[i]));
-				sampleInput.setSampleDate(DateUtil.str2Date(sampleDates[i],"YYYY-MM-DD"));
+				//sampleInput.setSampleDate(DateUtil.str2Date(sampleDates[i],"YYYY-mm-DD"));
+				sampleInput.setSampleDate(DateUtil.DatePattern(new Date()));
 				sampleInput.setCodeValue(codeValues[i]);
 				sampleInput.setTechnologyId(Integer.parseInt(technologyIds[i]));
 				sampleInput.setSalemanId(Integer.parseInt(salemanIds[i]));
@@ -210,7 +211,11 @@ public class SampleInputController extends BaseController {
 	@RequestMapping("update")
 	public Map<String, Object> update(Model model, SampleInput sampleInput,HttpServletRequest request) {
 		
-		String picPath=UploadFileUtils.saveUploadFile(request)[0];
+		String[] picPaths=UploadFileUtils.saveUploadFile(request);
+		String picPath=null;
+		if(null!=picPaths){
+			picPath=picPaths[0];
+		}
 		if(null!=picPath){
 			CompressPic compressPic=new CompressPic();
 			String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
