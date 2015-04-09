@@ -75,7 +75,7 @@ a:link,a:visited {
 }
 
 .menu li ul.level2 {
-	width: 200px;
+	width: 168px;
 	display: none;
 }
 
