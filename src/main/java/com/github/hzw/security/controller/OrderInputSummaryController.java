@@ -1,5 +1,6 @@
 package com.github.hzw.security.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,7 @@ import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
+import com.github.hzw.security.service.DateVersionService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
@@ -36,6 +38,7 @@ import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
+import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PropertiesUtils;
 
@@ -69,6 +72,9 @@ public class OrderInputSummaryController extends BaseController {
 	
 	@Inject
 	private ClothInfoService clothInfoService;
+	
+	@Inject
+	private DateVersionService dateVersionService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu,HttpServletRequest request, String pagesize,OrderInputSummary info) {
@@ -194,7 +200,13 @@ public class OrderInputSummaryController extends BaseController {
 		//***颜色判断结束****//
 		
 		//下单编号
-		String orderNo=orderInputSummaryService.getOrderNo();
+		String orderNo=null;
+		String tmp = DateUtil.date2Str(new Date(), "yyyyMMdd");
+		try {
+			orderNo=dateVersionService.getValue("orderInputSummary", tmp)+"";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("orderInputList", orderInputList);
