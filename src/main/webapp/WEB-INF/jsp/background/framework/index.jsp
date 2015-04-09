@@ -265,7 +265,7 @@
                 <div style="float:left; height:31px; color:#9e0905; font-weight:bold; line-height:31px; margin-left:20px; font-size:14px; ">城市天气预报</div>
                
             </div>
-	   <iframe width="400" scrolling="no" height="120" frameborder="0" allowtransparency="true" src="#"></iframe>
+	   <iframe width="400" scrolling="no" height="100" frameborder="0" allowtransparency="true" src="#"></iframe>
 	</div>
 	</div>
 						</div>
@@ -342,7 +342,7 @@
 						<div class="leftTree">
 							<jsp:include page="/menu.jsp"></jsp:include>
 						</div>
-						<div style="float: left; width: 82%;" id="framecenter">
+						<div style="float: left; width: 82%;height: 150px;" id="framecenter">
 							<div class="box-content" tabid="home" title=" 我的主页">
 								
 							</div>
