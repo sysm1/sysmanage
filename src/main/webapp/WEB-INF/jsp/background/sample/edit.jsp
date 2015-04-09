@@ -121,7 +121,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<tr>
 					<td class="l_right">开版日期：</td>
 					<td class="l_left">
-						<input id='sampleDate' name="sampleDate" class="isNum" readonly="readonly" type="text" value="<fmt:formatDate value="${bean.sampleDate}" pattern="YYYY-MM-DD"/>">
+						<input id='sampleDate' name="sampleDate" class="isNum" readonly="readonly" type="text" value="<fmt:formatDate value="${bean.sampleDate}" pattern="YYYY-MM-dd"/>">
 					</td><td rowspan="9" id="pictd">
 						<div id="imgPreview" style="width: 600px;height:300px" > 
 					    	&nbsp;<img  src="${pageContext.request.contextPath}/background/pic/getPic.html?id=${bean.id}" style="max-width:700px;"/> 

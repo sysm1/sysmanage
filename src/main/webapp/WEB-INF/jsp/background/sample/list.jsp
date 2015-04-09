@@ -275,6 +275,15 @@ ul { list-style:none;}
 		document.getElementById('middle').style.display="block";
 		document.getElementById('surface').style.display="block";
 	}
+	
+	/**全选**/
+	function checkAll(obj){
+		var checkIds=document.getElementsByName("checkId");
+		var length=checkIds.length;
+		for(var i=0;i<length;i++){
+			checkIds[i].checked =obj.checked;
+		}
+	}
 </script>
 </head>
 <body>
@@ -351,7 +360,7 @@ ul { list-style:none;}
 			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
 				<tr >
 					<th class="specalt" style="width:15px">
-						<input type="checkbox" id="checkIds" name="checkIds">
+						<input type="checkbox" id="checkIds" name="checkIds" onclick="checkAll(this);">
 					</th>
 					<th class="specalt" style="width:50px">id</th>
 					<th class="specalt" style="width:60px">开版日期</th>

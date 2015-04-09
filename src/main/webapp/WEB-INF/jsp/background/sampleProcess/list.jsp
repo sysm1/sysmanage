@@ -338,7 +338,7 @@ html>body td{ font-size:13px;}
 					<th class="specalt" style="width:75px">工艺</th>
 					<th class="specalt" style="width:110px">开版录入备注</th>
 					<th class="specalt" style="width:110px">工厂编号</th>
-					<th class="specalt" >工厂颜色</th>
+					<th class="specalt"  style="min-width: 150px;">工厂颜色</th>
 					<th class="specalt">回版日期</th>
 					<th class="specalt">备注</th>
 				</tr>
@@ -375,7 +375,7 @@ html>body td{ font-size:13px;}
 							${fn:substring(item.mark,0,10)}  
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
-						<td>
+						<td style="width:110px">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							<% i++; %>
 								 <input type="text" id="${item.id }factoryCode${status1.index+1 }" style="width:80px" 
@@ -389,26 +389,29 @@ html>body td{ font-size:13px;}
 								<span onclick="addFactoryCode(${item.id })" id="${item.id  }jiahao" style="cursor:pointer;">+</span>
 							<%} %>
 						</td>
-						<td>
+						<td style="min-width: 150px;">
 						<% int f=1; %>						
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							<% int ff=1; %>
 							<div>
 								<c:forEach var="item2" items="${item1.value}" varStatus="status2">
 								<c:if test="${item2.factoryColor !=null }"><%f++; ff++;%>
-									<input type="text" id="${item.id }${status2.index+1 }factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px" value="${item2.factoryColor }">
+									<input type="text" id="${item.id }${status2.index+1 }factoryColor${status1.index+1 }" 
+										name="factoryColor${status1.index+1 }" style="width:50px" value="${item2.factoryColor }">
 								</c:if>
 								</c:forEach>
-								<% if(ff<9){ 
+								<%if(ff>1){ %>
+								<% if(ff<9){
 								  for(int s=ff;s<=9;s++){%>
 									  <input type="text" id="${item.id  }<%=s %>factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px;display: none" value="">
 								<%} }%>
 								<span onclick="addColor(${item.id  },${status1.index+1})" style="cursor:pointer;">+</span>
 								<input type="hidden" id="${item.id }flag${status1.index+1}" value="<%=ff%>">
+								<%} %>
 							</div>
 							</c:forEach>
 							<% if(f==1){ %>
-							<div>
+							<div >
 								<input type="text" id="${item.id  }1factoryColor1" name="factoryColor1" style="width:50px" value="">
 								<input type="text" id="${item.id  }2factoryColor1" name="factoryColor1" style="width:50px" value="">
 								<input type="text" id="${item.id  }3factoryColor1" name="factoryColor1" style="width:50px" value="">
@@ -449,7 +452,7 @@ html>body td{ font-size:13px;}
 								<input type="hidden" id="${item.id  }flag2" value="4">
 							</div>
 						<%} %>
-						</td><td>
+						</td><td style="width:75px">
 							<c:if test="${item.replyDate ==null ||item.replyDate==''}">
 								<input type="text" id="replyDate" name="replyDate" style="width:70px" value="${replyDate }"
 									onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
