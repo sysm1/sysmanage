@@ -115,6 +115,7 @@ public class ReturnGoodsProcessController extends BaseController {
 	 * @param sampleInput
 	 * @param request
 	 */
+	@ResponseBody
 	@RequestMapping("save")
 	public String save(Model model,HttpServletRequest request,String summaryId,String status){
 		OrderSummary orderSummary=orderSummaryService.getById(summaryId);
@@ -122,9 +123,9 @@ public class ReturnGoodsProcessController extends BaseController {
 		returnGoodsProcessService.save(request, orderSummary);
 		if("1".equals(status)){
 			
-			return list(model,null, "1", request);
+			//return list(model,null, "1", request);
 		}
-		return null;
+		return "ok";
 	}
 	
 	/**

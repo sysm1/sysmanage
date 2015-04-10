@@ -204,6 +204,7 @@ public class OrderInputSummaryController extends BaseController {
 		String tmp = DateUtil.date2Str(new Date(), "yyyyMMdd");
 		try {
 			orderNo=dateVersionService.getValue("orderInputSummary", tmp)+"";
+			orderNo = tmp + Common.prefixFillChar(4, orderNo + "", "0");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
