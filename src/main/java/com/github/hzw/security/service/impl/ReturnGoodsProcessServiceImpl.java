@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderSummaryVO;
+import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.ReturnGoodsProcess;
 import com.github.hzw.security.mapper.ReturnGoodsProcessMapper;
+import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
 import com.github.hzw.util.DateUtil;
@@ -29,6 +32,9 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 	
 	@Autowired
 	private OrderSummaryService orderSummaryService;
+	
+	@Inject
+	private ClothAllowanceService clothAllowanceService;
 	
 	@Override
 	public PageView query(PageView pageView, ReturnGoodsProcess t) {
@@ -99,6 +105,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		String[] kongchas=request.getParameterValues("kongcha");
 		String[] jiaodais=request.getParameterValues("jiaodai");
 		try {
+			int returnNum=0;
 			int size=returnDates.length;
 			ReturnGoodsProcess bean=null;
 			returnGoodsProcessMapper.deleteBySummaryId(orderSummary.getId()+"");
@@ -117,7 +124,17 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				bean.setJiaodai(Integer.parseInt(jiaodais[i]));
 				add(bean);
 				orderSummaryService.update(orderSummary);
+				returnNum+=bean.getReturnNum()-bean.getZhiguan()-bean.getKongcha()-bean.getJiaodai();
 			}
+			//修改坯布余量
+			orderSummary=orderSummaryService.getById(orderSummary.getId()+"");
+			int alreadOrderSum=orderSummary.getNum();
+			alreadOrderSum=alreadOrderSum-returnNum;
+			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId());
+			clothAllowance.setAllowance(clothAllowance.getAllowance()+alreadOrderSum);
+			clothAllowanceService.update(clothAllowance);
+			//坯布余量修改完成
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
