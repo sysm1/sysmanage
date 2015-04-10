@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link href="css/selectUI/css/163css.css" type=text/css rel=stylesheet>
+<script type="text/javascript" src="css/selectUI/js/163css.js"></script>
+
 <%@ include file="/common/header.jsp"%>
 <style type="text/css">
 	.l_right{
@@ -13,6 +16,15 @@
 	}
 	.selectClss{
 		height:30px;
+	}
+	.shortselect{
+		background:#fafdfe;
+		height:28px;
+		line-height:28px;
+		border:1px solid #9bc0dd;
+		-moz-border-radius:2px;
+		-webkit-border-radius:2px;
+		border-radius:2px;
 	}
 </style>
 <script type="text/javascript">
@@ -394,7 +406,7 @@ $(function() {
 					<td class="l_right">幅宽:</td>
 					<td colspan="2">
 						<input id='kuanfu' name="kuanfu" class="checkdesc" type="text" value="" style="width: 80px;">&nbsp;CM&nbsp;
-						<select id="kuanfufs" name="kuanfufs" style="width: 60px;">
+						<select id="kuanfufs" name="kuanfufs" class="shortselect" style="width: 60px;">
 							<option value="0">包边</option>
 							<option value="1">实用</option>
 						</select>

@@ -143,11 +143,26 @@ th.specalt {
 			for(var i=0;i<cbox.length;i++){
 				var f = $('#'+cbox[i]+'_form');
 				f.attr('target','');
-				f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
-				f.submit();
+				//f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
+				//f.submit();
+				
+				$.ajax({
+				    type: "post", //使用get方法访问后台
+				    dataType: "json", //json格式的数据
+				    async: false, //同步   不写的情况下 默认为true
+				    url: '${pageContext.request.contextPath}/background/process/save.html?status=1', //要访问的后台地址
+				    data: f.serialize(), //要发送的数据
+				    success: function(data){
+				    	//alert(data);
+					},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+						alert(XMLHttpRequest.status);
+						alert(XMLHttpRequest.readyState);
+						alert(data);  
+				     }
+				});
 			}
 			alert("数据已回");
-			//location.reload();
+			location.reload();
 		});
 		$("#deleteView").click("click", function() {//绑定查询按扭
 			var cbox=grid.getSelectedCheckbox();
@@ -219,7 +234,7 @@ th.specalt {
 	function onclickTr(id){
 		//obj.style.backgroundColor ="#EEDC82";
 		for(var i=0;i<=16;i++){
-			document.getElementById(i+""+id).style.backgroundColor ="#EEDC82";
+			document.getElementById(i+"_"+id).style.backgroundColor ="#EEDC82";
 		}
 		document.getElementById(id+"checkId").checked=true;
 	}
@@ -228,11 +243,11 @@ th.specalt {
 		var checkFlag=document.getElementById(id+"checkId").checked;
 		if(checkFlag){
 			for(var i=0;i<=16;i++){
-				document.getElementById(i+""+id).style.backgroundColor ="#EEDC82";
+				document.getElementById(i+"_"+id).style.backgroundColor ="#EEDC82";
 			}
 		}else{
 			for(var i=0;i<=16;i++){
-				document.getElementById(i+""+id).style.backgroundColor ="";
+				document.getElementById(i+"_"+id).style.backgroundColor ="";
 			}
 		}
 	}
@@ -248,7 +263,7 @@ th.specalt {
 	/**去除颜色**/
 	function clearColor(id){
 		for(var i=0;i<=16;i++){
-			document.getElementById(i+""+id).style.backgroundColor ="";
+			document.getElementById(i+"_"+id).style.backgroundColor ="";
 		}
 		document.getElementById(id+"checkId").checked=false;
 	}
@@ -318,21 +333,21 @@ th.specalt {
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 				<tr id="${item.id }">
-					<td style="text-align: center;" id="0${item.id }">
+					<td style="text-align: center;" id="0_${item.id }">
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
-					<td id="1${item.id }">${item.returnStatusName }</td>
-					<td id="2${item.id }">${item.id }</td>
-					<td id="16${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>" onclick="clearColor(${item.id});">
+					<td id="1_${item.id }">${item.returnStatusName }</td>
+					<td id="2_${item.id }">${item.id }</td>
+					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
 					</td>
-					<td id="3${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
-					<td id="4${item.id }">${item.factoryCode }</td>
-					<td id="5${item.id }">${item.clothName }</td>
-					<td id="6${item.id }">${item.technologyName }</td>
-					<td id="7${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
-					<td id="8${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
+					<td id="3_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
+					<td id="4_${item.id }">${item.factoryCode }</td>
+					<td id="5_${item.id }">${item.clothName }</td>
+					<td id="6_${item.id }">${item.technologyName }</td>
+					<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
+					<td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
 					<c:if test="${fn:length(map[item.id]) ==0}">
 						<input type="text" name="returnDate" style="width:70px" value=""
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
@@ -344,8 +359,8 @@ th.specalt {
 					</c:if>
 						<span id="${item.id }returnDate" onclick="addOneRow(${item.id });">++</span>
 					</td>
-					<td id="9${item.id }">${item.num }${item.unitName }</td>
-					<td id="10${item.id }" onclick="onclickTr(${item.id })">
+					<td id="9_${item.id }">${item.num }${item.unitName }</td>
+					<td id="10_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text"  name="returnNum" value="" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -363,7 +378,7 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}zhiguan" ></span>
-					</td><td id="12${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="12_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="kongcha" value="" style="width: 45px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -372,7 +387,7 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}kongcha" ></span>
-					</td><td id="13${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="13_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="jiaodai" value="" style="width: 45px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -382,7 +397,7 @@ th.specalt {
 						</c:if>
 						<span id="${item.id}jiaodai" ></span>
 					</td>
-					<td id="14${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
+					<td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
 					<td onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="returnColor" value="${item1.returnColor }" style="width: 60px"><br>
@@ -393,7 +408,7 @@ th.specalt {
 						</c:if>
 						<span id="${item.id }returnColor" ></span>
 					</td>
-					<td id="15${item.id }" onclick="onclickTr(${item.id })">
+					<td id="15_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="mark" value="" ><br>
 						</c:if><c:if test="${map[item.id] != null }">
