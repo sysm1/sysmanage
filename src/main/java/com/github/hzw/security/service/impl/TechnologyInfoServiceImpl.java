@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,8 +67,10 @@ public class TechnologyInfoServiceImpl implements TechnologyInfoService {
 	
 	public List<TechnologyInfo> queryPinyin(String name){
 		Map<String, Object> map = new HashMap<String, Object>();
-		String cn = name.toUpperCase();
-		map.put("t", cn);
+		if(StringUtils.isNotEmpty(name)){
+			name = name.toUpperCase();
+		}
+		map.put("t", name);
 		return technologyInfoMapper.queryPinyin(map);
 	}
 }
