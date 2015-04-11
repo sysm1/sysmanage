@@ -68,7 +68,6 @@ th.nobg {
  border-top: 1px solid #C1DAD7;
  //background: #fff;
  font-size:12px;
- padding: 2px 6px 2px 12px;
  color: #4f6b72;
 }
 
@@ -145,15 +144,28 @@ html>body td{ font-size:13px;}
 				return false;
 			}
 			for(var i=0;i<cbox.length;i++){
-				//alert(check(cbox[i]));
 				if(check(cbox[i])){
 					var f = $('#'+cbox[i]+'_form');
-					f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/answer.html?type=1');
-					f.submit();
+					//f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/answer.html?type=1');
+					//f.submit();
+					$.ajax({
+					    type: "post", //使用get方法访问后台
+					    dataType: "json", //json格式的数据
+					    async: false, //同步   不写的情况下 默认为true
+					    url: '${pageContext.request.contextPath}/background/sampleProcess/answer.html?type=1', //要访问的后台地址
+					    data: f.serialize(), //要发送的数据
+					    success: function(data){
+					    	//alert(data);
+						},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+							alert(XMLHttpRequest.status);
+							alert(XMLHttpRequest.readyState);
+							alert(data);  
+					     }
+					});
 				}
 			}
 			alert("已回成功");
-			//location.reload();
+			location.reload();
 		});
 		$("#delaybtn").click("click", function() {//绑定编辑按扭
 			$('#pageNow').attr('value',1);
@@ -284,6 +296,37 @@ html>body td{ font-size:13px;}
 	function hiddenDiv(id){
 		document.getElementById(id).style.display="none";
 	}
+	
+	/***点击**/
+	function onclickTr(id){
+		//obj.style.backgroundColor ="#EEDC82";
+		for(var i=0;i<=12;i++){
+			document.getElementById(i+"_"+id).style.backgroundColor ="#EEDC82";
+		}
+		document.getElementById(id+"checkId").checked=true;
+	}
+	/***选择一个checkbox**/
+	function clickCheckId(id){
+		var checkFlag=document.getElementById(id+"checkId").checked;
+		if(checkFlag){
+			for(var i=0;i<=12;i++){
+				document.getElementById(i+"_"+id).style.backgroundColor ="#EEDC82";
+			}
+		}else{
+			for(var i=0;i<=12;i++){
+				document.getElementById(i+"_"+id).style.backgroundColor ="";
+			}
+		}
+	}
+	/**全选checkbox**/
+	function checkAllIds(obj){
+		var falg=obj.checked;
+		var checkIds=document.getElementsByName("checkId");
+		for(var i=0;i<checkIds.length;i++){
+			checkIds[i].checked=falg;
+			clickCheckId(checkIds[i].value);
+		}
+	}
 </script>
 </head>
 <body>
@@ -321,19 +364,18 @@ html>body td{ font-size:13px;}
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="delaybtn" title="拖延单：${delayDates }单">
 				拖延&nbsp;<span style="color: red">${delayDates }</span>&nbsp;单
 			</a>
-			&nbsp;&nbsp;&nbsp;点击选择行  双击取消选择行
 		</div>
 		<div id="paging" class="pagclass">
 			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
 				<tr >
 					<th class="specalt" style="width:15px">
-						<input type="checkbox" id="checkIds" name="checkIds">
+						<input type="checkbox" id="checkIds" name="checkIds" onclick="checkAllIds(this);">
 					</th>
 					<th class="specalt" style="width:50px">id</th>
 					<th class="specalt" style="width:45px">日期</th>
-					<th class="specalt" style="width:75px">分色文件号</th>
+					<th class="specalt" style="width:80px">分色文件号</th>
 					<th class="specalt" style="width:75px">布种</th>
-					<th class="specalt" style="width:250px">我司编号</th>
+					<th class="specalt" style="width:248px">我司编号</th>
 					<th class="specalt" style="width:100px">工厂</th>
 					<th class="specalt" style="width:75px">工艺</th>
 					<th class="specalt" style="width:110px">开版录入备注</th>
@@ -344,10 +386,10 @@ html>body td{ font-size:13px;}
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<% int i=0; %>
-					<tr id="${item.id }_tr" onclick="changeColorClick(this,'${item.id }');" ondblclick="changeColorDClick(this,'${item.id }');">
+					<tr id="${item.id }_tr" >
 					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-					 	<td>
-					 		<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" >
+					 	<td id="0_${item.id }">
+					 		<input type="checkbox" id="${item.id }checkId" name="checkId" onclick="clickCheckId(${item.id });" value="${item.id }" >
 					 		<input type="hidden" id="id" name="id" value="${item.id }">
 					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">
 					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">
@@ -355,27 +397,27 @@ html>body td{ font-size:13px;}
 					 		<input type="hidden" id="${item.id }fileCode" name="${item.id }fileCode" value="${item.fileCode}">
 					 		<input type="hidden" id="${item.id }myCompanyCode" name="${item.id }myCompanyCode" value="${item.myCompanyCode }">
 					 	</td>
-						<td onmouseover="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
-						<td title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>">
+						<td id="1_${item.id }" onclick="onclickTr(${item.id })" onmouseover="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
+						<td id="2_${item.id }" onclick="onclickTr(${item.id })" title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>" >
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
-						<td style="width:75px">
-							<input type="text" id="fileCode" name="fileCode" style="width:100px" value="${item.fileCode }" 
+						<td id="3_${item.id }" onclick="onclickTr(${item.id })" style="width:80px">
+							<input type="text" id="fileCode" name="fileCode" style="width:100%" value="${item.fileCode }" 
 								onchange="changeValue(this,'${item.id }fileCode')">
 						</td>
-						<td>${item.clothName }</td>
-						<td>
+						<td id="4_${item.id }" onclick="onclickTr(${item.id })">${item.clothName }</td>
+						<td id="5_${item.id }" onclick="onclickTr(${item.id })">
 							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:90px" 
 								onchange="changeValue(this,'${item.id }myCompanyCode')" value="${item.myCompanyCode }">
 							<input type="file" id="myFile" name="myFile" style="width: 135px">
 						</td>
-						<td>${item.factoryName }</td>
-						<td>${item.technologyName }</td>
-						<td title="${item.mark }">
+						<td id="6_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
+						<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.technologyName }</td>
+						<td id="8_${item.id }" onclick="onclickTr(${item.id })" title="${item.mark }">
 							${fn:substring(item.mark,0,10)}  
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
-						<td style="width:110px">
+						<td id="9_${item.id }" onclick="onclickTr(${item.id })" style="width:120px" >
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							<% i++; %>
 								 <input type="text" id="${item.id }factoryCode${status1.index+1 }" style="width:80px" 
@@ -389,7 +431,7 @@ html>body td{ font-size:13px;}
 								<span onclick="addFactoryCode(${item.id })" id="${item.id  }jiahao" style="cursor:pointer;">+</span>
 							<%} %>
 						</td>
-						<td style="min-width: 150px;">
+						<td id="10_${item.id }" onclick="onclickTr(${item.id })" style="min-width: 150px;">
 						<% int f=1; %>						
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							<% int ff=1; %>
@@ -452,7 +494,7 @@ html>body td{ font-size:13px;}
 								<input type="hidden" id="${item.id  }flag2" value="4">
 							</div>
 						<%} %>
-						</td><td style="width:75px">
+						</td><td id="11_${item.id }" onclick="onclickTr(${item.id })" style="width:75px">
 							<c:if test="${item.replyDate ==null ||item.replyDate==''}">
 								<input type="text" id="replyDate" name="replyDate" style="width:70px" value="${replyDate }"
 									onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
@@ -461,7 +503,7 @@ html>body td{ font-size:13px;}
 									value="<fmt:formatDate value='${item.replyDate }' pattern='yyyy-MM-dd'/>"
 									onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 							</c:if>
-						</td><td>
+						</td><td id="12_${item.id }" onclick="onclickTr(${item.id })">
 							<input type="text" id="replyMark" name="replyMark" style="width:200px" value="${item.replyMark }">
 						</td>
 						</form>

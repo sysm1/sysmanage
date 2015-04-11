@@ -19,7 +19,7 @@ $(function() {
 						$.ligerDialog.success('提交成功!', '提示', function() {
 							//这个是调用同一个页面趾两个iframe里的js方法
 							//account是iframe的id
-							//parent.sample.loadGird();
+							parent.inputsummary.changeColor();
 							closeWin();
 						});
 					} else {
@@ -38,6 +38,24 @@ $(function() {
 	});
 	
 	function saveWin() {
+		var factoryId=$('#factoryId').val();
+		if(factoryId==''){
+			alert('请选择工厂');
+			$('#factoryId').focus();
+			return false;
+		}
+		var technologyId=$('#technologyId').val();
+		if(technologyId==''){
+			alert('请选择工艺');
+			$('#technologyId').focus();
+			return false;
+		}
+		var fileColor=$('#fileColor').val();
+		if(fileColor==''){
+			alert('请填写分色文件号');
+			$('#fileColor').focus();
+			return false;
+		}
 		$("#form").submit();
 	}
 	
@@ -82,7 +100,7 @@ $(function() {
 		var td1=tr.insertCell(1);
 		var td2=tr.insertCell(2);
 		td0.innerHTML='工厂编号：';
-		td1.innerHTML='<input type="text" name="myCompanyColors2" >';
+		td1.innerHTML='<input type="text" name="factoryCodes2" >';
 		td2.colSpan=2;
 		td2.innerHTML='<div id="colors20"><input name="myCompanyColors2" onclick="clickText(this,\'我司颜色\');" '+
 				'onblur="changeValue(this,\'我司颜色\');" type="text" value="我司颜色" style="width:100px;"/>&nbsp;'+
@@ -148,6 +166,7 @@ $(function() {
 	<form name="form" id="form" action="${ctx}/background/flower/add.html" method="post">
 		<input id='picture' name="picture" type="hidden" value="" >
 		<input id='clothId' name="clothId" type="hidden" value="${clothInfo.id }" >
+		<input id='myCompanyCode' name="myCompanyCode" type="hidden" value="${myCompanyCode }" >
 		<table class="pp-list table table-striped table-bordered" style="margin-bottom: -3px;" id="addtable">
 			<tbody>
 			<tr>
@@ -173,7 +192,7 @@ $(function() {
 				<td>工艺：</td>
 				<td>
 					<select id='technologyId' name="technologyId">
-						<option>请选择</option>
+						<option value="">请选择</option>
 						<c:forEach var="item" items="${technologyInfos }">
 						<option value="${item.id }" <c:if test="${item.id eq technologyId }"> selected="selected"</c:if> >${item.name }</option>
 						</c:forEach>
@@ -181,7 +200,7 @@ $(function() {
 				</td>
 				<td>分色文件号：</td>
 				<td>
-					<input id='fileColor' name="fileColor" type="text" value="${bean.fileCode}" style="width:100px;">
+					<input id='fileColor' name="fileColor" type="text" value="${bean.fileCode}" style="width:200px;">
 				</td>
 			</tr><tr>
 				<td colspan="2">工厂编号</td>
@@ -209,20 +228,7 @@ $(function() {
 					</div>
 				</td>
 			</tr>
-			<tr id="fctr2" class="factoryCodeTrCss" style="display: none">
-				<td>工厂编号：</td>
-				<td>
-					<span class="factoryCodeInputcss" id="factoryCodeInputID2">
-					<input name="factoryCodes" type="text" value="工厂编号" style="width:100px;"/><br/>
-					</span><span id="addFacotyCodeId2"><a href="javascript:void(0);">-</a></span>
-				</td>
-				<td colspan="2">
-							<input name="myCompanyColors" type="text" value="我司颜色1" style="width:100px;"/>
-							<input name="factoryColors" type="text" value="工厂颜色" style="width:100px;"/>
-							<input name="mark" type="text" value="备注" style="width:100px;"/>
-							<span id="addFacotyMyCode2"><a href="javascript:void(0);">+</a></span><br/>
-				</td>
-			</tr><tr>
+			<tr>
 				<td colspan="2" >上传图片:<input type="file" id="file1" name="file" /><input id="uploadFile" type="button" value="上传" /></td>
 				<td colspan="2" rowspan="2"><img id="img1" alt="图片预览" src="" /></td>
 			</tr><tr>

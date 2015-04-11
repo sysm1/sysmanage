@@ -107,8 +107,9 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 	public List<OrderSummary> query(String notifyId ){
 		List<OrderSummary> list = orderSummaryMapper.queryByNotifyId(notifyId);
 		return list;
-	}
+	}	
 	
+
 	public PageView queryReportByFactoryPage(PageView pageView, Map<String, Object> map ){
 		map.put("paging", pageView);
 		List<OrderReportFactoryVO> list = orderSummaryMapper.queryReportByFactory(map);
@@ -129,7 +130,16 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 	
 	public List<OrderReportClothVO> queryReportByCloth(Map<String, Object> map){
 		 return orderSummaryMapper.queryReportByCloth(map);
-		 
+	}
+
+	/**
+	 * 查询未回单数量
+	 * @param orderSummary
+	 * @return 未回数量
+	 */
+	public String queryNoReturnNum(OrderSummary orderSummary){
+		return orderSummaryMapper.queryNoReturnNum(orderSummary);
+
 	}
 	
 }

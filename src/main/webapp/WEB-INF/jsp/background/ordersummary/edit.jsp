@@ -203,7 +203,7 @@ $(function() {
 		<!--input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }"-->
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
-		<input type="hidden" id="num1" name="num1" value="${num }">
+		<input type="hidden" id="num1" name="num1" value="${inputsummary.num }">
 		<input type="hidden" id="summId" name="summId" value="${inputsummary.id }">
 		<input type="hidden" id="id" name="id" value="${inputsummary.id }">
 		<table style=" height: 200px;" border="1">

@@ -170,7 +170,7 @@ public class SampleProcessController extends BaseController{
 	 * @param request
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@ResponseBody
 	@RequestMapping("answer")
 	public String answer(Model model,SampleInput sampleInput,HttpServletRequest request){
 		SampleInput bean=new SampleInput();
@@ -187,47 +187,47 @@ public class SampleProcessController extends BaseController{
 			}
 			sampleInputService.saveTemp(request, sampleInput);
 			
-			//再次查询
-			String fid=request.getParameter("fid");
-			String cid=request.getParameter("cid");
-			SampleInput sl=new SampleInput();
-			if(!"".equals(fid)){
-				sl.setFactoryId(Integer.parseInt(fid));
-			}
-			if(!"".equals(cid)){
-				sl.setClothId(Integer.parseInt(cid));
-			}
-			sl.setStatus(new Integer(0));
-			pageView = sampleInputService.query(getPageView("1",null), sl);
-			List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
-			List<ClothInfo> cloths = clothInfoService.queryAll(null);
-			
-			Map<Integer,Map<String,List<SampleAdditional>>> map=new HashMap<Integer,Map<String,List<SampleAdditional>>>();
-			List<SampleInputVO> plist=pageView.getRecords();
-			
-			for(SampleInputVO sample:plist){
-				Map<String,List<SampleAdditional>> facotoryCodeMap=new HashMap<String,List<SampleAdditional>>();
-				SampleAdditional sampleAdditional=new SampleAdditional();
-				sampleAdditional.setSampleId(sample.getId());
-				List<SampleAdditional> list=sampleAdditionalService.queryAll(sampleAdditional);
-				for(SampleAdditional samp:list){
-					if(null==facotoryCodeMap.get(samp.getFactoryCode())){
-						facotoryCodeMap.put(samp.getFactoryCode(), new ArrayList<SampleAdditional>());
-					}
-					facotoryCodeMap.get(samp.getFactoryCode()).add(samp);
-				}
-				map.put(sample.getId(), facotoryCodeMap);
-			}
-			model.addAttribute("map", map);
-			
-			model.addAttribute("pageView", pageView);
-			model.addAttribute("factoryInfos", factoryInfos);
-			model.addAttribute("cloths", cloths);
-			model.addAttribute("bean", sampleInput);
+//			//再次查询
+//			String fid=request.getParameter("fid");
+//			String cid=request.getParameter("cid");
+//			SampleInput sl=new SampleInput();
+//			if(!"".equals(fid)){
+//				sl.setFactoryId(Integer.parseInt(fid));
+//			}
+//			if(!"".equals(cid)){
+//				sl.setClothId(Integer.parseInt(cid));
+//			}
+//			sl.setStatus(new Integer(0));
+//			pageView = sampleInputService.query(getPageView("1",null), sl);
+//			List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+//			List<ClothInfo> cloths = clothInfoService.queryAll(null);
+//			
+//			Map<Integer,Map<String,List<SampleAdditional>>> map=new HashMap<Integer,Map<String,List<SampleAdditional>>>();
+//			List<SampleInputVO> plist=pageView.getRecords();
+//			
+//			for(SampleInputVO sample:plist){
+//				Map<String,List<SampleAdditional>> facotoryCodeMap=new HashMap<String,List<SampleAdditional>>();
+//				SampleAdditional sampleAdditional=new SampleAdditional();
+//				sampleAdditional.setSampleId(sample.getId());
+//				List<SampleAdditional> list=sampleAdditionalService.queryAll(sampleAdditional);
+//				for(SampleAdditional samp:list){
+//					if(null==facotoryCodeMap.get(samp.getFactoryCode())){
+//						facotoryCodeMap.put(samp.getFactoryCode(), new ArrayList<SampleAdditional>());
+//					}
+//					facotoryCodeMap.get(samp.getFactoryCode()).add(samp);
+//				}
+//				map.put(sample.getId(), facotoryCodeMap);
+//			}
+//			model.addAttribute("map", map);
+//			
+//			model.addAttribute("pageView", pageView);
+//			model.addAttribute("factoryInfos", factoryInfos);
+//			model.addAttribute("cloths", cloths);
+//			model.addAttribute("bean", sampleInput);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Common.BACKGROUND_PATH+"/sampleProcess/list";
+		return "ok";
 	}
 	
 	/**

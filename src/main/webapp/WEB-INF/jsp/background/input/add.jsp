@@ -62,6 +62,35 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		});
 	});
 	function saveWin() {
+		var table =document.getElementById("table1");
+		var rows = table.rows.length;
+		var row=null;
+		//var valueTd=document.getElementById ("tbl").rows [1].cells[2];
+		for(var i=1;i<rows;i++){
+			row=table.rows[i];
+			//alert(row.cells[2].childNodes[0].value);
+			if(row.cells[1].childNodes[0].value==''){
+				alert("请选择布种");
+				row.cells[1].childNodes[0].focus();
+				return false;
+			}if(row.cells[2].childNodes[0].value==''){
+				alert("请选择我司编号");
+				row.cells[2].childNodes[0].focus();
+				return false;
+			}if(row.cells[3].childNodes[0].value==''){
+				alert("请选择我司颜色");
+				row.cells[3].childNodes[0].focus();
+				return false;
+			}if(row.cells[4].childNodes[0].value==''){
+				alert("请添加下单数量");
+				row.cells[4].childNodes[0].focus();
+				return false;
+			}if(row.cells[7].childNodes[0].value==''){
+				alert("请选择业务员");
+				row.cells[7].childNodes[0].focus();
+				return false;
+			}
+		}
 		$("#form").submit();
 	}
 	
@@ -121,6 +150,37 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		obj.parentNode.parentNode.children[5].innerHTML=name;
 	}
 	
+	/**查询未回数量**/
+	function queryNoReturnNum(obj){
+		var clothId=obj.parentNode.parentNode.children[1].childNodes[0].value;
+		var myCompanyCode=obj.parentNode.parentNode.children[2].childNodes[0].value;
+		var myCompanyColor=obj.parentNode.parentNode.children[3].childNodes[0].value;
+		if(checkNull(clothId)&&checkNull(myCompanyCode)&&checkNull(myCompanyColor)){
+			$.ajax({
+			    type: "post", //使用get方法访问后台
+			    dataType: "json", //json格式的数据
+			    async: false, //同步   不写的情况下 默认为true
+			    url: rootPath + '/background/ordersummary/queryNoReturnNum.html', //要访问的后台地址
+			    data: {clothId:clothId,myCompanyCode:myCompanyCode,myCompanyColor:myCompanyColor}, //要发送的数据
+			    success: function(data){
+			    	if(null==data){
+			    		data='未下单';
+			    	}
+			    	obj.parentNode.parentNode.children[8].innerHTML=data;
+				},error : function() {    
+			          alert("异常！");    
+			     } 
+			});
+		}
+	}
+	
+	function checkNull(value){
+		if(null==value||value==""){
+			return false;
+		}
+		return true;
+	}
+	
 </script>
 </head>
 <body>
@@ -141,25 +201,25 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th>单位</th>
 					<th>备注</th>
 					<th align="right">业务员</th>
+					<th>未回数量</th>
 				</tr><tr>
 					<td>
 						<input type="checkbox" id="checkId" name="checkId" value="1">
 					</td>
 					<td class="l_left">
 						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:110px;">
-							<option>请选择布种</option>
+							<option value="">请选择</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
 					</td>
 					<td>
-						<select id="myCompanyCode" name="myCompanyCode" style="width:150px;">
-							<option>请选择</option>
-							<option id="1">1</option>
+						<select id="myCompanyCode" name="myCompanyCode" style="width:150px;" onchange="queryNoReturnNum(this)">
+							<option value="">请选择</option>
 						</select>
 					</td><td class="l_left">
-						<input type="text" name="myCompanyColor" style="width:150px;">
+						<input type="text" name="myCompanyColor" style="width:150px;" value="" onchange="queryNoReturnNum(this)">
 					</td>
 					<td >
 						<input type="text" id="num" name="num" value="" style="width: 80px">
@@ -169,12 +229,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td><input type="text" id="mark" name="mark" value=""></td>
 					<td>
 						<select id="salesmanId" name="salesmanId" style="width:140px;">
-							<option>请选择</option>
+							<option value="">请选择</option>
 							<c:forEach items="${salesmanInfos }" var="saleman">
 								<option value="${saleman.id }">${saleman.name }</option>
 							</c:forEach>
 						</select>
 					</td>
+					<td>0</td>
 				</tr>
 			</tbody>
 		</table>

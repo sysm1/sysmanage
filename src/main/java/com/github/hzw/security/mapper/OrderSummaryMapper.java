@@ -18,6 +18,7 @@ public interface OrderSummaryMapper extends BaseMapper<OrderSummary> {
 	 
 	 public List<OrderSummary> queryByNotifyId(String notifyId);
 
+	 public String queryNoReturnNum(OrderSummary orderSummary);
 	 
 	 public List<OrderSummaryVO> queryVO(Map<String, Object> map);
 

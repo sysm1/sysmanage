@@ -1,6 +1,5 @@
 package com.github.hzw.security.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,6 @@ import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
-import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
@@ -58,9 +56,6 @@ public class OrderSummaryController extends BaseController {
 	private TechnologyInfoService technologyInfoService;
 	
 	@Inject
-	private FlowerInfoService flowerInfoService;
-	
-	@Inject
 	private ClothAllowanceService clothAllowanceService;
 	
 	@Inject
@@ -89,7 +84,6 @@ public class OrderSummaryController extends BaseController {
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("bean", info);
 		model.addAttribute("technologyInfos", technologyInfos);
-		
 		return Common.BACKGROUND_PATH+"/ordersummary/list";
 	}
 	
@@ -184,9 +178,10 @@ public class OrderSummaryController extends BaseController {
 			model.addAttribute("colorRed", "red;font-weight:bold");
 			factoryColors=flowerAdditionalService.queryFactoryColor(null);
 		}
+		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		model.addAttribute("factoryColors",factoryColors);
-		
 		model.addAttribute("inputsummary", info);
+		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("clothInfos",clothInfos);
 		model.addAttribute("technologyInfos", technologyInfos);
@@ -244,6 +239,19 @@ public class OrderSummaryController extends BaseController {
 	public void exportExcel(HttpServletResponse response,OrderSummary info) {
 		 List<OrderSummary> acs = orderSummaryService.queryAll(info);
 		POIUtils.exportToExcel(response, "下单汇总报表", acs, OrderSummary.class, "下单汇总", acs.size());
+	}
+	
+	/**
+	 * 查询未回数量
+	 * @param clothId
+	 * @param myCompanyCode
+	 * @param myCompanyColor
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryNoReturnNum")
+	public String queryNoReturnNum(OrderSummary orderSummary){
+		return orderSummaryService.queryNoReturnNum(orderSummary);
 	}
 	
 }
