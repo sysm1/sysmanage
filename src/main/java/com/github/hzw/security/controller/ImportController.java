@@ -85,11 +85,13 @@ public class ImportController extends BaseController {
 		String beginTime = request.getParameter("beginTime");
 		String endTime = request.getParameter("endTime");
 		String clothId = request.getParameter("clothId");
+		// String all = request.getParameter("all");
+		// System.out.println("all:" + all);
 		map.put("beginTime", beginTime);
 		map.put("endTime", endTime);
 		map.put("clothId", clothId);
 		List<OrderReportClothVO> acs = orderSummaryService.queryReportByCloth(map);
-		POIUtils.exportToExcel(response, "布种报表", acs, OrderReportClothVO.class, "布种", acs.size());
+		POIUtils.exportToExcel(response, "下单报表(布种)", acs, OrderReportClothVO.class, "下单报表(布种)", acs.size());
 	}
 	
 	
@@ -103,7 +105,13 @@ public class ImportController extends BaseController {
 		map.put("endTime", endTime);
 		map.put("factoryId", factoryId);
 		List<OrderReportFactoryVO> acs = orderSummaryService.queryReportByFactory(map);
-		POIUtils.exportToExcel(response, "工厂报表", acs, OrderReportFactoryVO.class, "工厂", acs.size());
+		POIUtils.exportToExcel(response, "下单报表(工厂)", acs, OrderReportFactoryVO.class, "下单报表(工厂)", acs.size());
+	}
+	
+	@RequestMapping("list")
+	public String list(Model model, HttpServletRequest request, HttpServletResponse response){
+		
+		return Common.BACKGROUND_PATH+"/report/list";
 	}
 	
 }
