@@ -107,7 +107,7 @@
 	    <include refid="selectId" />
 	    from return_goods_process
 	    where id = #{id,jdbcType=INTEGER}
-	</select>
+	</select>	
   
   	<delete id="delete" parameterType="String">
 		delete from return_goods_process where

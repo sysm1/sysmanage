@@ -641,6 +641,12 @@
       )
   </insert>
   
+  	<!-- 查询未回单数 -->
+	<select id="queryNoReturnNum" parameterType="OrderSummary" resultType="String">
+		select t.num-(select sum(coalesce(return_num,0)) from return_goods_process where t.id=summary_id) noReturn
+		from order_summary  t
+		where cloth_id=#{clothId} and my_company_code=#{myCompanyCode} and my_company_color=#{myCompanyColor}
+	</select>
   
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="OrderSummary" >
     update order_summary
