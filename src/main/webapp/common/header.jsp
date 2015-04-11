@@ -12,14 +12,31 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> 
 <META HTTP-EQUIV="Expires" CONTENT="0"> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ 
 <link rel="stylesheet" href="${ctx}/css/basic.css" />
-<link href="${ctx}/ligerUI/skins/koala/css/style-all.css" rel="stylesheet" type="text/css" />  
+
+
+
+<link href="/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" /> 
+ <!-- 
+ 
+ <link href="${ctx}/ligerUI/skins/koala/css/style-all.css" rel="stylesheet" type="text/css" />
+ 
+ <script src="${ctx}/jquery/jquery-1.3.2.min.js"></script>
+ -->
  <script src="${ctx}/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.form.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery-validation/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery-validation/messages_cn.js"></script>
 <script type="text/javascript" src="${ctx}/ligerUI/js/ligerui.min.js"></script>
 <script type="text/javascript" src="${ctx}/ligerUI/js/plugins/ligerDialog.js"></script>
+
+
+<script src="/ligerUI/js/plugins/ligerCheckBox.js" type="text/javascript"></script>
+    <script src="/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
+    <script src="/ligerUI/js/plugins/ligerComboBox.js" type="text/javascript"></script>
+    
+
  <script src="${ctx}/js/lyGrid.js" type="text/javascript"></script>
 <link href="${ctx}/css/lanyuan.css" rel="stylesheet">
 <link href="${ctx}/css/page.css" rel="stylesheet">

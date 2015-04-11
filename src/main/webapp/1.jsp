@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    
+    <%@ include file="/common/header.jsp"%>
+    
+   
 
-    <link href="/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css">
-    <style type="text/css">
-    </style>
-    <script src="/js/jquery-1.8.3.js" type="text/javascript"></script>  
-    <script src="/ligerUI/js/core/base.js" type="text/javascript"></script>
     <script src="/ligerUI/js/plugins/ligerCheckBox.js" type="text/javascript"></script>
     <script src="/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
     <script src="/ligerUI/js/plugins/ligerComboBox.js" type="text/javascript"></script>
@@ -18,34 +19,41 @@
                 { header: '名字', name: 'name', width: 170 },
                 { header: '描述', name: 'desc', width: 170 }
             ];
- 
+
             $("#txt1").ligerComboBox(
                 {
-                    url: '/background/pinyin/list.html',
+                    url: 'http://127.0.0.1:8080/background/pinyin/list.html',
                     valueField : 'id',
                     textField: 'name',
                     columns: columns,
                     selectBoxWidth: 400,
                     autocomplete: true,
-                    width: 400
+                    width: 400,
+                    onSelected:function(e) {
+                    	 var data = e.data, key = e.key;
+                    	 alert(data + "," + key);
+                    }
                 }
             );
- 
+
             $("#txt2").ligerComboBox(
                 {
-                    url: '/background/pinyin/list.html',
+                    url: 'http://127.0.0.1:8080/background/pinyin/list.html',
                     valueField: 'id',
                     textField: 'name', 
-                    selectBoxWidth: 400,
+                    selectBoxWidth: 80,
                     autocomplete: true,
-                    width: 400 
+                    width: 80,
+                    onSelected:function(e) {
+                   		alert(e);
+                   }
                 }
             );
- 
- 
+
+
             $("#txt3").ligerComboBox(
                 {
-                    url: '/background/pinyin/list.html',
+                    url: 'http://127.0.0.1:8080/background/pinyin/list.html',
                     valueField: 'id',
                     textField: 'name',
                     selectBoxWidth: 400,
@@ -54,6 +62,7 @@
                     renderItem: function (e)
                     { 
                         var data = e.data, key = e.key;
+                        // alert(data + "," + key);
                         var out = [];
                         out.push('<div>' + this._highLight(data.name, key) + '</div>');
                         out.push('<div class="desc">备注:' + data.desc + '</div>');
@@ -62,7 +71,7 @@
                 }
             );
         });
-          
+         
     </script>
     <style type="text/css">
         .desc {
@@ -73,13 +82,17 @@
             background: none;
         }
     </style>
- 
-   
- 
-    <div class="l-text-wrapper"><div class="l-text l-text-combobox" style="width: 400px;"><input type="text" id="txt2" class="l-text-field" ligeruiid="txt2" style="width: 380px;"><div class="l-text-l"></div><div class="l-text-r"></div><div class="l-trigger"><div class="l-trigger-icon"></div></div><div class="l-trigger l-trigger-cancel" style="display: none;"><div class="l-trigger-icon"></div></div></div><input type="hidden" name="txt2_val" id="txt2_val" data-ligerid="txt2"></div><br>   
- 
-    <div class="l-text-wrapper"><div class="l-text l-text-combobox" style="width: 400px;"><input type="text" id="txt3" class="l-text-field" ligeruiid="txt3" style="width: 380px;"><div class="l-text-l"></div><div class="l-text-r"></div><div class="l-trigger"><div class="l-trigger-icon"></div></div><div class="l-trigger l-trigger-cancel" style="display: none;"><div class="l-trigger-icon"></div></div></div><input type="hidden" name="txt3_val" id="txt3_val" data-ligerid="txt3"></div>
+</head>
+<body style="padding:10px">  
+	
+	
+    <input type="text" id="txt2" style="width: 80px;"/><br />   
+
+    <input type="text" id="txt3"/>
+    
     <div class="liger-button"></div>
  <div style="display:none;">
-  
+ 
 </div>
+</body>
+</html>

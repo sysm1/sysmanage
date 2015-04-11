@@ -33,20 +33,23 @@ public class AutoComboController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping("cloth")
-	public List<ClothInfo> findcloth(String t) {
-		return clothInfoService.queryPinyin(t);
+	public List<ClothInfo> findcloth(String key) {
+		System.out.println("cloth:" + key);
+		return clothInfoService.queryPinyin(key);
 	}
 	
 	@ResponseBody
 	@RequestMapping("factory")
-	public List<FactoryInfo> findfactory(String t) {
-		return factoryInfoService.queryPinyin(t);
+	public List<FactoryInfo> findfactory(String key) {
+		System.out.println("factory:" + key);
+		return factoryInfoService.queryPinyin(key);
 	}
 	
 	@ResponseBody
 	@RequestMapping("technology")
-	public List<TechnologyInfo> findtechnology(String t){
-		return technologyInfoService.queryPinyin(t);
+	public List<TechnologyInfo> findtechnology(String key){
+		System.out.println("technology:" + key);
+		return technologyInfoService.queryPinyin(key);
 	}
 	
 	@ResponseBody
@@ -54,13 +57,15 @@ public class AutoComboController extends BaseController {
 	public List<ReturnObject> find(String t) {
 		List<ReturnObject> list = new ArrayList<ReturnObject>();
 		ReturnObject r = null;
-		for(int i = 1; i< 200; i++) {
+		for(int i = 1; i< 20; i++) {
 			r = new ReturnObject();
 			r.setId(i);
 			r.setDesc(i + "desc");
 			java.util.Random m = new java.util.Random(); 
 			int w = m.nextInt(26);
-			r.setName(str.charAt(w) + i + "name");
+			char c = str.charAt(w);
+			System.out.println(c);
+			r.setName(c + "" + i + "name");
 			list.add(r);
 		}
 		return list;

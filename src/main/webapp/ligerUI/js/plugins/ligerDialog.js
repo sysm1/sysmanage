@@ -1,5 +1,5 @@
 ﻿/**
-* jQuery ligerUI 1.2.3
+* jQuery ligerUI 1.2.4
 * 
 * http://ligerui.com
 *  
@@ -47,6 +47,7 @@
 
     $.ligerDefaults.Dialog = {
         cls: null,       //给dialog附加css class
+        contentCls: null,
         id: null,        //给dialog附加id
         buttons: null, //按钮集合 
         isDrag: true,   //是否拖动
@@ -136,11 +137,11 @@
             {
                 p.type = null;
                 g.dialog.addClass("l-dialog-win");
-                
+
             }
             if (p.cls) g.dialog.addClass(p.cls);
             if (p.id) g.dialog.attr("id", p.id);
-             
+
             //设置锁定屏幕、拖动支持 和设置图片
             g.mask();
             if (p.isDrag)
@@ -154,6 +155,8 @@
                 $(".l-dialog-image", g.dialog).remove();
                 g.dialog.content.addClass("l-dialog-content-noimage");
             }
+            if (p.contentCls)
+                g.dialog.content.addClass(p.contentCls);
             if (!p.show)
             {
                 g.unmask();
@@ -182,11 +185,11 @@
                 }
                 else
                 {
-                    g.jiframe = $("<iframe frameborder='0'></iframe>"); 
+                    g.jiframe = $("<iframe frameborder='0'></iframe>");
                     var framename = p.name ? p.name : "ligerwindow" + new Date().getTime();
                     g.jiframe.attr("name", framename);
                     g.jiframe.attr("id", framename);
-                    g.dialog.content.prepend(g.jiframe); 
+                    g.dialog.content.prepend(g.jiframe);
                     g.dialog.content.addClass("l-dialog-content-nopadding l-dialog-content-frame");
 
                     setTimeout(function ()
@@ -203,10 +206,10 @@
                         dialog.close();//关闭dialog 
                         */
                         g.jiframe.attr("src", p.url).bind('load.dialog', function ()
-                        { 
+                        {
                             iframeloading.hide();
                             g.trigger('loaded');
-                        }); 
+                        });
                         g.frame = window.frames[g.jiframe.attr("name")];
                     }, 0);
                     // 为了解决ie下对含有iframe的div窗口销毁不正确，进而导致第二次打开时焦点不在当前图层的问题
@@ -252,6 +255,19 @@
                     g.close();
             });
             if (!p.fixedType)
+            {
+                if (p.width == 'auto')
+                {
+                    setTimeout(function ()
+                    {
+                        resetPos()
+                    }, 100);
+                } else
+                {
+                    resetPos();
+                }
+            }
+            function resetPos()
             {
                 //位置初始化
                 var left = 0;
@@ -500,7 +516,7 @@
             if (value == "auto")
             {
                 g.dialog.content.height('auto');
-            }else if (value >= this._borderY)
+            } else if (value >= this._borderY)
             {
                 var height = value - this._borderY - g.dialog.buttons.outerHeight();
                 if (g.trigger('ContentHeightChange', [height]) == false) return;
@@ -524,7 +540,7 @@
                             $(this).addClass("l-dialog-max-over");
                     }, function ()
                     {
-                        $(this).removeClass("l-dialog-max-over l-dialog-recover-over"); 
+                        $(this).removeClass("l-dialog-max-over l-dialog-recover-over");
                     }).click(function ()
                     {
                         if ($(this).hasClass("l-dialog-recover"))
@@ -656,9 +672,14 @@
                 {
                     var frame = jframe[0];
                     frame.src = "about:blank";
-                    if (frame.contentWindow &&  frame.contentWindow.document)
-                    {
-                        frame.contentWindow.document.write('');
+                    if (frame.contentWindow && frame.contentWindow.document)
+                    { 
+                        try
+                        {
+                            frame.contentWindow.document.write('');
+                        } catch (e)
+                        {
+                        }
                     }
                     $.browser.msie && CollectGarbage();
                     jframe.remove();
@@ -955,7 +976,7 @@
         });
         return $.ligerDialog.open(options);
     };
-    $.ligerDialog.alert = function (content, title, type, callback)
+    $.ligerDialog.alert = function (content, title, type, callback, options)
     {
         content = content || "";
         if (typeof (title) == "function")
@@ -983,7 +1004,7 @@
             showMax: false,
             showToggle: false,
             showMin: false
-        });
+        }, options || {});
         return $.ligerDialog(p);
     };
 
@@ -1015,7 +1036,7 @@
         });
         return $.ligerDialog(p);
     };
-    $.ligerDialog.warning = function (content, title, callback)
+    $.ligerDialog.warning = function (content, title, callback, options)
     {
         if (typeof (title) == "function")
         {
@@ -1040,7 +1061,7 @@
             showMax: false,
             showToggle: false,
             showMin: false
-        });
+        }, options || {});
         return $.ligerDialog(p);
     };
     $.ligerDialog.waitting = function (title)
@@ -1058,21 +1079,21 @@
                 d.close();
         }
     };
-    $.ligerDialog.success = function (content, title, onBtnClick)
+    $.ligerDialog.success = function (content, title, onBtnClick, options)
     {
-        return $.ligerDialog.alert(content, title, 'success', onBtnClick);
-    }; 
-    $.ligerDialog.error = function (content, title, onBtnClick)
-    {
-        return $.ligerDialog.alert(content, title, 'error', onBtnClick);
+        return $.ligerDialog.alert(content, title, 'success', onBtnClick, options);
     };
-    $.ligerDialog.warn = function (content, title, onBtnClick)
+    $.ligerDialog.error = function (content, title, onBtnClick, options)
     {
-        return $.ligerDialog.alert(content, title, 'warn', onBtnClick);
+        return $.ligerDialog.alert(content, title, 'error', onBtnClick, options);
     };
-    $.ligerDialog.question = function (content, title)
+    $.ligerDialog.warn = function (content, title, onBtnClick, options)
     {
-        return $.ligerDialog.alert(content, title, 'question');
+        return $.ligerDialog.alert(content, title, 'warn', onBtnClick, options);
+    };
+    $.ligerDialog.question = function (content, title, options)
+    {
+        return $.ligerDialog.alert(content, title, 'question', null, options);
     };
 
 

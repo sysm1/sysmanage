@@ -89,6 +89,11 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				$(".l_err").css('display','none');
 			}
 		});
+		
+		
+		
+		
+		
 	});
 	function saveWin() {
 		$("#form").submit();
@@ -134,12 +139,15 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td class="l_right">布种：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
+						
 						<select id="clothId" name="clothId">
 							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option runit="${cloth.unit}" value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
+						
+						
 					</div>
 				</td>
 			 </tr>
@@ -155,12 +163,14 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td class="l_right">工厂：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
+						
 						<select id="factoryId" name="factoryId">
 							<option value="">请选择工厂</option>
 							<c:forEach items = "${ factorys }" var="factory">
 								<option value="${factory.id }">${factory.name}</option>
 							</c:forEach>
 						</select>
+						
 					</div>
 				</td>
 			</tr>

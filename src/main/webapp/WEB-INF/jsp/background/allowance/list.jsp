@@ -7,8 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
-<link rel="stylesheet" href="${ctx}/themes/blue/style.css"
-	type="text/css" id="" media="print, projection, screen" />
+
+<link rel="stylesheet" href="${ctx}/themes/blue/style.css" type="text/css" id="" media="print, projection, screen" />
+
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 
@@ -72,12 +73,13 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 		
 		$("#seach").click("click", function() {//绑定查询按扭
 			var num = $("#num").val();
-			
+			alert(num);
 			var searchParams = $("#fenye").serialize();
 			grid.setOptions({
 				data : searchParams
 			}); 
 		});
+		
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
 			f.attr('target','_blank');
@@ -138,6 +140,36 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				}
 			});
 		});
+		
+		$("#factory_text").ligerComboBox({
+             url: '/background/pinyin/factory.html',
+             valueField: 'id',
+             textField: 'name', 
+             selectBoxWidth: 110,
+             autocomplete: true,
+             width: 110,
+             onSelected:function(e) {
+                 $("#factoryId").val(e);
+                  // alert($("#factoryId").val());
+             }
+        });
+		
+		$("#cloth_text").ligerComboBox({
+            url: '/background/pinyin/cloth.html',
+            valueField: 'id',
+            textField: 'clothName', 
+            selectBoxWidth: 110,
+            autocomplete: true,
+            width: 110,
+            onSelected:function(e) {
+                $("#clothId").val(e);
+                 // alert($("#factoryId").val());
+            }
+       });
+	
+		
+	
+		
 	});
 	function loadGird(){
 		grid.loadData();
@@ -152,21 +184,29 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				<tr>
 				<td width="10%">布种：</td>
 				<td width="20%">
+				<input type="hidden" value="" id="clothId" name="clothId">
+				<!-- 
 				<select id="clothId" name="clothId" style="width:110px;">
 					<option value="">请选择布种</option>
 					<c:forEach items="${ cloths }" var = "cloth">
 						<option value="${cloth.id }">${cloth.clothName}</option>
 					</c:forEach>
 				</select> 
+				 -->
+				 <input type="text" id="cloth_text" style="width: 110px;"/>
 				</td>
 				<td width="10%">工厂:</td>
 				<td width="20%">
+				<input type="hidden" value="" id="factoryId" name="factoryId">
+				<!-- 
 				<select id="factoryId" name="factoryId" style="width:110px;">
 					<option value="">请选择工厂</option>
 					<c:forEach items="${ factorys }" var = "factory">
 						<option value="${factory.id }">${factory.name}</option>
 					</c:forEach>
 				</select>
+				 -->
+				 <input type="text" id="factory_text" style="width: 110px;"/>
 				</td>
 				<td width="10%">备注:</td>
 				<td >
