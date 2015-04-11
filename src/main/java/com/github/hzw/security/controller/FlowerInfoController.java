@@ -94,7 +94,7 @@ public class FlowerInfoController extends BaseController{
 			
 			String[] myCompanyColors2 = request.getParameterValues("myCompanyColors2"); // 第2工厂编号对应的着色
 			String[] factoryColors2 = request.getParameterValues("factoryColors2");
-			String[] marks2 = request.getParameterValues("marks2");
+			String[] mark2 = request.getParameterValues("mark2");
 			
 			List<FlowerAdditional> fas = new ArrayList<FlowerAdditional>();
 			FlowerAdditional fa = null;
@@ -105,7 +105,7 @@ public class FlowerInfoController extends BaseController{
 					fa.setFactoryCode(factoryCodes);
 					fa.setFactoryColor(factoryColors[i]);
 					fa.setMyCompanyColor(myCompanyColors[i]);
-					fa.setMark(marks[i]);
+					fa.setMark(marks[i].equals("备注")?"":marks[i]);
 					fa.setMyCompanyCode(info.getMyCompanyCode());
 					fas.add(fa);
 				}
@@ -118,7 +118,7 @@ public class FlowerInfoController extends BaseController{
 					fa.setFactoryCode(factoryCodes2);
 					fa.setFactoryColor(factoryColors2[i]);
 					fa.setMyCompanyColor(myCompanyColors2[i]);
-					fa.setMark(marks2[i]);
+					fa.setMark(mark2[i].equals("备注")?"":mark2[i]);
 					fa.setMyCompanyCode(info.getMyCompanyCode());
 					fas.add(fa);
 				}

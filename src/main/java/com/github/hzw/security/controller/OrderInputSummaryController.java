@@ -2,7 +2,6 @@ package com.github.hzw.security.controller;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -18,29 +17,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.VO.OrderInputVO;
-import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
-import com.github.hzw.security.entity.FlowerAdditional;
-import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
+import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
-import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.DateVersionService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
-import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderInputSummaryService;
+import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
-import com.github.hzw.util.PropertiesUtils;
 
 @Controller
 @RequestMapping("/background/inputsummary/")
@@ -50,13 +45,10 @@ public class OrderInputSummaryController extends BaseController {
 	private OrderInputSummaryService orderInputSummaryService;
 	
 	@Inject
+	private OrderSummaryService orderSummaryService;
+	
+	@Inject
 	private OrderInputService orderInputService;
-	
-	@Inject
-	private ClothAllowanceService clothAllowanceService;
-	
-	@Inject
-	private FlowerInfoService flowerInfoService;
 	
 	@Inject
 	private FlowerAdditionalService flowerAdditionalService;
@@ -175,8 +167,6 @@ public class OrderInputSummaryController extends BaseController {
 		List<OrderInputVO> orderInputList=orderInputService.queryByIds(ids.substring(1).split(","));//ids.substring(1).split(",")
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
-		//坯布余量查询
-		ClothAllowance clothAllowance=null;//clothAllowanceService.queryByCloth(info.getClothId()+"");
 		
 		int num=0;
 		for(OrderInputVO vo:orderInputList){
@@ -208,6 +198,11 @@ public class OrderInputSummaryController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		OrderSummary orderSummary =new OrderSummary();
+		orderSummary.setClothId(info.getClothId());
+		orderSummary.setMyCompanyCode(info.getMyCompanyCode());
+		orderSummary.setMyCompanyColor(info.getMyCompanyColor());
+		String noRetrun=orderSummaryService.queryNoReturnNum(orderSummary);
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("orderInputList", orderInputList);
@@ -218,6 +213,7 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("nowDate", Common.fromDateY());
 		model.addAttribute("inputIds",ids.substring(1));
 		model.addAttribute("summId",summId);
+		model.addAttribute("noRetrun",null==noRetrun?"0":noRetrun);
 		return Common.BACKGROUND_PATH+"/inputsummary/order";
 	}
 	
