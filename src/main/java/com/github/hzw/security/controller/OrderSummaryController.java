@@ -246,4 +246,17 @@ public class OrderSummaryController extends BaseController {
 		POIUtils.exportToExcel(response, "下单汇总报表", acs, OrderSummary.class, "下单汇总", acs.size());
 	}
 	
+	/**
+	 * 查询未回数量
+	 * @param clothId
+	 * @param myCompanyCode
+	 * @param myCompanyColor
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryNoReturnNum")
+	public String queryNoReturnNum(OrderSummary orderSummary){
+		return orderSummaryService.queryNoReturnNum(orderSummary);
+	}
+	
 }

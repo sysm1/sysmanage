@@ -26,6 +26,11 @@ import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PropertiesUtils;
 
+/**
+ * 回货进度
+ * @author wuyb
+ *
+ */
 @Controller
 @RequestMapping("/background/process/")
 public class ReturnGoodsProcessController extends BaseController {
@@ -173,6 +178,7 @@ public class ReturnGoodsProcessController extends BaseController {
 		}
 		return map;
 	}
+	
 	
 	/**
 	 * 删除
