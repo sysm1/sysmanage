@@ -14,4 +14,6 @@ public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
 	
 	public List<FlowerInfo> queryColor(Map<String, Object> map);
 	
+	public List<FlowerInfo> queryReport(Map<String, Object> map);
+	
 }

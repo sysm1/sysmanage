@@ -1,6 +1,7 @@
 package com.github.hzw.security.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,6 +128,7 @@ public class FlowerInfoController extends BaseController{
 			info.setList(fas);
 			info.setStatus(1);
 			info.setPicture(info.getPicture()==null?"http://www.baidu.com/img/bdlogo.png":info.getPicture());
+			info.setCreateTime(new Date());
 			flowerInfoService.add(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
@@ -287,8 +289,14 @@ public class FlowerInfoController extends BaseController{
 	}
 	
 	@RequestMapping("exportExcel")
-	public void exportExcel(HttpServletResponse response,FlowerInfo info) {
-		 List<FlowerInfo> acs = flowerInfoService.queryAll(info);
+	public void exportExcel(HttpServletRequest request, HttpServletResponse response) {
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		//List<FlowerInfo> acs = flowerInfoService.queryAll(info);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("beginTime", beginTime);
+		map.put("endTime", endTime);
+		List<FlowerInfo> acs = flowerInfoService.queryReport(map);
 		POIUtils.exportToExcel(response, "花号报表", acs, FlowerInfo.class, "花号", acs.size());
 	}
 	

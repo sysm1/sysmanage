@@ -71,7 +71,7 @@
     notify_time notifyTime,
     no
   </sql>
-  
+
   <select id="queryPrint" resultType="OrderSummary" parameterType="map">
   	select
 		<include refid="selectId" />
@@ -93,6 +93,42 @@
 		order by id desc
   </select>
   
+  
+  <select id="queryReportByFactory" resultType="com.github.hzw.security.VO.OrderReportFactoryVO" parameterType="map">
+  	select
+		<include refid="selectId" />
+			from order_summary
+		<where> 1=1
+			<if test="beginTime != null and beginTime != ''">
+				and order_date &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and order_date &lt;= #{endTime}
+			</if>
+			<if test="factoryId != null and factoryId != ''">
+				and factory_id = #{factoryId}
+			</if>
+		</where>
+		order by factory_id desc
+  </select>
+  
+  <select id="queryReportByCloth" resultType="com.github.hzw.security.VO.OrderReportClothVO" parameterType="map">
+  	select
+		<include refid="selectId" />
+			from order_summary
+		<where> 1=1
+			<if test="beginTime != null and beginTime != ''">
+				and order_date &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and order_date &lt;= #{endTime}
+			</if>
+			<if test="clothId != null and clothId != ''">
+				and cloth_id = #{clothId}
+			</if>
+		</where>
+		order by cloth_id desc
+  </select>
   
     <select id="queryNotify" resultType="OrderSummary" parameterType="map">
   	select

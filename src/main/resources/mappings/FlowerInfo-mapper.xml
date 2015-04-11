@@ -3,7 +3,7 @@
 <mapper namespace="com.github.hzw.security.mapper.FlowerInfoMapper" >
   
   <sql id="selectId1" >
-    id, factory_id factoryId, myCompanyCode, clothId, fileColor, technologyId, picture, status, factory_code factoryCode
+    id, factory_id factoryId, myCompanyCode, clothId, fileColor, technologyId, picture, status, factory_code factoryCode, create_time createTime
   </sql>
   
   <sql id="selectId" >
@@ -11,13 +11,15 @@
     factory_id factoryId, 
     (select factory.name from factory_info factory where factory.id = flower.factory_id ) as factoryName,
     my_company_code myCompanyCode, 
+    factory_code factoryCode,
     cloth_id clothId, 
     (select cloth.cloth_name from cloth_info cloth where cloth.id = flower.cloth_id ) as clothName, 
     file_color fileColor, 
     technology_id technologyId, 
     (select technology.name from technology_info technology where technology.id = flower.technology_id ) as technologyName,
     picture,     
-    status
+    status,
+    create_time createTime
   </sql>
   
   <sql id="selectIdExt" >
@@ -32,7 +34,8 @@
     technology_id technologyId, 
     (select technology.name from technology_info technology where technology.id = flower.technology_id ) as technologyName,
     picture, 
-    status
+    status,
+    create_time createTime
   </sql>
   
   <sql id="selectfad" >
@@ -85,6 +88,21 @@
 		order by flower.my_company_code desc
 	</select>
   
+  <select id="queryReport" resultType="FlowerInfo" parameterType="map">
+		select
+		<include refid="selectIdExt" />
+			from flower_info flower
+		<where> 
+		 	<if test="beginTime != null and beginTime != ''">
+				and create_time > #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and create_time > #{endTime}
+			</if>
+		</where>
+		order by flower.my_company_code desc
+	</select>
+  
   <select id="query" resultType="FlowerInfo" parameterType="FlowerInfo">
 		select
 		<include refid="selectId" />
@@ -132,7 +150,7 @@
 
 	<insert id="add" parameterType="FlowerInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into flower_info (
-			factory_id, my_company_code, cloth_id, file_color, technology_id, picture, status, factory_code
+			factory_id, my_company_code, cloth_id, file_color, technology_id, picture, status, factory_code, create_time
 		)
 		values(
 			#{factoryId},
@@ -142,7 +160,8 @@
 			#{technologyId},
 			#{picture},
 			#{status},
-			#{factoryCode}
+			#{factoryCode},
+			#{createTime}
 		)
 	</insert>
 	
@@ -183,6 +202,9 @@
 	      	</if>
 	      	<if test="factoryCode != null and factoryCode != ''">
 	        	factory_code=#{factoryCode},
+	      	</if>
+	      	<if test="createTime != null and createTime != ''">
+	        	create_time = #{createTime},
 	      	</if>
 		</set>
 		where id=#{id}

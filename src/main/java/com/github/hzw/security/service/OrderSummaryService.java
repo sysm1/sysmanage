@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.github.hzw.base.BaseService;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.OrderReportClothVO;
+import com.github.hzw.security.VO.OrderReportFactoryVO;
 import com.github.hzw.security.entity.OrderSummary;
 
 public interface OrderSummaryService extends BaseService<OrderSummary> {
@@ -26,4 +28,13 @@ public interface OrderSummaryService extends BaseService<OrderSummary> {
 
 	public PageView queryVO(PageView pageView, OrderSummary t);
 
+	
+	public List<OrderReportFactoryVO> queryReportByFactory(Map<String, Object> map);
+	 
+	public List<OrderReportClothVO> queryReportByCloth(Map<String, Object> map);
+	
+	public PageView queryReportByFactoryPage(PageView pageView, Map<String, Object> map );
+	
+	public PageView queryReportByClothPage(PageView pageView, Map<String, Object> map );
+	 
 }

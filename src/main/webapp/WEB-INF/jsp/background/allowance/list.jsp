@@ -262,6 +262,7 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				<a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>
+				
 				</td>
 				</tr>
 				</table>
@@ -283,11 +284,11 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete
 			</a>
-			<!--  
+			 
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
 				导出excel
 			</a>
-			-->
+			
 		</div>
 		<div id="paging" class="pagclass"></div>
 	</div>

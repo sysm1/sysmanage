@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.OrderReportClothVO;
+import com.github.hzw.security.VO.OrderReportFactoryVO;
 import com.github.hzw.security.VO.OrderSummaryVO;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.mapper.OrderSummaryMapper;
@@ -107,5 +109,27 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 		return list;
 	}
 	
+	public PageView queryReportByFactoryPage(PageView pageView, Map<String, Object> map ){
+		map.put("paging", pageView);
+		List<OrderReportFactoryVO> list = orderSummaryMapper.queryReportByFactory(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
+	
+	public List<OrderReportFactoryVO> queryReportByFactory(Map<String, Object> map){
+		return orderSummaryMapper.queryReportByFactory(map);
+	}
+	
+	public PageView queryReportByClothPage(PageView pageView, Map<String, Object> map ){
+		map.put("paging", pageView);
+		List<OrderReportClothVO> list = orderSummaryMapper.queryReportByCloth(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
+	
+	public List<OrderReportClothVO> queryReportByCloth(Map<String, Object> map){
+		 return orderSummaryMapper.queryReportByCloth(map);
+		 
+	}
 	
 }

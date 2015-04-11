@@ -104,9 +104,11 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 	
 	@Override
 	public List<FlowerInfo> queryFind(FlowerInfo info ){
-		
 		return flowerInfoMapper.queryFind(info);
-		
+	}
+	
+	public List<FlowerInfo> queryReport(Map<String, Object> map) {
+		return flowerInfoMapper.queryReport(map);
 	}
 	
 }

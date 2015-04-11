@@ -160,6 +160,7 @@ create table flower_info(
 	technology_id int, -- 工艺id
 	picture varchar(255), -- 图片(缩略图，原图)
 	status int not null default 1, -- 0 删除 1 正常
+	create_time datatime,
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
