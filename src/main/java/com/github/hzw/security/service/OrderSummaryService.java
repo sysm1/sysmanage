@@ -25,5 +25,12 @@ public interface OrderSummaryService extends BaseService<OrderSummary> {
 	public List<OrderSummary> query(String notifyId);
 
 	public PageView queryVO(PageView pageView, OrderSummary t);
+	
+	/**
+	 * 查询未回单数量
+	 * @param orderSummary
+	 * @return
+	 */
+	public String queryNoReturnNum(OrderSummary orderSummary);
 
 }

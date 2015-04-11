@@ -105,7 +105,15 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 	public List<OrderSummary> query(String notifyId ){
 		List<OrderSummary> list = orderSummaryMapper.queryByNotifyId(notifyId);
 		return list;
-	}
+	}	
 	
+	/**
+	 * 查询未回单数量
+	 * @param orderSummary
+	 * @return 未回数量
+	 */
+	public String queryNoReturnNum(OrderSummary orderSummary){
+		return orderSummaryMapper.queryNoReturnNum(orderSummary);
+	}
 	
 }
