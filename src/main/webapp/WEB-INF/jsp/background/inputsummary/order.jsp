@@ -279,6 +279,12 @@ $(function() {
 			}
 		}
 	}
+	
+	function changeColor(){
+		document.getElementById("myCompanyCodediv").style.color="";
+		document.getElementById("myCompanyColor").style.color="";
+		location.reload();
+	}
 </script>
 </head>
 <body>
@@ -299,13 +305,13 @@ $(function() {
 					<td class="l_right">单号：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<input type="text" id="orderCode" name="orderCode" value="${orderNo }" readonly="readonly">
+							${orderNo }
 						</div>
 					</td>
 					<td class="l_right">下单日期:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<input type="text" id="orderDate" name="orderDate" value="${nowDate }" readonly="readonly">
+							${nowDate }
 						</div>
 					</td>
 				</tr><tr>
@@ -329,7 +335,7 @@ $(function() {
 				</tr><tr>
 					<td class="l_right">我司编号:</td>
 					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if> >
-						<div class="lanyuan_input" 
+						<div class="lanyuan_input" id="myCompanyCodediv"
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyCode }');" style="color: ${codeRed};cursor:pointer;" </c:if> 
 						>
 							${inputsummary.myCompanyCode }
@@ -360,7 +366,7 @@ $(function() {
 					</td>
 					<td class="l_right">我司颜色:</td>
 					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if>>
-						<div class="lanyuan_input" 
+						<div class="lanyuan_input" id="myCompanyColor"
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyColor }');" style="color: ${codeRed};cursor:pointer;" </c:if>
 						> 
 							${inputsummary.myCompanyColor }
@@ -368,8 +374,10 @@ $(function() {
 					</td>
 				</tr><tr>
 					<td class="l_right">工厂坯布数量:</td>
-					<td class="l_left" colspan="2">
-						<div class="lanyuan_input" id="clothAllowance"></div>
+					<td >
+						<div class="lanyuan_input" id="clothAllowance"</div>
+					</td><td style="width: 100px;">
+						<span style="color: red;"><b>未回</b>：${noRetrun }</span>
 					</td>
 					<td class="l_right">工厂颜色:</td>
 					<td class="l_left" colspan="2">
@@ -390,7 +398,7 @@ $(function() {
 							<span id="balancetext" style="display: none">差额<input type="text" id="balance" name="balance" value="" style="width: 50px;"></span>条
 						</div>
 					</td>
-					<td class="l_right"><span id="ywy" style="display: none">业务员：</span></td>
+					<td class="l_right"><span id="ywy" style="display: none">差额业务员：</span></td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id="ywy2" style="display: none" id="balanceSalemanId" name="balanceSalemanId">
