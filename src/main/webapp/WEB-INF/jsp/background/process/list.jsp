@@ -369,7 +369,7 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }returnNum" ></span>
-					</td><td id="11${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="11_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="zhiguan" value="" style="width: 45px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
