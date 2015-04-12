@@ -86,7 +86,7 @@
 			oi.my_company_code myCompanyCode,
 			#{t.id} summId,
 			my_company_color myCompanyColor,
-			num,
+			num,mark,
 			(select name from salesman_info where id=salesman_id) saleManName,
 			create_time createTime
 		from order_input oi

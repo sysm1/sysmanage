@@ -64,7 +64,7 @@
 		select
 			oi.id, 
   			oi.cloth_id clothId, 
-  			oi.my_company_code myCompanyCode, 
+  			oi.my_company_code myCompanyCode, salesman_id salesmanId,
   			(select name from salesman_info where id=oi.salesman_id) saleManName,
   			oi.num,
   			oi.mark
