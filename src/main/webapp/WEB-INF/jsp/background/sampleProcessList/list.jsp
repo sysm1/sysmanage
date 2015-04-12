@@ -141,7 +141,7 @@ ul { list-style:none;}
 					width : 750,
 					height : 500,
 					url : rootPath + '/background/sampleProcessList/addtoFlowerUI.html?id='+cbox[0],
-					title : "花号修改",
+					title : "添加到花号基本资料",
 					isHidden : false
 				});
 			}else{
@@ -281,7 +281,7 @@ ul { list-style:none;}
 				<input type="text" id="endDate" name="endDate" value="<fmt:formatDate value='${bean.endDate}' pattern='yyyy-MM-dd'/>" style="width:91px;"
 					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 			</td><td style="width:70px;text-align: right;">备注：</td>
-			<td><input type="text" id="mark" name="mark" value="" ></td>
+			<td><input type="text" id="mark" name="mark" value="${bean.mark }" ></td>
 			<td style="width:70px;text-align: right;">工厂：</td>
 			<td>
 				<select  id="factoryId" name="factoryId">
@@ -300,7 +300,7 @@ ul { list-style:none;}
 					onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 			</td><td style="width:70px;text-align: right;">编号：</td>
 			<td>
-			    <input type="text" id="codeValue" name="codeValue" value=""/>
+			    <input type="text" id="codeValue" name="codeValue" value="${bean.codeValue }"/>
 			</td><td style="width:70px;text-align: right;">布种：</td>
 			<td>
 			    <select id="clothId" name="clothId">
@@ -361,7 +361,7 @@ ul { list-style:none;}
 					<th class="specalt" style="width:110px">开版录入备注</th>
 					<th class="specalt" >工厂编号</th>
 					<th  >工厂颜色</th>
-					<th >回版日期</th>
+					<th style="width:60px">回版日期</th>
 					<th >备注</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
@@ -412,8 +412,8 @@ ul { list-style:none;}
 								</c:forEach>
 							</div>
 							</c:forEach>
-						</td><td>
-							<fmt:formatDate value='${item.replyDate }' pattern='yyyy-MM-dd'/>
+						</td><td title="<fmt:formatDate value='${item.replyDate }' pattern='yyyy-MM-dd'/>">
+							<fmt:formatDate value='${item.replyDate }' pattern='MM-dd'/>
 						</td><td title="${item.replyMark }">
 							${fn:substring(item.replyMark,0,10)}  
 							<c:if test="${fn:length(item.replyMark)>10}">...</c:if>

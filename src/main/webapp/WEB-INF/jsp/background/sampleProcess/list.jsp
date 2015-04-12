@@ -401,9 +401,9 @@ html>body td{ font-size:13px;}
 						<td id="2_${item.id }" onclick="onclickTr(${item.id })" title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>" >
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
-						<td id="3_${item.id }" onclick="onclickTr(${item.id })" style="width:80px">
+						<td id="3_${item.id }" style="width:80px" >
 							<input type="text" id="fileCode" name="fileCode" style="width:100%" value="${item.fileCode }" 
-								onchange="changeValue(this,'${item.id }fileCode')">
+								onchange="changeValue(this,'${item.id }fileCode');" onclick="onclickTr(${item.id })" >
 						</td>
 						<td id="4_${item.id }" onclick="onclickTr(${item.id })">${item.clothName }</td>
 						<td id="5_${item.id }" onclick="onclickTr(${item.id })">

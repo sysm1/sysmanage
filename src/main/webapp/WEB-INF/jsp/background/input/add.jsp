@@ -60,6 +60,22 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				$(".l_err").css('display','none');
 			}
 		});
+		
+		
+		$("#myCompanyCode_text").ligerComboBox({
+            url: '/background/pinyin/factory.html',
+            valueField: 'id',
+            textField: 'name', 
+            selectBoxWidth: 110,
+            autocomplete: true,
+            width: 110,
+            onSelected:function(e) {
+            	alert(e);
+                //$("#factoryId").val(e);
+                 // alert($("#factoryId").val());
+            }
+       });
+		
 	});
 	function saveWin() {
 		var table =document.getElementById("table1");
@@ -226,9 +242,15 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</select>
 					</td>
 					<td>
+						
 						<select id="myCompanyCode" name="myCompanyCode" style="width:150px;" onchange="queryNoReturnNum(this)">
 							<option value="">请选择</option>
 						</select>
+						
+						
+						<!--input type="hidden" value="" id="myCompanyCode" name="myCompanyCode">
+						<input type="text" id="myCompanyCode_text" style="width: 110px;"/-->
+						
 					</td><td class="l_left">
 						<input type="text" name="myCompanyColor" style="width:150px;" value="" onchange="queryNoReturnNum(this)">
 					</td>
@@ -255,7 +277,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<td>
 					<div class="l_btn_centent">
 						<!-- saveWin_form   from是表单Ｉd-->
-						<a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a>
+						<!--a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a-->
 						<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
 						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
 						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
@@ -265,9 +287,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</td>
 			</tr>
 		</table>
-		</td><td>
+		</td>
+		<!--td>
 			图片预览<img alt="" src="http://d.hiphotos.baidu.com/baike/w%3D268/sign=9855e88c3912b31bc76cca2fbe1a3674/a8ec8a13632762d01cdbd074a0ec08fa503dc610.jpg">
-		</td></tr></table>
+		</td-->
+		</tr></table>
 	</form>
 	</div>
 </body>

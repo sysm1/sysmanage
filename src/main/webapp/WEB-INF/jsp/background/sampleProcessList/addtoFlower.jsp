@@ -38,7 +38,25 @@ $(function() {
 	});
 	
 	function saveWin() {
-		$("#form").submit();
+		var factoryCodes=$('#factoryCodes').val();
+		var myCompanyColors=document.getElementsByName("myCompanyColors");
+		//var myCompanyColors2=document.getElementsByName("myCompanyColors2");
+		var count=0;
+		if(factoryCodes!=''){
+			var length=myCompanyColors.length;
+			for(var i=0;i<length-1;i++){
+				if(myCompanyColors[i].value=='我司颜色'||myCompanyColors[i].value==''){
+					count++;
+				}
+			}
+		}
+		if(count>0){
+			if(confirm("我司颜色未填写是否需要保存，点击‘是’保存")){
+				$("#form").submit();
+			}
+		}else{
+			$("#form").submit();
+		}
 	}
 	
 	function ajaxFileUpload() {
@@ -77,12 +95,12 @@ $(function() {
         return false;
     }
 	function addOneRow(){
-		var tr=document.getElementById('addtable').insertRow(4);
+		var tr=document.getElementById('addtable').insertRow(5);
 		var td0=tr.insertCell(0);
 		var td1=tr.insertCell(1);
 		var td2=tr.insertCell(2);
 		td0.innerHTML='工厂编号：';
-		td1.innerHTML='<input type="text" name="myCompanyColors2" >';
+		td1.innerHTML='<input type="text" id="factoryCodes2" name="factoryCodes2" >';
 		td2.colSpan=2;
 		td2.innerHTML='<div id="colors20"><input name="myCompanyColors2" onclick="clickText(this,\'我司颜色\');" '+
 				'onblur="changeValue(this,\'我司颜色\');" type="text" value="我司颜色" style="width:100px;"/>&nbsp;'+
@@ -143,40 +161,31 @@ $(function() {
 </script>
 </head>
 <body>
-<div class="divdialog">
-	<div class="l_err" style="width: 370px;"></div>
+<div class="divdialog" style="padding-top: -60px;">
 	<form name="form" id="form" action="${ctx}/background/flower/add.html" method="post">
 		<input id='picture' name="picture" type="hidden" value="" >
 		<input id='factoryId' name="factoryId" type="hidden" value="${bean.factoryId }" >
 		<input id='clothId' name="clothId" type="hidden" value="${bean.clothId }" >
-		<table class="pp-list table table-striped table-bordered" style="margin-bottom: -3px;" id="addtable">
+		<input id='myCompanyCode' name="myCompanyCode" type="hidden" value="${bean.myCompanyCode }" >
+		<table class="pp-list table table-striped table-bordered" id="addtable">
 			<tbody>
 			<tr>
-				<td>我司名称：</td>
+				<td style="width: 13%;background-color: #00FFFF">我司名称：</td>
 				<td>飞翔</td>
-				<td>工厂：</td>
+				<td style="width: 13%;background-color: #00FFFF">工厂：</td>
 				<td>${bean.factoryName}</td>
 			</tr><tr>
-				<td>我司编号：</td>
-				<td>
-					<select id="myCompanyCode" name="myCompanyCode">
-						<option value="">请选择</option>
-						<option <c:if test="${bean.myCompanyCode eq fx2020202}"></c:if> value="fx2020202">fx2020202</option>
-						<option value="fx3020232">fx3020232</option>
-						<option value="fx4020242">fx4020242</option>
-					</select>
-				</td>
-				<td>布种：</td>
+				<td style="background-color: #00FFFF">我司编号：</td>
+				<td>${bean.myCompanyCode}</td>
+				<td style="background-color: #00FFFF">布种：</td>
 				<td>${bean.clothName }</td>
 			</tr><tr>
-				<td>工艺：</td>
+				<td style="background-color: #00FFFF">工艺：</td>
 				<td>${bean.technologyName }</td>
-				<td>分色文件号：</td>
-				<td>
-					<input id='fileColor' name="fileColor" type="text" value="${bean.fileCode}" style="width:100px;">
-				</td>
-			</tr><tr>
-				<td colspan="2">工厂编号</td>
+				<td style="background-color: #00FFFF">分色文件号：</td>
+				<td>${bean.fileCode}</td>
+			</tr><tr style="background-color: #00FFFF">
+				<td colspan="2" style="text-align: center">工厂编号</td>
 				<td colspan="2">
 					&nbsp;&nbsp;我司颜色&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					工厂颜色&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -187,9 +196,9 @@ $(function() {
 				<td>工厂编号：</td>
 				<td>				
 					<span class="factoryCodeInputcss" id="factoryCodeInputID">
-					<input name="factoryCodes" type="text" value="${item.key }" />
+					<input id="factoryCodes" name="factoryCodes" type="text" value="${item.key }" />
 					</span>
-					<span id="addonerow"><a onclick="addOneRow();">++</a></span>
+					<!--span id="addonerow"><a onclick="addOneRow();">++</a></span-->
 				</td>
 				<td colspan="2">
 					<c:forEach var="item2" items="${item.value}" varStatus="status2">
@@ -205,21 +214,11 @@ $(function() {
 				</td>
 			</tr>
 			</c:forEach>
-			<tr id="fctr2" class="factoryCodeTrCss" style="display: none">
-				<td>工厂编号：</td>
-				<td>
-					<span class="factoryCodeInputcss" id="factoryCodeInputID2">
-					<input name="factoryCodes" type="text" value="" style="width:100px;"/><br/>
-					</span><span id="addFacotyCodeId2"><a href="javascript:void(0);">-</a></span>
+			<tr>
+				<td colspan="2" >上传图片:
+					<input type="file" id="file1" name="file" style="height: 23px;"/>
+					<input id="uploadFile" type="button" value="上传" />
 				</td>
-				<td colspan="2">
-							<input name="myCompanyColors" type="text" value="我司颜色1" style="width:100px;"/>
-							<input name="factoryColors" type="text" value="工厂颜色" style="width:100px;"/>
-							<input name="mark" type="text" value="备注" style="width:100px;"/>
-							<span id="addFacotyMyCode2"><a href="javascript:void(0);">+</a></span><br/>
-				</td>
-			</tr><tr>
-				<td colspan="2" >上传图片:<input type="file" id="file1" name="file" /><input id="uploadFile" type="button" value="上传" /></td>
 				<td colspan="2" rowspan="2"><img id="img1" alt="图片预览" src="" /></td>
 			</tr><tr>
 				<td colspan="2">

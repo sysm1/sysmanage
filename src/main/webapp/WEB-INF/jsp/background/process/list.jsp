@@ -150,7 +150,7 @@ th.specalt {
 				    type: "post", //使用get方法访问后台
 				    dataType: "json", //json格式的数据
 				    async: false, //同步   不写的情况下 默认为true
-				    url: '${pageContext.request.contextPath}/background/process/save.html?status=1', //要访问的后台地址
+				    url: '${pageContext.request.contextPath}/background/process/save.html?status=2', //要访问的后台地址
 				    data: f.serialize(), //要发送的数据
 				    success: function(data){
 				    	//alert(data);
