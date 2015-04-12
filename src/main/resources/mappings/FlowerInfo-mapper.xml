@@ -147,6 +147,10 @@
 		</where>
 		order by id desc
 	</select>
+	
+	<select id="queryMycompanyCodeByCloth" parameterType="Integer" resultType="String">
+		select DISTINCT my_company_code myCompanyCode from flower_info where cloth_id = #{clothId}
+	</select>
 
 	<insert id="add" parameterType="FlowerInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into flower_info (
