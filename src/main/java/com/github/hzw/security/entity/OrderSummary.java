@@ -107,6 +107,11 @@ public class OrderSummary {
     private String no;
     private String notifyTimeStr; // 
     
+    /***业务员IDs**/
+    private String salesmans;
+
+    private String mark;
+    
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
         return id;
@@ -306,10 +311,6 @@ public class OrderSummary {
         this.setCreateTimeStr(DateUtil.date2Str(createTime, "yyyy-MM-dd"));
     }
     
-    private String salesmans;
-
-    private String mark;
-
 	public String getSalesmans() {
 		return salesmans;
 	}

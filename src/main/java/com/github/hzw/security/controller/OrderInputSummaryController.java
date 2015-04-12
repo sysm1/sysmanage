@@ -169,8 +169,10 @@ public class OrderInputSummaryController extends BaseController {
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		
 		int num=0;
+		String salmanIds="";
 		for(OrderInputVO vo:orderInputList){
 			num+=vo.getNum();
+			salmanIds+=","+vo.getSalesmanId();
 		}
 		
 		//****判断我司编号和我司颜色是否在花号基本资料中存在 不存在标记为红色****/
@@ -213,6 +215,7 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("nowDate", Common.fromDateY());
 		model.addAttribute("inputIds",ids.substring(1));
 		model.addAttribute("summId",summId);
+		model.addAttribute("salmanIds",salmanIds);
 		model.addAttribute("noRetrun",null==noRetrun?"0":noRetrun);
 		return Common.BACKGROUND_PATH+"/inputsummary/order";
 	}
