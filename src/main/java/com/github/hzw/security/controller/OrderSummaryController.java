@@ -181,6 +181,7 @@ public class OrderSummaryController extends BaseController {
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		model.addAttribute("factoryColors",factoryColors);
 		model.addAttribute("inputsummary", info);
+		model.addAttribute("orgNum", info.getNum()-info.getBalance());
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("clothInfos",clothInfos);

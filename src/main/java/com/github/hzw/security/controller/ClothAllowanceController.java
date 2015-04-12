@@ -74,7 +74,7 @@ public class ClothAllowanceController extends BaseController {
 		String cloth_allowance_kg="";
 		//确定布种的单位
 		if(null!=clothAllowance){
-			if(null==clothInfo.getUnit()||clothInfo.getUnit()==0){
+			if(null==clothInfo.getUnit()||clothInfo.getUnit()==0||clothInfo.getUnit()==4){
 				cloth_allowance_tiao=PropertiesUtils.findPropertiesKey("cloth_allowance_tiao");
 				if(clothAllowance.getAllowance()>Double.parseDouble(cloth_allowance_tiao)){
 					return "大量 ";

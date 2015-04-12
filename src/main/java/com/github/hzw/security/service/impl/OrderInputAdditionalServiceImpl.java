@@ -64,7 +64,7 @@ public class OrderInputAdditionalServiceImpl implements
 			try {
 				this.add(bean);
 				
-				//预录入汇总
+				/*预录入汇总
 				orderInputSummary.setMyCompanyCode(input.getMyCompanyCode());
 				orderInputSummary.setClothId(input.getClothId());
 				orderInputSummary.setMyCompanyColor(myCompanyColors[i]);
@@ -76,7 +76,7 @@ public class OrderInputAdditionalServiceImpl implements
 				}else{
 					orderInputSummary.setOrderIds(bean.getId()+"");
 					orderInputSummaryMapper.add(orderInputSummary);
-				}
+				}*/
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

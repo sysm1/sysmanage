@@ -169,11 +169,12 @@ public class OrderInputSummaryController extends BaseController {
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		
 		int num=0;
-		String salmanIds="";
+		String salmanIds=",";
 		for(OrderInputVO vo:orderInputList){
 			num+=vo.getNum();
 			salmanIds+=","+vo.getSalesmanId();
 		}
+		salmanIds=salmanIds.substring(1);
 		
 		//****判断我司编号和我司颜色是否在花号基本资料中存在 不存在标记为红色****/
 		List<String> factoryCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
