@@ -410,8 +410,8 @@ ul { list-style:none;}
 							${fn:substring(item.mark,0,10)}  
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
-					 	<td>
-					 		${item.salesmans }
+					 	<td >
+					 		<span id="${status.index }_salesId">${item.salesmans }</span>
 					 	</td>
 					<tr>
 				</c:forEach>
@@ -462,4 +462,23 @@ ul { list-style:none;}
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+/**初始化业务员名称***/
+var size=${size};
+var salmanId='';
+for(var i=0;i<=size;i++){
+	var id=i+'_salesId';
+	salmanId=$('#'+id)[0].innerHTML;
+	$.ajax({
+	    type: "post", //使用get方法访问后台
+	    dataType: "json", //json格式的数据
+	    async: false, //同步   不写的情况下 默认为true
+	    url: rootPath + '/background/salesman/getSalmansName.html', //要访问的后台地址
+	    data: {ids:salmanId}, //要发送的数据
+	    success: function(data){
+	    	$('#'+id)[0].innerHTML=data;		    	
+		}
+	});
+}
+</script>
 </html>
