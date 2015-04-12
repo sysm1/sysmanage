@@ -59,7 +59,9 @@ public class OrderInputController extends BaseController {
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
+		System.out.println("下单预录入查询 布种："+cloths.size());
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		System.out.println("下单预录入查询 业务员："+salesmanInfos.size());
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		return Common.BACKGROUND_PATH+"/input/list";
@@ -73,7 +75,9 @@ public class OrderInputController extends BaseController {
 	@ResponseBody
 	@RequestMapping("query")
 	public PageView query(OrderInputVO info,String pageNow,String pagesize) {
+		//System.out.println("==========xiadan==============：");
 		pageView = orderInputService.queryVO(getPageView(pageNow,pagesize), info);
+		//System.out.println("下单预录入查询："+pageView.getPageSize());
 		return pageView;
 	}
 	
