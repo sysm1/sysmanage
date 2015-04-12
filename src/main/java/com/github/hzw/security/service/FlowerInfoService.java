@@ -14,4 +14,11 @@ public interface FlowerInfoService extends BaseService<FlowerInfo> {
 	public PageView queryCode(PageView pageView, String code);
 	
 	public List<FlowerInfo> queryReport(Map<String, Object> map);
+	
+	/**
+	 * 以布种获取我司编号
+	 * @param clothId
+	 * @return
+	 */
+	public List<String> queryMycompanyCodeByCloth(Integer clothId);
 }

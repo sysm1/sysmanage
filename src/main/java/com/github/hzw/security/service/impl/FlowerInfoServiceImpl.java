@@ -50,6 +50,15 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 	public List<FlowerInfo> queryAll(FlowerInfo t) {
 		return flowerInfoMapper.queryAll(t);
 	}
+	
+	/**
+	 * 以布种获取我司编号
+	 * @param clothId
+	 * @return
+	 */
+	public List<String> queryMycompanyCodeByCloth(Integer clothId){
+		return flowerInfoMapper.queryMycompanyCodeByCloth(clothId);
+	}
 
 	@Override
 	public void delete(String id) throws Exception {

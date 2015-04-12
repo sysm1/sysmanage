@@ -16,4 +16,6 @@ public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
 	
 	public List<FlowerInfo> queryReport(Map<String, Object> map);
 	
+	public List<String> queryMycompanyCodeByCloth(Integer clothId);
+	
 }

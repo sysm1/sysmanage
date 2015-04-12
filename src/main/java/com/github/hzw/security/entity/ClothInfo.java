@@ -94,7 +94,9 @@ public class ClothInfo {
     }
     /**单位名称**/
 	public String getUnitName() {
-		if(unit==0){
+		if(null==unit){
+			unitName="";
+		}else if(0==unit){
 			unitName="条";
 		}else if(1==unit){
 			unitName="KG";

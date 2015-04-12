@@ -50,7 +50,11 @@ public class ClothInfoController extends BaseController {
 	public String getClothUnit(ClothInfo clothInfo,String pageNow,String pagesize){
 		pageView = clothInfoService.query(getPageView(pageNow,pagesize), clothInfo);
 		List<ClothInfo> list=pageView.getRecords();
-		return list.get(0).getUnitName();
+		String unitName="无单位";
+		if(null!=list.get(0).getUnitName()&&!"".equals(list.get(0).getUnitName())){
+			unitName=list.get(0).getUnitName();
+		}
+		return unitName;
 	}
 	
 	

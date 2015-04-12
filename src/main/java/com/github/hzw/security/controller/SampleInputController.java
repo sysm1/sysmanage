@@ -287,10 +287,10 @@ public class SampleInputController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("queryMycompanyCodeByCloth")
-	public List<FlowerInfo> queryMycompanyCodeByCloth(Integer clothId){
+	public List<String> queryMycompanyCodeByCloth(Integer clothId){
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setClothId(clothId);
-		List<FlowerInfo> list=flowerInfoService.queryAll(flowerInfo);
+		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(clothId);
 		return list;
 	}
 }
