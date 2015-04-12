@@ -64,14 +64,14 @@
     packing_style packingStyle, 
     print_status printStatus, print_num printNum,
     status, return_status returnStatus,
-    create_time createTime, salesmans, mark, 
+    create_time createTime, mark, CONCAT(salesmans, coalesce(balance_saleman_id,'0')) salesmans, 
     zhiguan, kongcha, jiaodai, balance, balance_saleman_id balanceSalemanId, kuanfu, kuanfufs, kezhong,
     kezhongUnit, kezhongfs,
     notify_id notifyId,
     notify_time notifyTime,
     no
   </sql>
-
+  
   <select id="queryPrint" resultType="OrderSummary" parameterType="map">
   	select
 		<include refid="selectId" />
@@ -93,42 +93,6 @@
 		order by id desc
   </select>
   
-  
-  <select id="queryReportByFactory" resultType="com.github.hzw.security.VO.OrderReportFactoryVO" parameterType="map">
-  	select
-		<include refid="selectId" />
-			from order_summary
-		<where> 1=1
-			<if test="beginTime != null and beginTime != ''">
-				and order_date &gt;= #{beginTime}
-			</if>
-			<if test="endTime != null and endTime != ''">
-				and order_date &lt;= #{endTime}
-			</if>
-			<if test="factoryId != null and factoryId != ''">
-				and factory_id = #{factoryId}
-			</if>
-		</where>
-		order by factory_id desc
-  </select>
-  
-  <select id="queryReportByCloth" resultType="com.github.hzw.security.VO.OrderReportClothVO" parameterType="map">
-  	select
-		<include refid="selectId" />
-			from order_summary
-		<where> 1=1
-			<if test="beginTime != null and beginTime != ''">
-				and order_date &gt;= #{beginTime}
-			</if>
-			<if test="endTime != null and endTime != ''">
-				and order_date &lt;= #{endTime}
-			</if>
-			<if test="clothId != null and clothId != ''">
-				and cloth_id = #{clothId}
-			</if>
-		</where>
-		order by cloth_id desc
-  </select>
   
     <select id="queryNotify" resultType="OrderSummary" parameterType="map">
   	select
@@ -420,6 +384,10 @@
       </if>
       <if test="no != null" >
         no,
+      </if><if test="balance != null" >
+        balance,
+      </if><if test="balanceSalemanId != null" >
+        balance_Saleman_Id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -513,6 +481,10 @@
       </if>
       <if test="no != null" >
         #{no,jdbcType=VARCHAR},
+      </if> <if test="balance != null" >
+        #{balance,jdbcType=VARCHAR},
+      </if> <if test="balanceSalemanId != null" >
+        #{balanceSalemanId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -635,6 +607,10 @@
       </if>
       <if test="no != null" >
         no = #{no,jdbcType=VARCHAR},
+      </if> <if test="balance != null" >
+        balance = #{balance,jdbcType=INTEGER},
+      </if> <if test="balanceSalemanId != null" >
+        balance_Saleman_Id = #{balanceSalemanId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -665,7 +641,7 @@
       factory_color, cloth_num, num, 
       standard, packing_style, print_status, 
       print_num, status, return_status, 
-      create_time, salesmans, mark
+      create_time, salesmans, mark,balance,balance_Saleman_Id
       )
     values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderDate,jdbcType=TIMESTAMP}, 
       #{clothId,jdbcType=INTEGER}, #{factoryId,jdbcType=INTEGER}, #{technologyId,jdbcType=INTEGER}, 
@@ -673,13 +649,14 @@
       #{factoryColor,jdbcType=VARCHAR}, #{clothNum,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
       #{standard,jdbcType=VARCHAR}, #{packingStyle,jdbcType=VARCHAR}, #{printStatus,jdbcType=INTEGER}, 
       #{printNum,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{returnStatus,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{salesmans,jdbcType=LONGVARCHAR}, #{mark,jdbcType=LONGVARCHAR}
+      #{createTime,jdbcType=TIMESTAMP}, #{salesmans,jdbcType=LONGVARCHAR}, #{mark,jdbcType=LONGVARCHAR},
+      #{balance,jdbcType=INTEGER}, #{balanceSalemanId,jdbcType=INTEGER}
       )
   </insert>
   
   	<!-- 查询未回单数 -->
 	<select id="queryNoReturnNum" parameterType="OrderSummary" resultType="String">
-		select t.num-(select sum(coalesce(return_num,0)) from return_goods_process where t.id=summary_id) noReturn
+		select sum(t.num)-coalesce((select sum(coalesce(return_num,0)) from return_goods_process where t.id=summary_id),0) noReturn 
 		from order_summary  t
 		where cloth_id=#{clothId} and my_company_code=#{myCompanyCode} and my_company_color=#{myCompanyColor}
 	</select>
@@ -731,6 +708,40 @@
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryReportByFactory" resultType="com.github.hzw.security.VO.OrderReportFactoryVO" parameterType="map">
+  	select
+		<include refid="selectId" />
+			from order_summary
+		<where> 1=1
+			<if test="beginTime != null and beginTime != ''">
+				and order_date &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and order_date &lt;= #{endTime}
+			</if>
+			<if test="factoryId != null and factoryId != ''">
+				and factory_id = #{factoryId}
+			</if>
+		</where>
+		order by factory_id desc
+  </select>
   
+  <select id="queryReportByCloth" resultType="com.github.hzw.security.VO.OrderReportClothVO" parameterType="map">
+  	select
+		<include refid="selectId" />
+			from order_summary
+		<where> 1=1
+			<if test="beginTime != null and beginTime != ''">
+				and order_date &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and order_date &lt;= #{endTime}
+			</if>
+			<if test="clothId != null and clothId != ''">
+				and cloth_id = #{clothId}
+			</if>
+		</where>
+		order by cloth_id desc
+  </select>
   
 </mapper>
