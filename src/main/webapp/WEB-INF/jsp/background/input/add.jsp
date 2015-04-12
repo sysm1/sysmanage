@@ -151,21 +151,44 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
 		    data: {clothId:obj.value}, //要发送的数据
 		    success: function(data){
-		    	//$("#myCompanyCode").empty();
-		    	//alert(obj.parentNode.parentNode.children[2].childNodes[0]);
-		    	var select = obj.parentNode.parentNode.children[2].childNodes[0];
-		    	var sl=select.options.length-1;
-		    	//alert(select.options.length);
-		    	for(var i=sl;i>0;i--){
-		    		select.options.remove(i);
+		    	if(data!=null&&data!=''){
+		    		//alert(data);
+			    	//$("#myCompanyCode").empty();
+			    	//alert(obj.parentNode.parentNode.children[2].childNodes[0]);
+			    	var select0 = obj.parentNode.parentNode.children[0].childNodes[0];
+			    	var select1 = obj.parentNode.parentNode.children[1].childNodes[0];
+			    	var select2 = obj.parentNode.parentNode.children[2];
+			    	//var select = obj.parent();
+			    	//select =document.getElementById('myCompanyCode');
+			    	//alert(select0.nodeName+select1.nodeName+select2.innerHTML);
+			    	/*var sl=select.options.length-1;
+			    	alert(sl);
+			    	for(var i=sl;i>0;i--){
+			    		select.options.remove(i);
+			    	}
+			    	*/
+			    	var selectb=null;
+			    	var selecte=null;
+			    	var options='';
+			    	selectb='<select id="myCompanyCode" name="myCompanyCode" style="width:150px;" onchange="queryNoReturnNum(this)">';
+			    	//alert(selectb);
+			    	for(var i=0;i<data.length;i++){
+			    		//alert(i);
+			    		if(null!=data[i]){
+			    			options+='<option id="'+data[i]+'">'+data[i]+'</option>';
+			    			//select.options.add(new Option(data[i],data[i]));
+			    		}
+			    		
+			    		//select.append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
+			    	}
+			    	//alert(options);
+			    	//select2.innerHTML+=options;
+			    	selecte='</select>';
+			    	select2.innerHTML=selectb+options+selecte;
+		    	}else{
+		    		alert('没有相关联的我司编号');
 		    	}
-		    	for(var i=0;i<data.length;i++){
-		    		//alert(i);
-		    		if(null!=data[i]){
-		    			select.options.add(new Option(data[i],data[i]));
-		    		}
-		    		//select.append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
-		    	}
+		    	
 			},error : function() {    
 		          // view("异常！");    
 		          alert("异常！");    
@@ -247,9 +270,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							<option value="">请选择</option>
 						</select>
 						
-						
-						<!--input type="hidden" value="" id="myCompanyCode" name="myCompanyCode">
-						<input type="text" id="myCompanyCode_text" style="width: 110px;"/-->
 						
 					</td><td class="l_left">
 						<input type="text" name="myCompanyColor" style="width:150px;" value="" onchange="queryNoReturnNum(this)">
