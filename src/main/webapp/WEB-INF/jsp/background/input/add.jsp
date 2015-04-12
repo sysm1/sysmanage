@@ -135,9 +135,18 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
 		    data: {clothId:obj.value}, //要发送的数据
 		    success: function(data){
-		    	$("#myCompanyCode").empty();
+		    	//$("#myCompanyCode").empty();
+		    	//alert(obj.parentNode.parentNode.children[2].childNodes[0]);
+		    	var select = obj.parentNode.parentNode.children[2].childNodes[0];
+		    	var sl=select.options.length-1;
+		    	//alert(select.options.length);
+		    	for(var i=sl;i>0;i--){
+		    		select.options.remove(i);
+		    	}
 		    	for(var i=0;i<data.length;i++){
-		    		$("#myCompanyCode").append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
+		    		//alert(i);
+		    		select.options.add(new Option(data[i].myCompanyCode,data[i].myCompanyCode));
+		    		//select.append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
 		    	}
 			},error : function() {    
 		          // view("异常！");    

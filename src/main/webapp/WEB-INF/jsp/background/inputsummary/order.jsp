@@ -298,6 +298,7 @@ $(function() {
 		<input type="hidden" id="status" name="status" value="1">
 		<input type="hidden" id="inputIds" name="inputIds" value="${inputIds }">
 		<input type="hidden" id="summId" name="summId" value="${summId }">
+		<input type="hidden" id="salesmans" name="salesmans" value="${salmanIds }">
 		<table style=" height: 200px;" border="1">
 			<tbody>
 				<tr style="text-align: center;height: 30px;"><td colspan="6">下单录入汇总页面</td></tr>
