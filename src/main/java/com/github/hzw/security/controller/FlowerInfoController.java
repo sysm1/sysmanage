@@ -106,6 +106,9 @@ public class FlowerInfoController extends BaseController{
 					fa.setFactoryCode(factoryCodes);
 					fa.setFactoryColor(factoryColors[i]);
 					fa.setMyCompanyColor(myCompanyColors[i]);
+					if("我司编号".equals(myCompanyColors[i])){
+						continue;
+					}
 					fa.setMark(marks[i].equals("备注")?"":marks[i]);
 					fa.setMyCompanyCode(info.getMyCompanyCode());
 					fas.add(fa);
@@ -119,6 +122,9 @@ public class FlowerInfoController extends BaseController{
 					fa.setFactoryCode(factoryCodes2);
 					fa.setFactoryColor(factoryColors2[i]);
 					fa.setMyCompanyColor(myCompanyColors2[i]);
+					if("我司编号".equals(myCompanyColors2[i])){
+						continue;
+					}
 					fa.setMark(mark2[i].equals("备注")?"":mark2[i]);
 					fa.setMyCompanyCode(info.getMyCompanyCode());
 					fas.add(fa);

@@ -175,6 +175,7 @@ public class SampleProcessListController extends BaseController{
 		sampleInput.setId(Integer.parseInt(id));
 		pageView = sampleInputService.queryReplay(getPageView("1","1"), sampleInput);
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
+		//flowerInfoService.queryMycompanyCodeByCloth(clothId);
 		
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
@@ -182,9 +183,7 @@ public class SampleProcessListController extends BaseController{
 			pageView.setPageNow(Integer.parseInt(pageView.getPageCount()+""));
 		}
 		//解析颜色  存放到map中
-		@SuppressWarnings("unchecked")
-		List<SampleInputVO> plist=pageView.getRecords();
-		
+		SampleInputVO bean=(SampleInputVO) pageView.getRecords().get(0);
 		Map<String,List<SampleAdditional>> facotoryCodeMap=new HashMap<String,List<SampleAdditional>>();
 		SampleAdditional sampleAdditional=new SampleAdditional();
 		sampleAdditional.setSampleId(sampleInput.getId());
@@ -197,10 +196,9 @@ public class SampleProcessListController extends BaseController{
 		}
 		model.addAttribute("facotoryCodeMap", facotoryCodeMap);
 		model.addAttribute("technologyInfos", technologyInfos);
-		model.addAttribute("bean", plist.get(0));
+		model.addAttribute("bean", bean);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("cloths", cloths);
-		
 		model.addAttribute("cloths",clothInfoService.queryAll(null));
 		model.addAttribute("factorys",factoryInfoService.queryAll(null));
 		model.addAttribute("technologys", this.technologyInfoService.queryAll(null));
