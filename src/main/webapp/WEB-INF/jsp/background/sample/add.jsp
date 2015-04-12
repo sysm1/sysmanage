@@ -93,14 +93,15 @@ $(function() {
 				return false;
 			}
 		}
-		var technologyId =document.getElementsByName("technologyId");
+		
+		/*var technologyId =document.getElementsByName("technologyId");
 		for(var i=0;i<technologyId.length;i++){
 			if(technologyId[i].value==""){
 				alert("请选择工艺");
 				technologyId[i].focus();
 				return false;
 			}
-		}
+		}*/
 		var myFile =document.getElementsByName("myFile");
 		for(var i=0;i<myFile.length;i++){
 			if(myFile[i].value==""){
