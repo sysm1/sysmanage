@@ -15,10 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderSummaryVO;
 import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.FlowerAdditional;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.ReturnGoodsProcess;
 import com.github.hzw.security.mapper.ReturnGoodsProcessMapper;
 import com.github.hzw.security.service.ClothAllowanceService;
+import com.github.hzw.security.service.FlowerAdditionalService;
+import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
 import com.github.hzw.util.DateUtil;
@@ -30,11 +34,17 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 	@Autowired
 	private ReturnGoodsProcessMapper returnGoodsProcessMapper;
 	
+	@Inject
+	private FlowerInfoService flowerInfoService;
+	
 	@Autowired
 	private OrderSummaryService orderSummaryService;
 	
 	@Inject
 	private ClothAllowanceService clothAllowanceService;
+	
+	@Inject
+	private FlowerAdditionalService flowerAdditionalService;
 	
 	@Override
 	public PageView query(PageView pageView, ReturnGoodsProcess t) {
@@ -104,6 +114,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		String[] zhiguans=request.getParameterValues("zhiguan");
 		String[] kongchas=request.getParameterValues("kongcha");
 		String[] jiaodais=request.getParameterValues("jiaodai");
+		String status=request.getParameter("status");
 		try {
 			int returnNum=0;
 			int size=returnDates.length;
@@ -123,7 +134,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				bean.setKongcha(Integer.parseInt(kongchas[i]));
 				bean.setJiaodai(Integer.parseInt(jiaodais[i]));
 				add(bean);
-				orderSummaryService.update(orderSummary);
+				
 				returnNum+=bean.getReturnNum()-bean.getZhiguan()-bean.getKongcha()-bean.getJiaodai();
 			}
 			//修改坯布余量
@@ -135,9 +146,49 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 			clothAllowanceService.update(clothAllowance);
 			//坯布余量修改完成
 			
+			//状态 判断
+			orderSummary.setStatus(getReturnStatusName(orderSummary));
+			orderSummary.setReturnStatus(Integer.parseInt(status));
+			orderSummaryService.update(orderSummary);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String getReturnStatusName(OrderSummary orderSummary){
+		//1.是否为新厂
+		String statusName="";
+		int factoryId=orderSummary.getFactoryId();
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setFactoryId(factoryId);
+		if(flowerInfoService.queryAll(flowerInfo).size()==0){
+			statusName+=","+"新厂";
+		}
+		//2.是否为新布
+		int clothId=orderSummary.getClothId();
+		flowerInfo=new FlowerInfo();
+		flowerInfo.setClothId(clothId);
+		if(flowerInfoService.queryAll(flowerInfo).size()==0){
+			statusName+=","+"新布";
+		}
+		//3.是否为新花
+		String myCompanyCode=orderSummary.getMyCompanyCode();
+		flowerInfo=new FlowerInfo();
+		flowerInfo.setMyCompanyCode(myCompanyCode);
+		if(flowerInfoService.queryFind(flowerInfo).size()==0){
+			statusName+=","+"新花";
+		}
+		//4.是否为新色
+		String myCompanyColor=orderSummary.getMyCompanyColor();
+		FlowerAdditional flowerAdditional=new FlowerAdditional();
+		flowerAdditional.setMyCompanyColor(myCompanyColor);
+		if(flowerAdditionalService.queryFind(flowerAdditional).size()==0){
+			statusName+=","+"新色";
+		}
+		if(statusName.equals("")){
+			statusName=",已回";
+		}
+		return statusName.substring(1);
 	}
 	
 	/**
