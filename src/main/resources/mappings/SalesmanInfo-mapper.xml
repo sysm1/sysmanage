@@ -20,6 +20,13 @@
 		</where>
 		order by id desc
 	</select>
+	
+	<select id="getSalmansName" resultType="String">
+		select Group_concat(name) from  salesman_info where id in 
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+		 #{item} 
+		</foreach> 
+	</select>
 
 	<select id="queryAll" resultType="SalesmanInfo">
 		select
