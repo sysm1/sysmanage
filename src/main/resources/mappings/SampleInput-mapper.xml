@@ -126,6 +126,9 @@
 		<if test="t.status != null and t.status != '' or t.status==0">
 			and s.status = #{t.status}
 		</if>
+		<if test="t.id != null and t.id != '' or t.id==0">
+			and s.id = #{t.id}
+		</if>
 		</where>
 		order by status,id desc
 	</select>
