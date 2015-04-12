@@ -182,10 +182,7 @@
 					<td align="right">我司编号：</td>
 					<td>
 						<select id="myCompanyCode" name="myCompanyCode">
-							<option value="">请选择布种</option>
-							<c:forEach items="${ cloths }" var = "cloth">
-							<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
-							</c:forEach>
+							<option value="">请选择布种</option>							
 						</select>
 					</td>
 					<td align="right">业务员：</td>

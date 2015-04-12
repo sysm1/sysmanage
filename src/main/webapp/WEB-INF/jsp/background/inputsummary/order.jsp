@@ -296,6 +296,8 @@ $(function() {
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
 		<input type="hidden" id="num1" name="num1" value="${num }">
 		<input type="hidden" id="status" name="status" value="1">
+		<input type="hidden" id="orderCode" name="orderCode" value="${orderNo }">
+		<input type="hidden" id="orderDate" name="orderDate" value="${nowDate }">
 		<input type="hidden" id="inputIds" name="inputIds" value="${inputIds }">
 		<input type="hidden" id="summId" name="summId" value="${summId }">
 		<input type="hidden" id="salesmans" name="salesmans" value="${salmanIds }">
@@ -346,7 +348,7 @@ $(function() {
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id='technologyId' name="technologyId">
-								<option>请选择</option>
+								<option value="">请选择</option>
 								<c:forEach var="item" items="${technologyInfos }">
 								<option value="${item.id }" >${item.name }</option>
 								</c:forEach>

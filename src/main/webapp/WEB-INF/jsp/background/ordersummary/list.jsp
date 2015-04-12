@@ -411,7 +411,7 @@ ul { list-style:none;}
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
 					 	<td>
-					 		
+					 		${item.salesmans }
 					 	</td>
 					<tr>
 				</c:forEach>

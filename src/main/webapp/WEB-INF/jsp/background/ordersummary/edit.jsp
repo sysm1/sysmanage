@@ -157,13 +157,13 @@ $(function() {
 		$("#form").submit();
 	}
 	function changeNum(obj){
-		var beforNum=$("#num1").val();
+		var beforNum=$("#orgNum").val();
 		var nowNum=obj.value;
 		if(nowNum==''){
 			$("#num").attr("value",beforNum);
 		}
 		var chae=parseInt(nowNum)-parseInt(beforNum);
-		if(chae>0){
+		if(chae>=0){
 			$("#balancetext").show();
 			$("#balance").attr("value",chae);
 			$("#ywy").show();
@@ -204,11 +204,12 @@ $(function() {
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
 		<input type="hidden" id="num1" name="num1" value="${inputsummary.num }">
+		<input type="hidden" id="orgNum" name="orgNum" value="${orgNum}">
 		<input type="hidden" id="summId" name="summId" value="${inputsummary.id }">
 		<input type="hidden" id="id" name="id" value="${inputsummary.id }">
 		<table style=" height: 200px;" border="1">
 			<tbody>
-				<tr style="text-align: center;height: 30px;"><td colspan="6">222下单录入汇总页面</td></tr>
+				<tr style="text-align: center;height: 30px;"><td colspan="6">下单录入汇总修改页面</td></tr>
 				<tr style="height: 30px;text-align: center;">
 					<td class="l_right">单号：</td>
 					<td class="l_left" colspan="2">
@@ -307,19 +308,29 @@ $(function() {
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<input id='num' name="num" class="checkdesc" type="text" value="${inputsummary.num }" style="width: 100px;" onchange="changeNum(this)">
-							<span id="balancetext" style="display: none">差额<input type="text" id="balance" name="balance" value="" style="width: 50px;"></span>条
+							<c:if test="${inputsummary.balance != null}">
+							<span id="balancetext" >差额
+							<input type="text" id="balance" name="balance" value="${inputsummary.balance}" style="width: 50px;"></span>条
+							</c:if>
 						</div>
 					</td>
-					<td class="l_right"><span id="ywy" style="display: none">业务员：</span></td>
+					<td class="l_right">
+						<c:if test="${inputsummary.balance != null}">
+						<span id="ywy" >业务员：</span>
+						</c:if>
+					</td>
 					<td class="l_left" colspan="2">
+						<c:if test="${inputsummary.balance != null}">
 						<div class="lanyuan_input">
-							<select id="ywy2" style="display: none" id="balanceSalemanId" name="balanceSalemanId">
+							<select id="ywy2" id="balanceSalemanId" name="balanceSalemanId">
 								<option value="">请选择</option>
 								<c:forEach var="saleman" items="${salesmanInfos }">
-								<option value="${saleman.id }">${saleman.name }</option>
+								<option value="${saleman.id }" <c:if test="${saleman.id==inputsummary.balanceSalemanId }"> selected="selected" </c:if> >${saleman.name }</option>
 								</c:forEach>
 							</select>
-						</div></td>
+						</div>
+						</c:if>
+					</td>
 				</tr><tr style="height: 30px;text-align: center;">
 					<td colspan="6">规格</td>
 				</tr><tr>
