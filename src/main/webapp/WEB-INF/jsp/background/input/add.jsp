@@ -145,7 +145,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		    	}
 		    	for(var i=0;i<data.length;i++){
 		    		//alert(i);
-		    		select.options.add(new Option(data[i].myCompanyCode,data[i].myCompanyCode));
+		    		if(null!=data[i]){
+		    			select.options.add(new Option(data[i],data[i]));
+		    		}
 		    		//select.append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
 		    	}
 			},error : function() {    
