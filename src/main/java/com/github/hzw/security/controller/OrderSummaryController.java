@@ -79,6 +79,7 @@ public class OrderSummaryController extends BaseController {
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		model.addAttribute("pageView", pageView);
+		model.addAttribute("size", pageView.getRecords().size()-1);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("salesmanInfos", salesmanInfos);

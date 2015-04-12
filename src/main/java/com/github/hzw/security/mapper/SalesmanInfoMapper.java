@@ -8,4 +8,6 @@ public interface SalesmanInfoMapper extends BaseMapper<SalesmanInfo>{
 
 	public SalesmanInfo isExist(String name);
 	
+	public String getSalmansName(String[] ids);
+	
 }

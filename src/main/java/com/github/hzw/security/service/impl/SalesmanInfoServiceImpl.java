@@ -30,7 +30,15 @@ public class SalesmanInfoServiceImpl implements SalesmanInfoService  {
 		pageView.setRecords(list);
 		return pageView;
 	}
-
+	/**
+	 * 获取业务员名称
+	 * @param ids 业务员IDs
+	 * @return
+	 */
+	@Override
+	public String getSalmansName(String[] ids){
+		return salesmanInfoMapper.getSalmansName(ids);
+	}
 	
 	@Override
 	public List<SalesmanInfo> queryAll(SalesmanInfo t) {

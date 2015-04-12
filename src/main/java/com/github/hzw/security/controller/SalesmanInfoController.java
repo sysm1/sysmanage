@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.util.Common;
-import com.github.hzw.util.Md5Tool;
 import com.github.hzw.util.POIUtils;
 
 @Controller
@@ -94,6 +92,16 @@ public class SalesmanInfoController extends BaseController {
 		}else{
 			return false;
 		}
+	}
+	/**
+	 * 获取多个业务员名称
+	 * @return
+	 */
+	@RequestMapping("getSalmansName")
+	@ResponseBody
+	public String getSalmansName(String ids){
+		String[] idsa=ids.split(",");
+		return salesmanInfoService.getSalmansName(idsa);
 	}
 	
 	/**
