@@ -196,7 +196,7 @@ $(function() {
 				<td>工厂编号：</td>
 				<td>				
 					<span class="factoryCodeInputcss" id="factoryCodeInputID">
-					<input id="factoryCodes" name="factoryCodes" type="text" value="${item.key }" />
+					<input id="factoryCodes" name="factoryCodes" type="text" value="${item.key }" style="width:200px;"/>
 					</span>
 					<!--span id="addonerow"><a onclick="addOneRow();">++</a></span-->
 				</td>
