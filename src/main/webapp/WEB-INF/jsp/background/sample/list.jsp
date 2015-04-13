@@ -226,6 +226,21 @@ ul { list-style:none;}
 				}
 			});
 		});
+		
+		/***过滤查询**/
+		$("#factory_text").ligerComboBox({
+	        url: '/background/pinyin/factory.html',
+	        valueField: 'id',
+	        textField: 'name', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 200,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#factoryId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
 	});
 	function loadGird(){
 		//grid.loadData();
@@ -284,6 +299,8 @@ ul { list-style:none;}
 			checkIds[i].checked =obj.checked;
 		}
 	}
+	
+	
 </script>
 </head>
 <body>
@@ -313,12 +330,14 @@ ul { list-style:none;}
 	<td style="text-align: right;">
 		工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：
 	</td><td>
-      <select  id="factoryId" name="factoryId">
+      <!--select  id="factoryId" name="factoryId">
 		<option value="">请选择工厂</option>
 		<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 				<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
 			</c:forEach>
-	  </select>
+	  </select-->	  
+	  <input type="hidden" value="" id="factoryId" name="factoryId" value="${ bean.factoryId }">
+	  <input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }"/>
     </td><td style="text-align: right;">
     	布种：
     </td><td>
