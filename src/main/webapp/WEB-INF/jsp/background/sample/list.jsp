@@ -234,10 +234,24 @@ ul { list-style:none;}
 	        textField: 'name', 
 	        selectBoxWidth: 220,
 	        autocomplete: true,
-	        width: 200,
+	        width: 220,
 	        height:20,
 	        onSelected:function(e) {
 	            $("#factoryId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
+		/***过滤查询**/
+		$("#cloth_text").ligerComboBox({
+	        url: '/background/pinyin/cloth.html',
+	        valueField: 'id',
+	        textField: 'clothName', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#clothId").val(e);
 	             // alert($("#factoryId").val());
 	        }
 	   });
@@ -300,6 +314,11 @@ ul { list-style:none;}
 		}
 	}
 	
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
+	}
 	
 </script>
 </head>
@@ -335,18 +354,22 @@ ul { list-style:none;}
 		<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 				<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
 			</c:forEach>
-	  </select-->	  
-	  <input type="hidden" value="" id="factoryId" name="factoryId" value="${ bean.factoryId }">
-	  <input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }"/>
+	  </select-->  
+	  <input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
+	  <input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
+	  		onchange="changeTextValue('factoryId',this);"/> 
     </td><td style="text-align: right;">
     	布种：
     </td><td>
-    	<select id="clothId" name="clothId">
+    	<!--select id="clothId" name="clothId">
 			<option value="">请选择布种</option>
 			<c:forEach items="${ cloths }" var = "cloth">
 				<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 			</c:forEach>
-		</select>
+		</select-->
+		<input type="hidden" id="clothId" name="clothId" value="${ bean.clothId }">
+	  	<input type="text" id="cloth_text" style="width: 200px;" value="${cloth.clothName }" 
+	  		onchange="changeTextValue('clothId',this);"/>
     </td><td style="text-align: right;">
     	工艺：
     </td><td>
