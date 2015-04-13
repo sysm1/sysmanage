@@ -51,7 +51,7 @@ th {
  letter-spacing: 2px;
  text-transform: uppercase;
  text-align: left;
- padding: 6px 6px 6px 12px;
+ padding: 6px 6px 6px 6px;
 }
 
 th.nobg {
@@ -69,6 +69,7 @@ th.nobg {
  //background: #fff;
  font-size:12px;
  color: #4f6b72;
+ padding: 1px 3px ;
 }
 
 .lanyuan_bb{
@@ -175,6 +176,35 @@ html>body td{ font-size:13px;}
 			f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/list.html');
 			f.submit();
 		});
+		
+		/***过滤查询**/
+		$("#factory_text").ligerComboBox({
+	        url: '/background/pinyin/factory.html',
+	        valueField: 'id',
+	        textField: 'name', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#factoryId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
+		/***过滤查询**/
+		$("#cloth_text").ligerComboBox({
+	        url: '/background/pinyin/cloth.html',
+	        valueField: 'id',
+	        textField: 'clothName', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#clothId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
 	});
 	function loadGird(){
 		grid.loadData();
@@ -327,6 +357,11 @@ html>body td{ font-size:13px;}
 			clickCheckId(checkIds[i].value);
 		}
 	}
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
+	}
 </script>
 </head>
 <body>
@@ -336,22 +371,35 @@ html>body td{ font-size:13px;}
 				<input type="hidden" id="pageNow" name="pageNow" value="">
 				<input type="hidden" id="status" name="status" value="0">
 				<input type="hidden" id="delay" name="delay" value="">
-				工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：&nbsp;
-				      <select  id="factoryId" name="factoryId">
+				<table>
+				<tr>
+				<td>工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：</td>
+				      <!--select  id="factoryId" name="factoryId">
 						<option value="">请选择工厂</option>
 						<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 							<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
 						</c:forEach>
-					  </select>
-			          布种：<select id="clothId" name="clothId">
+					  </select-->
+			    <td>
+			    	<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
+					<input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
+					  		onchange="changeTextValue('factoryId',this);"/>
+			    </td><td>布种：</td>
+			    <td><!--select id="clothId" name="clothId">
 							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
-						</select>
-			    <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">
-				查询
-			</a>
+						</select-->
+						<input type="hidden" id="clothId" name="clothId" value="${ bean.clothId }">
+					  	<input type="text" id="cloth_text" style="width: 200px;" value="${cloth.clothName }" 
+					  		onchange="changeTextValue('clothId',this);"/>
+			    </td>
+				<td>
+			    <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">查询	</a>
+			    </td>
+			</tr>
+			</table>
 			</form>
 		</div>
 		<div class="topBtn">
@@ -402,7 +450,7 @@ html>body td{ font-size:13px;}
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
 						<td id="3_${item.id }" style="width:80px" >
-							<input type="text" id="fileCode" name="fileCode" style="width:100%" value="${item.fileCode }" 
+							<input type="text" id="fileCode" name="fileCode" style="width:78px;" value="${item.fileCode }" 
 								onchange="changeValue(this,'${item.id }fileCode');" onclick="onclickTr(${item.id })" >
 						</td>
 						<td id="4_${item.id }" onclick="onclickTr(${item.id })">${item.clothName }</td>
