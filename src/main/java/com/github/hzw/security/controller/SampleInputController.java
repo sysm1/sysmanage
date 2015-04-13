@@ -89,8 +89,6 @@ public class SampleInputController extends BaseController {
 		}
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("bean", sampleInput);
-		System.out.println("========================sampleInput.getFactoryId()==============="+sampleInput.getFactoryId());
-		System.out.println("====================fac size========================"+factoryInfos.size());
 		if(factoryInfos.size()==1){
 			model.addAttribute("factoryInfo", factoryInfos.get(0));
 		}
