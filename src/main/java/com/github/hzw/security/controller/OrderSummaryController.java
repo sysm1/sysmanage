@@ -1,5 +1,6 @@
 package com.github.hzw.security.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +115,9 @@ public class OrderSummaryController extends BaseController {
 	public Map<String, Object> add(OrderSummary info,String inputIds,String summId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			info.setPrintStatus(0);
+			info.setPrintNum(0);
+			info.setCreateTime(new Date());
 			orderSummaryService.add(info);
 			OrderInputSummary orderInputSummary=orderInputSummaryService.getById(summId);
 			String orderIds=orderInputSummary.getOrderIds();
@@ -127,10 +131,19 @@ public class OrderSummaryController extends BaseController {
 			
 			//修改坯布余量 ？？？？？
 			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(info.getClothId(), info.getFactoryId());
-			Double allowance=clothAllowance.getAllowance();
-			allowance=allowance-info.getNum();
-			clothAllowance.setAllowance(allowance);
-			clothAllowanceService.update(clothAllowance);
+			if(null==clothAllowance){
+				clothAllowance=new ClothAllowance();
+				clothAllowance.setClothId(info.getClothId());
+				clothAllowance.setFactoryId(info.getFactoryId());
+				double num=0-info.getNum();
+				clothAllowance.setAllowance(num);
+				clothAllowanceService.add(clothAllowance);
+			}else{
+				Double allowance=clothAllowance.getAllowance();
+				allowance=allowance-info.getNum();
+				clothAllowance.setAllowance(allowance);
+				clothAllowanceService.update(clothAllowance);
+			}
 			//坯布余量修改完成
 			
 			map.put("flag", "true");
