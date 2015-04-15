@@ -23,6 +23,7 @@ import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderInputAdditionalService;
 import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.SalesmanInfoService;
@@ -56,14 +57,19 @@ public class OrderInputController extends BaseController {
 	@Inject
 	private SalesmanInfoService salesmanInfoService;
 	
+	@Inject
+	private FlowerInfoService flowerInfoService;
+	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		System.out.println("下单预录入查询 布种："+cloths.size());
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		System.out.println("下单预录入查询 业务员："+salesmanInfos.size());
+		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(null);
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("salesmanInfos", salesmanInfos);
+		model.addAttribute("myCompanyCodes", myCompanyCodes);
 		return Common.BACKGROUND_PATH+"/input/list";
 	}
 	

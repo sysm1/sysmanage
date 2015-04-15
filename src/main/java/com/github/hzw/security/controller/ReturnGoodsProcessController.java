@@ -48,6 +48,12 @@ public class ReturnGoodsProcessController extends BaseController {
 	@RequestMapping("list")
 	public String list(Model model,String delay, String pageNow,HttpServletRequest request) {
 		String factoryId=request.getParameter("factoryId");
+		FactoryInfo fac=new FactoryInfo();
+		if(null!=factoryId&&!"".equals(factoryId)){
+			fac.setId(Integer.parseInt(factoryId));
+		}
+		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,null), fac).getRecords();
+		
 		String code=request.getParameter("code");
 		OrderSummary orderSummary=new OrderSummary();
 		if(""!=delay&&null!=delay){
@@ -55,7 +61,7 @@ public class ReturnGoodsProcessController extends BaseController {
 		}if(!"".equals(code)&&null!=code){
 			orderSummary.setCode(code);
 		}
-		orderSummary.setStatus("0");
+		orderSummary.setReturnStatus(11);
 		if(null!=factoryId&&!"".equals(factoryId)){
 			orderSummary.setFactoryId(Integer.parseInt(factoryId));
 		}
@@ -69,7 +75,9 @@ public class ReturnGoodsProcessController extends BaseController {
 			rlist=returnGoodsProcessService.queryBySummaryId(summaryId+"");
 			map.put(summaryId, rlist);
 		}
-		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		if(factoryInfos.size()==1){
+			model.addAttribute("factoryInfo", factoryInfos.get(0));
+		}
 		String delayDates=returnGoodsProcessService.queryDelayDates(PropertiesUtils.findPropertiesKey("process_delay_dates"));
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("map", map);
@@ -122,14 +130,10 @@ public class ReturnGoodsProcessController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("save")
-	public String save(Model model,HttpServletRequest request,String summaryId,String status){
+	public String save(Model model,HttpServletRequest request,String summaryId,String returnStatus){
 		OrderSummary orderSummary=orderSummaryService.getById(summaryId);
-		orderSummary.setStatus(status);
+		orderSummary.setReturnStatus(Integer.parseInt(returnStatus));
 		returnGoodsProcessService.save(request, orderSummary);
-		if("1".equals(status)){
-			
-			//return list(model,null, "1", request);
-		}
 		return "ok";
 	}
 	
