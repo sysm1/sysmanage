@@ -265,7 +265,11 @@
 			and status = #{t.status}
 		</if>
 		<if test="t.returnStatus != null and t.returnStatus != ''">
-			and return_status = #{t.returnStatus}
+			<if test="t.returnStatus==11">
+				and (return_status=0 or return_status=1)
+			</if><if test="t.returnStatus!=11">
+				and return_status = #{t.returnStatus} 
+			</if>
 		</if>
 		<if test="t.mark != null and t.mark != ''">
 			and mark like '%${t.mark}%'
