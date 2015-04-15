@@ -201,18 +201,12 @@ $(function() {
 	};
 	
 	function pop(obj){
-		var dialog;
-		/**dialog = parent.$.ligerDialog.open({
-			width : 650,
-			height : 500,
-			url : rootPath + '/background/mark/addlist.html',
-			title : "开版备注选择",
-			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
-		});
-		*/
-		
-		var rarr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:500px; dialogHeight:400px; status:0");
-		obj.value=rarr;
+		//alert(obj);
+		var arr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:500px; dialogHeight:400px; status:0");
+		if (arr != null&&arr!=''){
+			//alert(arr);
+			obj.value=arr;
+		}
 	}
 	function addMark(data){
 		alert(data);

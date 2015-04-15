@@ -121,7 +121,7 @@ th.specalt {
 			for(var i=0;i<cbox.length;i++){
 				var f = $('#'+cbox[i]+'_form');
 				f.attr('target','iframe');
-				f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=0');
+				f.attr('action','${pageContext.request.contextPath}/background/process/save.html?returnStatus=0');
 				f.submit();
 			}
 			alert("数据暂存成功");
@@ -150,7 +150,7 @@ th.specalt {
 				    type: "post", //使用get方法访问后台
 				    dataType: "json", //json格式的数据
 				    async: false, //同步   不写的情况下 默认为true
-				    url: '${pageContext.request.contextPath}/background/process/save.html?status=2', //要访问的后台地址
+				    url: '${pageContext.request.contextPath}/background/process/save.html?returnStatus=2', //要访问的后台地址
 				    data: f.serialize(), //要发送的数据
 				    success: function(data){
 				    	//alert(data);
@@ -164,6 +164,22 @@ th.specalt {
 			alert("数据已回");
 			location.reload();
 		});
+		
+		/***过滤查询**/
+		$("#factory_text").ligerComboBox({
+	        url: '/background/pinyin/factory.html',
+	        valueField: 'id',
+	        textField: 'name', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#factoryId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
+		
 		$("#deleteView").click("click", function() {//绑定查询按扭
 			var cbox=grid.getSelectedCheckbox();
 			if (cbox=="") {
@@ -267,6 +283,11 @@ th.specalt {
 		}
 		document.getElementById(id+"checkId").checked=false;
 	}
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
+	}
 </script>
 </head>
 <body>
@@ -279,12 +300,15 @@ th.specalt {
 					<tr>
 						<td>工厂：</td>
 						<td>
-							<select  id="factoryId" name="factoryId">
+							<!--select  id="factoryId" name="factoryId">
 								<option value="">请选择工厂</option>
 								<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 									<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
 								</c:forEach>
-							</select>
+							</select-->
+							<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
+							<input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
+								onchange="changeTextValue('factoryId',this);"/> 
 						</td><td>&nbsp;&nbsp;编号：</td>
 						<td>
 							<input type="text" id="code" name="code" value="${bean.code }">

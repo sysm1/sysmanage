@@ -110,6 +110,7 @@
 	        valueField: 'id',
 	        textField: 'clothName', 
 	        selectBoxWidth: 215,
+	        selectBoxHeight: 215,
 	        autocomplete: true,
 	        width: 215,
 	        height:20,
@@ -133,7 +134,7 @@
 					    	    myCompanyCode.append(option);
 					    	}
 				    	}else{
-				    		alert('没有相关联的我司编号');
+				    		//alert('没有相关联的我司编号');
 				    	}
 					}
 				});
@@ -227,6 +228,9 @@
 					<td>
 						<select id="myCompanyCode" name="myCompanyCode">
 							<option value="">请选择</option>
+							<c:forEach var="code" items="${myCompanyCodes }">
+								<option value="${code }">${code }</option>
+							</c:forEach>
 						</select>
 					</td>
 					<td align="right">业务员：</td>
