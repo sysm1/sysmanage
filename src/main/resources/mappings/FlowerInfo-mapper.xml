@@ -144,6 +144,12 @@
 		<if test="clothId != null and clothId != ''">
 			and flower.cloth_id = #{clothId}
 		</if>
+		<if test="factoryId != null and factoryId != ''">
+			and flower.factory_Id = #{factoryId}
+		</if>
+		<if test="technologyId != null and technologyId != ''">
+			and flower.technology_Id = #{technologyId}
+		</if>
 		</where>
 		order by id desc
 	</select>
