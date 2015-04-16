@@ -141,13 +141,14 @@ ul { list-style:none;}
 			f.submit();
 		});
 		$("#add").click("click", function() {//绑定新增按扭
-			dialog = parent.$.ligerDialog.open({
-				width : 950,
-				height : 500,
-				url : rootPath + '/background/sample/addUI.html',
-				title : "开版录入",
-				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
-			});
+			//dialog = parent.$.ligerDialog.open({
+			//	width : 950,
+			//	height : 500,
+			//	url : rootPath + '/background/sample/addUI.html',
+			//	title : "开版录入",
+			//	isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+			//});
+			location.href=rootPath + '/background/sample/addUI.html';
 		});
 		$("#editView").click("click", function() {//绑定编辑按扭
 			var cbox=getSelectedCheckbox();

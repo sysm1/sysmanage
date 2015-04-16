@@ -127,6 +127,8 @@ $(function() {
 			}
 		}
 		$("#form").submit();
+		alert('保存成功');
+		location.href='${ctx}/background/sample/list.html';
 	}
 	
 	/** 
@@ -199,17 +201,26 @@ $(function() {
 		});
 		return arr;
 	};
-	
+	var object=null;
 	function pop(obj){
 		//alert(obj);
-		var arr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:500px; dialogHeight:400px; status:0");
-		if (arr != null&&arr!=''){
+		//var arr = showModalDialog("${ctx}/background/mark/addlist.html", "", "dialogWidth:500px; dialogHeight:400px; status:0");
+		//if (arr != null&&arr!=''){
 			//alert(arr);
-			obj.value=arr;
-		}
+		//	obj.value=arr;
+		//}
+		object=obj;
+		dialog = parent.$.ligerDialog.open({
+			width : 550,
+			height : 500,
+			url : rootPath + '/background/mark/addlist.html',
+			title : "开版录入",
+			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+		});
 	}
+	/**设置备注信息**/
 	function addMark(data){
-		alert(data);
+		object.value=data;
 	}
 	
 	function clearText(obj){
@@ -227,7 +238,10 @@ $(function() {
 </head>
 <body style="width: 1100px;">
 <div class="divdialog">
-	<div class="l_err" ></div>
+<div style="padding-left: 350px;">开版录入</div>
+	<div class="l_err" >
+		
+	</div>
 	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
 		<table style="height: 100%;" id="table1" border="1" name="table1">
 			<tbody>
@@ -303,7 +317,7 @@ $(function() {
 							<a class="btn btn-primary" href="javascript:void(0)" id="addTable" ><span>新增一行</span></a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span></a> 
-							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="javascript:history.go(-1);"><span>关闭</span> </a>
 						</div>
 					</td>
 				</tr>

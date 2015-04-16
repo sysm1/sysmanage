@@ -111,9 +111,10 @@ html>body td{ font-size:13px;}
 		});
 		$("#ok").click("click", function() {//绑定查询按扭
 			var cbox=getSelectedCheckbox();
-			//alert(cbox);
-			window.returnValue=cbox;
-			window.close();
+			parent.sample.addMark(cbox);
+			closeWin();
+			//window.returnValue=cbox;
+			//window.close();
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
