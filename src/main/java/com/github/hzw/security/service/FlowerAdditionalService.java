@@ -27,4 +27,6 @@ public interface FlowerAdditionalService extends BaseService<FlowerAdditional> {
 	 */
 	public List<String> queryFactoryColor(String  myCompanyColor);
 	
+	public List<FlowerAdditional> queryAllColor(FlowerAdditional fa);
+	
 }

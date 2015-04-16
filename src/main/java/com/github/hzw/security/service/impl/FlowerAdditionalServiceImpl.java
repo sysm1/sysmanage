@@ -29,6 +29,10 @@ public class FlowerAdditionalServiceImpl implements FlowerAdditionalService {
 		pageView.setRecords(list);
 		return pageView;
 	}
+	
+	public List<FlowerAdditional> queryAllColor(FlowerAdditional fa){
+		return flowerAdditionalMapper.queryAllColor(fa);
+	}
 
 	
 	@Override

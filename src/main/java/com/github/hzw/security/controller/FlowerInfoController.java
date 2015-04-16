@@ -135,7 +135,16 @@ public class FlowerInfoController extends BaseController{
 			info.setStatus(1);
 			info.setPicture(info.getPicture()==null?"http://www.baidu.com/img/bdlogo.png":info.getPicture());
 			info.setCreateTime(new Date());
-			flowerInfoService.add(info);
+			//验证是否资料是否重复
+			List<FlowerInfo> list=flowerInfoService.queryAll(info);
+			if(list.size()>0){
+				List<FlowerAdditional> flist=flowerAdditionalService.queryAll(fa);
+				if(flist.size()==0){
+					flowerInfoService.add(info);
+				}
+			}else{
+				flowerInfoService.add(info);
+			}
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
