@@ -19,5 +19,7 @@ public interface SampleInputMapper extends BaseMapper<SampleInput>{
 	 * @return
 	 */
 	public String queryDelayDates(String dates);
+	
+	public void updateStatus(String[] idsa);
 
 }

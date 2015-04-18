@@ -104,6 +104,64 @@ public class SampleProcessController extends BaseController{
 		return Common.BACKGROUND_PATH+"/sampleProcess/list";
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("toUpdate")
+	public String toUpdate(Model model,String delay, Resources menu, HttpServletRequest request,
+			String pagesize,SampleInput sampleInput,String ids){
+		
+		sampleInputService.updateStatus(ids.split(","));
+		String pageNow=request.getParameter("pageNow");
+		
+		ClothInfo cloth=new ClothInfo();
+		cloth.setId(sampleInput.getClothId());
+		List<ClothInfo> cloths = clothInfoService.query(getPageView(pageNow,pagesize), cloth).getRecords();
+		
+		FactoryInfo fac=new FactoryInfo();
+		fac.setId(sampleInput.getFactoryId());
+		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,pagesize), fac).getRecords();
+		
+		if(""!=delay&&null!=delay){
+			sampleInput.setDelayDates(Integer.parseInt(PropertiesUtils.findPropertiesKey("sample_delay_dates")));
+		}
+		sampleInput.setStatus(new Integer(0));
+		pageView = sampleInputService.query(getPageView(pageNow,pagesize), sampleInput);
+		
+		if(pageView.getPageNow()>pageView.getPageCount()){
+			pageView.setPageNow(Integer.parseInt(pageView.getPageCount()+""));
+		}
+		
+		Map<Integer,Map<String,List<SampleAdditional>>> map=new HashMap<Integer,Map<String,List<SampleAdditional>>>();
+		List<SampleInputVO> plist=pageView.getRecords();
+		
+		for(SampleInputVO sample:plist){
+			Map<String,List<SampleAdditional>> facotoryCodeMap=new HashMap<String,List<SampleAdditional>>();
+			SampleAdditional sampleAdditional=new SampleAdditional();
+			sampleAdditional.setSampleId(sample.getId());
+			List<SampleAdditional> list=sampleAdditionalService.queryAll(sampleAdditional);
+			for(SampleAdditional samp:list){
+				if(null==facotoryCodeMap.get(samp.getFactoryCode())){
+					facotoryCodeMap.put(samp.getFactoryCode(), new ArrayList<SampleAdditional>());
+				}
+				facotoryCodeMap.get(samp.getFactoryCode()).add(samp);
+			}
+			map.put(sample.getId(), facotoryCodeMap);
+		}
+		//获取拖延单数
+		String delayDates=sampleInputService.queryDelayDates(PropertiesUtils.findPropertiesKey("sample_delay_dates"));
+		model.addAttribute("map", map);
+		model.addAttribute("replyDate", Common.fromDateY());
+		model.addAttribute("pageView", pageView);
+		if(factoryInfos.size()==1){
+			model.addAttribute("factoryInfo", factoryInfos.get(0));
+		}
+		if(cloths.size()==1){
+			model.addAttribute("cloth", cloths.get(0));
+		}
+		model.addAttribute("bean", sampleInput);
+		model.addAttribute("delayDates",delayDates);
+		return Common.BACKGROUND_PATH+"/sampleProcess/list";
+	}
+	
 	/**
 	 * 暂存数据
 	 * @param model

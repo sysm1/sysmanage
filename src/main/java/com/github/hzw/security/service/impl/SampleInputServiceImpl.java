@@ -207,6 +207,10 @@ public class SampleInputServiceImpl implements SampleInputService {
 		}
 	}
 	
+	public void updateStatus(String[] idsa){
+		sampleInputMapper.updateStatus(idsa);
+	}
+	
 	/**
 	 * 是否是新色
 	 * @param list
