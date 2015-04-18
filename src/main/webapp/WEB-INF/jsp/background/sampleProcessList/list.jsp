@@ -165,7 +165,7 @@ ul { list-style:none;}
 			}
 			alert("开版进度已回成功");
 		});
-		$("#editView").click("click", function() {//绑定编辑按扭
+		$("#edit").click("click", function() {//绑定编辑按扭
 			var cbox=getSelectedCheckbox();
 			if(cbox==""){
 				parent.$.ligerDialog.alert("请选择一条记录修改");
@@ -175,13 +175,15 @@ ul { list-style:none;}
 				parent.$.ligerDialog.alert("一次只能修改一条记录");
 				return;
 			}
-			dialog = parent.$.ligerDialog.open({
+			/**dialog = parent.$.ligerDialog.open({
 				width : 950,
 				height : 500,
 				url : rootPath + '/background/sample/editUI.html?id='+cbox,
 				title : "修改开版录入",
 				isHidden : false
 			});
+			*/
+			location.href=rootPath + '/background/sampleProcess/toUpdate.html?ids='+cbox
 		});
 		
 		/***过滤查询**/
@@ -376,7 +378,7 @@ ul { list-style:none;}
 </form>
 		</div>
 		<div class="topBtn" style="width:800px;text-align: center">
-			<a class="btn btn-large btn-primary" href="javascript:void(0)" id="answer">
+			<a class="btn btn-large btn-primary" href="javascript:void(0)" id="edit">
 				修改
 			</a>
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="addtoFlower">

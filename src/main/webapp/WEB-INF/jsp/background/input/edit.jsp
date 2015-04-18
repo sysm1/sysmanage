@@ -91,6 +91,34 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		          alert("异常！");    
 		     } 
 		});
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
+		    data: {clothId:obj.value}, //要发送的数据
+		    success: function(data){
+		    	var td2 = obj.parentNode.parentNode.children[2];
+		    	if(data!=null&&data!=''){
+			    	var selectb=null;
+			    	var selecte=null;
+			    	var options='';
+			    	selectb='<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">';
+			    	for(var i=0;i<data.length;i++){
+			    		if(null!=data[i]){
+			    			options+='<option value="'+data[i]+'">'+data[i]+'</option>';
+			    		}
+			    	}
+			    	selecte='</select>';
+			    	td2.innerHTML=selectb+options+selecte;
+		    	}else{
+		    		td2.innerHTML='<input type="text" id="myCompanyCode" name="myCompanyCode" value="" style="width:92%;">';
+		    	}
+			},error : function() {    
+		          // view("异常！");
+		          alert("异常！");    
+		     } 
+		});
 	}
 	
 	function changeUnitName(name,obj){
@@ -135,8 +163,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		<table id="table1" border="1" name="table1">
 			<tbody>
 				<tr>
+					<th>
+						<input type="checkbox" id="checkAll" name="checkAll">
+					</th>
 					<th align="right">布种</th>
-					<th align="right">我司编号</th>
+					<th align="right" style="width: 150px;">我司编号</th>
 					<th align="right">我司颜色</th>
 					<th >数量</th>
 					<th>单位</th>
@@ -144,6 +175,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th align="right">业务员</th>
 					<th></th>
 				</tr><tr>
+					<td>
+						<input type="checkbox" id="checkId" name="checkId" value="1">
+					</td>
 					<td class="l_left">
 						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:150px;">
 							<option>请选择布种</option>
@@ -183,8 +217,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			<tr>
 				<td>
 					<div class="l_btn_centent">
-						<!-- saveWin_form   from是表单Ｉd-->
-						<a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a>
+						<!-- saveWin_form   from是表单Ｉd>
+						<a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a-->
 						<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
 						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
 						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
@@ -196,24 +230,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	</div>
 </body>
 <script type="text/javascript">
-initUnit(${input.clothId});
-</script>
-<script type="text/javascript">
-	$.ajax({
-	    type: "post", //使用get方法访问后台
-	    dataType: "json", //json格式的数据
-	    async: false, //同步   不写的情况下 默认为true
-	    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
-	    data: {clothId:$('#clothId').val()}, //要发送的数据
-	    success: function(data){
-	    	$("#myCompanyCode").empty();
-	    	for(var i=0;i<data.length;i++){
-	    		$("#myCompanyCode").append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
-	    	}
-		},error : function() {    
-	          // view("异常！");    
-	          alert("异常！");    
-	     } 
-	});
+	//initUnit(${input.clothId});
+	var cloth=document.getElementById("clothId");
+	//alert(cloth);
+	changeClothSelect(cloth);
 </script>
 </html>

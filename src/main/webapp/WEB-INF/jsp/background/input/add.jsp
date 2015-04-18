@@ -89,7 +89,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				alert("请选择布种");
 				row.cells[1].childNodes[0].focus();
 				return false;
-			}if(row.cells[2].childNodes[0].value==''){
+			}
+			//alert(row.cells[2].childNodes[0].value);
+			if(row.cells[2].childNodes[0].value==''){
 				alert("请选择我司编号");
 				row.cells[2].childNodes[0].focus();
 				return false;
@@ -159,7 +161,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			    	selectb='<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">';
 			    	for(var i=0;i<data.length;i++){
 			    		if(null!=data[i]){
-			    			options+='<option id="'+data[i]+'">'+data[i]+'</option>';
+			    			options+='<option value="'+data[i]+'">'+data[i]+'</option>';
 			    		}
 			    	}
 			    	selecte='</select>';
@@ -292,6 +294,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		</tr></table>
 	</form>
 	</div>
+	
 </body>
 
 </html>
