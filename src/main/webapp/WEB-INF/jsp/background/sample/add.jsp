@@ -21,8 +21,9 @@ $(function() {
 						$.ligerDialog.success('提交成功!', '提示', function() {
 							//这个是调用同一个页面趾两个iframe里的js方法
 							//account是iframe的id
-							parent.sample.loadGird();
-							closeWin();
+							location.href='${ctx}/background/sample/list.html';
+							//parent.sample.loadGird();
+							//closeWin();
 						});
 						//parent.window.document.getElementById("username").focus();
 					} else {
@@ -127,8 +128,8 @@ $(function() {
 			}
 		}
 		$("#form").submit();
-		alert('保存成功');
-		location.href='${ctx}/background/sample/list.html';
+		//alert('保存成功');
+		//location.href='${ctx}/background/sample/list.html';
 	}
 	
 	/** 

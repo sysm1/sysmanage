@@ -262,7 +262,7 @@ ul { list-style:none;}
 		$('#pageNow').attr('value',${pageView.pageNow });
 		var f = $('#fenye');
 		//f.attr('target','_blank');
-		f.attr('action',window.location.href);
+		f.attr('action','${pageContext.request.contextPath}/background/sample/list.html');
 		f.submit();
 	}
 	function page(pageNO){
