@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <%@ include file="/common/header.jsp"%>
 <!-- 开办进度查询 -->
 
@@ -120,10 +121,30 @@ html>body td{ font-size:13px;}
 				return;
 			}
 			for(var i=0;i<cbox.length;i++){
+				/**
 				var f = $('#'+cbox[i]+'_form');
 				f.attr('target','iframe');
 				f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html');
 				f.submit();
+				*/
+				
+				var f = $('#'+cbox[i]+'_form');
+				//f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/answer.html?type=1');
+				//f.submit();
+				$.ajax({
+				    type: "post", //使用get方法访问后台
+				    dataType: "json", //json格式的数据
+				    async: false, //同步   不写的情况下 默认为true
+				    url: '${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html', //要访问的后台地址
+				    data: f.serialize(), //要发送的数据
+				    success: function(data){
+				    	//alert(data);
+					},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+						alert(XMLHttpRequest.status);
+						alert(XMLHttpRequest.readyState);
+						alert(data);  
+				     }
+				});
 			}
 			alert("数据暂存成功");
 		});
@@ -362,6 +383,44 @@ html>body td{ font-size:13px;}
 			$('#'+id).attr('value','');
 		}
 	}
+	
+	/**图片上传**/
+	function picUpload(id,index) {
+		alert(id);
+		$.ajaxFileUpload(
+	            {
+	                url: '/background/upload.html', //用于文件上传的服务器端请求地址
+	                secureuri: false, //是否需要安全协议，一般设置为false
+	                fileElementId: id, //文件上传域的ID
+	                dataType: 'json', //返回值类型 一般设置为json
+	                success: function (data, status)  //服务器成功响应处理函数 
+	                // string res = "{ error:'" + error + "', msg:'" + msg + "',imgurl:'" + imgurl + "'}";
+	                {
+	                	/**
+	                    $("#img1").attr("src", data.imgurl);
+	                    if (typeof (data.error) != 'undefined') {
+	                        if (data.error != '') {
+	                            alert(data.error);
+	                        } else {
+	                            alert(data.msg);
+	                        }
+	                    }
+	                    **/
+	                    if( data.code == '0') {
+	                    	alert(data.msg);
+	                    } else {
+	                    	$("#img1").attr("src", data.url);
+	                    	$("#picture").val(data.picture);
+	                    }
+	                },
+	                error: function (data, status, e)//服务器响应失败处理函数
+	                {
+	                    alert(e);
+	                }
+	            }
+	        )
+        return false;
+    }
 </script>
 </head>
 <body>
@@ -435,7 +494,7 @@ html>body td{ font-size:13px;}
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<% int i=0; %>
 					<tr id="${item.id }_tr" >
-					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
+					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post">
 					 	<td id="0_${item.id }">
 					 		<input type="checkbox" id="${item.id }checkId" name="checkId" onclick="clickCheckId(${item.id });" value="${item.id }" >
 					 		<input type="hidden" id="id" name="id" value="${item.id }">
@@ -457,7 +516,8 @@ html>body td{ font-size:13px;}
 						<td id="5_${item.id }" onclick="onclickTr(${item.id })">
 							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:90px" 
 								onchange="changeValue(this,'${item.id }myCompanyCode')" value="${item.myCompanyCode }">
-							<input type="file" id="myFile" name="myFile" style="width: 135px">
+							<input type="file" id="9_myFile" name="myFile" style="width: 135px" onchange="picUpload('${item.id }_myFile',${item.id })">
+							<input type="hidden" id="${item.id }_picture" name="picture" value="${item.picture }">
 						</td>
 						<td id="6_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
 						<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.technologyName }</td>
