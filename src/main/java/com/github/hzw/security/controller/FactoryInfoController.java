@@ -110,6 +110,19 @@ public class FactoryInfoController extends BaseController {
 		return Common.BACKGROUND_PATH+"/factory/edit";
 	}
 	
+	/**
+	 * 跑到查看界面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("viewUI")
+	public String viewUI(Model model,String id) {
+		FactoryInfo info = factoryInfoService.getById(id);
+		model.addAttribute("factory", info);
+		return Common.BACKGROUND_PATH+"/factory/view";
+	}
+	
 	
 	/**
 	 * 更新类型
