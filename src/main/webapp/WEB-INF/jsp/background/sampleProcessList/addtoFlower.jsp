@@ -166,6 +166,7 @@ $(function() {
 		<input id='picture' name="picture" type="hidden" value="" >
 		<input id='factoryId' name="factoryId" type="hidden" value="${bean.factoryId }" >
 		<input id='clothId' name="clothId" type="hidden" value="${bean.clothId }" >
+		<input id='technologyId' name="technologyId" type="hidden" value="${bean.technologyId }" >
 		<input id='myCompanyCode' name="myCompanyCode" type="hidden" value="${bean.myCompanyCode }" >
 		<table class="pp-list table table-striped table-bordered" id="addtable">
 			<tbody>

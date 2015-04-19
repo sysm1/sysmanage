@@ -51,6 +51,14 @@ public class ReturnGoodsProcessListMsController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
 	public String list(Model model,String delay, String pageNow,OrderSummary orderSummary) {
+		ClothInfo cloth=new ClothInfo();
+		cloth.setId(orderSummary.getClothId());
+		List<ClothInfo> cloths = clothInfoService.query(getPageView(pageNow,null), cloth).getRecords();
+		
+		FactoryInfo fac=new FactoryInfo();
+		fac.setId(orderSummary.getFactoryId());
+		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,null), fac).getRecords();
+		
 		pageView=orderSummaryService.queryVO(getPageView(pageNow,null),orderSummary);
 		List<OrderSummaryVO> list=pageView.getRecords();
 		List<ReturnGoodsProcess> rlist=null;
@@ -61,17 +69,20 @@ public class ReturnGoodsProcessListMsController extends BaseController {
 			rlist=returnGoodsProcessService.queryBySummaryId(summaryId+"");
 			map.put(summaryId, rlist);
 		}
-		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<TechnologyInfo> technologys= technologyInfoService.queryAll(null);
-		List<ClothInfo> cloths=clothInfoService.queryAll(null);
 		String delayDates=returnGoodsProcessService.queryDelayDates(PropertiesUtils.findPropertiesKey("process_delay_dates"));
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("map", map);
-		model.addAttribute("cloths", cloths);
 		model.addAttribute("technologys", technologys);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("delayDates",delayDates);
 		model.addAttribute("bean", orderSummary);
+		if(factoryInfos.size()==1){
+			model.addAttribute("factoryInfo", factoryInfos.get(0));
+		}
+		if(cloths.size()==1){
+			model.addAttribute("cloth", cloths.get(0));
+		}
 		return Common.BACKGROUND_PATH+"/processListMs/list";
 	}
 	

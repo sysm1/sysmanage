@@ -29,4 +29,6 @@ public interface SampleInputService extends BaseService<SampleInput> {
 	 */
 	public String queryDelayDates(String dates);
 	
+	public void updateStatus(String[] idsa);
+	
 }

@@ -6,8 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <%@ include file="/common/header.jsp"%>
+<script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
+
 <!-- 开办进度查询 -->
 
 <style type="text/css">
@@ -51,7 +53,7 @@ th {
  letter-spacing: 2px;
  text-transform: uppercase;
  text-align: left;
- padding: 6px 6px 6px 12px;
+ padding: 6px 6px 6px 6px;
 }
 
 th.nobg {
@@ -69,6 +71,7 @@ th.nobg {
  //background: #fff;
  font-size:12px;
  color: #4f6b72;
+ padding: 1px 3px ;
 }
 
 .lanyuan_bb{
@@ -119,10 +122,30 @@ html>body td{ font-size:13px;}
 				return;
 			}
 			for(var i=0;i<cbox.length;i++){
+				/**
 				var f = $('#'+cbox[i]+'_form');
 				f.attr('target','iframe');
 				f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html');
 				f.submit();
+				*/
+				
+				var f = $('#'+cbox[i]+'_form');
+				//f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/answer.html?type=1');
+				//f.submit();
+				$.ajax({
+				    type: "post", //使用get方法访问后台
+				    dataType: "json", //json格式的数据
+				    async: false, //同步   不写的情况下 默认为true
+				    url: '${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html', //要访问的后台地址
+				    data: f.serialize(), //要发送的数据
+				    success: function(data){
+				    	//alert(data);
+					},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+						alert(XMLHttpRequest.status);
+						alert(XMLHttpRequest.readyState);
+						alert(data);  
+				     }
+				});
 			}
 			alert("数据暂存成功");
 		});
@@ -175,6 +198,35 @@ html>body td{ font-size:13px;}
 			f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/list.html');
 			f.submit();
 		});
+		
+		/***过滤查询**/
+		$("#factory_text").ligerComboBox({
+	        url: '/background/pinyin/factory.html',
+	        valueField: 'id',
+	        textField: 'name', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#factoryId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
+		/***过滤查询**/
+		$("#cloth_text").ligerComboBox({
+	        url: '/background/pinyin/cloth.html',
+	        valueField: 'id',
+	        textField: 'clothName', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#clothId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
 	});
 	function loadGird(){
 		grid.loadData();
@@ -327,6 +379,39 @@ html>body td{ font-size:13px;}
 			clickCheckId(checkIds[i].value);
 		}
 	}
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
+	}
+	
+	/**图片上传**/
+	function picUpload(id,index) {
+		alert(id);
+		$.ajaxFileUpload(
+	            {
+	                url: '${pageContext.request.contextPath}/background/upload.html', //用于文件上传的服务器端请求地址
+	                secureuri: false, //是否需要安全协议，一般设置为false
+	                fileElementId: id, //文件上传域的ID
+	                dataType: 'json', //返回值类型 一般设置为json
+	                success: function (data, status) { //服务器成功响应处理函数 
+	                    alert(data);
+	                    if( data.code == '0') {
+	                    	alert(data.msg);
+	                    } else {
+	                    	alert(1);
+	                    	//$("#img1").attr("src", data.url);
+	                    	$("#"+index+"_picture").val(data.picture);
+	                    }
+	                },
+	                error: function (data, status, e)//服务器响应失败处理函数
+	                {
+	                    alert(e);
+	                }
+	            }
+	        )
+        return false;
+    }
 </script>
 </head>
 <body>
@@ -336,22 +421,35 @@ html>body td{ font-size:13px;}
 				<input type="hidden" id="pageNow" name="pageNow" value="">
 				<input type="hidden" id="status" name="status" value="0">
 				<input type="hidden" id="delay" name="delay" value="">
-				工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：&nbsp;
-				      <select  id="factoryId" name="factoryId">
+				<table>
+				<tr>
+				<td>工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：</td>
+				      <!--select  id="factoryId" name="factoryId">
 						<option value="">请选择工厂</option>
 						<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 							<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
 						</c:forEach>
-					  </select>
-			          布种：<select id="clothId" name="clothId">
+					  </select-->
+			    <td>
+			    	<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
+					<input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
+					  		onchange="changeTextValue('factoryId',this);"/>
+			    </td><td>布种：</td>
+			    <td><!--select id="clothId" name="clothId">
 							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
-						</select>
-			    <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">
-				查询
-			</a>
+						</select-->
+						<input type="hidden" id="clothId" name="clothId" value="${ bean.clothId }">
+					  	<input type="text" id="cloth_text" style="width: 200px;" value="${cloth.clothName }" 
+					  		onchange="changeTextValue('clothId',this);"/>
+			    </td>
+				<td>
+			    <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">查询	</a>
+			    </td>
+			</tr>
+			</table>
 			</form>
 		</div>
 		<div class="topBtn">
@@ -387,7 +485,7 @@ html>body td{ font-size:13px;}
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<% int i=0; %>
 					<tr id="${item.id }_tr" >
-					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
+					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post">
 					 	<td id="0_${item.id }">
 					 		<input type="checkbox" id="${item.id }checkId" name="checkId" onclick="clickCheckId(${item.id });" value="${item.id }" >
 					 		<input type="hidden" id="id" name="id" value="${item.id }">
@@ -402,14 +500,15 @@ html>body td{ font-size:13px;}
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
 						<td id="3_${item.id }" style="width:80px" >
-							<input type="text" id="fileCode" name="fileCode" style="width:100%" value="${item.fileCode }" 
+							<input type="text" id="fileCode" name="fileCode" style="width:78px;" value="${item.fileCode }" 
 								onchange="changeValue(this,'${item.id }fileCode');" onclick="onclickTr(${item.id })" >
 						</td>
 						<td id="4_${item.id }" onclick="onclickTr(${item.id })">${item.clothName }</td>
 						<td id="5_${item.id }" onclick="onclickTr(${item.id })">
 							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:90px" 
 								onchange="changeValue(this,'${item.id }myCompanyCode')" value="${item.myCompanyCode }">
-							<input type="file" id="myFile" name="myFile" style="width: 135px">
+							<input type="file" id="${item.id }_myFile" name="myFile" style="width: 135px" onchange="picUpload('${item.id }_myFile',${item.id })">
+							<input type="hidden" id="${item.id }_picture" name="picture" value="${item.picture }">
 						</td>
 						<td id="6_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
 						<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.technologyName }</td>

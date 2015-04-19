@@ -43,6 +43,22 @@
 		select
 		<include refid="selectId" />
 		from flower_additional
+		<where> 1=1 
+		<if test="myCompanyColor != null and myCompanyColor != ''">
+			or my_company_color = #{myCompanyColor}
+		</if>
+		<if test="factoryColor != null and factoryColor != ''">
+			or factory_color = #{factoryColor}
+		</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<select id="queryAllColor" resultType="FlowerAdditional">
+		select
+		<include refid="selectId" />
+		from flower_additional
+		where my_company_color = #{myCompanyColor} or factory_color = #{factoryColor}
 		order by id desc
 	</select>
 

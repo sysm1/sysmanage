@@ -53,11 +53,20 @@ public class SampleProcessListController extends BaseController{
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput){
-		String pageNow=request.getParameter("pageNow");		
+		String pageNow=request.getParameter("pageNow");	
+		
+		//过滤查询  查询条件
+		ClothInfo cloth=new ClothInfo();
+		cloth.setId(sampleInput.getClothId());
+		List<ClothInfo> cloths = clothInfoService.query(getPageView(pageNow,pagesize), cloth).getRecords();
+		
+		FactoryInfo fac=new FactoryInfo();
+		fac.setId(sampleInput.getFactoryId());
+		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,pagesize), fac).getRecords();
+		//查询条件结束
+		
 		pageView = sampleInputService.queryReplay(getPageView(pageNow,pagesize), sampleInput);
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
-		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
-		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		if(pageView.getPageNow()>pageView.getPageCount()){
 			pageView.setPageNow(Integer.parseInt(pageView.getPageCount()+""));
 		}
@@ -81,8 +90,12 @@ public class SampleProcessListController extends BaseController{
 		model.addAttribute("map", map);
 		model.addAttribute("technologyInfos", technologyInfos);
 		model.addAttribute("pageView", pageView);
-		model.addAttribute("factoryInfos", factoryInfos);
-		model.addAttribute("cloths", cloths);
+		if(factoryInfos.size()==1){
+			model.addAttribute("factoryInfo", factoryInfos.get(0));
+		}
+		if(cloths.size()==1){
+			model.addAttribute("cloth", cloths.get(0));
+		}
 		model.addAttribute("bean", sampleInput);
 		return Common.BACKGROUND_PATH+"/sampleProcessList/list";
 	}

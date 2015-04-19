@@ -1,5 +1,6 @@
 package com.github.hzw.security.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
+import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
@@ -61,6 +63,10 @@ public class OrderSummaryController extends BaseController {
 	@Inject
 	private FlowerAdditionalService flowerAdditionalService;
 	
+	@Inject
+	private FlowerInfoService flowerInfoService;
+	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow,OrderSummary info,String flag) {
 		if("1".equals(flag)){
@@ -70,21 +76,34 @@ public class OrderSummaryController extends BaseController {
 			//info.setStartDate(new Date());
 			//info.setEndDate(new Date());
 		}
+		
+		ClothInfo cloth=new ClothInfo();
+		cloth.setId(info.getClothId());
+		List<ClothInfo> cloths = clothInfoService.query(getPageView(pageNow,null), cloth).getRecords();
+		
+		FactoryInfo fac=new FactoryInfo();
+		fac.setId(info.getFactoryId());
+		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,null), fac).getRecords();
+		
 		pageView = orderSummaryService.query(getPageView(pageNow,null), info);
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setMyCompanyCode(info.getMyCompanyCode());
-		
-		List<ClothInfo> cloths = clothInfoService.queryAll(null);
-		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(null);
+		if(cloths.size()==1){
+			model.addAttribute("cloth", cloths.get(0));
+		}
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("size", pageView.getRecords().size()-1);
-		model.addAttribute("factoryInfos", factoryInfos);
+		if(factoryInfos.size()==1){
+			model.addAttribute("factoryInfo", factoryInfos.get(0));
+		}
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("bean", info);
 		model.addAttribute("technologyInfos", technologyInfos);
+		model.addAttribute("myCompanyCodes", myCompanyCodes);
 		return Common.BACKGROUND_PATH+"/ordersummary/list";
 	}
 	
@@ -114,6 +133,9 @@ public class OrderSummaryController extends BaseController {
 	public Map<String, Object> add(OrderSummary info,String inputIds,String summId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			info.setPrintStatus(0);
+			info.setPrintNum(0);
+			info.setCreateTime(new Date());
 			orderSummaryService.add(info);
 			OrderInputSummary orderInputSummary=orderInputSummaryService.getById(summId);
 			String orderIds=orderInputSummary.getOrderIds();
@@ -127,10 +149,19 @@ public class OrderSummaryController extends BaseController {
 			
 			//修改坯布余量 ？？？？？
 			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(info.getClothId(), info.getFactoryId());
-			Double allowance=clothAllowance.getAllowance();
-			allowance=allowance-info.getNum();
-			clothAllowance.setAllowance(allowance);
-			clothAllowanceService.update(clothAllowance);
+			if(null==clothAllowance){
+				clothAllowance=new ClothAllowance();
+				clothAllowance.setClothId(info.getClothId());
+				clothAllowance.setFactoryId(info.getFactoryId());
+				double num=0-info.getNum();
+				clothAllowance.setAllowance(num);
+				clothAllowanceService.add(clothAllowance);
+			}else{
+				Double allowance=clothAllowance.getAllowance();
+				allowance=allowance-info.getNum();
+				clothAllowance.setAllowance(allowance);
+				clothAllowanceService.update(clothAllowance);
+			}
 			//坯布余量修改完成
 			
 			map.put("flag", "true");

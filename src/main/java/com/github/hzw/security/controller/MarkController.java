@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.Mark;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.MarkService;
 import com.github.hzw.util.Common;
-import com.github.hzw.util.Md5Tool;
 
 @Controller
 @RequestMapping("/background/mark/")
@@ -32,9 +30,10 @@ public class MarkController extends BaseController{
 	}
 	
 	@RequestMapping("addlist")
-	public String addlist(Model model,Mark mark, String pageNow) {
+	public String addlist(Model model,Mark mark, String pageNow,Object obj) {
 		pageView = markService.query(getPageView(pageNow,"100"), mark);
 		model.addAttribute("pageView", pageView);
+		model.addAttribute("obj",obj);
 		return Common.BACKGROUND_PATH+"/mark/addlist";
 	}
 	

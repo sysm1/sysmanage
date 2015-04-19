@@ -67,21 +67,31 @@ public class SampleInputController extends BaseController {
 	 * @param pageNow
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput) {
 		String pageNow=request.getParameter("pageNow");
-		List<ClothInfo> cloths = clothInfoService.queryAll(null);
-		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		ClothInfo cloth=new ClothInfo();
+		cloth.setId(sampleInput.getClothId());
+		List<ClothInfo> cloths = clothInfoService.query(getPageView(pageNow,pagesize), cloth).getRecords();
+		
+		FactoryInfo fac=new FactoryInfo();
+		fac.setId(sampleInput.getFactoryId());
+		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,pagesize), fac).getRecords();
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		pageView = sampleInputService.query(getPageView(pageNow,pagesize), sampleInput);
 		if(pageView.getPageNow()>pageView.getPageCount()){
 			pageView.setPageNow(Integer.parseInt(pageView.getPageCount()+""));
 		}
-		model.addAttribute("cloths", cloths);
+		if(cloths.size()==1){
+			model.addAttribute("cloth", cloths.get(0));
+		}
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("bean", sampleInput);
-		model.addAttribute("factoryInfos", factoryInfos);
+		if(factoryInfos.size()==1){
+			model.addAttribute("factoryInfo", factoryInfos.get(0));
+		}
 		model.addAttribute("technologyInfos", technologyInfos);
 		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/sample/list";
@@ -160,7 +170,7 @@ public class SampleInputController extends BaseController {
 				//sampleInput.setSampleDate(DateUtil.str2Date(sampleDates[i],"YYYY-mm-DD"));
 				sampleInput.setSampleDate(DateUtil.DatePattern(new Date()));
 				sampleInput.setCodeValue(codeValues[i]);
-				sampleInput.setTechnologyId(Integer.parseInt(technologyIds[i]));
+				sampleInput.setTechnologyId(null==technologyIds[i]?null:Integer.parseInt(technologyIds[i]));
 				sampleInput.setSalemanId(Integer.parseInt(salemanIds[i]));
 				sampleInput.setMark(marks[i]);
 				sampleInput.setStatus(0);

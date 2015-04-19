@@ -67,7 +67,7 @@ th.nobg {
  border-top: 1px solid #C1DAD7;
  background: #fff;
  font-size:12px;
- padding: 3px 6px 2px 3px;
+ padding: 3px 6px 2px;
  color: #4f6b72;
 }
 
@@ -165,7 +165,7 @@ ul { list-style:none;}
 			}
 			alert("开版进度已回成功");
 		});
-		$("#editView").click("click", function() {//绑定编辑按扭
+		$("#edit").click("click", function() {//绑定编辑按扭
 			var cbox=getSelectedCheckbox();
 			if(cbox==""){
 				parent.$.ligerDialog.alert("请选择一条记录修改");
@@ -175,14 +175,45 @@ ul { list-style:none;}
 				parent.$.ligerDialog.alert("一次只能修改一条记录");
 				return;
 			}
-			dialog = parent.$.ligerDialog.open({
+			/**dialog = parent.$.ligerDialog.open({
 				width : 950,
 				height : 500,
 				url : rootPath + '/background/sample/editUI.html?id='+cbox,
 				title : "修改开版录入",
 				isHidden : false
 			});
+			*/
+			location.href=rootPath + '/background/sampleProcess/toUpdate.html?ids='+cbox
 		});
+		
+		/***过滤查询**/
+		$("#factory_text").ligerComboBox({
+	        url: '/background/pinyin/factory.html',
+	        valueField: 'id',
+	        textField: 'name', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#factoryId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
+		/***过滤查询**/
+		$("#cloth_text").ligerComboBox({
+	        url: '/background/pinyin/cloth.html',
+	        valueField: 'id',
+	        textField: 'clothName', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#clothId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
 	});
 	function loadGird(){
 		grid.loadData();
@@ -254,7 +285,7 @@ ul { list-style:none;}
 			    data: {id:id}, //要发送的数据
 			    success: function(data){
 			    	if(data==0){
-			    		$('#addtoFlower').hide();
+			    		//$('#addtoFlower').hide();
 			    		
 			    	}else{
 			    		$('#addtoFlower').show();
@@ -263,6 +294,11 @@ ul { list-style:none;}
 			});
 		}else{
 			$('#addtoFlower').show();
+		}
+	}
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
 		}
 	}
 </script>
@@ -284,12 +320,15 @@ ul { list-style:none;}
 			<td><input type="text" id="mark" name="mark" value="${bean.mark }" ></td>
 			<td style="width:70px;text-align: right;">工厂：</td>
 			<td>
-				<select  id="factoryId" name="factoryId">
+				<!--select  id="factoryId" name="factoryId">
 					<option value="">请选择工厂</option>
 					<c:forEach items="${ factoryInfos }" var = "factoryInfo">
-			<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
-			</c:forEach>
-			</select>
+					<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
+					</c:forEach>
+				</select-->
+				<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
+				<input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
+				  		onchange="changeTextValue('factoryId',this);"/>
 			</td>
 		 </tr>
 			 <td style="width:70px;text-align: right;">回版日期：</td>
@@ -303,12 +342,15 @@ ul { list-style:none;}
 			    <input type="text" id="codeValue" name="codeValue" value="${bean.codeValue }"/>
 			</td><td style="width:70px;text-align: right;">布种：</td>
 			<td>
-			    <select id="clothId" name="clothId">
+			    <!--select id="clothId" name="clothId">
 					<option value="">请选择布种</option>
 					<c:forEach items="${ cloths }" var = "cloth">
 					<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 					</c:forEach>
-				</select>
+				</select-->
+				<input type="hidden" id="clothId" name="clothId" value="${ bean.clothId }">
+			  	<input type="text" id="cloth_text" style="width: 200px;" value="${cloth.clothName }" 
+			  		onchange="changeTextValue('clothId',this);"/>
 			</td> 
 		</tr><tr>
 			<td style="width:70px;text-align: right;">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</td>
@@ -336,7 +378,7 @@ ul { list-style:none;}
 </form>
 		</div>
 		<div class="topBtn" style="width:800px;text-align: center">
-			<a class="btn btn-large btn-primary" href="javascript:void(0)" id="answer">
+			<a class="btn btn-large btn-primary" href="javascript:void(0)" id="edit">
 				修改
 			</a>
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="addtoFlower">
@@ -354,11 +396,11 @@ ul { list-style:none;}
 					<th class="specalt" style="width:40px">状态</th>
 					<th class="specalt" style="width:40px">日期</th>
 					<th class="specalt" style="width:75px">分色文件号</th>
-					<th  style="width:75px">布种</th>
+					<th  style="width:85px">布种</th>
 					<th class="specalt" style="width:85px">我司编号</th>
 					<th class="specalt" style="width:100px">工厂</th>
 					<th class="specalt" style="width:75px">工艺</th>
-					<th class="specalt" style="width:110px">开版录入备注</th>
+					<th class="specalt" style="width:130px">开版录入备注</th>
 					<th class="specalt" >工厂编号</th>
 					<th  >工厂颜色</th>
 					<th style="width:60px">回版日期</th>
@@ -368,11 +410,11 @@ ul { list-style:none;}
 				<% int i=0; %>
 					<tr>
 					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-					 	<td>
-					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" onclick="changeCheckId(this);" style="width:18px">
-					 		<input type="hidden" id="id" name="id" value="${item.id }">
+					 	<input type="hidden" id="id" name="id" value="${item.id }">
 					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">
 					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">
+					 	<td style="width: 20px;">
+					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" onclick="changeCheckId(this);" style="width:18px">
 					 	</td>
 						<td onmouseover="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
 						<td>
@@ -393,7 +435,7 @@ ul { list-style:none;}
 						<td>${item.factoryName }</td>
 						<td>${item.technologyName }</td>
 						<td title="${item.mark }">
-							${fn:substring(item.mark,0,10)}  
+							${fn:substring(item.mark,0,10)}
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
 						<td>

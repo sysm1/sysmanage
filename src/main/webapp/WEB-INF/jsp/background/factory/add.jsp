@@ -68,24 +68,20 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/factory/add.html" method="post">
-		<table style="width: 285px; height: 200px;">
+		<table style="width: 285px; height: 100%;" >
 			<tbody>
 				<tr>
 					<td class="l_right">名称：</td>
 					<td class="l_left">
-					<div class="lanyuan_input">
 					<input id='name' name="name" type="text" value="">
-						</div></td>
+					</td>
 				</tr>
 
 				<tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='mark'
-						name="mark" class="checkdesc" type="text" value="">
-						</div>
-						</td>
+						<textarea rows="10" cols="8" id='mark' name="mark" ></textarea>
+					</td>
 				</tr>
 				
 				<tr>

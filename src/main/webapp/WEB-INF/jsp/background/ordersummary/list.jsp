@@ -210,6 +210,58 @@ ul { list-style:none;}
 				}
 			});
 		});
+		
+		/***过滤查询**/
+		$("#factory_text").ligerComboBox({
+	        url: '/background/pinyin/factory.html',
+	        valueField: 'id',
+	        textField: 'name', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#factoryId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
+		/***过滤查询**/
+		$("#cloth_text").ligerComboBox({
+	        url: '/background/pinyin/cloth.html',
+	        valueField: 'id',
+	        textField: 'clothName', 
+	        selectBoxWidth: 215,
+	        selectBoxHeight: 215,
+	        autocomplete: true,
+	        width: 215,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#clothId").val(e);
+	            //alert($("#clothId").val());
+	            var clothId=$("#clothId").val();
+	            $.ajax({
+				    type: "post", //使用get方法访问后台
+				    dataType: "json", //json格式的数据
+				    async: false, //同步   不写的情况下 默认为true
+				    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
+				    data: {clothId:clothId}, //要发送的数据
+				    success: function(data){
+				    	if(data!=null&&data!=''){
+					    	var myCompanyCode = $("#myCompanyCode");
+					    	myCompanyCode.empty();
+					    	myCompanyCode.append($("<option>").text("请选择").val(""));
+					    	for(var i=0;i<data.length;i++) {
+					    	    var option = $("<option>").text(data[i]).val(data[i]);
+					    	    myCompanyCode.append(option);
+					    	}
+				    	}else{
+				    		//alert('没有相关联的我司编号');
+				    	}
+					}
+				});
+	        }
+	    });
+		
 	});
 	/**
 	 * 获取选中的值
@@ -230,6 +282,16 @@ ul { list-style:none;}
 		//f.attr('target','_blank');
 		f.attr('action','${pageContext.request.contextPath}/background/ordersummary/list.html');
 		f.submit();
+	}
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
+	}
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
 	}
 </script>
 </head>
@@ -254,22 +316,29 @@ ul { list-style:none;}
 						</td>
 						<td style="width:70px;text-align: right;">工厂：</td>
 						<td>
-							<select  id="factoryId" name="factoryId">
+							<!--select  id="factoryId" name="factoryId">
 								<option value="">请选择工厂</option>
 								<c:forEach items="${ factoryInfos }" var = "factoryInfo">
 										<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
 									</c:forEach>
-							  </select>
+							</select-->
+							<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
+							<input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
+								onchange="changeTextValue('factoryId',this);"/> 
 						</td>
 					</tr><tr>
 						<td style="width:70px;text-align: right;">布种：</td>
 						<td>
-							<select id="clothId" name="clothId">
+							<!--select id="clothId" name="clothId">
 								<option value="">请选择布种</option>
 								<c:forEach items="${ cloths }" var = "cloth">
 									<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 								</c:forEach>
-							</select>
+							</select-->
+							
+							<input type="hidden" id="clothId" name="clothId" value="${ bean.clothId }">
+						  	<input type="text" id="cloth_text" style="width: 200px;" value="${cloth.clothName }" 
+						  		onchange="changeTextValue('clothId',this);"/>
 						</td><td style="width:70px;text-align: right;">
 							工厂编号：
 						</td><td>
@@ -278,6 +347,9 @@ ul { list-style:none;}
 						<td>
 							<select id="myCompanyCode" name="myCompanyCode">
 								<option value="">请选择</option>
+								<c:forEach var="code" items="${myCompanyCodes }">
+									<option value="${code }">${code }</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr><tr>

@@ -144,12 +144,24 @@
 		<if test="clothId != null and clothId != ''">
 			and flower.cloth_id = #{clothId}
 		</if>
+		<if test="factoryId != null and factoryId != ''">
+			and flower.factory_Id = #{factoryId}
+		</if>
+		<if test="technologyId != null and technologyId != ''">
+			and flower.technology_Id = #{technologyId}
+		</if>
 		</where>
 		order by id desc
 	</select>
 	
 	<select id="queryMycompanyCodeByCloth" parameterType="Integer" resultType="String">
-		select DISTINCT my_company_code myCompanyCode from flower_info where cloth_id = #{clothId}
+		select DISTINCT my_company_code myCompanyCode 
+		from flower_info 
+		<where> 1=1
+			<if test="_parameter != null and _parameter != ''">
+			and cloth_id = #{_parameter}
+			</if>
+		</where>
 	</select>
 
 	<insert id="add" parameterType="FlowerInfo" useGeneratedKeys="true" keyProperty="id">

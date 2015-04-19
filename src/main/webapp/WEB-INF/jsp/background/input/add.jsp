@@ -89,7 +89,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				alert("请选择布种");
 				row.cells[1].childNodes[0].focus();
 				return false;
-			}if(row.cells[2].childNodes[0].value==''){
+			}
+			//alert(row.cells[2].childNodes[0].value);
+			if(row.cells[2].childNodes[0].value==''){
 				alert("请选择我司编号");
 				row.cells[2].childNodes[0].focus();
 				return false;
@@ -152,23 +154,24 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
 		    data: {clothId:obj.value}, //要发送的数据
 		    success: function(data){
-		    	//$("#myCompanyCode").empty();
-		    	//alert(obj.parentNode.parentNode.children[2].childNodes[0]);
-		    	var select = obj.parentNode.parentNode.children[2].childNodes[0];
-		    	var sl=select.options.length-1;
-		    	//alert(select.options.length);
-		    	for(var i=sl;i>0;i--){
-		    		select.options.remove(i);
-		    	}
-		    	for(var i=0;i<data.length;i++){
-		    		//alert(i);
-		    		if(null!=data[i]){
-		    			select.options.add(new Option(data[i],data[i]));
-		    		}
-		    		//select.append("<option value='"+data[i].myCompanyCode+"'>"+data[i].myCompanyCode+"</option>");
+		    	var td2 = obj.parentNode.parentNode.children[2];
+		    	if(data!=null&&data!=''){
+			    	var selectb=null;
+			    	var selecte=null;
+			    	var options='';
+			    	selectb='<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">';
+			    	for(var i=0;i<data.length;i++){
+			    		if(null!=data[i]){
+			    			options+='<option value="'+data[i]+'">'+data[i]+'</option>';
+			    		}
+			    	}
+			    	selecte='</select>';
+			    	td2.innerHTML=selectb+options+selecte;
+		    	}else{
+		    		td2.innerHTML='<input type="text" id="myCompanyCode" name="myCompanyCode" value="" style="width:92%;">';
 		    	}
 			},error : function() {    
-		          // view("异常！");    
+		          // view("异常！");
 		          alert("异常！");    
 		     } 
 		});
@@ -223,7 +226,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</th>
 					<th align="right">布种</th>
-					<th align="right">我司编号</th>
+					<th align="right" style="width: 150px;">我司编号</th>
 					<th align="right">我司颜色</th>
 					<th >数量</th>
 					<th>单位</th>
@@ -244,13 +247,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 					<td>
 						
-						<select id="myCompanyCode" name="myCompanyCode" style="width:150px;" onchange="queryNoReturnNum(this)">
+						<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">
 							<option value="">请选择</option>
 						</select>
 						
-						
-						<!--input type="hidden" value="" id="myCompanyCode" name="myCompanyCode">
-						<input type="text" id="myCompanyCode_text" style="width: 110px;"/-->
 						
 					</td><td class="l_left">
 						<input type="text" name="myCompanyColor" style="width:150px;" value="" onchange="queryNoReturnNum(this)">
@@ -295,6 +295,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		</tr></table>
 	</form>
 	</div>
+	
 </body>
 
 </html>
