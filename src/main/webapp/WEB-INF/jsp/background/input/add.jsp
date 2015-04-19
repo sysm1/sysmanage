@@ -118,8 +118,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	    $("#addTable").click(function(){
 	    	var tr=$("#table1 tr:eq(2) ");
 			i++;
-	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
+	  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
 	    });
+	    
 	    $("#deleteTable").click(function(){
 	    	var checkId=document.getElementsByName("checkId");
 	    	for(var i=checkId.length-1;i>=0;i--){
