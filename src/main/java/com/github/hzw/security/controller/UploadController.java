@@ -39,6 +39,22 @@ public class UploadController {
 	public @ResponseBody Map<String, Object> fileUpload(@RequestParam("file") CommonsMultipartFile file, 
 			HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("UploadController#fileUpload() start");
+		String myCompanyCode=request.getParameter("myCompanyCode");
+		if(null==myCompanyCode||"".equals(myCompanyCode)){
+			myCompanyCode="";
+		}
+		String factoryCode1=request.getParameter("factoryCode1");
+		if(null==factoryCode1||"".equals(factoryCode1)){
+			factoryCode1="";
+		}
+		String factoryCode2=request.getParameter("factoryCode2");
+		if(null==factoryCode2||"".equals(factoryCode2)){
+			factoryCode2="";
+		}
+		String fileCode=request.getParameter("fileCode");
+		if(null==fileCode||"".equals(fileCode)){
+			fileCode="";
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		try{
 			//清除上次上传进度信息
@@ -57,8 +73,9 @@ public class UploadController {
 					map.put("msg", "请选择正确的文件类型");
 					return map;
 				}
-				String srcname = UUID.randomUUID().toString() + "." + fileExtension;
-				String smallname = UUID.randomUUID().toString() + "." + fileExtension;
+				/***图片文件名称 以我司编号 工厂编号和分色文件号命名***/
+				String srcname = "src="+myCompanyCode+","+factoryCode1+"_"+factoryCode2+","+fileCode+ "." + fileExtension;
+				String smallname = "small="+myCompanyCode+","+factoryCode1+"_"+factoryCode2+","+fileCode+ "." + fileExtension;
 				file.transferTo(new File(saveDirectory, srcname)); // 保存
 				ImageUtils.scale2(saveDirectory+"/"+srcname, saveDirectory+"/" + smallname, 200, 200, true);
 				map.put("code", "1");

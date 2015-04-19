@@ -168,6 +168,7 @@ public class SampleProcessController extends BaseController{
 	 * @param sampleInput
 	 * @param request
 	 */
+	@ResponseBody
 	@RequestMapping("saveTemp")
 	public void saveTemp(Model model,SampleInput sampleInput,HttpServletRequest request){
 		SampleInput bean=new SampleInput();
