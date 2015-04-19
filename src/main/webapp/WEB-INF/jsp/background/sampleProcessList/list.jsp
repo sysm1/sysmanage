@@ -67,7 +67,7 @@ th.nobg {
  border-top: 1px solid #C1DAD7;
  background: #fff;
  font-size:12px;
- padding: 3px 6px 2px 3px;
+ padding: 3px 6px 2px;
  color: #4f6b72;
 }
 
@@ -396,11 +396,11 @@ ul { list-style:none;}
 					<th class="specalt" style="width:40px">状态</th>
 					<th class="specalt" style="width:40px">日期</th>
 					<th class="specalt" style="width:75px">分色文件号</th>
-					<th  style="width:75px">布种</th>
+					<th  style="width:85px">布种</th>
 					<th class="specalt" style="width:85px">我司编号</th>
 					<th class="specalt" style="width:100px">工厂</th>
 					<th class="specalt" style="width:75px">工艺</th>
-					<th class="specalt" style="width:110px">开版录入备注</th>
+					<th class="specalt" style="width:130px">开版录入备注</th>
 					<th class="specalt" >工厂编号</th>
 					<th  >工厂颜色</th>
 					<th style="width:60px">回版日期</th>
@@ -410,11 +410,11 @@ ul { list-style:none;}
 				<% int i=0; %>
 					<tr>
 					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-					 	<td>
-					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" onclick="changeCheckId(this);" style="width:18px">
-					 		<input type="hidden" id="id" name="id" value="${item.id }">
+					 	<input type="hidden" id="id" name="id" value="${item.id }">
 					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">
 					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">
+					 	<td style="width: 20px;">
+					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" onclick="changeCheckId(this);" style="width:18px">
 					 	</td>
 						<td onmouseover="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
 						<td>
@@ -435,7 +435,7 @@ ul { list-style:none;}
 						<td>${item.factoryName }</td>
 						<td>${item.technologyName }</td>
 						<td title="${item.mark }">
-							${fn:substring(item.mark,0,10)}  
+							${fn:substring(item.mark,0,10)}
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
 						<td>

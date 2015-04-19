@@ -21,10 +21,12 @@
 						colkey : "name",
 						name : "名称",
 						width:"300px"
-					}, {
+					}
+					/**, {
 						colkey : "mark",
 						name : "备注"
-					}],
+					}*/
+					],
 					jsonUrl : '${pageContext.request.contextPath}/background/factory/query.html',
 					checkbox : true
 				});
@@ -48,7 +50,7 @@
 				width : 300,
 				height : 310,
 				url : rootPath + '/background/factory/addUI.html',
-				title : "增加业务员信息",
+				title : "增加工厂信息",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 			});
 		});
@@ -63,7 +65,22 @@
 				width : 300,
 				height : 310,
 				url : rootPath + '/background/factory/editUI.html?id='+cbox,
-				title : "修改业务员信息",
+				title : "修改工厂信息",
+				isHidden : false
+			});
+		});
+		
+		$("#view").click("click", function() {//绑定查询按扭
+			var cbox=grid.getSelectedCheckbox();
+			if (cbox.length > 1||cbox=="") {
+				parent.$.ligerDialog.alert("只能选中一个");
+				return;
+			}
+			dialog = parent.$.ligerDialog.open({
+				width : 300,
+				height : 310,
+				url : rootPath + '/background/factory/viewUI.html?id='+cbox,
+				title : "查看工厂信息",
 				isHidden : false
 			});
 		});
@@ -121,11 +138,15 @@
 			</a> --> 
 			
 			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> Edit
+				class="icon-edit icon-white"></i> 修改
 			</a> 
 			
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> Delete
+				class="icon-trash icon-white"></i> 删除
+			</a>
+			
+			<a class="btn btn-primary" href="javascript:void(0)" id="view"> <i
+				class="icon-zoom-add icon-white"></i> 查看
 			</a>
 			
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
