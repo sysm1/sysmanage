@@ -109,7 +109,7 @@ public class OrderInputController extends BaseController {
 			info.setMyCompanyCode(request.getParameterValues("myCompanyCode")[0]);
 			
 			orderInputService.addOrderInput(request);
-			orderInputAdditionalService.saveAddition(request,info);
+			//orderInputAdditionalService.saveAddition(request,info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
