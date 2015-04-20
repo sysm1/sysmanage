@@ -38,6 +38,7 @@ public class UploadFileUtils {
 		MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;  
         //  获得第1张图片（根据前台的name名称得到上传的文件）   
         List<MultipartFile> myFiles =  multipartRequest.getFiles("myFile");
+        String[] myCompanyCode=request.getParameterValues("");
         String[] destPaths=new String[myFiles.size()];
         int size=0;
         
