@@ -514,7 +514,7 @@ html>body td{ font-size:13px;}
 							${fn:substring(item.mark,0,10)}  
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
-						<td id="9_${item.id }" onclick="onclickTr(${item.id })" style="width:120px" >
+						<td id="9_${item.id }" onclick="onclickTr(${item.id })" style="width:120px;" >
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							<% i++; %>
 								 <input type="text" id="${item.id }factoryCode${status1.index+1 }" style="width:80px" 
@@ -525,7 +525,9 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
 							<%}if(i!=2){ %>
 								<input type="text" id="${item.id }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
-								<span onclick="addFactoryCode(${item.id })" id="${item.id  }jiahao" style="cursor:pointer;">+</span>
+								<span onclick="addFactoryCode(${item.id })" id="${item.id  }jiahao" style="cursor:pointer;vertical-align:bottom;">
+									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								</span>
 							<%} %>
 						</td>
 						<td id="10_${item.id }" onclick="onclickTr(${item.id })" style="min-width: 150px;">
@@ -544,7 +546,9 @@ html>body td{ font-size:13px;}
 								  for(int s=ff;s<=9;s++){%>
 									  <input type="text" id="${item.id  }<%=s %>factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px;display: none" value="">
 								<%} }%>
-								<span onclick="addColor(${item.id  },${status1.index+1})" style="cursor:pointer;">+</span>
+								<span onclick="addColor(${item.id  },${status1.index+1})" style="cursor:pointer;vertical-align:bottom;">
+									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								</span>
 								<input type="hidden" id="${item.id }flag${status1.index+1}" value="<%=ff%>">
 								<%} %>
 							</div>
@@ -560,7 +564,9 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
-								<span onclick="addColor(${item.id  },1)" style="cursor:pointer;">+</span>
+								<span onclick="addColor(${item.id  },1)" style="cursor:pointer;vertical-align:bottom;">
+									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								</span>
 								<input type="hidden" id="${item.id  }flag1" value="4">
 							</div>
 							<div>
@@ -573,7 +579,9 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" style="cursor:pointer;display: none">+</span>
+								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" style="cursor:pointer;display: none;vertical-align:bottom;">
+									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								</span>
 								<input type="hidden" id="${item.id  }flag2" value="4">
 							</div>
 						<%} if(f>1){%>
@@ -587,7 +595,9 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" style="cursor:pointer;display: none">+</span>
+								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" style="cursor:pointer;display: none;vertical-align:bottom;">
+									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								</span>
 								<input type="hidden" id="${item.id  }flag2" value="4">
 							</div>
 						<%} %>

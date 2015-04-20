@@ -306,7 +306,7 @@ ul { list-style:none;}
 		<div id="paging" class="pagclass">
 			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
 				<tr>
-					<th class="specalt" style="width:50px;">详情</th>
+					<th class="specalt" style="width:35px;">详情</th>
 					<th style="width:50px;">选择</th>
 					<th style="width:50px;">序号</th>
 					<th style="widht:100px;">下单时间</th>
@@ -320,7 +320,8 @@ ul { list-style:none;}
 				
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 					<tr style="background-color:#1FFF" id="${status.index }" >
-						<td id="td${status.index+1 }" style="background:#FFE4B5;"><span onclick="showDetail('${status.index +1}','${item.id }');">+</span></td>
+						<td id="td${status.index+1 }" style="cursor:pointer;background:#FFE4B5;font-size: 20px;text-align: center;width: 30px;font-weight:bold; ">
+							<span onclick="showDetail('${status.index +1}','${item.id }');">+</span></td>
 						<td style="background:#FFE4B5;width:50px;">
 					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll('${status.index +1}',this);">
 					 	</td>

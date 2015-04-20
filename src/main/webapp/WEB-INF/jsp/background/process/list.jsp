@@ -381,7 +381,9 @@ th.specalt {
 								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 						</c:forEach>
 					</c:if>
-						<span id="${item.id }returnDate" onclick="addOneRow(${item.id });">++</span>
+						<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" style="cursor:pointer;vertical-align:bottom;">
+							<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+						</span>
 					</td>
 					<td id="9_${item.id }">${item.num }${item.unitName }</td>
 					<td id="10_${item.id }" onclick="onclickTr(${item.id })">
