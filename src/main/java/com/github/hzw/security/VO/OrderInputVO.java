@@ -114,6 +114,8 @@ public class OrderInputVO {
 			unit="KG";
 		}if("2".equals(unit)){
 			unit="米";
+		}else if("3".equals(unit)||"4".equals(unit)){
+			unit="KG";
 		}
 		return num+unit;
 	}

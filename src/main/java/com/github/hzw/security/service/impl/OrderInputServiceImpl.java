@@ -20,6 +20,7 @@ import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.mapper.OrderInputMapper;
 import com.github.hzw.security.mapper.OrderInputSummaryMapper;
 import com.github.hzw.security.service.ClothInfoService;
+import com.github.hzw.security.service.OrderInputAdditionalService;
 import com.github.hzw.security.service.OrderInputService;
 
 @Transactional
@@ -34,6 +35,9 @@ public class OrderInputServiceImpl implements OrderInputService {
 	
 	@Inject
 	private ClothInfoService clothInfoService;
+	
+	@Inject 
+	private OrderInputAdditionalService orderInputAdditionalService;
 	
 	@Override
 	public PageView queryVO(PageView pageView, OrderInputVO t) {
@@ -72,11 +76,8 @@ public class OrderInputServiceImpl implements OrderInputService {
 			bean.setSalesmanId(Integer.parseInt(salesmanId[i]));
 			bean.setStatus(0);
 			ClothInfo clothInfo=new ClothInfo();
-			clothInfo.setId(bean.getClothId());
-			List<ClothInfo> list=clothInfoService.queryAll(clothInfo);
-			if(list.size()>0){
-				bean.setUnit(list.get(0).getId());
-			}
+			clothInfo=clothInfoService.getById(bean.getClothId()+"");
+			bean.setUnit(clothInfo.getUnit());
 			try {
 				this.add(bean);
 				
@@ -93,6 +94,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 					inputSummary.setOrderIds(bean.getId()+"");
 					orderInputSummaryMapper.add(inputSummary);
 				}
+				orderInputAdditionalService.saveAddition(request,bean);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
