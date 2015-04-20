@@ -178,6 +178,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	}
 	
 	function changeUnitName(name,obj){
+		if(name=='包'){
+			name="KG";
+		}
 		obj.parentNode.parentNode.children[5].innerHTML=name;
 	}
 	
@@ -229,7 +232,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th align="right" style="width: 150px;">我司编号</th>
 					<th align="right">我司颜色</th>
 					<th >数量</th>
-					<th>单位</th>
+					<th style="width: 35px;text-align: center">单位</th>
 					<th>备注</th>
 					<th align="right">业务员</th>
 					<th>未回数量</th>
@@ -257,7 +260,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 					<td >
 						<input type="text" id="num" name="num" value="" style="width: 80px">
-					</td><td>
+					</td><td style="font-weight: bold;text-align: center;">
 						条
 					</td>
 					<td><input type="text" id="mark" name="mark" value=""></td>
@@ -281,7 +284,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<!--a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a-->
 						<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
 						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
-						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
+						<!--a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a-->
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
 					</div>
