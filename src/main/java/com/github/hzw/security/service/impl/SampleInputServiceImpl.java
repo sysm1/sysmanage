@@ -16,11 +16,10 @@ import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.SampleAdditional;
 import com.github.hzw.security.entity.SampleInput;
 import com.github.hzw.security.mapper.SampleInputMapper;
-import com.github.hzw.security.service.SampleInputService;
-import com.github.hzw.security.service.SampleAdditionalService;
-import com.github.hzw.security.service.FlowerInfoService;   
 import com.github.hzw.security.service.FlowerAdditionalService;
-import com.github.hzw.util.UploadFileUtils;
+import com.github.hzw.security.service.FlowerInfoService;
+import com.github.hzw.security.service.SampleAdditionalService;
+import com.github.hzw.security.service.SampleInputService;
 @Transactional
 @Service("sampleInputService")
 public class SampleInputServiceImpl implements SampleInputService {
@@ -115,6 +114,12 @@ public class SampleInputServiceImpl implements SampleInputService {
 	@Override
 	public void add(SampleInput t) throws Exception {
 		this.sampleInputMapper.add(t);
+		sampleAdditionalService.deleteBySampleId(t.getId()+"");
+		SampleAdditional sampleAdditional=new SampleAdditional();
+		sampleAdditional.setSampleId(t.getId());
+		sampleAdditional.setFactoryCode(t.getFactoryCode());
+		sampleAdditional.setMyCompanyCode(t.getMyCompanyCode());
+		sampleAdditionalService.add(sampleAdditional);
 	}
 	
 	@Override
