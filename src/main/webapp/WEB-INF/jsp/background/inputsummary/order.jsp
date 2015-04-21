@@ -417,20 +417,20 @@ $(function() {
 					<td class="l_right">幅宽:</td>
 					<td colspan="2">
 						<input id='kuanfu' name="kuanfu" class="checkdesc" type="text" value="" style="width: 80px;">&nbsp;CM&nbsp;
-						<select id="kuanfufs" name="kuanfufs" class="shortselect" style="width: 60px;">
+						<select id="kuanfufs" name="kuanfufs" class="shortselect" style="width: 65px;">
 							<option value="0">包边</option>
 							<option value="1">实用</option>
 						</select>
 					</td><td  class="l_right">克重:</td>
 					<td colspan="2">
 						<input id='kezhong' name="kezhong" class="checkdesc" type="text" value="" style="width: 70px;">
-						<select id="kezhongUnit" name="kezhongUnit" style="width: 60px;">
+						<select id="kezhongUnit" name="kezhongUnit" style="width: 67px;">
 							<option value="0">G/M2</option>
 							<option value="3">M/KG</option>
 							<option value="1">G/Y</option>
 							<option value="2">G/M</option>
 						</select>
-						<select id="kezhongfs" name="kezhongfs" style="width: 60px;">
+						<select id="kezhongfs" name="kezhongfs" style="width: 62px;">
 							<option value="0">回后</option>
 							<option value="1">出机</option>
 						</select>

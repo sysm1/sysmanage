@@ -442,7 +442,8 @@ html>body td{ font-size:13px;}
 						<input type="hidden" id="clothId" name="clothId" value="${ bean.clothId }">
 					  	<input type="text" id="cloth_text" style="width: 200px;" value="${cloth.clothName }" 
 					  		onchange="changeTextValue('clothId',this);"/>
-			    </td>
+			    </td><td>编号：</td>
+			    <td><input type="text" id="codeValue" name="codeValue" value="${bean.codeValue }"/></td>
 				<td>
 			    <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">查询	</a>
 			    </td>
