@@ -40,6 +40,45 @@
     demand, s.mark mark,s.reply_mark replyMark
   </sql>
   
+  
+  <sql id="selectByReport" >
+    id, 
+    sample_date sampleDate, 
+    factory_id factoryId,
+    (select factory.name from factory_info factory where factory.id = factory_id ) as factoryName, 
+    cloth_id clothId, 
+    (select cloth.cloth_name from cloth_info cloth where cloth.id = cloth_id ) as clothName, 
+    code_type codeType,
+    code_value codeValue,
+    file_code fileCode, 
+    factory_code factoryCode, 
+    my_company_code myCompanyCode, 
+    technology_id technologyId,
+    (select technology.name from technology_info technology where technology.id = technology_id ) as technologyName, 
+    <!-- 
+    saleman_id salemanId, 
+    picture, status, 
+    small_picture smallPicture,
+     -->
+    reply_date replyDate, 
+    create_time createTime, 
+    demand, mark,reply_mark replyMark
+  </sql>
+  
+  <select id="queryReport" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="map">
+  	select
+		<include refid="selectByReport" />
+		from sample_input
+		<where>
+			<if test="beginTime != null and beginTime != ''">
+				and create_time &gt; #{beginTime}
+			</if>
+      		<if test="endTime != null and endTime != ''">
+				and create_time &lt; #{endTime}
+			</if>
+		</where>
+  </select>
+  
   <select id="query" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
 		select
 		<include refid="selectId" />

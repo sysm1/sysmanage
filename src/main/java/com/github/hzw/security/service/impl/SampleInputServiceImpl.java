@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.SampleInputVO;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.SampleAdditional;
@@ -251,4 +252,10 @@ public class SampleInputServiceImpl implements SampleInputService {
 		}
 		return false;
 	}
+	
+	
+	public List<SampleInputVO> queryReport(Map<String, Object> map){
+		return this.sampleInputMapper.queryReport(map);
+	}
+
 }

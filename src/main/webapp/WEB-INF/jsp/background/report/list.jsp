@@ -54,6 +54,22 @@
 			f.submit();
 		});
 		
+		
+		// 开版进度查询
+		$("#export1").click("click", function() {
+			if($("#date1").attr("checked")){
+				// alert($("#date6").attr("checked"));
+			} else {
+				$("#beginTime").attr("value", $("#beginTime1").attr("value"));
+				$("#endTime").attr("value", $("#endTime1").attr("value"));
+			}
+			var f = $('#fenye');
+			f.attr('target','_blank');
+			f.attr('action','${pageContext.request.contextPath}/background/flower/exportSampleExcel.html');
+			f.submit();
+		});
+		
+		
 	});
 </script>
 </head>

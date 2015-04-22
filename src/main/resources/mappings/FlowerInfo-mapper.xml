@@ -94,10 +94,10 @@
 			from flower_info flower
 		<where> 
 		 	<if test="beginTime != null and beginTime != ''">
-				and create_time > #{beginTime}
+				and create_time &gt; #{beginTime}
 			</if>
-			<if test="endTime != null and endTime != ''">
-				and create_time > #{endTime}
+      		<if test="endTime != null and endTime != ''">
+				and create_time &lt; #{endTime}
 			</if>
 		</where>
 		order by flower.my_company_code desc

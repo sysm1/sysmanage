@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.hzw.base.BaseMapper;
 import com.github.hzw.security.VO.SampleInputVO;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.SampleInput;
 
 public interface SampleInputMapper extends BaseMapper<SampleInput>{
@@ -22,4 +23,6 @@ public interface SampleInputMapper extends BaseMapper<SampleInput>{
 	
 	public void updateStatus(String[] idsa);
 
+	public List<SampleInputVO> queryReport(Map<String, Object> map);
+	
 }
