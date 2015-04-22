@@ -182,6 +182,11 @@ $(function() {
 	    	var tr=$("#table1 tr:eq(2) ");
 			i++;
 	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
+	　  		var tr=$("#table1 tr:last");
+	　  		var codeValue='<input id="codeValue" name="codeValue" class="isNum" type="text" value="" style="width: 100px;">';
+	　  		var mark='<input type="text" id="mark" name="mark" style="width:200px;" value="双击选择备注信息" onblur="blurValue(this);" onclick="clearText(this);" ondblclick="pop(this)">';
+	　  		tr.children('td').eq(5).html(codeValue);
+	　  		tr.children('td').eq(9).html(mark);
 	    });
 	    $("#deleteTable").click(function(){
 	    	var checkId=document.getElementsByName("checkId");
@@ -189,6 +194,40 @@ $(function() {
 	    		if(checkId[i].checked){
 	    			checkId[i].parentNode.parentNode.parentNode.removeChild(checkId[i].parentNode.parentNode);
 	    		}
+	    	}
+	    });
+	    $('#copyone').click(function(){
+	    	var row='';
+	    	var clothId="";
+	    	var factoryId="";
+	    	var newRow="";
+	    	var codeType='';
+	    	var teln='';
+	    	var salman='';
+	    	var i=0;
+	    	$('input:checkbox[name=checkId]:checked').each(function(){
+	    		 i++;
+	    		 //alert($(this).parent().parent());
+	    		 row=$(this).parent().parent();
+	    		 newRow=row.clone();
+	    		 factoryId=row.find("select").eq(0).val();
+	    		 clothId=row.find("select").eq(1).val();
+	    		 codeType=row.find("select").eq(2).val();
+	    		 teln=row.find("select").eq(3).val();
+	    		 salman=row.find("select").eq(4).val();
+	    		 
+	    		 newRow.insertAfter($("#table1 tr:last"));
+	    		 newRow.find("select").eq(0).attr("value",factoryId);
+	    		 newRow.find("select").eq(1).attr("value",clothId);
+	    		 newRow.find("select").eq(2).attr("value",codeType);
+	    		 newRow.find("select").eq(3).attr("value",teln);
+	    		 newRow.find("select").eq(4).attr("value",salman);
+	    		 
+	    		 //alert(row.find("file").eq(0).val());
+	    		 //newRow.find("file").eq(0).attr("value",row.find("file").eq(0).val());
+	    	});
+	    	if(i==0){
+	    		alert("请选择一条数据复制");
 	    	}
 	    });
 	});
@@ -314,7 +353,7 @@ $(function() {
 				<tr>
 					<td >
 						<div class="l_btn_centent">
-							<!--  a class="btn btn-primary" href="javascript:void(0)" id="copyone" onclick="copy_one();"><span>复制新增</span></a>-->
+							<a class="btn btn-primary" href="javascript:void(0)" id="copyone" ><span>复制新增</span></a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="addTable" ><span>新增一行</span></a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span></a> 
