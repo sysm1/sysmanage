@@ -26,6 +26,9 @@
 		-webkit-border-radius:2px;
 		border-radius:2px;
 	}
+	.bd{
+		border:1px solid green;
+	}
 </style>
 <script type="text/javascript">
 
@@ -394,11 +397,13 @@ $(function() {
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right">数量:</td>
+					<td class="l_right" style="height: 30px;">数量:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<input id='num' name="num" class="checkdesc" type="text" value="${num }" style="width: 100px;" onchange="changeNum(this)">
-							<span id="balancetext" style="display: none">差额<input type="text" id="balance" name="balance" value="" style="width: 50px;"></span>条
+							<input id='num' name="num" class="checkdesc" type="text" value="${num }" 
+								style="width: 100px;height: 99%;border:1px solid green;" onchange="changeNum(this)">
+							<span id="balancetext" style="display: none">差额
+							<input type="text" id="balance" name="balance" value="" style="width: 50px;height: 99%;border:1px solid green;"></span>条
 						</div>
 					</td>
 					<td class="l_right"><span id="ywy" style="display: none">差额业务员：</span></td>
@@ -414,16 +419,18 @@ $(function() {
 				</tr><tr style="height: 30px;text-align: center;">
 					<td colspan="6">规格</td>
 				</tr><tr>
-					<td class="l_right">幅宽:</td>
-					<td colspan="2">
-						<input id='kuanfu' name="kuanfu" class="checkdesc" type="text" value="" style="width: 80px;">&nbsp;CM&nbsp;
+					<td class="l_right" style="height: 30px;">幅宽:</td>
+					<td colspan="2" style="height: 30px;">
+						<input id='kuanfu' name="kuanfu" class="checkdesc" type="text" value="" 
+							style="width: 80px;height: 17px;border:1px solid green;">&nbsp;CM&nbsp;
 						<select id="kuanfufs" name="kuanfufs" class="shortselect" style="width: 65px;">
 							<option value="0">包边</option>
 							<option value="1">实用</option>
 						</select>
 					</td><td  class="l_right">克重:</td>
-					<td colspan="2">
-						<input id='kezhong' name="kezhong" class="checkdesc" type="text" value="" style="width: 70px;">
+					<td colspan="2" style="height: 30px;">
+						<input id='kezhong' name="kezhong" class="checkdesc" type="text" value="" 
+							style="width: 70px;height: 17px;border:1px solid green;">
 						<select id="kezhongUnit" name="kezhongUnit" style="width: 67px;">
 							<option value="0">G/M2</option>
 							<option value="3">M/KG</option>
@@ -440,12 +447,12 @@ $(function() {
 							包装方式
 					</td>
 				</tr><tr>
-					<td style="width: 100px;text-align: right;">纸管：</td>
-					<td style="width: 110px;"><input type="text" id="zhiguan" name="zhiguan" value="" style="width: 110px;"></td>
+					<td style="width: 100px;text-align: right;height: 30px;">纸管：</td>
+					<td style="width: 110px;"><input type="text" id="zhiguan" name="zhiguan" value="" style="width: 110px;height: 17px;border:1px solid green;"></td>
 					<td style="width: 100px;text-align: right;">空差：</td>
-					<td ><input type="text" id="kongcha" name="kongcha" value="" style="width: 110px;"></td>
+					<td ><input type="text" id="kongcha" name="kongcha" value="" style="width: 110px;height: 17px;border:1px solid green;"></td>
 					<td style="width: 100px;text-align: right;">胶袋：</td>
-					<td ><input type="text" id="jiaodai" name="jiaodai" value="" style="width: 110px;"> </td>
+					<td ><input type="text" id="jiaodai" name="jiaodai" value="" style="width: 110px;height: 17px;border:1px solid green;"> </td>
 				</tr>
 				
 				<c:forEach	var="order" items="${orderInputList }">
