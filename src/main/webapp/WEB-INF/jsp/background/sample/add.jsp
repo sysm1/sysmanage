@@ -187,6 +187,7 @@ $(function() {
 	　  		var mark='<input type="text" id="mark" name="mark" style="width:200px;" value="双击选择备注信息" onblur="blurValue(this);" onclick="clearText(this);" ondblclick="pop(this)">';
 	　  		tr.children('td').eq(5).html(codeValue);
 	　  		tr.children('td').eq(9).html(mark);
+	　  		$("input[name='checkId']").attr("checked",false);
 	    });
 	    $("#deleteTable").click(function(){
 	    	var checkId=document.getElementsByName("checkId");
@@ -222,7 +223,7 @@ $(function() {
 	    		 newRow.find("select").eq(2).attr("value",codeType);
 	    		 newRow.find("select").eq(3).attr("value",teln);
 	    		 newRow.find("select").eq(4).attr("value",salman);
-	    		 
+	    		 $("input[name='checkId']").attr("checked",false);
 	    		 //alert(row.find("file").eq(0).val());
 	    		 //newRow.find("file").eq(0).attr("value",row.find("file").eq(0).val());
 	    	});

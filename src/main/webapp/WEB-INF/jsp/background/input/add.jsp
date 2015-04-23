@@ -116,11 +116,53 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	var i=2;
 	$(document).ready(function(){
 	    $("#addTable").click(function(){
-	    	var tr=$("#table1 tr:eq(2) ");
-			i++;
-	  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
+	  		var newtr=$("#table1 tr:last").clone();
+	  		newtr.insertAfter($("#table1 tr:last"))
+	  		var select='<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">'+
+				'<option value="">请选择</option>'+
+				'</select>';
+	  		newtr.find("input").eq(0).attr("value",'');
+	　  		newtr.find("input").eq(1).attr("value",'');
+	　  		newtr.find("input").eq(2).attr("value",'');
+	　  		newtr.find("input").eq(3).attr("value",'');
+	　  		newtr.children('td').eq(2).html(select);
+	　  		$("input[name='checkId']").attr("checked",false);
 	    });
-	    
+	    $('#copyone').click(function(){
+	    	var row='';
+	    	var clothId="";
+	    	var factoryId="";
+	    	var newRow="";
+	    	var codeType='';
+	    	var teln='';
+	    	var salman='';
+	    	var i=0;
+	    	$('input:checkbox[name=checkId]:checked').each(function(){
+	    		 i++;
+	    		 //alert($(this).parent().parent());
+	    		 row=$(this).parent().parent();
+	    		 newRow=row.clone();
+	    		 factoryId=row.find("select").eq(0).val();
+	    		 clothId=row.find("select").eq(1).val();
+	    		 codeType=row.find("select").eq(2).val();
+	    		 teln=row.find("select").eq(3).val();
+	    		 salman=row.find("select").eq(4).val();
+	    		 
+	    		 newRow.insertAfter($("#table1 tr:last"));
+	    		 newRow.find("select").eq(0).attr("value",factoryId);
+	    		 newRow.find("select").eq(1).attr("value",clothId);
+	    		 newRow.find("select").eq(2).attr("value",codeType);
+	    		 newRow.find("select").eq(3).attr("value",teln);
+	    		 newRow.find("select").eq(4).attr("value",salman);
+	    		 $("input[name='checkId']").attr("checked",false);
+	    		 
+	    		 //alert(row.find("file").eq(0).val());
+	    		 //newRow.find("file").eq(0).attr("value",row.find("file").eq(0).val());
+	    	});
+	    	if(i==0){
+	    		alert("请选择一条数据复制");
+	    	}
+	    });
 	    $("#deleteTable").click(function(){
 	    	var checkId=document.getElementsByName("checkId");
 	    	for(var i=checkId.length-1;i>=0;i--){
@@ -281,7 +323,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<td>
 					<div class="l_btn_centent">
 						<!-- saveWin_form   from是表单Ｉd-->
-						<!--a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a-->
+						<a class="btn btn-primary" href="javascript:void(0)" id="copyone"><span>复制新增</span> </a>
 						<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
 						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
 						<!--a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a-->
