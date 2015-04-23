@@ -140,9 +140,14 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 			//修改坯布余量
 			orderSummary=orderSummaryService.getById(orderSummary.getId()+"");
 			int alreadOrderSum=orderSummary.getNum();
+			int unit=orderSummary.getUnit();
 			alreadOrderSum=alreadOrderSum-returnNum;
 			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId());
-			clothAllowance.setAllowance(clothAllowance.getAllowance()+alreadOrderSum);
+			if(0==unit){
+				clothAllowance.setAllowance(clothAllowance.getAllowance()+alreadOrderSum);
+			}else{
+				clothAllowance.setAllowancekg(clothAllowance.getAllowance()+alreadOrderSum);
+			}
 			clothAllowanceService.update(clothAllowance);
 			//坯布余量修改完成
 			

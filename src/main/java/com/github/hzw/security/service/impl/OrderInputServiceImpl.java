@@ -88,10 +88,12 @@ public class OrderInputServiceImpl implements OrderInputService {
 				olist=orderInputSummaryMapper.queryAll(inputSummary);
 				if(olist.size()>0){
 					inputSummary=olist.get(0);
+					inputSummary.setNum(inputSummary.getNum()+bean.getNum());
 					inputSummary.setOrderIds(inputSummary.getOrderIds()+","+bean.getId());
 					orderInputSummaryMapper.update(inputSummary);
 				}else{
 					inputSummary.setOrderIds(bean.getId()+"");
+					inputSummary.setNum(bean.getNum());
 					orderInputSummaryMapper.add(inputSummary);
 				}
 				orderInputAdditionalService.saveAddition(request,bean);
