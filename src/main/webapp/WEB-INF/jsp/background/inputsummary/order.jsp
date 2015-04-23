@@ -403,7 +403,7 @@ $(function() {
 							<input id='num' name="num" class="checkdesc" type="text" value="${num }" 
 								style="width: 100px;height: 99%;border:1px solid green;" onchange="changeNum(this)">
 							<span id="balancetext" style="display: none">差额
-							<input type="text" id="balance" name="balance" value="" style="width: 50px;height: 99%;border:1px solid green;"></span>条
+							<input type="text" id="balance" name="balance" value="" style="width: 50px;height: 99%;border:1px solid green;"></span>${unitName }
 						</div>
 					</td>
 					<td class="l_right"><span id="ywy" style="display: none">差额业务员：</span></td>
