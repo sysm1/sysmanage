@@ -19,7 +19,7 @@
     unit,
     old_sum as oldSum, 
     change_sum as changeSum, 
-    
+    (select sum(num) from order_summary os where os.cloth_id =cloth_allowance.cloth_id and os.factory_id=cloth_allowance.factory_id and os.return_status in(0,1) ) noReturn,<!-- 未回数量 -->
     allowancekg, 
     unitkg,
     old_sumkg as oldSumkg, 

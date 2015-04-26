@@ -360,6 +360,8 @@
       </if>
       <if test="mark != null" >
         mark,
+      </if><if test="balancemark != null" >
+        balancemark,
       </if>
       <if test="zhiguan != null" >
         zhiguan,
@@ -457,6 +459,8 @@
       </if>
       <if test="mark != null" >
         #{mark,jdbcType=LONGVARCHAR},
+      </if><if test="balancemark != null" >
+        #{balancemark,jdbcType=LONGVARCHAR},
       </if>
       <if test="zhiguan != null" >
         #{zhiguan,jdbcType=INTEGER},
@@ -566,38 +570,29 @@
       </if>
       <if test="mark != null" >
         mark = #{mark,jdbcType=LONGVARCHAR},
+      </if>      
+      <if test="balancemark != null" >
+        balancemark = #{balancemark,jdbcType=LONGVARCHAR},
       </if>
-      
       <if test="zhiguan != null" >
        	zhiguan =  #{zhiguan,jdbcType=INTEGER},
       </if>
       <if test="kongcha != null" >
-
        kongcha = #{kongcha,jdbcType=INTEGER},
-
       </if>
       <if test="jiaodai != null" >
-
         jiaodai=#{jiaodai,jdbcType=INTEGER},
-
       </if>
       <if test="kuanfu != null" >
-
         kuanfu=#{kuanfu,jdbcType=INTEGER},
-
       </if>
       <if test="kuanfufs != null" >
-
         kuanfufs=#{kuanfufs,jdbcType=INTEGER},
-
       </if>
       <if test="kezhong != null" >
-
         kezhong = #{kezhong,jdbcType=INTEGER},
-
       </if>
       <if test="kezhongUnit != null" >
-
         kezhongUnit=#{kezhongUnit,jdbcType=INTEGER},
       </if>
       <if test="kezhongfs != null" >

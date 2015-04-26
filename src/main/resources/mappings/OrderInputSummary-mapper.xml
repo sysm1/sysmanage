@@ -11,7 +11,7 @@
   </sql>
   
   <sql id="selectIdVO" >
-    ois.id,ci.cloth_name clothName,ois.my_company_code myCompanyCode,ois.my_company_color myCompanyColor
+    ois.id,ci.cloth_name clothName,ois.my_company_code myCompanyCode,ois.my_company_color myCompanyColor,ois.num,ois.unit
   </sql>
   
   <select id="query" resultType="OrderInputSummary" parameterType="OrderInputSummary">
@@ -86,7 +86,7 @@
 			oi.my_company_code myCompanyCode,
 			#{t.id} summId,
 			my_company_color myCompanyColor,
-			num,mark,
+			num,unit,mark,
 			(select name from salesman_info where id=salesman_id) saleManName,
 			create_time createTime
 		from order_input oi
@@ -98,7 +98,7 @@
 
 	<insert id="add" parameterType="OrderInputSummary" useGeneratedKeys="true" keyProperty="id">
 		insert into order_input_summary (
-			cloth_id, my_company_code, my_company_color, num, order_ids, mark
+			cloth_id, my_company_code, my_company_color, num, order_ids, mark,unit
 		)
 		values(
 			#{clothId},
@@ -106,7 +106,8 @@
 			#{myCompanyColor},
 			#{num},
 			#{orderIds},
-			#{mark}
+			#{mark},
+			#{unit}
 		)
 	</insert>
 	
@@ -146,7 +147,9 @@
       	<if test="num != null and num != ''">
         	 num=#{num},
       	</if>
-        	 
+        <if test="unit != null and unit != ''">
+        	 unit=#{unit},
+      	</if>
       	<if test="mark != null and mark != ''">
         	 mark=#{mark},
       	</if>
