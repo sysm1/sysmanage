@@ -54,6 +54,8 @@ public class OrderSummary {
     /**下单单位**/
     private Integer unit;
     
+    private String numText;
+    
     /***包装方式 纸管**/
     private Integer zhiguan;
     
@@ -533,6 +535,21 @@ public class OrderSummary {
 	/***差额业务员备注信息**/
 	public void setBalancemark(String balancemark) {
 		this.balancemark = balancemark;
+	}
+
+	public String getNumText() {
+		if(null==unit){
+			numText=num+"";
+		}else if(unit==0){
+			numText=num+"条";
+		}else{
+			numText=num+"KG";
+		}
+		return numText;
+	}
+
+	public void setNumText(String numText) {
+		this.numText = numText;
 	}
    
 }
