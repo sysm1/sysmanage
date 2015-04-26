@@ -30,19 +30,19 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 					},{
 						colkey : "strInputDate",
 						name : "日期",
-						width : "100px"
+						width : "75px"
 					},{
 						colkey : "clothName",
 						name : "布种名称",
-						width : "200px"
+						width : "150px"
 					},{
 						colkey : "factoryName",
 						name : "工厂",
 						width : "200px"
 					}, {
-						colkey : "allowance",
+						colkey : "allowanceInfo",
 						name : "现余量",
-						width : "50px"
+						width : "150px"
 					}, {
 						colkey : "oldSum",
 						name : "前余量",
