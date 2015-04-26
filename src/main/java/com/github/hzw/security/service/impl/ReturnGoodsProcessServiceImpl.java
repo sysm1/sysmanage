@@ -146,7 +146,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 			if(0==unit){
 				clothAllowance.setAllowance(clothAllowance.getAllowance()+alreadOrderSum);
 			}else{
-				clothAllowance.setAllowancekg(clothAllowance.getAllowance()+alreadOrderSum);
+				clothAllowance.setAllowancekg(clothAllowance.getAllowance().doubleValue()+alreadOrderSum);
 			}
 			clothAllowanceService.update(clothAllowance);
 			//坯布余量修改完成

@@ -90,7 +90,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 			// 按布种单位计算
 			t.setOldSum(0.0);
 			// t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()));
-			t.setAllowance(t.getChangeSum());
+			t.setAllowance(t.getChangeSum().intValue());
 			t.setUnit(cloth.getUnit());
 			t.setCreateTime(new Date());
 			
@@ -102,9 +102,9 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		} else {
 			
 			t.setId(tm.getId());
-			t.setOldSum(tm.getAllowance());
+			t.setOldSum(tm.getAllowance().doubleValue());
 			//t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()) + tm.getAllowance());
-			t.setAllowance(t.getChangeSum() + tm.getAllowance());
+			t.setAllowance(t.getChangeSum().intValue() + tm.getAllowance());
 			t.setUnit(cloth.getUnit());
 			
 			// 公斤

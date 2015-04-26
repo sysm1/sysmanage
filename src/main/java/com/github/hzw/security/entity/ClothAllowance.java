@@ -22,7 +22,7 @@ public class ClothAllowance {
     
     // 工厂名称
     private String factoryName; // 冗余
-    private Double allowance;
+    private Integer allowance;
     private int unit; // 布种单位   0条 1 kg 2cm 3码
     private Double oldSum;
     private Double changeSum;
@@ -30,8 +30,11 @@ public class ClothAllowance {
     private int unitkg; // 布种单位   0条 1 kg 2cm 3码
     private Double oldSumkg;
     private Double changeSumkg;
-    
+    /***未回数量**/
+    private Integer noReturn;
     private Date createTime;
+    /***现余量信息**/
+    private String allowanceInfo;
 
     private String mark;
 
@@ -68,12 +71,12 @@ public class ClothAllowance {
 
     
     @ExcelDataMapper(title="余量",order=5)
-    public Double getAllowance() {
+    public Integer getAllowance() {
         return allowance;
     }
 
     
-    public void setAllowance(Double allowance) {
+    public void setAllowance(Integer allowance) {
         this.allowance = allowance;
     }
 
@@ -201,6 +204,26 @@ public class ClothAllowance {
 
 	public void setUnit(int unit) {
 		this.unit = unit;
+	}
+	/***未回数量**/
+	public Integer getNoReturn() {
+		return noReturn;
+	}
+	/***未回数量**/
+	public void setNoReturn(Integer noReturn) {
+		this.noReturn = noReturn;
+	}
+	/***现余量信息**/
+	public String getAllowanceInfo() {
+		allowanceInfo=allowance+"条";
+		if(null!=noReturn&&0<noReturn){
+			allowanceInfo+="(未回"+noReturn+"条)";
+		}
+		return allowanceInfo;
+	}
+	/***现余量信息**/
+	public void setAllowanceInfo(String allowanceInfo) {
+		this.allowanceInfo = allowanceInfo;
 	}
 	
 	
