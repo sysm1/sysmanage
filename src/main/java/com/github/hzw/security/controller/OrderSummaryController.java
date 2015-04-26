@@ -153,14 +153,23 @@ public class OrderSummaryController extends BaseController {
 				clothAllowance=new ClothAllowance();
 				clothAllowance.setClothId(info.getClothId());
 				clothAllowance.setFactoryId(info.getFactoryId());
-				int num=0-info.getNum();
-				//下单时 只减去条的余量
-				clothAllowance.setAllowance(num);
+				Integer num=0-info.getNum();
+				int unit=info.getUnit();
+				if(unit==0){
+					clothAllowance.setAllowance(num);
+				}else{
+					clothAllowance.setAllowancekg(num.doubleValue());
+				}
 				clothAllowanceService.add(clothAllowance);
 			}else{
-				int allowance=clothAllowance.getAllowance();
+				Integer allowance=clothAllowance.getAllowance();
 				allowance=allowance-info.getNum();
-				clothAllowance.setAllowance(allowance);
+				int unit=info.getUnit();
+				if(unit==0){
+					clothAllowance.setAllowance(allowance);
+				}else{
+					clothAllowance.setAllowancekg(allowance.doubleValue());
+				}
 				clothAllowanceService.update(clothAllowance);
 			}
 			//坯布余量修改完成
