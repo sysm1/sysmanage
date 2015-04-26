@@ -15,8 +15,6 @@
  
 <link rel="stylesheet" href="${ctx}/css/basic.css" />
 
-
-
 <link href="/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" /> 
  <!-- 
  
@@ -30,7 +28,7 @@
 <script type="text/javascript" src="${ctx}/js/jquery-validation/messages_cn.js"></script>
 <script type="text/javascript" src="${ctx}/ligerUI/js/ligerui.min.js"></script>
 <script type="text/javascript" src="${ctx}/ligerUI/js/plugins/ligerDialog.js"></script>
-
+<script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 
 <script src="/ligerUI/js/plugins/ligerCheckBox.js" type="text/javascript"></script>
     <script src="/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
