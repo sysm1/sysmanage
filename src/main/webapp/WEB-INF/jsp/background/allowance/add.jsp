@@ -4,6 +4,11 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
+<style type="text/css">
+	.l_right{
+		text-align: right;
+	}
+</style>
 <script type="text/javascript">
 
 //单独验证某一个input  class="checkpass"
@@ -90,10 +95,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			}
 		});
 		
-		
-		
-		
-		
 	});
 	function saveWin() {
 		$("#form").submit();
@@ -106,14 +107,19 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			if(unit == '' || unit == null || unit == undefined) return;
 			if(unit == '0') {
 				$("#clothUnit").html("条");
+				$("#clothUnit2").html("条");
 			} else if(unit == '1') {
 				$("#clothUnit").html("公斤");
+				$("#clothUnit2").html("公斤");
 			} else if(unit == '2') {
 				$("#clothUnit").html("米");
+				$("#clothUnit2").html("米");
 			} else if(unit == '3') {
 				$("#clothUnit").html("码");
+				$("#clothUnit2").html("码");
 			} else if(unit == '4') {
 				$("#clothUnit").html("包");
+				$("#clothUnit2").html("包");
 			}
 		});
 	});
@@ -146,19 +152,10 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 								<option runit="${cloth.unit}" value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
-						
-						
+						<span class="lanyuan_input" id="clothUnit2" style="font-weight: bold;"></span>
 					</div>
 				</td>
 			 </tr>
-			
-			<tr>
-				<td class="l_right">单位：</td>
-				<td class="l_left">
-					<div class="lanyuan_input" id="clothUnit"></div>
-				</td>
-			</tr>
-			
 			<tr>
 				<td class="l_right">工厂：</td>
 				<td class="l_left">
@@ -174,28 +171,22 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					</div>
 				</td>
 			</tr>
-			
 			<tr>
 				<td class="l_right">新增量：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='changeSum' name="changeSum" type="text" class="isNum" value="">
+						<input id='changeSum' name="changeSum" type="text" class="isNum" value="" >
+						<span class="lanyuan_input" id="clothUnit"></span>
 					</div>
 				</td>
 			</tr>
 			
 			<tr>
-				<td class="l_right">单位：</td>
-				<td class="l_left">
-					<div class="lanyuan_input" id="clothUnit">公斤</div>
-				</td>
-			</tr>
-			
-			<tr>
 				<td class="l_right">新增量：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="">
+						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="" >
+						<span class="lanyuan_input" id="clothUnit">公斤</span>
 					</div>
 				</td>
 			</tr>
