@@ -136,7 +136,9 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td class="l_right">日期：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='inputDate' name="inputDate" class="isDay" type="text" value="">
+						<input type="text" id="inputDate" name="inputDate" 
+							value="<fmt:formatDate value='${bean.startDate}' pattern='yyyy-MM-dd'/>" 
+							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 					</div>
 				</td>
 			</tr>

@@ -44,9 +44,6 @@ ul { list-style:none;}
 		$("#order").click("click", function() {//下单录入页面
 			var cbox=getSelectedCheckbox();
 			window.location.href=rootPath + "/background/inputsummary/order.html?id="+cbox.join(",");
-			
-			
-			
 		});
 		$("#editView").click("click", function() {//绑定编辑按扭
 			var cbox=getSelectedCheckbox();
@@ -155,7 +152,7 @@ ul { list-style:none;}
 			td4.innerHTML=data[i].clothName;
 			td5.innerHTML=data[i].myCompanyCode;
 			td6.innerHTML=data[i].myCompanyColor;
-			td7.innerHTML=data[i].num;
+			td7.innerHTML=data[i].numText;
 			td8.innerHTML=data[i].mark;
 			td9.innerHTML=data[i].saleManName;
 		}
@@ -330,7 +327,7 @@ ul { list-style:none;}
 						<td style="background:#FFE4B5;">${item.clothName }</td>
 						<td style="background:#FFE4B5;">${item.myCompanyCode }</td>
 						<td style="background:#FFE4B5;">${item.myCompanyColor }</td>
-						<td style="background:#FFE4B5;">${item.num }</td>
+						<td style="background:#FFE4B5;">${item.numText }</td>
 						<td style="background:#FFE4B5;">见明细</td>
 						<td style="background:#FFE4B5;">业务员</td>
 					<tr>

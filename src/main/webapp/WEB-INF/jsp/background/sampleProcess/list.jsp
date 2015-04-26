@@ -512,8 +512,8 @@ html>body td{ font-size:13px;}
 						<td id="6_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
 						<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.technologyName }</td>
 						<td id="8_${item.id }" onclick="onclickTr(${item.id })" title="${item.mark }">
-							${fn:substring(item.mark,0,10)}  
-							<c:if test="${fn:length(item.mark)>10}">...</c:if>
+							${fn:substring(item.mark,0,8)}  
+							<c:if test="${fn:length(item.mark)>8}">...</c:if>
 						</td>
 						<td id="9_${item.id }" onclick="onclickTr(${item.id })" style="width:120px;" >
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">

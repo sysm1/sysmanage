@@ -10,6 +10,9 @@
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <style type="text/css">
+
+.textcss{height: 99%;border:1px solid green;}
+
 .ordersearchDivCss { 
 	position: absolute; 
 	z-index: 100; 
@@ -170,17 +173,7 @@ ul { list-style:none;}
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
 			}
-			
 			window.location.href=rootPath +'/background/ordersummary/editUI.html?id='+cbox;
-			
-			/**
-			dialog = parent.$.ligerDialog.open({
-				width : 700,
-				height : 510,
-				url : rootPath + '/background/ordersummary/editUI.html?id='+cbox,
-				title : "下单录入汇总修改页面",
-				isHidden : false
-			});*/
 		});
 		
 		$("#deleteView").click("click", function() {//绑定查询按扭
@@ -219,7 +212,7 @@ ul { list-style:none;}
 	        selectBoxWidth: 220,
 	        autocomplete: true,
 	        width: 220,
-	        height:20,
+	        height:15,
 	        onSelected:function(e) {
 	            $("#factoryId").val(e);
 	             // alert($("#factoryId").val());
@@ -234,7 +227,7 @@ ul { list-style:none;}
 	        selectBoxHeight: 215,
 	        autocomplete: true,
 	        width: 215,
-	        height:20,
+	        height:15,
 	        onSelected:function(e) {
 	            $("#clothId").val(e);
 	            //alert($("#clothId").val());
@@ -305,14 +298,17 @@ ul { list-style:none;}
 					<tr>
 						<td style="width:70px;text-align: right;">下单日期：</td>
 						<td>
-							<input type="text" id="startDate" name="startDate" value="<fmt:formatDate value='${bean.startDate}' pattern='yyyy-MM-dd'/>" style="width:91px;" 
+							<input type="text" id="startDate" name="startDate" value="<fmt:formatDate value='${bean.startDate}' pattern='yyyy-MM-dd'/>" 
+								style="width:91px;height: 99%;border:1px solid green;margin-top: 1px" 
 								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">至
-							<input type="text" id="endDate" name="endDate" value="<fmt:formatDate value='${bean.endDate}' pattern='yyyy-MM-dd'/>" style="width:91px;"
+							<input type="text" id="endDate" name="endDate" value="<fmt:formatDate value='${bean.endDate}' pattern='yyyy-MM-dd'/>" 
+								style="width:91px;height: 99%;border:1px solid green;margin-top: 1px"
 								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 						</td>
 						<td style="width:70px;text-align: right;">单号：</td>
 						<td>
-							<input type="text" id="orderCode" name="orderCode" value="${bean.orderCode }">
+							<input type="text" id="orderCode" name="orderCode" value="${bean.orderCode }" 
+								style="height: 99%;border:1px solid green;margin-top: 1px">
 						</td>
 						<td style="width:70px;text-align: right;">工厂：</td>
 						<td>
@@ -323,7 +319,7 @@ ul { list-style:none;}
 									</c:forEach>
 							</select-->
 							<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
-							<input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
+							<input type="text" id="factory_text" style="width: 200px;height: 99%;border:1px solid green;margin-top: -3px" value="${factoryInfo.name }" 
 								onchange="changeTextValue('factoryId',this);"/> 
 						</td>
 					</tr><tr>
@@ -337,15 +333,15 @@ ul { list-style:none;}
 							</select-->
 							
 							<input type="hidden" id="clothId" name="clothId" value="${ bean.clothId }">
-						  	<input type="text" id="cloth_text" style="width: 200px;" value="${cloth.clothName }" 
+						  	<input type="text" id="cloth_text" style="width: 200px;height: 99%;border:1px solid green;margin-top: -3px" value="${cloth.clothName }" 
 						  		onchange="changeTextValue('clothId',this);"/>
 						</td><td style="width:70px;text-align: right;">
 							工厂编号：
 						</td><td>
-							<input type="text" id="factoryCode" name="factoryCode" value="${bean.factoryCode}">
+							<input type="text" id="factoryCode" name="factoryCode" value="${bean.factoryCode}" style="height: 99%;border:1px solid green;margin-top: 1px">
 						</td><td style="width:70px;text-align: right;">我司编号：</td>
 						<td>
-							<select id="myCompanyCode" name="myCompanyCode">
+							<select id="myCompanyCode" name="myCompanyCode" style="height: 95%;border:1px solid green;margin-top: 1px">
 								<option value="">请选择</option>
 								<c:forEach var="code" items="${myCompanyCodes }">
 									<option value="${code }">${code }</option>
@@ -355,7 +351,7 @@ ul { list-style:none;}
 					</tr><tr>
 						<td style="width:70px;text-align: right;">我司颜色：</td>
 						<td>
-							<input type="text" id="myCompanyColor" name="myCompanyColor" value="${bean.myCompanyColor}">
+							<input type="text" id="myCompanyColor" name="myCompanyColor" value="${bean.myCompanyColor}" style="height: 99%;border:1px solid green;margin-top: 1px">
 						</td>
 						<td style="width:70px;text-align: right;">业务员：</td>
 						<td>
@@ -367,12 +363,12 @@ ul { list-style:none;}
 							</select>
 						</td><td style="width:70px;text-align: right;">备注：</td>
 						<td>
-							<input type="text" id="mark" name="mark" value="${bean.mark }">
+							<input type="text" id="mark" name="mark" value="${bean.mark }" style="height: 99%;border:1px solid green;margin-top: 1px">
 						</td>
 					</tr><tr>
 						<td style="width:70px;text-align: right;">工艺：</td>
 						<td>
-						    <select id="technologyId" name="technologyId">
+						    <select id="technologyId" name="technologyId" style="height: 95%;border:1px solid green;margin-top: 1px">
 								<option value="">请选择工艺</option>
 								<c:forEach items="${ technologyInfos }" var = "technologyInfo">
 								<option <c:if test="${technologyInfo.id eq bean.technologyId }">selected="selected"</c:if> value="${technologyInfo.id }">${technologyInfo.name}</option>
@@ -380,12 +376,12 @@ ul { list-style:none;}
 							</select>
 						</td><td style="width:70px;text-align: right;">下单次数：</td>
 						<td colspan="3">
-							<select id="oprator" name="oprator" style="width: 100px">
+							<select id="oprator" name="oprator" style="width: 100px;height: 95%;border:1px solid green;margin-top: 1px">
 								<option value="">请选择</option>
 								<option value="1" <c:if test="${bean.oprator ==1 }">selected="selected"</c:if>>大于等于</option>
 								<option value="2" <c:if test="${bean.oprator ==2 }">selected="selected"</c:if>>小于等于</option>
 							</select>
-							下单数量：<input type="text" id="num" name="num" value="${bean.num }">							
+							下单数量：<input type="text" id="num" name="num" value="${bean.num }" style="height: 99%;border:1px solid green;margin-top: 1px">							
 						</td>
 					</tr>
 				</table>
@@ -423,8 +419,8 @@ ul { list-style:none;}
 						<input type="checkbox" id="checkIds" name="checkIds">
 					</th>
 					<th class="specalt" style="width:40px" rowspan="2">id</th>
-					<th class="specalt" style="width:50px" rowspan="2">日期</th>
-					<th class="specalt" style="width:50px" rowspan="2">布种</th>
+					<th class="specalt" style="width:45px" rowspan="2">日期</th>
+					<th class="specalt" style="width:75px" rowspan="2">布种</th>
 					<th class="specalt" rowspan="2">工艺</th>
 					<th class="specalt" rowspan="2">我司编号</th>
 					<th class="specalt" rowspan="2">我司颜色</th>
@@ -443,8 +439,8 @@ ul { list-style:none;}
 					<th class="specalt" >胶袋</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
-					<tr>
-					 	<td>
+					<tr >
+					 	<td style="height: 25px;">
 					 		<input type="checkbox" id="${item.id }" name="checkId" value="${item.id }">
 					 	</td><td>
 					 		${item.id }

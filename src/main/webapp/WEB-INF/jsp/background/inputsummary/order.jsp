@@ -142,8 +142,6 @@ $(function() {
 	});
 });
 
-
-
 	function saveWin() {
 		var factoryId=$("#factoryId").val();
 		if(factoryId==""){
@@ -169,7 +167,6 @@ $(function() {
 			$("#factoryColor").focus();
 			return false;
 		}
-		//$("#form").submit();
 		
 		$("#form").ajaxSubmit({//验证新增是否成功
 			type : "post",
@@ -189,8 +186,6 @@ $(function() {
 				}
 			}
 		});
-		
-		
 	}
 	function changeNum(obj){
 		var beforNum=$("#num1").val();
@@ -204,12 +199,14 @@ $(function() {
 			$("#balance").attr("value",chae);
 			$("#ywy").show();
 			$("#ywy2").show();
+			$("#balancemarkTr").show();
 		}else if(chae<0){
 			alert("修改后的数量不能小于当前数量！");
 			$("#num").attr("value",beforNum);
 			$("#balancetext").hide();
 			$("#ywy").hide();
 			$("#ywy2").hide();
+			$("#balancemarkTr").hide();
 		}
 	}
 	
@@ -298,6 +295,7 @@ $(function() {
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
 		<input type="hidden" id="num1" name="num1" value="${num }">
+		<input type="hidden" id="unit" name="unit" value="${clothInfo.unit }">
 		<input type="hidden" id="status" name="status" value="1">
 		<input type="hidden" id="orderCode" name="orderCode" value="${orderNo }">
 		<input type="hidden" id="orderDate" name="orderDate" value="${nowDate }">
@@ -401,9 +399,9 @@ $(function() {
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<input id='num' name="num" class="checkdesc" type="text" value="${num }" 
-								style="width: 100px;height: 99%;border:1px solid green;" onchange="changeNum(this)">
+								style="width: 95px;height: 99%;border:1px solid green;" onchange="changeNum(this)">
 							<span id="balancetext" style="display: none">差额
-							<input type="text" id="balance" name="balance" value="" style="width: 50px;height: 99%;border:1px solid green;"></span>${unitName }
+							<input type="text" id="balance" name="balance" value="" style="width: 45px;height: 99%;border:1px solid green;"></span>${unitName }
 						</div>
 					</td>
 					<td class="l_right"><span id="ywy" style="display: none">差额业务员：</span></td>
@@ -416,6 +414,11 @@ $(function() {
 								</c:forEach>
 							</select>
 						</div></td>
+				</tr><tr style="display: none" id="balancemarkTr">
+					<td>差额业务员备注</td>
+					<td colspan="5">
+						<input id='balancemark' name="balancemark" type="text" value="" style="width: 553px;height: 17px;border:1px solid green;">
+					</td>
 				</tr><tr style="height: 30px;text-align: center;">
 					<td colspan="6">规格</td>
 				</tr><tr>
@@ -473,7 +476,7 @@ $(function() {
 					<td class="l_right">备注:</td>
 					<td class="l_left" colspan="5">
 						<div class="lanyuan_input">
-							<input id='mark' name="mark" class="checkdesc" type="text" value="" style="width: 553px">
+							<input id='mark' name="mark" class="checkdesc" type="text" value="" style="width: 553px;height: 17px;border:1px solid green;">
 						</div>
 					</td>
 				</tr>

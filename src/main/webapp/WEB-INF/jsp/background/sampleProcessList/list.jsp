@@ -435,8 +435,8 @@ ul { list-style:none;}
 						<td>${item.factoryName }</td>
 						<td>${item.technologyName }</td>
 						<td title="${item.mark }">
-							${fn:substring(item.mark,0,10)}
-							<c:if test="${fn:length(item.mark)>10}">...</c:if>
+							${fn:substring(item.mark,0,8)}
+							<c:if test="${fn:length(item.mark)>8}">...</c:if>
 						</td>
 						<td>
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">

@@ -52,9 +52,9 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 						name : "新增量",
 						width : "50px"
 					},{
-						colkey : "allowancekg",
+						colkey : "allowanceKgInfo",
 						name : "现余量(公斤)",
-						width : "50px"
+						width : "150px"
 					}, {
 						colkey : "oldSumkg",
 						name : "前余量(公斤)",
