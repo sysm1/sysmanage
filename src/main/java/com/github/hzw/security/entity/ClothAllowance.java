@@ -217,7 +217,7 @@ public class ClothAllowance {
 	public String getAllowanceInfo() {
 		allowanceInfo=allowance+"条";
 		if(null!=noReturn&&0<noReturn){
-			allowanceInfo+="(未回"+noReturn+"条)";
+			allowanceInfo=(allowance-noReturn)+"(未回"+noReturn+"条)";
 		}
 		return allowanceInfo;
 	}
