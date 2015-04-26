@@ -463,8 +463,8 @@ ul { list-style:none;}
 					 		${item.factoryCode }
 					 	</td><td>
 					 		${item.factoryColor }
-					 	</td><td>
-					 		${item.num }
+					 	</td><td style="text-align: right;">
+					 		${item.numText }
 					 	</td><td>
 					 		${item.standard }
 					 	</td><td>
