@@ -35,6 +35,8 @@ public class ClothAllowance {
     private Date createTime;
     /***现余量信息**/
     private String allowanceInfo;
+    /***现余量信息KG**/
+    private String allowanceKgInfo;
 
     private String mark;
 
@@ -215,9 +217,10 @@ public class ClothAllowance {
 	}
 	/***现余量信息**/
 	public String getAllowanceInfo() {
-		allowanceInfo=allowance+"条";
-		if(null!=noReturn&&0<noReturn){
-			allowanceInfo=(allowance-noReturn)+"(未回"+noReturn+"条)";
+		String unitName="条";		
+		allowanceInfo=allowance+unitName;
+		if(null!=noReturn&&0<noReturn&&unit==0){
+			allowanceInfo=(allowance-noReturn)+unitName+"(未回"+noReturn+unitName+")";
 		}
 		return allowanceInfo;
 	}
@@ -225,7 +228,18 @@ public class ClothAllowance {
 	public void setAllowanceInfo(String allowanceInfo) {
 		this.allowanceInfo = allowanceInfo;
 	}
-	
-	
+	/***现余量信息KG**/
+	public String getAllowanceKgInfo() {
+		String unitName="KG";
+		allowanceKgInfo=allowancekg+unitName;
+		if(null!=noReturn&&0<noReturn&&unit==4){
+			allowanceKgInfo=(allowancekg-noReturn)+unitName+"(未回"+noReturn+unitName+")";
+		}
+		return allowanceKgInfo;
+	}
+	/***现余量信息KG**/
+	public void setAllowanceKgInfo(String allowanceKgInfo) {
+		this.allowanceKgInfo = allowanceKgInfo;
+	}
 
 }

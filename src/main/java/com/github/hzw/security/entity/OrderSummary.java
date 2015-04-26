@@ -111,6 +111,8 @@ public class OrderSummary {
     private String salesmans;
 
     private String mark;
+    /***差额业务员备注信息**/
+    private String balancemark;
     
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -523,6 +525,14 @@ public class OrderSummary {
 
 	public void setReturnStatusName(String returnStatusName) {
 		this.returnStatusName = returnStatusName;
+	}
+	/***差额业务员备注信息**/
+	public String getBalancemark() {
+		return balancemark;
+	}
+	/***差额业务员备注信息**/
+	public void setBalancemark(String balancemark) {
+		this.balancemark = balancemark;
 	}
    
 }

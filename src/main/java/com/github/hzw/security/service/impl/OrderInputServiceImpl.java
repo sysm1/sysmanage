@@ -89,11 +89,15 @@ public class OrderInputServiceImpl implements OrderInputService {
 				if(olist.size()>0){
 					inputSummary=olist.get(0);
 					inputSummary.setNum(inputSummary.getNum()+bean.getNum());
+					if(inputSummary.getUnit()!=bean.getUnit()){
+						inputSummary.setUnit(null);
+					}
 					inputSummary.setOrderIds(inputSummary.getOrderIds()+","+bean.getId());
 					orderInputSummaryMapper.update(inputSummary);
 				}else{
 					inputSummary.setOrderIds(bean.getId()+"");
 					inputSummary.setNum(bean.getNum());
+					inputSummary.setUnit(bean.getUnit());
 					orderInputSummaryMapper.add(inputSummary);
 				}
 				orderInputAdditionalService.saveAddition(request,bean);

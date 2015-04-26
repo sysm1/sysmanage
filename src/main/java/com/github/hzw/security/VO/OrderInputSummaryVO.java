@@ -33,6 +33,11 @@ public class OrderInputSummaryVO {
     private String myCompanyColor;
 
     private Integer num;
+    
+    private String numText;
+    
+    /***单位*/
+    private Integer unit;
 
     private String orderIds;
 
@@ -128,5 +133,28 @@ public class OrderInputSummaryVO {
 
 	public void setSummId(Integer summId) {
 		this.summId = summId;
+	}
+
+	public Integer getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
+	}
+
+	public String getNumText() {
+		if(null==unit){
+			numText="";
+		}else if(0==unit){
+			numText=num+"条";
+		}else{
+			numText=num+"KG";
+		}
+		return numText;
+	}
+
+	public void setNumText(String numText) {
+		this.numText = numText;
 	}
 }

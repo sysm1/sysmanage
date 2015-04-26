@@ -206,11 +206,12 @@ public class OrderInputSummaryController extends BaseController {
 		orderSummary.setMyCompanyCode(info.getMyCompanyCode());
 		orderSummary.setMyCompanyColor(info.getMyCompanyColor());
 		String noRetrun=orderSummaryService.queryNoReturnNum(orderSummary);
-		
-		String unitName=clothInfoService.getById(info.getClothId()+"").getUnitName();
-		if("包".equals(unitName)){
+		String unitName="";
+		ClothInfo clothInfo=clothInfoService.getById(info.getClothId()+"");
+		if("包".equals(clothInfo.getUnitName())){
 			unitName="KG";
 		}
+		model.addAttribute("clothInfo", clothInfo);
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("unitName", unitName);
 		model.addAttribute("factoryInfos", factoryInfos);
