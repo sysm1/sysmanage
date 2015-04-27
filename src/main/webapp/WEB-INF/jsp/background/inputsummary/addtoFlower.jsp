@@ -50,12 +50,13 @@ $(function() {
 			$('#technologyId').focus();
 			return false;
 		}
+		/**
 		var fileColor=$('#fileColor').val();
 		if(fileColor==''){
 			alert('请填写分色文件号');
 			$('#fileColor').focus();
 			return false;
-		}
+		}*/
 		$("#form").submit();
 	}
 	

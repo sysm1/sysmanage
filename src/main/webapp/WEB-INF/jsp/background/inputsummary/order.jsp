@@ -29,6 +29,10 @@
 	.bd{
 		border:1px solid green;
 	}
+	.frameborder{
+		height: 27px;
+		border:1px solid green;
+	}
 </style>
 <script type="text/javascript">
 
@@ -319,10 +323,10 @@ $(function() {
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right">工厂:</td>
+					<td class="l_right" style="height: 30px;">工厂:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryId" name="factoryId" onchange="changeFactory(this);">
+							<select id="factoryId" name="factoryId" onchange="changeFactory(this);" class="frameborder">
 								<option value="">请选择</option>
 								<c:forEach var="item" items="${factoryInfos }" varStatus="status">
 								<option value="${item.id }">${item.name }</option>
@@ -337,7 +341,7 @@ $(function() {
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right">我司编号:</td>
+					<td class="l_right" style="height: 30px;">我司编号:</td>
 					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if> >
 						<div class="lanyuan_input" id="myCompanyCodediv"
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyCode }');" style="color: ${codeRed};cursor:pointer;" </c:if> 
@@ -348,7 +352,7 @@ $(function() {
 					<td class="l_right">工艺:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<select id='technologyId' name="technologyId">
+							<select id='technologyId' name="technologyId" class="frameborder">
 								<option value="">请选择</option>
 								<c:forEach var="item" items="${technologyInfos }">
 								<option value="${item.id }" >${item.name }</option>
@@ -357,10 +361,10 @@ $(function() {
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right">工厂编号:</td>
+					<td class="l_right" style="height: 30px;">工厂编号:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryCode" name="factoryCode">
+							<select id="factoryCode" name="factoryCode" class="frameborder">
 								<option value="">请选择</option>
 								<c:forEach var="code" items="${factoryCodes }">
 									<option value="${code }">${code }</option>
@@ -377,7 +381,7 @@ $(function() {
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right">工厂坯布数量:</td>
+					<td class="l_right" style="height: 30px;">工厂坯布数量:</td>
 					<td >
 						<div class="lanyuan_input" id="clothAllowance"></div>
 					</td><td style="width: 100px;">
@@ -386,7 +390,7 @@ $(function() {
 					<td class="l_right">工厂颜色:</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryColor" name="factoryColor">
+							<select id="factoryColor" name="factoryColor" class="frameborder">
 								<option value="">请选择</option>
 								<c:forEach var="color" items="${factoryColors }">
 									<option value="${color}">${color }</option>
