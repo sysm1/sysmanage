@@ -294,7 +294,7 @@ th.specalt {
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-				<tr id="${item.id }">
+				<tr id="${item.id }" height="30px;">
 					<td id="2${item.id }">${item.id }</td>
 					<td  title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
