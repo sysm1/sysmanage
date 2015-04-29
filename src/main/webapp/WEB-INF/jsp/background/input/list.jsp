@@ -66,7 +66,7 @@
 		
 		$("#add").click("click", function() {//绑定新增按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 1350,
+				width : 1150,
 				height : 550,
 				url : rootPath + '/background/input/addUI.html',
 				title : "下单预录入",

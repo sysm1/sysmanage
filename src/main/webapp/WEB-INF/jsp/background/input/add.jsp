@@ -155,9 +155,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	    		 newRow.find("select").eq(3).attr("value",teln);
 	    		 newRow.find("select").eq(4).attr("value",salman);
 	    		 $("input[name='checkId']").attr("checked",false);
-	    		 
-	    		 //alert(row.find("file").eq(0).val());
-	    		 //newRow.find("file").eq(0).attr("value",row.find("file").eq(0).val());
 	    	});
 	    	if(i==0){
 	    		alert("请选择一条数据复制");
@@ -261,13 +258,28 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 1270px;"></div>
+	<div style="width: 1150px;">
+		<table width="550px">
+			<tr>
+				<td style="width: 100px;">
+					<a class="btn btn-primary" href="javascript:void(0)" id="copyone"><span>复制新增</span> </a>
+				</td><td style="width: 100px;">
+					<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
+				</td><td style="width: 100px;">
+					<a class="btn btn-primary" href="javascript:void(0)" style=width:60px;"
+						id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
+				</td><td style="text-align: right;">
+					<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" style="background-color: red;"><span>删除</span></a>
+				</td>
+			</tr>
+		</table>
+	</div>
 	<form name="form" id="form" action="${ctx}/background/input/add.html" method="post">
 	<table><tr><td valign="top">
 		<table id="table1" border="1" name="table1">
 			<tbody>
 				<tr>
-					<th>
+					<th style="height: 30px;">
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</th>
 					<th align="right">布种</th>
@@ -318,21 +330,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr>
 			</tbody>
 		</table>
-		<table width="850px">
-			<tr>
-				<td>
-					<div class="l_btn_centent">
-						<!-- saveWin_form   from是表单Ｉd-->
-						<a class="btn btn-primary" href="javascript:void(0)" id="copyone"><span>复制新增</span> </a>
-						<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
-						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
-						<!--a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a-->
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
-					</div>
-				</td>
-			</tr>
-		</table>
+		
 		</td>
 		<!--td>
 			图片预览<img alt="" src="http://d.hiphotos.baidu.com/baike/w%3D268/sign=9855e88c3912b31bc76cca2fbe1a3674/a8ec8a13632762d01cdbd074a0ec08fa503dc610.jpg">
