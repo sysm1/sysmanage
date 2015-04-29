@@ -114,7 +114,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		String[] zhiguans=request.getParameterValues("zhiguan");
 		String[] kongchas=request.getParameterValues("kongcha");
 		String[] jiaodais=request.getParameterValues("jiaodai");
-		String status=request.getParameter("status");
+		String returnStatus=request.getParameter("returnStatus");
 		try {
 			int returnNum=0;
 			int size=returnDates.length;
@@ -153,7 +153,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 			
 			//状态 判断
 			orderSummary.setStatus(getReturnStatusName(orderSummary));
-			orderSummary.setReturnStatus(Integer.parseInt(status));
+			orderSummary.setReturnStatus(Integer.parseInt(returnStatus));
 			orderSummaryService.update(orderSummary);
 		} catch (Exception e) {
 			e.printStackTrace();
