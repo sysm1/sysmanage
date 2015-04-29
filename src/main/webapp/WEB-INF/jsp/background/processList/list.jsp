@@ -401,13 +401,13 @@ th.specalt {
 		</div>
 		<div id="paging" class="pagclass" >
 			<table border="1" id="mytable">
-				<tr>
+				<tr style="height: 35px;">
 					<th class="specalt">
 						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
 					</th>
 					<th>&nbsp;状态&nbsp;</th>
 					<th>序号</th>
-					<th>下单日期</th>
+					<th style="width: 60px;">下单日期</th>
 					<th style="min-width: 60px;">工&nbsp;厂</th>
 					<th>工厂编号</th>
 					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
@@ -425,7 +425,7 @@ th.specalt {
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-				<tr id="${item.id }">
+				<tr id="${item.id }" style="height: 30px;">
 					<td style="text-align: center;" id="0${item.id }">
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">

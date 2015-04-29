@@ -279,15 +279,31 @@ $(function() {
 </head>
 <body style="width: 1100px;">
 <div class="divdialog">
-<div style="padding-left: 350px;">开版录入</div>
-	<div class="l_err" >
-		
+<div style="padding-left: 350px;"><b>开版录入</b></div>
+	<div >
+<table width="550px;" >
+	<tr>
+		<td style="width: 100px;">
+			<a class="btn btn-primary" href="javascript:void(0)" id="copyone" ><span>复制新增</span></a>
+		</td><td style="width: 100px;">
+			<a class="btn btn-primary" href="javascript:void(0)" id="addTable" ><span>新增一行</span></a>
+		</td><td style="width: 100px;">
+			<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" 
+				style=width:60px;" onclick="saveWin();"><span>保存</span></a>
+		</td><td style="width: 100px;">	
+			<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" style=width:60px;"
+				onclick="javascript:history.go(-1);"><span>返回</span> </a>
+		</td><td style="text-align: right;">
+			<a class="btn btn-primary" style="background-color: red;" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
+		</td>
+	</tr>
+</table>
 	</div>
 	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
-		<table style="height: 100%;" id="table1" border="1" name="table1">
+		<table style="height: 100%;" id="table1" border="2" name="table1">
 			<tbody>
 				<tr>
-					<td>
+					<td style="height: 30px;">
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</td>
 					<td>开版日期</td>
@@ -350,20 +366,7 @@ $(function() {
 						<input type="text" id="mark" name="mark" style="width:200px;" value="双击选择备注信息" onblur="blurValue(this);" onclick="clearText(this);" ondblclick="pop(this)">
 					</td>
 				</tr>
-			</table><table width="700px;">	
-				<tr>
-					<td >
-						<div class="l_btn_centent">
-							<a class="btn btn-primary" href="javascript:void(0)" id="copyone" ><span>复制新增</span></a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="addTable" ><span>新增一行</span></a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span></a> 
-							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="javascript:history.go(-1);"><span>关闭</span> </a>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+			</table>
 	</form>
 	</div>
 </body>

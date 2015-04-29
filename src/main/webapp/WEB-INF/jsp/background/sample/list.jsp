@@ -357,7 +357,7 @@ ul { list-style:none;}
 			</c:forEach>
 	  </select-->  
 	  <input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
-	  <input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
+	  <input type="text" id="factory_text" style="width: 200px;height: 99%;border:1px solid green;margin-top: -3px" value="${factoryInfo.name }" 
 	  		onchange="changeTextValue('factoryId',this);"/> 
     </td><td style="text-align: right;">
     	布种：

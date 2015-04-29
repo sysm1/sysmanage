@@ -388,7 +388,7 @@ ul { list-style:none;}
 		</div>
 		<div id="paging" class="pagclass">
 			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
-				<tr >
+				<tr style="height: 30px;">
 					<th style="width:20px">
 						<input type="checkbox" id="checkIds" name="checkIds" style="width:18px">
 					</th>
@@ -408,7 +408,7 @@ ul { list-style:none;}
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<% int i=0; %>
-					<tr>
+					<tr style="height: 30px;">
 					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 					 	<input type="hidden" id="id" name="id" value="${item.id }">
 					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">

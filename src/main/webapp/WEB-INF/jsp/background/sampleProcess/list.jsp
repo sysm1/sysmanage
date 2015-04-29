@@ -272,12 +272,14 @@ html>body td{ font-size:13px;}
 	}
 	/**已回按钮验证**/
 	function check(id){
+		/**
 		var fileCode=document.getElementById(id+"fileCode");
 		if(fileCode.value==''){
 			alert("分色文件号不能为空！");
 			fileCode.focus();
 			return false;
 		}
+		**/
 		var myCompanyCode=document.getElementById(id+"myCompanyCode");
 		if(myCompanyCode.value==''){
 			alert("我司编号不能为空！");

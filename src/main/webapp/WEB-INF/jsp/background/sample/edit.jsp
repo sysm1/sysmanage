@@ -116,7 +116,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	<form name="form" id="form" action="${ctx}/background/sample/update.html" method="post"  enctype="multipart/form-data">
 		<input type="hidden" id="copyadd" name="copyadd" value="${copyadd }">
 		<input type="hidden" id="id" name="id" value="${bean.id }">
-		<table style="height: 200px;" border="1">
+		<table style="height: 200px;" border="2">
 			<tbody>
 				<tr>
 					<td class="l_right">开版日期：</td>
@@ -147,7 +147,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</c:forEach>
 						</select>
 					</td>
-				</tr><tr>
+				</tr><tr style="height: 30px;">
 					<td>
 						<select id="codeType" name="codeType" style="width:90px">
 							<option value="">编号类型</option>
@@ -155,8 +155,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							<option <c:if test="${1 eq bean.codeType }">selected="selected"</c:if> value="1">工厂编号</option>
 							<option <c:if test="${2 eq bean.codeType }">selected="selected"</c:if> value="2">我司编号</option>
 					    </select></td>
-					<td>
-						<input id='codeValue' name="codeValue" class="isNum" type="text" value="${bean.codeValue }">
+					<td >
+						<input id='codeValue' name="codeValue" style="height: 15px;border:1px solid green;" type="text" value="${bean.codeValue }">
 					</td>
 				</tr><tr>
 					<td>工艺：</td>
