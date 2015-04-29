@@ -394,7 +394,7 @@ public class OrderSummaryVO {
 			unitName="条";
 		}else if(0==unit){
 			unitName="条";
-		}else if(1==unit){
+		}else if(1==unit||4==unit){
 			unitName="KG";
 		}else if(2==unit){
 			unitName="米";
