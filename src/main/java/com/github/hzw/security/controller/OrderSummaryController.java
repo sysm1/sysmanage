@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -283,7 +284,19 @@ public class OrderSummaryController extends BaseController {
 	
 	@RequestMapping("exportExcel")
 	public void exportExcel(HttpServletResponse response,OrderSummary info) {
-		 List<OrderSummary> acs = orderSummaryService.queryAll(info);
+		List<OrderSummary> acs = orderSummaryService.queryAll(info);
+		POIUtils.exportToExcel(response, "下单汇总报表", acs, OrderSummary.class, "下单汇总", acs.size());
+	}
+	
+	@RequestMapping("exportSummaryExcel")
+	public void exportSummaryExcel(HttpServletRequest request, HttpServletResponse response) {
+		
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("beginTime", beginTime);
+		map.put("endTime", endTime);
+		List<OrderSummary> acs = orderSummaryService.queryReportBySummary(map);
 		POIUtils.exportToExcel(response, "下单汇总报表", acs, OrderSummary.class, "下单汇总", acs.size());
 	}
 	

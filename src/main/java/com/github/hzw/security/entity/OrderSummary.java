@@ -104,7 +104,9 @@ public class OrderSummary {
     
     private String createTimeStr;
 
-    private int notifyId;
+    private String orderDateStr;
+   
+	private int notifyId;
     private Date notifyTime;
     private String no;
     private String notifyTimeStr; // 
@@ -129,10 +131,19 @@ public class OrderSummary {
         return orderCode;
     }
 
+    @ExcelDataMapper(title="下单日期",order=2)
+    public String getOrderDateStr() {
+		return orderDateStr;
+	}
+
+	public void setOrderDateStr(String orderDateStr) {
+		this.orderDateStr = orderDateStr;
+	}
+    
     public void setOrderCode(String orderCode) {
         this.orderCode = orderCode;
     }
-    @ExcelDataMapper(title="下单日期",order=2)
+    
     @JsonSerialize(using=JsonDate4YYYYMMDD.class)
     public Date getOrderDate() {
         return orderDate;
@@ -140,6 +151,7 @@ public class OrderSummary {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+        this.orderDateStr = DateUtil.date2Str(orderDate, "yyyy-MM-dd");
     }
 
     public Integer getClothId() {
@@ -166,6 +178,7 @@ public class OrderSummary {
         this.technologyId = technologyId;
     }
 
+    @ExcelDataMapper(title="纸管",order=12)
     public Integer getZhiguan() {
 		return zhiguan;
 	}
@@ -174,6 +187,7 @@ public class OrderSummary {
 		this.zhiguan = zhiguan;
 	}
 
+	@ExcelDataMapper(title="空差",order=13)
 	public Integer getKongcha() {
 		return kongcha;
 	}
@@ -184,6 +198,7 @@ public class OrderSummary {
 	}
 
 	/**包装方式胶袋**/
+	@ExcelDataMapper(title="胶袋",order=14)
 	public Integer getJiaodai() {
 		return jiaodai;
 	}
@@ -193,6 +208,7 @@ public class OrderSummary {
 		this.jiaodai = jiaodai;
 	}
 
+	@ExcelDataMapper(title="我司编号",order=5)
     public String getMyCompanyCode() {
         return myCompanyCode;
     }
@@ -201,6 +217,7 @@ public class OrderSummary {
         this.myCompanyCode = myCompanyCode;
     }
 
+    @ExcelDataMapper(title="我司颜色",order=6)
     public String getMyCompanyColor() {
         return myCompanyColor;
     }
@@ -209,6 +226,7 @@ public class OrderSummary {
         this.myCompanyColor = myCompanyColor;
     }
 
+    @ExcelDataMapper(title="工厂编号",order=8)
     public String getFactoryCode() {
         return factoryCode;
     }
@@ -217,6 +235,7 @@ public class OrderSummary {
         this.factoryCode = factoryCode;
     }
 
+    @ExcelDataMapper(title="工厂颜色",order=9)
     public String getFactoryColor() {
         return factoryColor;
     }
@@ -234,6 +253,7 @@ public class OrderSummary {
     }
 
     /**下单数量**/
+    @ExcelDataMapper(title="数量",order=10)
     public Integer getNum() {
         return num;
     }
@@ -242,6 +262,7 @@ public class OrderSummary {
         this.num = num;
     }
 
+    @ExcelDataMapper(title="规格",order=11)
     public String getStandard() {
         return standard;
     }
@@ -315,6 +336,7 @@ public class OrderSummary {
         this.setCreateTimeStr(DateUtil.date2Str(createTime, "yyyy-MM-dd"));
     }
     
+    @ExcelDataMapper(title="业务员",order=16)
 	public String getSalesmans() {
 		return salesmans;
 	}
@@ -323,6 +345,7 @@ public class OrderSummary {
 		this.salesmans = salesmans;
 	}
 
+	@ExcelDataMapper(title="备注",order=15)
 	public String getMark() {
 		return mark;
 	}
@@ -414,6 +437,7 @@ public class OrderSummary {
 		this.createTimeStr = createTimeStr;
 	}
 
+	@ExcelDataMapper(title="布种",order=3)
 	public String getClothName() {
 		return clothName;
 	}
@@ -422,6 +446,7 @@ public class OrderSummary {
 		this.clothName = clothName;
 	}
 
+	@ExcelDataMapper(title="工厂",order=7)
 	public String getFactoryName() {
 		return factoryName;
 	}
@@ -430,6 +455,7 @@ public class OrderSummary {
 		this.factoryName = factoryName;
 	}
 
+	@ExcelDataMapper(title="工艺",order=4)
 	public String getTechnologyName() {
 		return technologyName;
 	}
