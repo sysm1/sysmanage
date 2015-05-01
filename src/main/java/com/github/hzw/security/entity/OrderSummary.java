@@ -57,13 +57,13 @@ public class OrderSummary {
     private String numText;
     
     /***包装方式 纸管**/
-    private Integer zhiguan;
+    private Double zhiguan;
     
     /***包装方式 空差**/
-    private Integer kongcha;
+    private Double kongcha;
     
     /***包装方式 胶袋**/
-    private Integer jiaodai;
+    private Double jiaodai;
     
     /**差额**/
     private Integer balance;
@@ -166,30 +166,30 @@ public class OrderSummary {
         this.technologyId = technologyId;
     }
 
-    public Integer getZhiguan() {
+    public Double getZhiguan() {
 		return zhiguan;
 	}
 
-	public void setZhiguan(Integer zhiguan) {
+	public void setZhiguan(Double zhiguan) {
 		this.zhiguan = zhiguan;
 	}
 
-	public Integer getKongcha() {
+	public Double getKongcha() {
 		return kongcha;
 	}
 
 	/**包装方式空差**/
-	public void setKongcha(Integer kongcha) {
+	public void setKongcha(Double kongcha) {
 		this.kongcha = kongcha;
 	}
 
 	/**包装方式胶袋**/
-	public Integer getJiaodai() {
+	public Double getJiaodai() {
 		return jiaodai;
 	}
 
 	/**包装方式胶袋**/
-	public void setJiaodai(Integer jiaodai) {
+	public void setJiaodai(Double jiaodai) {
 		this.jiaodai = jiaodai;
 	}
 
