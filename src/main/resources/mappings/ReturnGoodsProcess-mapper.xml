@@ -89,6 +89,7 @@
 		select
 		 	return_date returnDate,
 		 	return_num returnNum,
+		 	return_num_kg returnNumKg,
 		 	return_color returnColor,
 		 	mark,zhiguan,
 		 	kongcha,jiaodai
