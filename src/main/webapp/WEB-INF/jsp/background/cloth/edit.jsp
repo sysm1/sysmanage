@@ -78,20 +78,17 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
+	<div class="l_err" style="width: 485px;"></div>
 	<form name="form" id="form" action="${ctx}/background/cloth/update.html" method="post">
-		<table style="width: 285px; height: 200px;">
+		<table style="width: 485px; height: 200px;">
 			<tbody>
-				
 				<tr>
 					<td class="l_right">名称：</td>
 					<td class="l_left">
 					<input id='id' name="id" type="hidden" value="${cloth.id}">
 					<input id='clothName' name="clothName" type="text" value="${cloth.clothName}">
 					</td>
-				</tr>
-				
-				<tr>
+				</tr><tr>
 					<td class="l_right">下单名称：</td>
 					<td class="l_left">
 					<input id='orderName' name="orderName" type="text" value="${cloth.orderName}">
@@ -105,9 +102,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							<option value="4" <c:if test="${cloth.unit eq 4 }">selected</c:if>>包</option>
 						</select>
 					</td>
-				</tr>
-				
-				<tr>
+				</tr><tr>
+					<td>默认公斤数：</td>
+					<td>
+						<input type="text" id="tiaoKg" name="tiaoKg" value="${cloth.tiaoKg }">条/KG
+					</td>
+				</tr><tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
@@ -115,9 +115,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						name="mark" type="text" class="checkdesc" value="${cloth.mark}">
 						</div>
 						</td>
-				</tr>
-				
-				<tr>
+				</tr><tr>
 					<td colspan="2">
 						<div class="l_btn_centent">
 								<!-- saveWin_form   from是表单Ｉd-->

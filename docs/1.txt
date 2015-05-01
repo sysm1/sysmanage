@@ -32,6 +32,7 @@ create table cloth_info (
 	mark text,
 	unit int,   			-- /**布种单位 0条 1 kg 2cm 3码***/
 	loss_rate int 			-- 折扣率
+	tiao_kg double(10,2),--条和公斤换算单位
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -240,9 +241,9 @@ CREATE TABLE `order_summary` (
 `status`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂不一样   ----新厂 我司编号不一样----新花 布种不一样---新布 颜色不一样----新色   红色字体 可以组合  （新厂新花) 一样的为正常   绿色字体 ' ,
 `return_status`  int(11) NULL DEFAULT 0 COMMENT '0 未回货  1 未回完  2已回货' ,
 `create_time`  datetime NULL DEFAULT NULL COMMENT '下单时间' ,
-`zhiguan`  int(11) NULL DEFAULT NULL COMMENT '纸管' ,
-`kongcha`  int(11) NULL DEFAULT NULL COMMENT '空差' ,
-`jiaodai`  int(11) NULL DEFAULT NULL COMMENT '胶袋' ,
+`zhiguan`  double(12,2) NULL DEFAULT NULL COMMENT '纸管' ,
+`kongcha`  double(12,2) NULL DEFAULT NULL COMMENT '空差' ,
+`jiaodai`  double(12,2) NULL DEFAULT NULL COMMENT '胶袋' ,
 `balance`  int(11) NULL DEFAULT NULL COMMENT '差额' ,
 `balance_saleman_id`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '差额业务员' ,
 `kuanfu`  int(11) NULL DEFAULT NULL COMMENT '宽幅' ,
@@ -264,13 +265,14 @@ create table return_goods_process(
 	summary_id int,
 	return_date datetime,   -- 回货日期
 	return_num int,		-- 回货数量
+	return_Num_kg double(12,2),--回货数量KG
 	return_unit  varchar(16), -- -- kg cm yard item
 	statistics_num int,      -- 换算单位后数量(条)
 	return_color varchar(255),  -- 实到颜色
 	mark text,  -- 备注
-	zhiguan  int(11) NULL DEFAULT NULL COMMENT '纸管' ,
-	kongcha  int(11) NULL DEFAULT NULL COMMENT '空差' ,
-	jiaodai  int(11) NULL DEFAULT NULL COMMENT '胶袋' ,
+	zhiguan  double(12,2) NULL DEFAULT NULL COMMENT '纸管' ,
+	kongcha  double(12,2) NULL DEFAULT NULL COMMENT '空差' ,
+	jiaodai  double(12,2) NULL DEFAULT NULL COMMENT '胶袋' ,
 	create_time datetime,
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

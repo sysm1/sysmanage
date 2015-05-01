@@ -49,7 +49,7 @@ public class OrderSummary {
 
     private Integer clothNum;
 
-    private Integer num;
+    private Double num;
     
     /**下单单位**/
     private Integer unit;
@@ -57,13 +57,13 @@ public class OrderSummary {
     private String numText;
     
     /***包装方式 纸管**/
-    private Integer zhiguan;
+    private Double zhiguan;
     
     /***包装方式 空差**/
-    private Integer kongcha;
+    private Double kongcha;
     
     /***包装方式 胶袋**/
-    private Integer jiaodai;
+    private Double jiaodai;
     
     /**差额**/
     private Integer balance;
@@ -179,32 +179,32 @@ public class OrderSummary {
     }
 
     @ExcelDataMapper(title="纸管",order=12)
-    public Integer getZhiguan() {
+    public Double getZhiguan() {
 		return zhiguan;
 	}
 
-	public void setZhiguan(Integer zhiguan) {
+	public void setZhiguan(Double zhiguan) {
 		this.zhiguan = zhiguan;
 	}
 
 	@ExcelDataMapper(title="空差",order=13)
-	public Integer getKongcha() {
+	public Double getKongcha() {
 		return kongcha;
 	}
 
 	/**包装方式空差**/
-	public void setKongcha(Integer kongcha) {
+	public void setKongcha(Double kongcha) {
 		this.kongcha = kongcha;
 	}
 
 	/**包装方式胶袋**/
 	@ExcelDataMapper(title="胶袋",order=14)
-	public Integer getJiaodai() {
+	public Double getJiaodai() {
 		return jiaodai;
 	}
 
 	/**包装方式胶袋**/
-	public void setJiaodai(Integer jiaodai) {
+	public void setJiaodai(Double jiaodai) {
 		this.jiaodai = jiaodai;
 	}
 
@@ -254,11 +254,11 @@ public class OrderSummary {
 
     /**下单数量**/
     @ExcelDataMapper(title="数量",order=10)
-    public Integer getNum() {
+    public Double getNum() {
         return num;
     }
 
-    public void setNum(Integer num) {
+    public void setNum(Double num) {
         this.num = num;
     }
 
@@ -577,5 +577,4 @@ public class OrderSummary {
 	public void setNumText(String numText) {
 		this.numText = numText;
 	}
-   
 }

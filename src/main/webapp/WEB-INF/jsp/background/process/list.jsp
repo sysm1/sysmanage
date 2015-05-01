@@ -113,18 +113,9 @@ th.specalt {
 			});
 		});
 		$("#saveTemp").click("click", function() {//绑定暂存按扭
-			var cbox=getSelectedCheckbox();
-			if(cbox==""){
-				parent.$.ligerDialog.alert("请选择一条记录修改");
-				return;
+			if(!saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=0')){
+				alert("数据暂存成功");	
 			}
-			for(var i=0;i<cbox.length;i++){
-				var f = $('#'+cbox[i]+'_form');
-				f.attr('target','iframe');
-				f.attr('action','${pageContext.request.contextPath}/background/process/save.html?returnStatus=0');
-				f.submit();
-			}
-			alert("数据暂存成功");
 		});
 		$("#delaybtn").click("click", function() {
 			$('#pageNow').attr('value',1);
@@ -135,32 +126,8 @@ th.specalt {
 			f.submit();
 		});
 		$("#save").click("click", function() {//绑定查询按扭
-			var cbox=getSelectedCheckbox();
-			if(cbox==""){
-				parent.$.ligerDialog.alert("请选择一条记录修改");
-				return;
-			}
-			for(var i=0;i<cbox.length;i++){
-				var f = $('#'+cbox[i]+'_form');
-				f.attr('target','');
-				//f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
-				//f.submit();
-				
-				$.ajax({
-				    type: "post", //使用get方法访问后台
-				    dataType: "json", //json格式的数据
-				    async: false, //同步   不写的情况下 默认为true
-				    url: '${pageContext.request.contextPath}/background/process/save.html?returnStatus=2', //要访问的后台地址
-				    data: f.serialize(), //要发送的数据
-				    success: function(data){
-				    	//alert(data);
-					},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
-						alert(XMLHttpRequest.status);
-						alert(XMLHttpRequest.readyState);
-						alert(data);  
-				     }
-				});
-			}
+			saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=2');
+			//alert(document.getElementsByName("returnNum").length);
 			alert("数据已回");
 			location.reload();
 		});
@@ -208,6 +175,78 @@ th.specalt {
 			});
 		});
 	});
+	
+	function saveData(url1){
+		//alert(document.getElementsByName("returnNum").length);
+		var cbox=getSelectedCheckbox();
+		if(cbox==""){
+			parent.$.ligerDialog.alert("请选择一条记录修改");
+			return false;
+		}
+		for(var i=0;i<cbox.length;i++){
+			var url=url1;
+			var f = $('#'+cbox[i]+'_form');
+			//alert(document.getElementsByName(cbox[i]+"returnNum").length);
+			//var url='${pageContext.request.contextPath}/background/process/save.html?returnStatus=2';
+			var returnNums=document.getElementsByName(cbox[i]+"returnNum");
+			for(var j=0;j<returnNums.length;j++){
+				url+="&returnNum="+returnNums[j].value;
+			}
+			var returnDates=document.getElementsByName(cbox[i]+"returnDate");
+			for(var j=0;j<returnDates.length;j++){
+				url+="&returnDate="+returnDates[j].value;
+			}
+			
+			var returnNumKgs=document.getElementsByName(cbox[i]+"returnNumKg");
+			for(var j=0;j<returnNumKgs.length;j++){
+				url+="&returnNumKg="+returnNumKgs[j].value;
+			}
+			
+			var returnColors=document.getElementsByName(cbox[i]+"returnColor");
+			for(var j=0;j<returnColors.length;j++){
+				url+="&returnColor="+returnColors[j].value;
+			}
+			
+			var marks=document.getElementsByName(cbox[i]+"mark");
+			for(var j=0;j<marks.length;j++){
+				url+="&mark="+marks[j].value;
+			}
+			
+			var zhiguans=document.getElementsByName(cbox[i]+"zhiguan");
+			for(var j=0;j<zhiguans.length;j++){
+				url+="&zhiguan="+zhiguans[j].value;
+			}
+			
+			var kongchas=document.getElementsByName(cbox[i]+"kongcha");
+			for(var j=0;j<kongchas.length;j++){
+				url+="&kongcha="+kongchas[j].value;
+			}
+			
+			var jiaodais=document.getElementsByName(cbox[i]+"jiaodai");
+			for(var j=0;j<jiaodais.length;j++){
+				url+="&jiaodai="+jiaodais[j].value;
+			}
+			//alert(f.serialize());
+			f.attr('target','');
+			//f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
+			//f.submit();
+			$.ajax({
+			    type: "post", //使用get方法访问后台
+			    dataType: "json", //json格式的数据
+			    async: false, //同步   不写的情况下 默认为true
+			    url: url, //要访问的后台地址
+			    data: f.serialize(), //要发送的数据
+			    success: function(data){
+			    	//alert(data);
+				},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+					alert(XMLHttpRequest.status);
+					alert(XMLHttpRequest.readyState);
+					alert(data);  
+			     }
+			});
+		}
+	}
+	
 	function loadGird(){
 		grid.loadData();
 	}
@@ -216,14 +255,15 @@ th.specalt {
 	var index=1;
 	var newId=2;
 	function addOneRow(itemId){
-		$('#'+itemId+'returnDate').before('<input type="text"  name="returnDate" style="width:70px" value=""'+
+		$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value=""'+
 				'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
-		$('#'+itemId+'returnNum').before('<input type="text"  name="returnNum" value="" style="width: 60px"><br>');
-		$('#'+itemId+'returnColor').before('<input type="text"  name="returnColor" value="" style="width: 60px"><br>');
-		$('#'+itemId+'mark').before('<input type="text"  name="mark" value="" ><br>');
-		$('#'+itemId+'zhiguan').before('<input type="text"  name="zhiguan" value="" style="width: 45px"><br>');
-		$('#'+itemId+'kongcha').before('<input type="text"  name="kongcha" value="" style="width: 45px"><br>');
-		$('#'+itemId+'jiaodai').before('<input type="text"  name="jiaodai" value="" style="width: 45px"><br>');
+		$('#'+itemId+'returnNum').after('<input type="text"  name="'+itemId+'returnNum" value="" style="width: 60px"><br>');
+		$('#'+itemId+'returnNumKg').before('<input type="text"  name="'+itemId+'returnNumKg" value="" style="width: 60px"><br>');
+		$('#'+itemId+'returnColor').before('<input type="text"  name="'+itemId+'returnColor" value="" style="width: 60px"><br>');
+		$('#'+itemId+'mark').before('<input type="text"  name="'+itemId+'mark" value="" ><br>');
+		$('#'+itemId+'zhiguan').before('<input type="text"  name="'+itemId+'zhiguan" value="" style="width: 45px"><br>');
+		$('#'+itemId+'kongcha').before('<input type="text"  name="'+itemId+'kongcha" value="" style="width: 45px"><br>');
+		$('#'+itemId+'jiaodai').before('<input type="text"  name="'+itemId+'jiaodai" value="" style="width: 45px"><br>');
 		index++;
 		newId++;
 	}
@@ -291,7 +331,7 @@ th.specalt {
 </script>
 </head>
 <body>
-	<div class="divBody" style="width:1500px;">
+	<div class="divBody" style="width:1600px;">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
@@ -346,7 +386,8 @@ th.specalt {
 					<th>我司编号</th>
 					<th >回货日期</th>
 					<th>下单数量</th>
-					<th>实到数量</th>
+					<th>实到数量（条）</th>
+					<th>实到数量（KG）</th>
 					<th>纸管</th>
 					<th>空差</th>
 					<th>胶袋</th>
@@ -373,11 +414,11 @@ th.specalt {
 					<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
 					<td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
 					<c:if test="${fn:length(map[item.id]) ==0}">
-						<input type="text" name="returnDate" style="width:70px" value=""
+						<input type="text" name="${item.id }returnDate" style="width:70px" value=""
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 					</c:if><c:if test="${map[item.id] != null }">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-							<input type="text" name="returnDate" style="width:70px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
+							<input type="text" name="${item.id }returnDate" style="width:70px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
 								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 						</c:forEach>
 					</c:if>
@@ -388,37 +429,46 @@ th.specalt {
 					<td id="9_${item.id }">${item.num }${item.unitName }</td>
 					<td id="10_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text"  name="returnNum" value="" style="width: 60px"><br>
+							<input type="text"  name="${item.id }returnNum" value="" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text"  name="returnNum" value="${item1.returnNum }" style="width: 60px"><br>
+								<input type="text"  name="${item.id }returnNum" value="${item1.returnNum }" style="width: 60px"><br>
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }returnNum" ></span>
-					</td><td id="11_${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="16_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="zhiguan" value="" style="width: 45px;"><br>
+							<input type="text"  name="${item.id }returnNumKg" value="" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="zhiguan" value="${item1.zhiguan }" style="width: 45px;"><br>
+								<input type="text"  name="${item.id }returnNumKg" value="${item1.returnNumKg }" style="width: 60px"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id }returnNumKg" ></span>
+					</td><td id="11_${item.id }" onclick="onclickTr(${item.id })">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }zhiguan" value="" style="width: 45px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }zhiguan" value="${item1.zhiguan }" style="width: 45px;"><br>
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}zhiguan" ></span>
 					</td><td id="12_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="kongcha" value="" style="width: 45px;"><br>
+							<input type="text" name="${item.id }kongcha" value="" style="width: 45px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="kongcha" value="${item1.kongcha }" style="width: 45px;"><br>
+								<input type="text" name="${item.id }kongcha" value="${item1.kongcha }" style="width: 45px;"><br>
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}kongcha" ></span>
 					</td><td id="13_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="jiaodai" value="" style="width: 45px;"><br>
+							<input type="text" name="${item.id }jiaodai" value="" style="width: 45px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="jiaodai" value="${item1.jiaodai }" style="width: 45px;"><br>
+								<input type="text" name="${item.id }jiaodai" value="${item1.jiaodai }" style="width: 45px;"><br>
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}jiaodai" ></span>
@@ -426,20 +476,20 @@ th.specalt {
 					<td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
 					<td onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="returnColor" value="${item1.returnColor }" style="width: 60px"><br>
+							<input type="text" name="${item.id }returnColor" value="${item1.returnColor }" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="returnColor" value="${item1.returnColor }" style="width: 60px"><br>
+								<input type="text" name="${item.id }returnColor" value="${item1.returnColor }" style="width: 60px"><br>
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }returnColor" ></span>
 					</td>
 					<td id="15_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="mark" value="" ><br>
+							<input type="text" name="${item.id }mark" value="" ><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="mark" value="${item1.mark }" ><br>
+								<input type="text" name="${item.id }mark" value="${item1.mark }" ><br>
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }mark" ></span>

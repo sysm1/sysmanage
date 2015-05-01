@@ -27,6 +27,9 @@
 						colkey : "unitName",
 						name : "布种单位"
 					},{
+						colkey : "tiaoKg",
+						name : "条/KG"
+					},{
 						colkey : "mark",
 						name : "备注"
 					}],
@@ -50,7 +53,7 @@
 		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
+				width : 400,
 				height : 310,
 				url : rootPath + '/background/cloth/addUI.html',
 				title : "增加布种信息",
@@ -65,7 +68,7 @@
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
+				width : 400,
 				height : 310,
 				url : rootPath + '/background/cloth/editUI.html?id='+cbox,
 				title : "修改布种信息",

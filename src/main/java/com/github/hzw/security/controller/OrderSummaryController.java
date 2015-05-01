@@ -139,7 +139,7 @@ public class OrderSummaryController extends BaseController {
 			info.setCreateTime(new Date());
 			orderSummaryService.add(info);
 			OrderInputSummary orderInputSummary=orderInputSummaryService.getById(summId);
-			String orderIds=orderInputSummary.getOrderIds();
+			String orderIds=orderInputSummary.getOrderIds().replace(",,",",");
 			orderIds=","+orderIds;
 			String [] idsa=inputIds.split(",");
 			for(String id:idsa){
@@ -149,6 +149,8 @@ public class OrderSummaryController extends BaseController {
 			orderInputSummaryService.update(orderInputSummary);
 			
 			//修改坯布余量 ？？？？？
+			ClothInfo clothInfo=clothInfoService.getById(info.getClothId()+"");
+			Double tiaoKg=clothInfo.getTiaoKg();
 			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(info.getClothId(), info.getFactoryId());
 			if(null==clothAllowance){
 				clothAllowance=new ClothAllowance();
@@ -157,24 +159,28 @@ public class OrderSummaryController extends BaseController {
 				clothAllowance.setChangeSum(0D);
 				clothAllowance.setChangeSumkg(0D);
 				clothAllowance.setInputDate(new Date());
-				Integer num=0-info.getNum();
 				int unit=info.getUnit();
 				if(unit==0){
-					clothAllowance.setAllowance(num);
+					clothAllowance.setAllowance(-info.getNum().intValue());
+					clothAllowance.setAllowancekg(0D);
 				}else{
-					clothAllowance.setAllowancekg(num.doubleValue());
+					clothAllowance.setAllowancekg(-info.getNum());
 				}
-				clothAllowanceService.add(clothAllowance);
+				clothAllowanceService.addAllowance(clothAllowance);
 			}else{
-				Integer allowance=clothAllowance.getAllowance();
-				allowance=allowance-info.getNum();
 				int unit=info.getUnit();
-				if(unit==0){
+				Double allowanceKg=clothAllowance.getAllowancekg();
+				if(0==unit){
+					Integer allowance=clothAllowance.getAllowance();
+					allowance=allowance-info.getNum().intValue();
+					allowanceKg=allowanceKg-tiaoKg*info.getNum();
+					clothAllowance.setAllowancekg(allowanceKg);
 					clothAllowance.setAllowance(allowance);
 				}else{
-					clothAllowance.setAllowancekg(allowance.doubleValue());
+					allowanceKg=allowanceKg-info.getNum();
+					clothAllowance.setAllowancekg(allowanceKg);
 				}
-				clothAllowanceService.update(clothAllowance);
+				clothAllowanceService.addAllowance(clothAllowance);
 			}
 			//坯布余量修改完成
 			

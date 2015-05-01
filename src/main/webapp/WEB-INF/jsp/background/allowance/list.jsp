@@ -38,7 +38,7 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 					},{
 						colkey : "factoryName",
 						name : "工厂",
-						width : "200px"
+						width : "150px"
 					}, {
 						colkey : "allowanceInfo",
 						name : "现余量",

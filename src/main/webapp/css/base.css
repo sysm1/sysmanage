@@ -473,4 +473,6 @@ marquee{
 	font-size:14px;
 	margin:0 auto;
 }
-
+.l_right{
+	text-align: right;
+}
