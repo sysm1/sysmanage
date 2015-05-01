@@ -49,7 +49,7 @@ public class OrderSummary {
 
     private Integer clothNum;
 
-    private Integer num;
+    private Double num;
     
     /**下单单位**/
     private Integer unit;
@@ -234,11 +234,11 @@ public class OrderSummary {
     }
 
     /**下单数量**/
-    public Integer getNum() {
+    public Double getNum() {
         return num;
     }
 
-    public void setNum(Integer num) {
+    public void setNum(Double num) {
         this.num = num;
     }
 
