@@ -1,7 +1,5 @@
 package com.github.hzw.util;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -391,4 +389,16 @@ public class POIUtils {
 		}
 			
 	}
+	
+	
+	public static String getValue(HSSFCell hssfCell){  
+	    if(hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN){  
+	      return String.valueOf( hssfCell.getBooleanCellValue());  
+	    }else if(hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC){  
+	      return String.valueOf( hssfCell.getNumericCellValue());  
+	    }else{  
+	      return String.valueOf( hssfCell.getStringCellValue());  
+	    }  
+	  }
+	
 }

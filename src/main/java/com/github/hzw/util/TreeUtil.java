@@ -34,9 +34,6 @@ public class TreeUtil {
 	
 	/**
 	 * 递归列表
-	 * @author LJN
-	 * Email: mmm333zzz520@163.com
-	 * @date 2013-12-4 下午7:27:30
 	 * @param list
 	 * @param Resources
 	 */
