@@ -42,7 +42,7 @@ public class MysqlUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		backup();
+		// backup();
 		// load();
 	}
 
@@ -50,13 +50,13 @@ public class MysqlUtils {
 	 * 备份检验一个sql文件是否可以做导入文件用的一个判断方法：把该sql文件分别用记事本和ultra
 	 * edit打开，如果看到的中文均正常没有乱码，则可以用来做导入的源文件（不管sql文件的编码格式如何，也不管db的编码格式如何）
 	 */
-	public static void backup() {
+	public static void backup(String db) {
 		try {
 			Runtime rt = Runtime.getRuntime();
 
 			// 调用 mysql 的 cmd:
 			Process child = rt
-					.exec("mysqldump -uroot -proot --set-charset=utf8 demo");// 设置导出编码为utf8。这里必须是utf8
+					.exec(mysqlbin + "mysqldump -u" + dbuser +" -p"+ dbpasswd + " " + db);// 设置导出编码为utf8。这里必须是utf8
 
 			// 把进程执行中的控制台输出信息写入.sql文件，即生成了备份文件。注：如果不对控制台信息进行读出，则会导致进程堵塞无法运行
 			InputStream in = child.getInputStream();// 控制台的输出信息作为输入流
@@ -74,7 +74,7 @@ public class MysqlUtils {
 			outStr = sb.toString();
 
 			// 要用来做导入用的sql目标文件：
-			FileOutputStream fout = new FileOutputStream("e:/demo.sql");
+			FileOutputStream fout = new FileOutputStream(backuppath + "all.sql");
 			OutputStreamWriter writer = new OutputStreamWriter(fout, "utf8");
 			writer.write(outStr);
 			// 注：这里如果用缓冲方式写入文件的话，会导致中文乱码，用flush()方法则可以避免
@@ -94,74 +94,17 @@ public class MysqlUtils {
 		}
 	}
 
-	public static void export(String db, String tables, String filename) {
-		 // String cmd = mysqlbin + "mysqldump -u" + dbuser + " -p" + dbpasswd + " " + db + " " + tables + " > " + backuppath + filename +"&";
-		
-		 // String[] cmd = {"/bin/bash", "-c", "nohup ", mysqlbin+"mysqldump", "-u"+dbuser, "-p"+dbpasswd, db, tables, " > " , backuppath + filename};  
-		 String cmd = mysqlbin + "export.sh ";
-		logger.info("cmd:" + cmd);
-		try {
-			//Process p = Runtime.getRuntime().exec(cmd);
-			// p.waitFor();
-			ProcessBuilder pb = new ProcessBuilder(new String[]{cmd});
-			pb.start();
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		System.out.println("finished...");
-
-		System.out.println("/* Export OK! */");
-
-	}
-
-	/**
-	 * 导入 mysql -u root -p voice<voice.sql 导入的时候需要数据库已经建好。
-	 */
-	public static void importAll(String db, String tables, String filename) {
-		String cmd = mysqlbin + "mysql -u" + dbuser + " -p" + dbpasswd + " "
-				+ db + " < " + backuppath + filename;
-		logger.info("cmd:" + cmd);
-		BufferedReader br = null;
-		try {
-			Process proc = Runtime.getRuntime().exec(cmd);
-			/**
-			 * br = new BufferedReader( new
-			 * InputStreamReader(proc.getInputStream()));
-			 * 
-			 * @SuppressWarnings("unused") String line = null; //
-			 *                             System.out.println("打印所有正在运行的进程信息");
-			 *                             while ((line = br.readLine()) !=
-			 *                             null) {
-			 *                             System.out.println(br.readLine()); }
-			 **/
-			int i = proc.waitFor();
-			System.out.println(i);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		System.out.println("/* Import OK! */");
-	}
-
 	/**
 	 * 导入 导入的时候需要数据库已经建好。
 	 */
-	public static void load() {
+	public static void load(String db) {
 		try {
-			String fPath = "e:/demo.sql";
+			String fPath = backuppath + "all.sql";
 			Runtime rt = Runtime.getRuntime();
 
 			// 调用 mysql 的 cmd:
 			// rt.exec("create database demo");
-			Process child = rt.exec("mysql -uroot -proot demo");
+			Process child = rt.exec(mysqlbin + "mysql -u"+ dbuser +" -p"+ dbpasswd +" " + db);
 			OutputStream out = child.getOutputStream();// 控制台的输入信息作为输出流
 			String inStr;
 			StringBuffer sb = new StringBuffer("");
@@ -188,5 +131,7 @@ public class MysqlUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 }

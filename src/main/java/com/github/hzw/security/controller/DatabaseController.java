@@ -29,7 +29,7 @@ public class DatabaseController extends BaseController {
 	public Map<String, Object> exportAll() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			MysqlUtils.export("system-manage", "", "all.sql");
+			MysqlUtils.backup("system-manage");
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
@@ -43,7 +43,7 @@ public class DatabaseController extends BaseController {
 	public Map<String, Object> importAll() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			MysqlUtils.importAll("system-manage", "", "all.sql");
+			MysqlUtils.load("system-manage");
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
