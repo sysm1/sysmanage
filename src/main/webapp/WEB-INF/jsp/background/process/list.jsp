@@ -113,7 +113,7 @@ th.specalt {
 			});
 		});
 		$("#saveTemp").click("click", function() {//绑定暂存按扭
-			if(saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=0')){
+			if(!saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=0')){
 				alert("数据暂存成功");	
 			}
 		});
