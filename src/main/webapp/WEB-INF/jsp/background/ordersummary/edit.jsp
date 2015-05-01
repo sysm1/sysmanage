@@ -331,7 +331,16 @@ $(function() {
 						</div>
 						</c:if>
 					</td>
-				</tr><tr style="height: 30px;text-align: center;">
+				</tr>
+				<c:if test="${inputsummary.balancemark!=null }">
+				<tr>
+					<td>差额业务员备注：</td>
+					<td colspan="5">
+						<input id='balancemark' name="balancemark" type="text" value="${inputsummary.balancemark }" style="width: 553px;height: 17px;border:1px solid green;">
+					</td>
+				</tr>
+				</c:if>
+				<tr style="height: 30px;text-align: center;">
 					<td colspan="6">规格</td>
 				</tr><tr>
 					<td class="l_right">幅宽:</td>
