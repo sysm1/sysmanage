@@ -38,7 +38,7 @@ public class OrderSummaryTest {
 			summary.setFactoryCode("factoryCode"+ i);
 			summary.setFactoryColor("factoryColor"+ i);
 			summary.setClothNum(10);
-			summary.setNum(2);
+			summary.setNum(2.0);
 			summary.setStandard("规格"+ i);
 			summary.setPackingStyle("packingStyle"+ i);
 			summary.setSalesmans("1|2|"+ i);
