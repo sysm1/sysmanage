@@ -27,6 +27,8 @@ public class ClothInfo {
     /***单位名字**/
     private String unitName;
     
+    private Double tiaoKg;
+    
     /**这损率**/
     private int lossRate;
 
@@ -105,7 +107,7 @@ public class ClothInfo {
 		}else if(3==unit){
 			unitName="码";
 		}else if(4==unit){
-			unitName="包";
+			unitName="KG";
 		}
 		return unitName;
 	}
@@ -128,7 +130,12 @@ public class ClothInfo {
 	public void setPinyin(String pinyin) {
 		this.pinyin = pinyin;
 	}
-    
-    
-    
+
+	public Double getTiaoKg() {
+		return tiaoKg;
+	}
+
+	public void setTiaoKg(Double tiaoKg) {
+		this.tiaoKg = tiaoKg;
+	}
 }

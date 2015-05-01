@@ -220,7 +220,7 @@ public class ClothAllowance {
 		String unitName="条";		
 		allowanceInfo=allowance+unitName;
 		if(null!=noReturn&&0<noReturn&&unit==0){
-			allowanceInfo=(allowance-noReturn)+unitName+"(未回"+noReturn+unitName+")";
+			allowanceInfo=(allowance)+unitName+"(未回"+noReturn+unitName+")";
 		}
 		return allowanceInfo;
 	}
@@ -233,7 +233,7 @@ public class ClothAllowance {
 		String unitName="KG";
 		allowanceKgInfo=allowancekg+unitName;
 		if(null!=noReturn&&0<noReturn&&unit==4){
-			allowanceKgInfo=(allowancekg-noReturn)+unitName+"(未回"+noReturn+unitName+")";
+			allowanceKgInfo=(allowancekg)+unitName+"(未回"+noReturn+unitName+")";
 		}
 		return allowanceKgInfo;
 	}
