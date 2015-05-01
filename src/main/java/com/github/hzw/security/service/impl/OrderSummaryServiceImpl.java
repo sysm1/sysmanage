@@ -142,4 +142,8 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 
 	}
 	
+	public List<OrderSummary> queryReportBySummary(Map<String, Object> map ){
+		return orderSummaryMapper.queryReportBySummary(map);
+	}
+	
 }

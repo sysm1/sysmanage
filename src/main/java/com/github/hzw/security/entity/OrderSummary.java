@@ -577,5 +577,4 @@ public class OrderSummary {
 	public void setNumText(String numText) {
 		this.numText = numText;
 	}
-   
 }

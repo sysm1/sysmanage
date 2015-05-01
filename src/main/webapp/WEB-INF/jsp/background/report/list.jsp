@@ -69,6 +69,19 @@
 			f.submit();
 		});
 		
+		//  下单录入汇总查询
+		$("#export2").click("click", function() {
+			if($("#date2").attr("checked")){
+				// alert($("#date6").attr("checked"));
+			} else {
+				$("#beginTime").attr("value", $("#beginTime2").attr("value"));
+				$("#endTime").attr("value", $("#endTime2").attr("value"));
+			}
+			var f = $('#fenye');
+			f.attr('target','_blank');
+			f.attr('action','${pageContext.request.contextPath}/background/ordersummary/exportSummaryExcel.html');
+			f.submit();
+		});
 		
 	});
 </script>
@@ -126,7 +139,7 @@
 							</td>
 							<td style="text-align: center;"><a class="btn btn-large btn-success" href="javascript:void(0)" id="export2">导出excel</a></td>
 						</tr>
-						
+						<!-- 
 						<tr style="line-height: 27px;">
 							<td style="text-align: center;">3</td>
 							<td style="text-align: center;">编号对应表</td>
@@ -137,6 +150,7 @@
 							</td>
 							<td style="text-align: center;"><a class="btn btn-large btn-success" href="javascript:void(0)" id="export3">导出excel</a></td>
 						</tr>
+						 -->
 						<tr style="line-height: 27px;">
 							<td style="text-align: center;">4</td>
 							<td style="text-align: center;">花号基础资料</td>

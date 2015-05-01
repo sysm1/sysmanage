@@ -43,5 +43,9 @@ public interface OrderSummaryService extends BaseService<OrderSummary> {
 	public PageView queryReportByFactoryPage(PageView pageView, Map<String, Object> map );
 	
 	public PageView queryReportByClothPage(PageView pageView, Map<String, Object> map );
-	 
+	
+	// public List<OrderSummary> queryReportBySummary(Map<String, Object> map);
+	
+	public List<OrderSummary> queryReportBySummary(Map<String, Object> map);
+	
 }

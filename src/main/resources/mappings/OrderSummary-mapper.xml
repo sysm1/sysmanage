@@ -92,6 +92,24 @@
   </select>
   
   
+  <select id="queryReportBySummary" resultType="OrderSummary" parameterType="map">
+  	select
+		<include refid="selectId" />
+			from order_summary
+		<where> 1=1
+			<if test="printNum != null and printNum != ''">
+				and print_num = 0
+			</if>
+			<if test="beginTime != null and beginTime != ''">
+				and order_date &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and order_date &lt;= #{endTime}
+			</if>
+		</where>
+		order by id desc
+  </select>
+  
     <select id="queryNotify" resultType="OrderSummary" parameterType="map">
   	select
 		<include refid="selectId" />

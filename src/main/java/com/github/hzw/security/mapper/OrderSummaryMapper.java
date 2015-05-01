@@ -25,4 +25,7 @@ public interface OrderSummaryMapper extends BaseMapper<OrderSummary> {
 	 public List<OrderReportFactoryVO> queryReportByFactory(Map<String, Object> map);
 	 
 	 public List<OrderReportClothVO> queryReportByCloth(Map<String, Object> map);
+	 
+	 public List<OrderSummary> queryReportBySummary(Map<String, Object> map);
+	 
 }
