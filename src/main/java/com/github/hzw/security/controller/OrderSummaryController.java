@@ -139,7 +139,7 @@ public class OrderSummaryController extends BaseController {
 			info.setCreateTime(new Date());
 			orderSummaryService.add(info);
 			OrderInputSummary orderInputSummary=orderInputSummaryService.getById(summId);
-			String orderIds=orderInputSummary.getOrderIds();
+			String orderIds=orderInputSummary.getOrderIds().replace(",,",",");
 			orderIds=","+orderIds;
 			String [] idsa=inputIds.split(",");
 			for(String id:idsa){
