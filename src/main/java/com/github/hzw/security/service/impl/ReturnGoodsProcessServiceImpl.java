@@ -160,7 +160,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				}
 				
 				if(0==unit){
-					double xz=0;
+					double xz=0;//虚重量
 					if(null!=bean.getZhiguan()){
 						xz+=bean.getZhiguan();
 					}if(null!=bean.getKongcha()){
@@ -169,29 +169,39 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 						xz+=bean.getJiaodai();
 					}
 					//公斤数
-					returnNumKg+=Double.parseDouble(returnNumKgs[i])-xz*bean.getReturnNum();
+					
+					if(null!=returnNumKgs[i]&&!"".equals(returnNumKgs[i])){
+						returnNumKg+=Double.parseDouble(returnNumKgs[i]);
+					}
+					if(null!=bean.getReturnNum()&&!"".equals(bean.getReturnNum())){
+						returnNumKg-=xz*bean.getReturnNum();
+					}
 				}else{
-					returnNumKg+=Double.parseDouble(returnNumKgs[i]);
+					if(null!=returnNumKgs[i]){
+						returnNumKg+=Double.parseDouble(returnNumKgs[i]);
+					}
 				}
 			}
-			//修改坯布余量
-			orderSummary=orderSummaryService.getById(orderSummary.getId()+"");
-			Double alreadOrderSum=orderSummary.getNum();
-			
-			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId());
-			if(null!=clothAllowance){
-				//如果是条为单位的  计算条和KG的数量
-				if(0==unit){
-					//单量虚重
-					alreadOrderSum=alreadOrderSum-returnNum;
-					clothAllowance.setAllowance(clothAllowance.getAllowance()+alreadOrderSum.intValue());
-					clothAllowance.setAllowancekg(clothAllowance.getAllowancekg()+orderSummary.getNum()*tiaoKg-returnNumKg);
-				}else{//以包为单位的计算KG的数量
-					alreadOrderSum=alreadOrderSum-returnNumKg;
-					clothAllowance.setAllowancekg(clothAllowance.getAllowancekg()+orderSummary.getNum()-returnNumKg);
+			if("2".equals(returnStatus)){
+				//修改坯布余量
+				orderSummary=orderSummaryService.getById(orderSummary.getId()+"");
+				Double alreadOrderSum=orderSummary.getNum();
+				
+				ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId());
+				if(null!=clothAllowance){
+					//如果是条为单位的  计算条和KG的数量
+					if(0==unit){
+						//单量虚重
+						alreadOrderSum=alreadOrderSum-returnNum;
+						clothAllowance.setAllowance(clothAllowance.getAllowance()+alreadOrderSum.intValue());
+						clothAllowance.setAllowancekg(clothAllowance.getAllowancekg()+orderSummary.getNum()*tiaoKg-returnNumKg);
+					}else{//以包为单位的计算KG的数量
+						alreadOrderSum=alreadOrderSum-returnNumKg;
+						clothAllowance.setAllowancekg(clothAllowance.getAllowancekg()+orderSummary.getNum()-returnNumKg);
+					}
+					clothAllowanceService.addAllowance(clothAllowance);
+					//坯布余量修改完成
 				}
-				clothAllowanceService.addAllowance(clothAllowance);
-				//坯布余量修改完成
 			}
 			
 			//状态 判断
