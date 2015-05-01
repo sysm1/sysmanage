@@ -141,6 +141,8 @@
       </if>
       <if test="returnNum != null" >
         return_num,
+      </if><if test="returnNumKg != null" >
+        return_Num_kg,
       </if>
       <if test="returnUnit != null" >
         return_unit,
@@ -174,6 +176,8 @@
       </if>
       <if test="returnNum != null" >
         #{returnNum,jdbcType=INTEGER},
+      </if><if test="returnNumKg != null" >
+        #{returnNumKg,jdbcType=INTEGER},
       </if>
       <if test="returnUnit != null" >
         #{returnUnit,jdbcType=VARCHAR},

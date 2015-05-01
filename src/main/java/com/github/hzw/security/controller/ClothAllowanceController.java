@@ -67,21 +67,20 @@ public class ClothAllowanceController extends BaseController {
 	@RequestMapping("queryByClothAndFactory")
 	public String queryByClothAndFactory(Integer clothId,Integer factoryId) {
 		ClothInfo clothInfo=new ClothInfo();
-		clothInfo.setId(clothId);
-		clothInfo=clothInfoService.queryAll(clothInfo).get(0);
+		clothInfo=clothInfoService.getById(clothId+"");
 		ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(clothId, factoryId);
 		String cloth_allowance_tiao="";
 		String cloth_allowance_kg="";
 		//确定布种的单位
 		if(null!=clothAllowance){
-			if(null==clothInfo.getUnit()||clothInfo.getUnit()==0||clothInfo.getUnit()==4){
+			if(null==clothInfo.getUnit()||clothInfo.getUnit()==0){
 				cloth_allowance_tiao=PropertiesUtils.findPropertiesKey("cloth_allowance_tiao");
 				if(clothAllowance.getAllowance()>Double.parseDouble(cloth_allowance_tiao)){
 					return "大量 ";
 				}else{
 					return clothAllowance.getAllowance()+" "+clothInfo.getUnitName();
 				}
-			}else if(clothInfo.getUnit()==1){
+			}else if(clothInfo.getUnit()==1||clothInfo.getUnit()==4){
 				cloth_allowance_kg=PropertiesUtils.findPropertiesKey("cloth_allowance_kg");
 				if(clothAllowance.getAllowance()>Double.parseDouble(cloth_allowance_kg)){
 					return "大量 ";

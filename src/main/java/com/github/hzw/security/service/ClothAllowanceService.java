@@ -14,4 +14,9 @@ public interface ClothAllowanceService extends BaseService<ClothAllowance> {
 	
 	public PageView queryByFind(PageView pageView, Map<String, Object> map );
 	
+	/**
+	 * 先从库里查找clothId,factoryId唯一的值
+	 */
+	public void addAllowance(ClothAllowance t) throws Exception;
+	
 }

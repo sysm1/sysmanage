@@ -15,12 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderSummaryVO;
 import com.github.hzw.security.entity.ClothAllowance;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.ReturnGoodsProcess;
 import com.github.hzw.security.mapper.ReturnGoodsProcessMapper;
 import com.github.hzw.security.service.ClothAllowanceService;
+import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
@@ -42,6 +44,9 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 	
 	@Inject
 	private ClothAllowanceService clothAllowanceService;
+	
+	@Inject
+	private ClothInfoService clothInfoService;
 	
 	@Inject
 	private FlowerAdditionalService flowerAdditionalService;
@@ -109,14 +114,20 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 	public void save(HttpServletRequest request,OrderSummary orderSummary){
 		String[] returnDates=request.getParameterValues("returnDate");
 		String[] returnNums=request.getParameterValues("returnNum");
+		String[] returnNumKgs=request.getParameterValues("returnNumKg");
 		String[] returnColors=request.getParameterValues("returnColor");
 		String[] marks=request.getParameterValues("mark");
 		String[] zhiguans=request.getParameterValues("zhiguan");
 		String[] kongchas=request.getParameterValues("kongcha");
 		String[] jiaodais=request.getParameterValues("jiaodai");
 		String returnStatus=request.getParameter("returnStatus");
+		
+		ClothInfo clothInfo=clothInfoService.getById(orderSummary.getClothId()+"");
+		Double tiaoKg=clothInfo.getTiaoKg();
+		int unit=orderSummary.getUnit();
 		try {
 			int returnNum=0;
+			Double returnNumKg=0D;
 			int size=returnDates.length;
 			ReturnGoodsProcess bean=null;
 			returnGoodsProcessMapper.deleteBySummaryId(orderSummary.getId()+"");
@@ -126,30 +137,62 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				bean.setMark(marks[i]);
 				bean.setReturnColor(returnColors[i]);
 				bean.setReturnDate(DateUtil.str2Date(returnDates[i],"yyyy-MM-dd"));
-				bean.setReturnNum(Integer.parseInt(returnNums[i]));
+				if(null!=returnNums[i]&&!"".equals(returnNums[i])){
+					bean.setReturnNum(Integer.parseInt(returnNums[i]));
+				}if(null!=returnNumKgs[i]&&!"".equals(returnNumKgs[i])){
+					bean.setReturnNumKg(Double.parseDouble(returnNumKgs[i]));
+				}				
 				bean.setReturnUnit("");
 				bean.setStatisticsNum(null);
 				bean.setSummaryId(orderSummary.getId());
-				bean.setZhiguan(Integer.parseInt(zhiguans[i]));
-				bean.setKongcha(Integer.parseInt(kongchas[i]));
-				bean.setJiaodai(Integer.parseInt(jiaodais[i]));
-				add(bean);
+				if(null!=zhiguans[i]&&!"".equals(zhiguans[i])){
+					bean.setZhiguan(Double.parseDouble(zhiguans[i]));
+				}
+				if(null!=kongchas[i]&&!"".equals(kongchas[i])){
+					bean.setKongcha(Double.parseDouble(kongchas[i]));
+				}if(null!=jiaodais[i]&&!"".equals(jiaodais[i])){
+					bean.setJiaodai(Double.parseDouble(jiaodais[i]));
+				}
 				
-				returnNum+=bean.getReturnNum()-bean.getZhiguan()-bean.getKongcha()-bean.getJiaodai();
+				add(bean);
+				if(null!=bean.getReturnNum()){
+					returnNum+=bean.getReturnNum();
+				}
+				
+				if(0==unit){
+					double xz=0;
+					if(null!=bean.getZhiguan()){
+						xz+=bean.getZhiguan();
+					}if(null!=bean.getKongcha()){
+						xz+=bean.getKongcha();
+					}if(null!=bean.getJiaodai()){
+						xz+=bean.getJiaodai();
+					}
+					//公斤数
+					returnNumKg+=Double.parseDouble(returnNumKgs[i])-xz*bean.getReturnNum();
+				}else{
+					returnNumKg+=Double.parseDouble(returnNumKgs[i]);
+				}
 			}
 			//修改坯布余量
 			orderSummary=orderSummaryService.getById(orderSummary.getId()+"");
-			int alreadOrderSum=orderSummary.getNum();
-			int unit=orderSummary.getUnit();
-			alreadOrderSum=alreadOrderSum-returnNum;
+			Double alreadOrderSum=orderSummary.getNum();
+			
 			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId());
-			if(0==unit){
-				clothAllowance.setAllowance(clothAllowance.getAllowance()+alreadOrderSum);
-			}else{
-				clothAllowance.setAllowancekg(clothAllowance.getAllowance().doubleValue()+alreadOrderSum);
+			if(null!=clothAllowance){
+				//如果是条为单位的  计算条和KG的数量
+				if(0==unit){
+					//单量虚重
+					alreadOrderSum=alreadOrderSum-returnNum;
+					clothAllowance.setAllowance(clothAllowance.getAllowance()+alreadOrderSum.intValue());
+					clothAllowance.setAllowancekg(clothAllowance.getAllowancekg()+orderSummary.getNum()*tiaoKg-returnNumKg);
+				}else{//以包为单位的计算KG的数量
+					alreadOrderSum=alreadOrderSum-returnNumKg;
+					clothAllowance.setAllowancekg(clothAllowance.getAllowancekg()+orderSummary.getNum()-returnNumKg);
+				}
+				clothAllowanceService.addAllowance(clothAllowance);
+				//坯布余量修改完成
 			}
-			clothAllowanceService.update(clothAllowance);
-			//坯布余量修改完成
 			
 			//状态 判断
 			orderSummary.setStatus(getReturnStatusName(orderSummary));

@@ -234,6 +234,7 @@ $(function() {
 	}
 	
 	function changeFactory(obj){
+		//alert(obj.value);
 		$.ajax({
 		    type: "post", //使用get方法访问后台
 		    dataType: "json", //json格式的数据
@@ -328,8 +329,8 @@ $(function() {
 						<div class="lanyuan_input">
 							<select id="factoryId" name="factoryId" onchange="changeFactory(this);" class="frameborder">
 								<option value="">请选择</option>
-								<c:forEach var="item" items="${factoryInfos }" varStatus="status">
-								<option value="${item.id }">${item.name }</option>
+								<c:forEach var="factory" items="${factoryInfos }" varStatus="status">
+								<option value="${factory.id }">${factory.name }</option>
 								</c:forEach>
 							</select>
 						</div>

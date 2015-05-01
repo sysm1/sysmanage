@@ -80,10 +80,26 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	function saveWin() {
 		var table =document.getElementById("table1");
 		var rows = table.rows.length;
+		//alert(rows);
 		var row=null;
 		//var valueTd=document.getElementById ("tbl").rows [1].cells[2];
+		
+		if(rows==2){
+			var clothIds=document.getElementsByName("clothId");
+			if(clothIds[0].value==''){
+				alert("请选择布种");
+				return false;
+			}
+			var salesmanIds=document.getElementsByName("salesmanId");
+			if(salesmanIds[0].value==''){
+				alert("请选择业务员");
+				return false;
+			}
+		}
+		
 		for(var i=1;i<rows;i++){
 			row=table.rows[i];
+			//alert(row.cells[2].innerHTML);
 			//alert(row.cells[2].childNodes[0].value);
 			if(row.cells[1].childNodes[0].value==''){
 				alert("请选择布种");

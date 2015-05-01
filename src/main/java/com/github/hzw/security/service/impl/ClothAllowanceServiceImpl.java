@@ -114,8 +114,33 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 			t.setCreateTime(new Date());
 			this.clothAllowanceMapper.update(t);
 		}
-		
-		
+	}
+	
+	/**
+	 * 先从库里查找clothId,factoryId唯一的值
+	 */
+	@Override
+	public void addAllowance(ClothAllowance t) throws Exception {
+		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId());
+		ClothInfo cloth = clothInfoService.getById(t.getClothId() + "");
+		if(tm == null) {
+			// 按布种单位计算
+			t.setOldSum(0.0);
+			t.setAllowance(null==t.getChangeSum()?0:t.getChangeSum().intValue());
+			t.setUnit(cloth.getUnit());
+			t.setCreateTime(new Date());
+			
+			// 公斤
+			t.setOldSumkg(0.0);
+			t.setAllowancekg(t.getChangeSumkg());
+			
+			this.clothAllowanceMapper.add(t);
+		} else {
+			t.setId(tm.getId());
+			t.setUnit(cloth.getUnit());
+			t.setCreateTime(new Date());
+			this.clothAllowanceMapper.update(t);
+		}
 	}
 	
 	

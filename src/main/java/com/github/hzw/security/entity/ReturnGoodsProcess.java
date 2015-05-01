@@ -13,6 +13,9 @@ public class ReturnGoodsProcess {
     private Date returnDate;
 
     private Integer returnNum;
+    
+    /***回货数量KG**/
+    private Double returnNumKg;
 
     private String returnUnit;
 
@@ -26,13 +29,13 @@ public class ReturnGoodsProcess {
     private String mark;
     
     /***包装方式 纸管**/
-    private Integer zhiguan;
+    private Double zhiguan;
     
     /***包装方式 空差**/
-    private Integer kongcha;
+    private Double kongcha;
     
     /***包装方式 胶袋**/
-    private Integer jiaodai;
+    private Double jiaodai;
 
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -98,27 +101,27 @@ public class ReturnGoodsProcess {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    public Integer getZhiguan() {
+    public Double getZhiguan() {
 		return zhiguan;
 	}
 
-	public void setZhiguan(Integer zhiguan) {
+	public void setZhiguan(Double zhiguan) {
 		this.zhiguan = zhiguan;
 	}
 
-	public Integer getKongcha() {
+	public Double getKongcha() {
 		return kongcha;
 	}
 
-	public void setKongcha(Integer kongcha) {
+	public void setKongcha(Double kongcha) {
 		this.kongcha = kongcha;
 	}
 
-	public Integer getJiaodai() {
+	public Double getJiaodai() {
 		return jiaodai;
 	}
 
-	public void setJiaodai(Integer jiaodai) {
+	public void setJiaodai(Double jiaodai) {
 		this.jiaodai = jiaodai;
 	}
 
@@ -130,4 +133,12 @@ public class ReturnGoodsProcess {
     public void setMark(String mark) {
         this.mark = mark;
     }
+    /***回货数量KG**/
+	public Double getReturnNumKg() {
+		return returnNumKg;
+	}
+	/***回货数量KG**/
+	public void setReturnNumKg(Double returnNumKg) {
+		this.returnNumKg = returnNumKg;
+	}
 }

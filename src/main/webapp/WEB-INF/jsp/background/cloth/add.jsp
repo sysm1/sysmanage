@@ -73,9 +73,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
+	<div class="l_err" style="width: 485px;"></div>
 	<form name="form" id="form" action="${ctx}/background/cloth/add.html" method="post">
-		<table style="width: 285px; height: 200px;">
+		<table style="width: 485px; height: 200px;">
 			<tbody>
 			
 				<tr>
@@ -101,8 +101,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							<option value="4">包</option>
 						</select>
 					</td>
-				</tr>
-				
+				</tr><tr>
+					<td>默认公斤数：</td>
+					<td>
+						<input type="text" id="tiaoKg" name="tiaoKg" value="">条/KG
+					</td>
+				</tr>		
 				<tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
