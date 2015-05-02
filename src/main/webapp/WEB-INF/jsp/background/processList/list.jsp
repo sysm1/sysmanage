@@ -120,7 +120,7 @@ th.specalt {
 				parent.$.ligerDialog.alert("请选择一条记录修改");
 				return;
 			}
-			alert(cbox);
+			//alert(cbox);
 			//var f = $('#fenye');
 			//f.attr('target','_blank');
 			//f.attr('action','${pageContext.request.contextPath}/background/process/updateStatus.html?rStatus=1&oids='+cbox);
