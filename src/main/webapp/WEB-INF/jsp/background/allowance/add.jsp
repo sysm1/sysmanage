@@ -156,7 +156,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td class="l_right">布种：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						
 						<select id="clothId" name="clothId">
 							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">

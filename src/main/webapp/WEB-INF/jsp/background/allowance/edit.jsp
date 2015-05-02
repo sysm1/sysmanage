@@ -103,17 +103,19 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
+	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/allowance/update.html" method="post">
 		<input id='id' name="id" type="hidden" value="${allowance.id}">
-		<table style="width: 285px; height: 200px;">
+		<table style="width: 385px; height: 300px;">
 			<tbody>
 			
 			<tr>
 				<td class="l_right">日期：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='inputDate' name="inputDate" class="isDay" type="text" value="${allowance.strInputDate}">
+						<input type="text" id="inputDate" name="inputDate" 
+							value="<fmt:formatDate value='${allowance.inputDate}' pattern='yyyy-MM-dd'/>" 
+							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 					</div>
 				</td>
 			</tr>
@@ -124,21 +126,8 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 					<div class="lanyuan_input">
 						<input id='clothId' name="clothId" type="hidden" value="${allowance.clothId}">
 						<input id='clothName' name="clothName" type="text" value="${allowance.clothName}" readonly="readonly">
-					</div>
-				</td>
-			</tr>
-			<!-- 0条 1 kg 2cm 3码 -->
-			<tr>
-				<td class="l_right">单位：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-						<c:choose>
-							<c:when test="${ allowance.unit == '1' }">公斤</c:when>
-							<c:when test="${ allowance.unit == '2' }">米</c:when>
-							<c:when test="${ allowance.unit == '3' }">码</c:when>
-							<c:when test="${ allowance.unit == '4' }">包</c:when>
-							<c:otherwise>条</c:otherwise>
-						</c:choose>
+						<c:if test="${allowance.unit==0 }">条</c:if>
+						<c:if test="${allowance.unit==4 }">包</c:if>
 					</div>
 				</td>
 			</tr>
@@ -158,15 +147,17 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='changeSum' name="changeSum" type="text" class="isNum" value="${allowance.changeSum}">
+					<c:if test="${allowance.unit==0 }">条</c:if>
+					<c:if test="${allowance.unit==4 }">包</c:if>
 					</div>
 				</td>
 			</tr>
 			
 			<tr>
-				<td class="l_right">新增量(公斤)：</td>
+				<td class="l_right">新增量：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="${allowance.changeSumkg}">
+						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="${allowance.changeSumkg}">公斤
 					</div>
 				</td>
 			</tr>

@@ -105,8 +105,8 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
-				height : 310,
+				width : 400,
+				height : 510,
 				url : rootPath + '/background/allowance/editUI.html?id='+cbox,
 				title : "修改坯布余量",
 				isHidden : false
