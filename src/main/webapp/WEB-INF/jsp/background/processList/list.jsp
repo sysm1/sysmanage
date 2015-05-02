@@ -120,13 +120,13 @@ th.specalt {
 				parent.$.ligerDialog.alert("请选择一条记录修改");
 				return;
 			}
-			for(var i=0;i<cbox.length;i++){
-				var f = $('#'+cbox[i]+'_form');
-				f.attr('target','iframe');
-				f.attr('action','${pageContext.request.contextPath}/background/process/save.html?');
-				f.submit();
-			}
-			alert("数据暂存成功");
+			alert(cbox);
+			//var f = $('#fenye');
+			//f.attr('target','_blank');
+			//f.attr('action','${pageContext.request.contextPath}/background/process/updateStatus.html?rStatus=1&oids='+cbox);
+			//f.submit();
+			window.location.href='${pageContext.request.contextPath}/background/process/updateStatus.html?rStatus=1&oids='+cbox;
+			//alert("数据暂存成功");
 		});
 		$("#delaybtn").click("click", function() {
 			$('#pageNow').attr('value',1);
