@@ -250,6 +250,25 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 	}
 	
 	/**
+	 * 修改状态
+	 * @param ids
+	 * @param status
+	 */
+	public void updateStatus(String ids,String status){
+		String[] idsa=ids.split(",");
+		OrderSummary orderSummary=null;
+		for(String id:idsa){
+			orderSummary=orderSummaryService.getById(id);
+			orderSummary.setReturnStatus(Integer.parseInt(status));
+			try {
+				orderSummaryService.update(orderSummary);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
 	 * 查询下单附属
 	 * @param summaryId
 	 * @return

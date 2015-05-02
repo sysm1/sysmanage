@@ -35,6 +35,8 @@ public interface ReturnGoodsProcessService extends
 	 */
 	public List<ReturnGoodsProcess> queryBySummaryId(String summaryId);
 	
+	public void updateStatus(String ids,String status);
+	
 	/**
 	 * 查询拖延单数
 	 * @param dates

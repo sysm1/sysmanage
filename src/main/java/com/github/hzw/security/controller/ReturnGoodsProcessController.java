@@ -88,6 +88,17 @@ public class ReturnGoodsProcessController extends BaseController {
 	}
 	
 	/**
+	 * 修改回货进度的状态
+	 */
+	@RequestMapping("updateStatus")
+	public String updateStatus(Model model,String delay, String pageNow,HttpServletRequest request){
+		String ids=request.getParameter("oids");
+		String returnStatus=request.getParameter("rStatus");
+		returnGoodsProcessService.updateStatus(ids, returnStatus);
+		return list(model, pageNow, pageNow, request);
+	}
+	
+	/**
 	 * @param model
 	 * 存放返回界面的model
 	 * @return
