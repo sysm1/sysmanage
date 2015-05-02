@@ -156,7 +156,7 @@ public class OrderSummaryController extends BaseController {
 				clothAllowance=new ClothAllowance();
 				clothAllowance.setClothId(info.getClothId());
 				clothAllowance.setFactoryId(info.getFactoryId());
-				clothAllowance.setChangeSum(0D);
+				clothAllowance.setChangeSum(0);
 				clothAllowance.setChangeSumkg(0D);
 				clothAllowance.setInputDate(new Date());
 				int unit=info.getUnit();

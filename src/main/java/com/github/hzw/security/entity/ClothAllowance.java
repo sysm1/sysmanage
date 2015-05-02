@@ -25,7 +25,7 @@ public class ClothAllowance {
     private Integer allowance;
     private int unit; // 布种单位   0条 1 kg 2cm 3码
     private Double oldSum;
-    private Double changeSum;
+    private Integer changeSum;
     private Double allowancekg;
     private int unitkg; // 布种单位   0条 1 kg 2cm 3码
     private Double oldSumkg;
@@ -106,12 +106,12 @@ public class ClothAllowance {
 
     
     @ExcelDataMapper(title="新增量",order=6)
-    public Double getChangeSum() {
+    public Integer getChangeSum() {
         return changeSum;
     }
 
     
-    public void setChangeSum(Double changeSum) {
+    public void setChangeSum(Integer changeSum) {
         this.changeSum = changeSum;
     }
 
