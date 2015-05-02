@@ -103,24 +103,32 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 	// clothId  0条 1 kg 2cm 3码 4包
 	$(function() {
 		$('#clothId').change(function(){
+			//alert($("#unit").val());
 			var unit = ($(this).find("option:selected").attr("runit"));
 			if(unit == '' || unit == null || unit == undefined) return;
 			if(unit == '0') {
 				$("#clothUnit").html("条");
 				$("#clothUnit2").html("条");
+				$("#unit").attr("value",0);
 			} else if(unit == '1') {
 				$("#clothUnit").html("公斤");
 				$("#clothUnit2").html("公斤");
+				$("#unit").attr("value",1);
 			} else if(unit == '2') {
 				$("#clothUnit").html("米");
 				$("#clothUnit2").html("米");
+				$("#unit").attr("value",2);
 			} else if(unit == '3') {
 				$("#clothUnit").html("码");
 				$("#clothUnit2").html("码");
+				$("#unit").attr("value",3);
 			} else if(unit == '4') {
+				$("#unit").attr("value",4);
 				$("#clothUnit").html("包");
 				$("#clothUnit2").html("包");
+				
 			}
+			//alert($("#unit").val());
 		});
 	});
 </script>
@@ -129,6 +137,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/allowance/add.html" method="post">
+		<input type="hidden" id="unit" name="unit" value="">
 		<table style="width: 385px; height: 300px;">
 			<tbody>
 			
