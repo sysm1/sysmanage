@@ -19,4 +19,6 @@ public interface ClothAllowanceService extends BaseService<ClothAllowance> {
 	 */
 	public void addAllowance(ClothAllowance t) throws Exception;
 	
+	public void updateClothAllowance(ClothAllowance t);
+	
 }

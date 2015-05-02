@@ -259,9 +259,47 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		OrderSummary orderSummary=null;
 		for(String id:idsa){
 			orderSummary=orderSummaryService.getById(id);
+			if(orderSummary.getReturnStatus()!=2){
+				continue;
+			}
 			orderSummary.setReturnStatus(Integer.parseInt(status));
 			try {
 				orderSummaryService.update(orderSummary);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			//修改坯布余量
+			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId());
+			Integer unit=orderSummary.getUnit();
+			ClothInfo cloth=clothInfoService.getById(orderSummary.getClothId()+"");
+			if(0==unit){
+				List<ReturnGoodsProcess> processList=returnGoodsProcessMapper.queryBySummaryId(orderSummary.getId()+"");
+				int returnNum=0;
+				int returnNumKg=0;//计算KG量 净重
+				for(ReturnGoodsProcess process:processList){
+					returnNum+=process.getReturnNum();
+					returnNumKg+=process.getReturnNumKg()-(process.getZhiguan()+process.getKongcha()+process.getJiaodai()*process.getReturnNum());
+				}
+				int tiao=clothAllowance.getAllowance();
+				Double kgl=clothAllowance.getAllowancekg();
+				tiao=tiao-orderSummary.getNum().intValue();
+				tiao=tiao+returnNum;
+				kgl=kgl+returnNumKg;
+				kgl=kgl-orderSummary.getNum().intValue()*cloth.getTiaoKg();
+				clothAllowance.setAllowance(tiao);//单位为条的
+				clothAllowance.setAllowancekg(kgl);
+			}else{
+				double orderKg=orderSummary.getNum();//下单公斤数
+				double returnKg=0;//回货公斤数
+				List<ReturnGoodsProcess> processList=returnGoodsProcessMapper.queryBySummaryId(orderSummary.getId()+"");
+				for(ReturnGoodsProcess process:processList){
+					returnKg+=process.getReturnNumKg()-(process.getZhiguan()+process.getKongcha()+process.getJiaodai()*process.getReturnNum());
+				}
+				orderKg=clothAllowance.getAllowancekg()-orderKg+returnKg;
+				clothAllowance.setAllowancekg(orderKg);
+			}
+			try {
+				clothAllowanceService.updateClothAllowance(clothAllowance);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

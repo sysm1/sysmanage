@@ -143,6 +143,14 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		}
 	}
 	
+	public void updateClothAllowance(ClothAllowance t){
+		try {
+			this.clothAllowanceMapper.update(t);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	// 单位转换 把（米，码，公斤转为条）
 	/**
