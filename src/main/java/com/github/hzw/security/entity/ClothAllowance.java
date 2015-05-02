@@ -217,7 +217,10 @@ public class ClothAllowance {
 	}
 	/***现余量信息**/
 	public String getAllowanceInfo() {
-		String unitName="条";		
+		String unitName="条";
+		if(0!=unit){
+			unitName="包";
+		}
 		allowanceInfo=allowance+unitName;
 		if(null!=noReturn&&0<noReturn&&unit==0){
 			allowanceInfo=(allowance)+unitName+"(未回"+noReturn+unitName+")";

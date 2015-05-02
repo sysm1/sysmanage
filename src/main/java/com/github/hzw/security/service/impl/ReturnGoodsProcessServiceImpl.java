@@ -127,6 +127,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		int unit=orderSummary.getUnit();
 		try {
 			int returnNum=0;
+			/**回货净重量*/
 			Double returnNumKg=0D;
 			int size=returnDates.length;
 			ReturnGoodsProcess bean=null;
@@ -158,18 +159,16 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				if(null!=bean.getReturnNum()){
 					returnNum+=bean.getReturnNum();
 				}
-				
+				double xz=0;//虚重量
+				if(null!=bean.getZhiguan()){
+					xz+=bean.getZhiguan();
+				}if(null!=bean.getKongcha()){
+					xz+=bean.getKongcha();
+				}if(null!=bean.getJiaodai()){
+					xz+=bean.getJiaodai();
+				}
 				if(0==unit){
-					double xz=0;//虚重量
-					if(null!=bean.getZhiguan()){
-						xz+=bean.getZhiguan();
-					}if(null!=bean.getKongcha()){
-						xz+=bean.getKongcha();
-					}if(null!=bean.getJiaodai()){
-						xz+=bean.getJiaodai();
-					}
 					//公斤数
-					
 					if(null!=returnNumKgs[i]&&!"".equals(returnNumKgs[i])){
 						returnNumKg+=Double.parseDouble(returnNumKgs[i]);
 					}
@@ -178,7 +177,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 					}
 				}else{
 					if(null!=returnNumKgs[i]){
-						returnNumKg+=Double.parseDouble(returnNumKgs[i]);
+						returnNumKg+=Double.parseDouble(returnNumKgs[i])-xz*bean.getReturnNum();
 					}
 				}
 			}
