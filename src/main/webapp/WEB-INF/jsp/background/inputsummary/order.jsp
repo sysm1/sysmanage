@@ -5,7 +5,7 @@
 <head>
 <link href="css/selectUI/css/163css.css" type=text/css rel=stylesheet>
 <script type="text/javascript" src="css/selectUI/js/163css.js"></script>
-
+<script src="${ctx}/js/inputsummary.js" type="text/javascript"></script>
 <%@ include file="/common/header.jsp"%>
 <style type="text/css">
 	.l_right{
@@ -31,7 +31,7 @@
 	}
 	.frameborder{
 		height: 27px;
-		border:1px solid green;
+		border:1px solid ;
 	}
 </style>
 <script type="text/javascript">
@@ -146,150 +146,24 @@ $(function() {
 	});
 });
 
-	function saveWin() {
-		var factoryId=$("#factoryId").val();
-		if(factoryId==""){
-			alert("工厂不能为空");
-			$("#factoryId").focus();
-			return false;
-		}
-		var technologyId=$("#technologyId").val();
-		if(technologyId==""){
-			alert("工艺不能为空");
-			$("#technologyId").focus();
-			return false;
-		}
-		var factoryCode=$("#factoryCode").val();
-		if(factoryCode==""){
-			alert("工厂编号不能为空");
-			$("#factoryCode").focus();
-			return false;
-		}
-		var factoryColor=$("#factoryColor").val();
-		if(factoryColor==""){
-			alert("工厂颜色不能为空");
-			$("#factoryColor").focus();
-			return false;
-		}
-		
-		$("#form").ajaxSubmit({//验证新增是否成功
-			type : "post",
-			dataType:"json",
-			success : function(data) {
-				if (data.flag == "true") {
-					$.ligerDialog.success('提交成功!', '提示', function() {
-						//这个是调用同一个页面趾两个iframe里的js方法
-						//account是iframe的id
-						window.location.href=rootPath + "/background/inputsummary/list.html";
-						//parent.input.loadGird();
-						//closeWin();
-					});
-					//parent.window.document.getElementById("username").focus();
-				} else {
-					$.ligerDialog.warn("提交失败！！");
-				}
-			}
-		});
-	}
-	function changeNum(obj){
-		var beforNum=$("#num1").val();
-		var nowNum=obj.value;
-		if(nowNum==''){
-			$("#num").attr("value",beforNum);
-		}
-		var chae=parseInt(nowNum)-parseInt(beforNum);
-		if(chae>0){
-			$("#balancetext").show();
-			$("#balance").attr("value",chae);
-			$("#ywy").show();
-			$("#ywy2").show();
-			$("#balancemarkTr").show();
-		}else if(chae<0){
-			alert("修改后的数量不能小于当前数量！");
-			$("#num").attr("value",beforNum);
-			$("#balancetext").hide();
-			$("#ywy").hide();
-			$("#ywy2").hide();
-			$("#balancemarkTr").hide();
-		}
-	}
+function changeFactory(obj){
+	//alert(obj.value);
+	$.ajax({
+	    type: "post", //使用get方法访问后台
+	    dataType: "json", //json格式的数据
+	    async: false, //同步   不写的情况下 默认为true
+	    url: rootPath + '/background/allowance/queryByClothAndFactory.html?factoryId='+obj.value+'&clothId=${inputsummary.clothId }', //要访问的后台地址
+	    data: {}, //要发送的数据
+	    success: function(data){
+	    	$('#clothAllowance')[0].innerHTML=data;
+		},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+			alert(XMLHttpRequest.status);
+			alert(XMLHttpRequest.readyState);
+			alert(data);  
+	     }
+	});
+}
 	
-	/***添加到花号基本资料*/
-	function addtoflower(code){
-		var factoryId=$('#factoryId').val();
-		var clothId=$('#clothId').val();
-		var myCompanyCode=$('#myCompanyCode').val();
-		var myCompanyColor=$('#myCompanyColor').val();
-		var technologyId=$('#technologyId').val();
-		var factoryCode=$('#factoryCode').val();
-		dialog = parent.$.ligerDialog.open({
-			width : 750,
-			height : 500,
-			url : rootPath + '/background/inputsummary/addtoFlowerUI.html?factoryId='+factoryId+
-					"&myCompanyCode="+myCompanyCode+"&clothId="+clothId+"&myCompanyColor="+myCompanyColor+
-					'&technologyId='+technologyId+"&factoryCode="+factoryCode,
-			title : "花号修改",
-			isHidden : false
-		});
-	}
-	
-	function changeFactory(obj){
-		//alert(obj.value);
-		$.ajax({
-		    type: "post", //使用get方法访问后台
-		    dataType: "json", //json格式的数据
-		    async: false, //同步   不写的情况下 默认为true
-		    url: rootPath + '/background/allowance/queryByClothAndFactory.html?factoryId='+obj.value+'&clothId=${inputsummary.clothId }', //要访问的后台地址
-		    data: {}, //要发送的数据
-		    success: function(data){
-		    	$('#clothAllowance')[0].innerHTML=data;
-			},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
-				alert(XMLHttpRequest.status);
-				alert(XMLHttpRequest.readyState);
-				alert(data);  
-		     }
-		});
-	}
-	
-	function overrideText(data){
-		var technology=data[4].innerHTML;
-		var factory=data[7].innerHTML;//工厂名称
-		var factoryCode=data[8].innerHTML;//工厂编号
-		var factoryColor=data[9].innerHTML;//工厂颜色
-		var fac=document.getElementById("factoryId");
-		var tec=document.getElementById("technologyId");//工艺
-		var facCode=document.getElementById("factoryCode");//工厂编号 
-		var facColor=document.getElementById("factoryColor");
-		for(var i=0;i<fac.options.length;i++){
-			if(fac.options[i].text.trim()==factory.trim()){
-				fac.options[i].selected='selected';
-			}
-		}
-		//设定工艺
-		for(var i=0;i<tec.options.length;i++){
-			if(tec.options[i].text.trim()==technology.trim()){
-				tec.options[i].selected='selected';
-			}
-		}
-		//设定工厂编号
-		for(var i=0;i<facCode.options.length;i++){
-			if(facCode.options[i].text.trim()==factoryCode.trim()){
-				facCode.options[i].selected='selected';
-			}
-		}
-		//设定工厂颜色
-		for(var i=0;i<facColor.options.length;i++){
-			if(facColor.options[i].text.trim()==factoryColor.trim()){
-				facColor.options[i].selected='selected';
-			}
-		}
-	}
-	
-	function changeColor(){
-		document.getElementById("myCompanyCodediv").style.color="";
-		document.getElementById("myCompanyColor").style.color="";
-		location.reload();
-	}
 </script>
 </head>
 <body>
@@ -317,14 +191,14 @@ $(function() {
 							${orderNo }
 						</div>
 					</td>
-					<td class="l_right">下单日期:</td>
+					<td class="l_right">下单日期：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							${nowDate }
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right" style="height: 30px;">工厂:</td>
+					<td class="l_right" style="height: 30px;">工厂：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id="factoryId" name="factoryId" onchange="changeFactory(this);" class="frameborder">
@@ -335,14 +209,14 @@ $(function() {
 							</select>
 						</div>
 					</td>
-					<td class="l_right">布种:</td>
+					<td class="l_right">布种：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							${inputsummary.clothName }
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right" style="height: 30px;">我司编号:</td>
+					<td class="l_right" style="height: 30px;">我司编号：</td>
 					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if> >
 						<div class="lanyuan_input" id="myCompanyCodediv"
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyCode }');" style="color: ${codeRed};cursor:pointer;" </c:if> 
@@ -350,7 +224,7 @@ $(function() {
 							${inputsummary.myCompanyCode }
 						</div>
 					</td>
-					<td class="l_right">工艺:</td>
+					<td class="l_right">工艺：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id='technologyId' name="technologyId" class="frameborder">
@@ -362,7 +236,7 @@ $(function() {
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right" style="height: 30px;">工厂编号:</td>
+					<td class="l_right" style="height: 30px;">工厂编号：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id="factoryCode" name="factoryCode" class="frameborder">
@@ -373,7 +247,7 @@ $(function() {
 							</select>
 						</div>
 					</td>
-					<td class="l_right">我司颜色:</td>
+					<td class="l_right">我司颜色：</td>
 					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if>>
 						<div class="lanyuan_input" id="myCompanyColor"
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyColor }');" style="color: ${codeRed};cursor:pointer;" </c:if>
@@ -382,13 +256,13 @@ $(function() {
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right" style="height: 30px;">工厂坯布数量:</td>
+					<td class="l_right" style="height: 30px;">工厂坯布数量：</td>
 					<td >
 						<div class="lanyuan_input" id="clothAllowance"></div>
 					</td><td style="width: 100px;">
 						<span style="color: red;"><b>未回</b>：${noRetrun }</span>
 					</td>
-					<td class="l_right">工厂颜色:</td>
+					<td class="l_right">工厂颜色：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<select id="factoryColor" name="factoryColor" class="frameborder">
@@ -400,13 +274,13 @@ $(function() {
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right" style="height: 30px;">数量:</td>
+					<td class="l_right" style="height: 30px;">数量：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							<input id='num' name="num" class="checkdesc" type="text" value="${num }" 
-								style="width: 95px;height: 99%;border:1px solid green;" onchange="changeNum(this)">
+								style="width: 95px;height: 99%;border:1px solid ;" onchange="changeNum(this)">
 							<span id="balancetext" style="display: none">差额
-							<input type="text" id="balance" name="balance" value="" style="width: 45px;height: 99%;border:1px solid green;"></span>${unitName }
+							<input type="text" id="balance" name="balance" value="" style="width: 45px;height: 99%;border:1px solid ;"></span>${unitName }
 						</div>
 					</td>
 					<td class="l_right"><span id="ywy" style="display: none">差额业务员：</span></td>
@@ -422,23 +296,23 @@ $(function() {
 				</tr><tr style="display: none" id="balancemarkTr">
 					<td>差额业务员备注</td>
 					<td colspan="5">
-						<input id='balancemark' name="balancemark" type="text" value="" style="width: 553px;height: 17px;border:1px solid green;">
+						<input id='balancemark' name="balancemark" type="text" value="" style="width: 553px;height: 17px;border:1px solid ;">
 					</td>
 				</tr><tr style="height: 30px;text-align: center;">
 					<td colspan="6">规格</td>
 				</tr><tr>
-					<td class="l_right" style="height: 30px;">幅宽:</td>
+					<td class="l_right" style="height: 30px;">幅宽：</td>
 					<td colspan="2" style="height: 30px;">
 						<input id='kuanfu' name="kuanfu" class="checkdesc" type="text" value="" 
-							style="width: 80px;height: 17px;border:1px solid green;">&nbsp;CM&nbsp;
+							style="width: 80px;height: 17px;border:1px solid ;">&nbsp;CM&nbsp;
 						<select id="kuanfufs" name="kuanfufs" class="shortselect" style="width: 65px;">
 							<option value="0">包边</option>
 							<option value="1">实用</option>
 						</select>
-					</td><td  class="l_right">克重:</td>
+					</td><td  class="l_right">克重：</td>
 					<td colspan="2" style="height: 30px;">
 						<input id='kezhong' name="kezhong" class="checkdesc" type="text" value="" 
-							style="width: 70px;height: 17px;border:1px solid green;">
+							style="width: 70px;height: 17px;border:1px solid ;">
 						<select id="kezhongUnit" name="kezhongUnit" style="width: 67px;">
 							<option value="0">G/M2</option>
 							<option value="3">M/KG</option>
@@ -451,25 +325,22 @@ $(function() {
 						</select>
 					</td>
 				</tr><tr>
-					<td  colspan="6" style="height: 30px;text-align: center;">
-							包装方式
-					</td>
+					<td  colspan="6" style="height: 30px;text-align: center;">包装方式</td>
 				</tr><tr>
 					<td style="width: 100px;text-align: right;height: 30px;">纸管：</td>
-					<td style="width: 110px;"><input type="text" id="zhiguan" name="zhiguan" value="" style="width: 110px;height: 17px;border:1px solid green;"></td>
+					<td style="width: 110px;"><input type="text" id="zhiguan" name="zhiguan" value="" style="width: 110px;height: 17px;border:1px solid ;"></td>
 					<td style="width: 100px;text-align: right;">空差：</td>
-					<td ><input type="text" id="kongcha" name="kongcha" value="" style="width: 110px;height: 17px;border:1px solid green;"></td>
+					<td ><input type="text" id="kongcha" name="kongcha" value="" style="width: 110px;height: 17px;border:1px solid ;"></td>
 					<td style="width: 100px;text-align: right;">胶袋：</td>
-					<td ><input type="text" id="jiaodai" name="jiaodai" value="" style="width: 110px;height: 17px;border:1px solid green;"> </td>
+					<td ><input type="text" id="jiaodai" name="jiaodai" value="" style="width: 110px;height: 17px;border:1px solid ;"> </td>
 				</tr>
-				
 				<c:forEach	var="order" items="${orderInputList }">
 				<tr style="height: 30px;text-align: center;">
-					<td class="l_right" >业务员:</td>
+					<td class="l_right" >业务员：</td>
 					<td class="l_left" colspan="2">
 						${order.saleManName }
 					</td>
-					<td class="l_right">业务员备注:</td>
+					<td class="l_right">业务员备注：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							${order.mark }
@@ -477,25 +348,19 @@ $(function() {
 					</td>
 				</tr>
 				</c:forEach>
-				<tr>
-					<td class="l_right">备注:</td>
+				<tr style="height: 30px;">
+					<td class="l_right">备注：</td>
 					<td class="l_left" colspan="5">
 						<div class="lanyuan_input">
-							<input id='mark' name="mark" class="checkdesc" type="text" value="" style="width: 553px;height: 17px;border:1px solid green;">
+							<input id='mark' name="mark" class="checkdesc" type="text" value="" style="width: 553px;height: 17px;border:1px solid ;">
 						</div>
 					</td>
-				</tr>
-				
-				<tr>
+				</tr><tr>
 					<td colspan="6">
 						<div class="l_btn_centent">
-							<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-									onclick="javascript:history.go(-1);"><span>取消</span> </a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="search">
-								<span>查询</span>
-							</a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="javascript:history.go(-1);"><span>取消</span> </a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="search"> <span>查询</span></a>
 						</div>
 					</td>
 				</tr>

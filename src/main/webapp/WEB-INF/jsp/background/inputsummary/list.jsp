@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<script src="${ctx}/js/inputsummary.js" type="text/javascript"></script>
 <link href="${ctx}/css/list-main.css" rel="stylesheet">
 <style type="text/css">
 * { margin:0; padding:0;}
@@ -47,14 +48,10 @@ ul { list-style:none;}
 		});
 		$("#editView").click("click", function() {//绑定编辑按扭
 			var cbox=getSelectedCheckbox();
-			if (cbox.length > 1||cbox=="") {
-				parent.$.ligerDialog.alert("只能选中一个");
-				return;
-			}
 			dialog = parent.$.ligerDialog.open({
-				width : 950,
+				width : 1150,
 				height : 550,
-				url : rootPath + '/background/input/editUI.html?addId='+cbox[0].split("_")[0],
+				url : rootPath + '/background/inputsummary/editUI.html?addId='+cbox,
 				title : "修改下单预录入",
 				isHidden : false
 			});
@@ -176,102 +173,6 @@ ul { list-style:none;}
 		$("#td"+index)[0].innerHTML='<span onclick="hiddenDetail('+pos+','+inputId+','+index+')">-</span>';
 	}
 	
-	function hiddenDetail(id,inputId,index){
-		var tds=document.getElementsByName("chtd"+id);
-		for(var i=0;i<tds.length;i++){
-			//alert(tds[i].parentNode.parentNode.nodeName);
-			tds[i].parentNode.parentNode.style.display="none";
-		}
-		$("#td"+index)[0].innerHTML='<span onclick="showDetail('+index+','+inputId+')">+</span>';
-		$('#'+inputId)[0].checked=false;
-	}
-	
-	function addTr(tab, row, trHtml){
-	     //获取table最后一行 $("#tab tr:last")
-	     //获取table第一行 $("#tab tr").eq(0)
-	     //获取table倒数第二行 $("#tab tr").eq(-2)
-	     var $tr=$("#"+tab+" tr").eq(row);
-	     if($tr.size()==0){
-	        alert("指定的table id或行数不存在！");
-	        return;
-	     }
-	     $tr.after(trHtml);
-	  }
-	
-	function page(pageNO){
-		$('#pageNow').attr('value',pageNO);
-		var f = $('#fenye');
-		//f.attr('target','_blank');
-		f.attr('action','${pageContext.request.contextPath}/background/inputsummary/list.html');
-		f.submit();
-	}
-	
-	/****反向选择checkbox*/
-	function checkAllChild(obj){
-		var summId=obj.value.split("_")[1];
-		var childcheckId=document.getElementsByName("childcheckId");
-		var childValue="";
-		var chsize=0;
-		var size=0;
-		for(var i=0;i<childcheckId.length;i++){
-			childValue=childcheckId[i].value;
-			if(childValue.split("_")[1]==summId){
-				size++;
-				if(childcheckId[i].checked ){
-					chsize++;
-				}
-			}
-		}
-		if(chsize==size){
-			document.getElementById(summId).checked=true;
-		}else{
-			document.getElementById(summId).checked=false;
-		}
-		showOrHiddenBtn();
-	}
-	
-	/**全选 当前父节点下的子节点**/
-	function checkAll(index,obj){
-		var summId=obj.value;
-		if(obj.checked){
-			if($("#td"+index)[0].innerHTML.split('+').length>1){
-				showDetail(index,summId);//加载子节点
-			}
-			
-		}
-		var childcheckId=document.getElementsByName("childcheckId");
-		var childValue="";
-		for(var i=0;i<childcheckId.length;i++){
-			childValue=childcheckId[i].value;
-			if(childValue.split("_")[1]==summId){
-				childcheckId[i].checked = obj.checked;
-			}
-		}
-		showOrHiddenBtn();
-	}
-	
-	function showOrHiddenBtn(){
-		var csize=0;
-		var checkId=document.getElementsByName("checkId");
-		for(var i=0;i<checkId.length;i++){
-			if(checkId[i].checked){
-				csize++;
-			}
-		}
-		if(csize>1){
-			document.getElementById("order").style.display="none";
-			document.getElementById("order2").style.display="";
-		}else{
-			document.getElementById("order").style.display="";
-			document.getElementById("order2").style.display="none";
-		}
-		if(childcheckId.length>1){
-			document.getElementById("order").style.display="none";
-			document.getElementById("order2").style.display="";
-		}
-		var childcheckId=document.getElementsByName("childcheckId");
-		
-	}
 </script>
 </head>
 <body onmousedown="whichElement(event);">

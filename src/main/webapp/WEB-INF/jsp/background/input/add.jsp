@@ -141,6 +141,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	　  		newtr.find("input").eq(1).attr("value",'');
 	　  		newtr.find("input").eq(2).attr("value",'');
 	　  		newtr.find("input").eq(3).attr("value",'');
+	　  		newtr.find("input").eq(4).attr("value",'');
 	　  		newtr.children('td').eq(2).html(select);
 	　  		$("input[name='checkId']").attr("checked",false);
 	    });
