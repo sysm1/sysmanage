@@ -62,7 +62,7 @@ public class DateVersionServiceImpl implements DateVersionService {
 	 * category : printsummary
 	 * dateK  yyyy-MM-dd
 	 */
-	public int getValue(String category, String dateK) throws Exception{
+	public int getValue(String category, String dateK) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("category", category);
@@ -70,13 +70,23 @@ public class DateVersionServiceImpl implements DateVersionService {
 		DateVersion dv = dateVersionMapper.getByCategoryAndDate(map);
 		if(dv != null) {
 			dv.setValueV(dv.getValueV() + 1);
-			this.dateVersionMapper.update(dv);
+			try {
+				this.dateVersionMapper.update(dv);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}else{
 			dv = new DateVersion();
 			dv.setCategory(category);
 			dv.setDateK(dateK);
 			dv.setValueV(1);
-			this.add(dv);
+			System.out.println("============111111111111111==========="+dv.toString());
+			try {
+				this.add(dv);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("===========4444444444444444============");
 		}
 		return dv.getValueV();
 	}
