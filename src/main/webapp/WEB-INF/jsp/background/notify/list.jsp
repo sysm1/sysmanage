@@ -44,7 +44,13 @@
 				}
 			});
 		});
-		
+		$('#checkAllId').click(function(){
+	         //判断apple是否被选中
+	         var bischecked=$('#checkAllId').is(':checked');
+	         //alert(bischecked);
+	         var fruit=$('input[name="checkId"]');
+	         bischecked?fruit.attr('checked',true):fruit.attr('checked',false);
+	    });
 		
 		$("#seach").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
@@ -91,37 +97,51 @@
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-				<input type="hidden" id="pageNow" name="pageNow" value="1">
-				下单日期:<input type="text" name="beginTime" value="${param.beginTime}" style="width:100px;" />至
-				<input type="text" name="endTime" value="${param.endTime}" style="width:100px;" />
-				工厂:
-				<select id="factoryId" name="factoryId" style="width:100px;">
-					<option value="">请选择工厂</option>
-					<c:forEach items="${ factorys }" var = "factory">
-						<option value="${factory.id }">${factory.name}</option>
-					</c:forEach>
-				</select>
-				工艺:
-				<select id="factoryId" name="factoryId" style="width:100px;">
-					<option value="">请选择工艺</option>
-					<c:forEach items="${ technologys }" var = "technology">
-						<option value="${technology.id }">${technology.name}</option>
-					</c:forEach>
-				</select><br/>
-				布种:
-				<select id="clothId" name="clothId" style="width:100px;">
-					<option value="">请选择布种</option>
-					<c:forEach items="${ cloths }" var = "cloth">
-						<option value="${cloth.id }">${cloth.clothName}</option>
-					</c:forEach>
-				</select>
-				工厂编号:
-					<input type="text" name="factoryCode" value="${param.factoryCode}" style="width:100px;" />
-				工厂颜色:
-					<input type="text" name="factoryColor" value="${param.factoryColor}" style="width:100px;" />
-				<a class="btn btn-primary"
-					href="javascript:void(0)" id="seach"> 查询
-				</a>
+			<table>
+				<tr>
+					<td style="text-align: right;">下单日期：</td>
+					<td>
+						<input type="text" name="returnDate" style="width:90px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
+								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">至
+						<input type="text" name="returnDate" style="width:92px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
+							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
+					</td><td style="text-align: right;">工&nbsp;厂：</td>
+					<td>
+						<select id="factoryId" name="factoryId" style="width:150px;">
+							<option value="">请选择工厂</option>
+							<c:forEach items="${ factorys }" var = "factory">
+								<option value="${factory.id }">${factory.name}</option>
+							</c:forEach>
+						</select>
+					</td><td style="text-align: right;">工&nbsp;艺：</td>
+					<td>
+						<select id="factoryId" name="factoryId" style="width:150px;">
+							<option value="">请选择工艺</option>
+							<c:forEach items="${ technologys }" var = "technology">
+								<option value="${technology.id }">${technology.name}</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr><tr>
+					<td style="text-align: right;">布&nbsp;种：</td>
+					<td>
+						<select id="clothId" name="clothId" style="width:150px;">
+							<option value="">请选择布种</option>
+							<c:forEach items="${ cloths }" var = "cloth">
+								<option value="${cloth.id }">${cloth.clothName}</option>
+							</c:forEach>
+						</select>
+					</td>
+					<td style="text-align: right;">工厂编号：</td>
+					<td><input type="text" name="factoryCode" value="${param.factoryCode}" style="width:140px;" /></td>
+					<td style="text-align: right;">工厂颜色：</td>
+					<td><input type="text" name="factoryColor" value="${param.factoryColor}" style="width:140px;" /></td>
+					<td>
+						&nbsp;<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查&nbsp;询</a>
+					</td>
+				</tr>
+			</table>
+				
 			</form>
 		</div>
 		<div class="topBtn">
@@ -136,21 +156,21 @@
 			<table id="rowspan" cellspacing="0" class="tablesorter">
 				<thead>
 					<tr>
-						<th><input type="checkbox" /></th>
-						<th>序号</th>
-						<th>单号</th>
-						<th>工厂</th>
-						<th>下单日期</th>
+						<th><input type="checkbox" id="checkAllId" onclick="checkAllId();"/></th>
+						<th style="font-size: 14px;">序号</th>
+						<th style="font-size: 14px;">单号</th>
+						<th style="font-size: 14px;">工厂</th>
+						<th style="font-size: 14px;">下单日期</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${ pageView.records }" var="summary">
 						<tr>
-							<td><input type="checkbox" name="checkId" value="${summary.notifyId}" /></td>
-							<td><span class="detail" rid="${summary.notifyId}">${summary.notifyId}</span></td>
-							<td>${summary.no}</td>
-							<td>${summary.factoryName}</td>
-							<td>${summary.notifyTimeStr }</td>
+							<td style="font-size: 12px;"><input type="checkbox" name="checkId" value="${summary.notifyId}" /></td>
+							<td style="font-size: 12px;"><span class="detail" rid="${summary.notifyId}">${summary.notifyId}</span></td>
+							<td style="font-size: 12px;">${summary.no}</td>
+							<td style="font-size: 12px;">${summary.factoryName}</td>
+							<td style="font-size: 12px;">${summary.notifyTimeStr }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
