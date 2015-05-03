@@ -23,11 +23,11 @@ public class ClothAllowance {
     // 工厂名称
     private String factoryName; // 冗余
     private Integer allowance;
-    private int unit; // 布种单位   0条 1 kg 2cm 3码
+    private int unit; // 布种单位   0条 1 kg 2cm 3码 4包
     private Double oldSum;
     private Integer changeSum;
     private Double allowancekg;
-    private int unitkg; // 布种单位   0条 1 kg 2cm 3码
+    private int unitkg; // 布种单位   
     private Double oldSumkg;
     private Double changeSumkg;
     /***未回数量**/

@@ -11,11 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
+import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
@@ -43,6 +45,9 @@ public class ReportServiceImpl implements ReportService {
 	@Resource
 	private FlowerAdditionalService flowerAdditionalService;
 	
+	@Resource
+	private ClothAllowanceService clothAllowanceService;
+	
 	public void importFlower(List<List<String>> list) throws Exception{
 		
 		FlowerInfo info = null;
@@ -62,7 +67,7 @@ public class ReportServiceImpl implements ReportService {
 					.trim());
 			if (factoryInfo == null) {
 				factoryInfo = new FactoryInfo();
-				factoryInfo.setMark(factoryName);
+				factoryInfo.setMark("excel导入");
 				factoryInfo.setName(factoryName);
 				factoryInfo.setPinyin(PinyinUtil.getPinYinHeadChar(factoryName)
 						.toUpperCase());
@@ -89,7 +94,7 @@ public class ReportServiceImpl implements ReportService {
 				clothInfo.setClothName(clothName.trim());
 				clothInfo.setCreateTime(new Date());
 				clothInfo.setLossRate(1);
-				clothInfo.setMark(clothName);
+				clothInfo.setMark("excel导入");
 				clothInfo.setOrderName(clothName);
 				clothInfo.setPinyin(PinyinUtil.getPinYinHeadChar(clothName)
 						.toUpperCase());
@@ -193,4 +198,98 @@ public class ReportServiceImpl implements ReportService {
 
 	}
 	
+	
+	public void importAllowance(List<List<String>> list) throws Exception{
+		ClothAllowance allowance = null;
+		for(List<String> li : list) {
+			allowance = new ClothAllowance();
+			
+			// 0
+			String clothName = (String) li.get(0);
+			if (StringUtils.isEmpty(clothName)) {
+				continue;
+			}
+
+			//3
+			String unit = (String) li.get(3);
+			Integer i = 0; // 单位条
+			if(StringUtils.isNotEmpty(unit)) {
+				if("条".equals(unit.trim())){
+					i = 0;
+				}else if("包".equals(unit.trim())){
+					i = 4;
+				}else if("公斤".equals(unit.trim())){
+					i = 1;
+				}else if("米".equals(unit.trim())){
+					i = 2;
+				}else if("码".equals(unit.trim())) {
+					i = 3;
+				}
+			}
+			
+			ClothInfo clothInfo = clothInfoService.isExist(clothName.trim());
+			if (clothInfo == null) {
+				clothInfo = new ClothInfo();
+				clothInfo.setClothName(clothName.trim());
+				clothInfo.setCreateTime(new Date());
+				clothInfo.setLossRate(1);
+				clothInfo.setMark("excel导入");
+				clothInfo.setOrderName(clothName);
+				clothInfo.setPinyin(PinyinUtil.getPinYinHeadChar(clothName)
+						.toUpperCase());
+				clothInfo.setTiaoKg(1.0);
+				clothInfo.setUnit(i);
+				// clothInfo.setUnitName(unitName);
+				clothInfoService.add(clothInfo);
+			}
+			allowance.setClothId(clothInfo.getId());
+			
+			// 1
+			String factoryName = (String) li.get(1);
+			if (StringUtils.isEmpty(factoryName)) {
+				continue;
+			}
+			
+			FactoryInfo factoryInfo = factoryInfoService.isExist(factoryName
+					.trim());
+			if (factoryInfo == null) {
+				factoryInfo = new FactoryInfo();
+				factoryInfo.setMark("excel导入");
+				factoryInfo.setName(factoryName);
+				factoryInfo.setPinyin(PinyinUtil.getPinYinHeadChar(factoryName)
+						.toUpperCase());
+				factoryInfoService.add(factoryInfo);
+			}
+			allowance.setFactoryId(factoryInfo.getId());
+			
+			//2 
+			try{
+				String allowanceStr = (String) li.get(2);
+				Integer allNum = Integer.valueOf(allowanceStr);
+				// allowance.setAllowance(allNum);
+				allowance.setChangeSum(allNum);
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				continue;
+			}
+			
+			// 4
+			try{
+				String allowancekg = (String) li.get(4);
+				Double akg = Double.valueOf(allowancekg);
+				// allowance.setAllowancekg(akg);
+				allowance.setChangeSumkg(akg);
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				continue;
+			}
+			
+			allowance.setCreateTime(new Date());
+			allowance.setInputDate(new Date());
+			clothAllowanceService.add(allowance);
+			logger.info("allowance:{}", allowance.toString());
+			
+		}
+		
+	}
 }

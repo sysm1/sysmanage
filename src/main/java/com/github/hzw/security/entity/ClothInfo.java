@@ -107,7 +107,7 @@ public class ClothInfo {
 		}else if(3==unit){
 			unitName="码";
 		}else if(4==unit){
-			unitName="KG";
+			unitName="包";
 		}
 		return unitName;
 	}

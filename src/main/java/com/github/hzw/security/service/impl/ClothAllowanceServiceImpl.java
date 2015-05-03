@@ -104,7 +104,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 			t.setId(tm.getId());
 			t.setOldSum(null==tm.getAllowance()?0:tm.getAllowance().doubleValue());
 			//t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()) + tm.getAllowance());
-			t.setAllowance(null==t.getChangeSum()?0:t.getChangeSum().intValue() + tm.getAllowance());
+			t.setAllowance((null==t.getChangeSum()?0:t.getChangeSum().intValue()) + tm.getAllowance());
 			t.setUnit(cloth.getUnit());
 			
 			// 公斤

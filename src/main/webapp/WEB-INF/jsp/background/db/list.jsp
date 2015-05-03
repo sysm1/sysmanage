@@ -122,6 +122,68 @@ $(function() {
         return false;
     }
 	
+	
+	
+	$("#orderSummaryFile").click("click", function(){
+		alert("orderSummaryFile");
+		ajaxOrderSummaryFileUpload();
+	});
+	
+	function ajaxOrderSummaryFileUpload() {
+        $.ajaxFileUpload(
+            {
+                url: '/background/report/orderSummaryFileImport.html', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'orderSummaryFile', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数 
+                {
+                    if( data.code == '0') { // 失败
+                    	alert(data.msg);
+                    } else {
+                    	alert(data.msg);  // 成功
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert(e);
+                }
+            }
+        )
+        return false;
+    }
+	
+	
+	$("#uploadAllowanceFile").click("click", function(){
+		alert("uploadAllowanceFile");
+		ajaxAllowanceFileUpload();
+	});
+	
+	function ajaxAllowanceFileUpload() {
+        $.ajaxFileUpload(
+            {
+                url: '/background/report/allowanceFileImport.html', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'allowanceFile', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数 
+                {
+                    if( data.code == '0') { // 失败
+                    	alert(data.msg);
+                    } else {
+                    	alert(data.msg);  // 成功
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert(e);
+                }
+            }
+        )
+        return false;
+    }
+	
+	
 });
 </script>
 </head>
@@ -169,8 +231,24 @@ $(function() {
 							花号基础资料导入：<input type="file" id="flowerFile" name="flowerFile" />
 							<input class="btn btn-large btn-success" id="uploadFlowerFile" type="button" value="上传" />
 						
-						<a class="btn btn-large btn-success" href="/template/flower_template.xlsx">模板下载</a>
+							<a class="btn btn-large btn-success" href="/template/flower_template.xlsx">模板下载</a>
 						</form>
+						
+						
+						<form name="fenye1" id="fenye1">
+							下单录入汇总导入：<input type="file" id="orderSummaryFile" name="orderSummaryFile" />
+							<input class="btn btn-large btn-success" id="orderSummaryFile" type="button" value="上传" />
+						
+							<a class="btn btn-large btn-success" href="/template/orderSummary_template.xlsx">模板下载</a>
+						</form>
+						
+						<form name="fenye2" id="fenye2">
+							坯布余量导入：<input type="file" id="allowanceFile" name="allowanceFile" />
+							<input class="btn btn-large btn-success" id="uploadAllowanceFile" type="button" value="上传" />
+						
+							<a class="btn btn-large btn-success" href="/template/allowance_template.xlsx">模板下载</a>
+						</form>
+						
 						</div>
 					</td>
 					</tr>

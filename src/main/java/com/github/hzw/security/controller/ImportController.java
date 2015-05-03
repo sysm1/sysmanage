@@ -242,4 +242,56 @@ public class ImportController extends BaseController {
 		return map;
 	}
 
+	
+	@RequestMapping(value = "orderSummaryImport", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> orderSummaryFileUpload(
+			@RequestParam("orderSummaryFile") CommonsMultipartFile orderSummaryFile,
+			HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		String filename = orderSummaryFile.getOriginalFilename();
+		try {
+			
+			List<List<String>> list = POIUtils.getExcelData(orderSummaryFile,filename, 0);
+			// reportService.importFlower(list);
+			
+			System.out.println(list);
+			map.put("code", "1");
+			map.put("msg", "sucess");
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "0");
+			map.put("msg", "error:" + e.getMessage());
+		}
+		System.out.println(map);
+		return map;
+	}
+	
+	@RequestMapping(value = "allowanceFileImport", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> allowanceFileImport(
+			@RequestParam("allowanceFile") CommonsMultipartFile allowanceFile,
+			HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		String filename = allowanceFile.getOriginalFilename();
+		try {
+			
+			List<List<String>> list = POIUtils.getExcelData(allowanceFile,filename, 0);
+			reportService.importAllowance(list);
+			
+			System.out.println(list);
+			map.put("code", "1");
+			map.put("msg", "sucess");
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "0");
+			map.put("msg", "error:" + e.getMessage());
+		}
+		System.out.println(map);
+		return map;
+	}
+	
+	
 }
