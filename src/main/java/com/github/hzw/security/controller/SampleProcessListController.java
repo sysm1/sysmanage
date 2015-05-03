@@ -53,7 +53,10 @@ public class SampleProcessListController extends BaseController{
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, HttpServletRequest request,String pagesize,SampleInput sampleInput){
-		String pageNow=request.getParameter("pageNow");	
+		String pageNow=request.getParameter("pageNow");
+		if(null!=sampleInput.getStatus()&&99==sampleInput.getStatus()){
+			sampleInput.setStatus(null);
+		}
 		
 		//过滤查询  查询条件
 		ClothInfo cloth=new ClothInfo();

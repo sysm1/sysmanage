@@ -1,6 +1,7 @@
 package com.github.hzw.security.VO;
 
 import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -17,6 +18,9 @@ public class OrderInputVO {
     private String clothName;
     
     private String myCompanyCode;
+    
+    /***我司编号列表**/
+    private List<String> myCompanyCodes;
 
     /***我司颜色**/
     private String myCompanyColor;
@@ -30,6 +34,9 @@ public class OrderInputVO {
     
     /***单位**/
     private String unit;
+    
+    /***单位**/
+    private String unitName;
     
     /**备注**/
     private String mark;
@@ -106,6 +113,23 @@ public class OrderInputVO {
 		this.mark = mark;
 	}
 
+	public String getUnitName() {
+		if("0".equals(unit)){
+			unitName="条";
+		}if("1".equals(unit)){
+			unitName="KG";
+		}if("2".equals(unit)){
+			unitName="米";
+		}else if("3".equals(unit)||"4".equals(unit)){
+			unitName="KG";
+		}
+		return unitName;
+	}
+
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
+
 	/***单位 0条 1KG 2米 3码**/
 	public String getUnit() {
 		if("0".equals(unit)){
@@ -148,4 +172,12 @@ public class OrderInputVO {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public List<String> getMyCompanyCodes() {
+		return myCompanyCodes;
+	}
+
+	public void setMyCompanyCodes(List<String> myCompanyCodes) {
+		this.myCompanyCodes = myCompanyCodes;
+	}
 }
