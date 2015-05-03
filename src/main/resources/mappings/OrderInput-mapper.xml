@@ -66,7 +66,8 @@
   			oi.cloth_id clothId, 
   			oi.my_company_code myCompanyCode, salesman_id salesmanId,
   			(select name from salesman_info where id=oi.salesman_id) saleManName,
-  			oi.num,
+  			my_company_color myCompanyColor,
+  			oi.num,unit,
   			oi.mark
 		from order_input oi
 		where oi.id in

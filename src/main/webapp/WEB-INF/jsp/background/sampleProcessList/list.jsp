@@ -355,7 +355,7 @@ ul { list-style:none;}
 			<td style="width:70px;text-align: right;">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</td>
 			<td>
 			    <select id="status" name="status">
-			   	<option value="">请选择</option>
+			   	<option value="99">请选择</option>
 			   	<option value="0" <c:if test="${0 eq bean.status }">selected="selected"</c:if> >未回</option>
 			   	<option value="1" <c:if test="${1 eq bean.status }">selected="selected"</c:if> >新版</option>
 			   	<option value="2" <c:if test="${2 eq bean.status }">selected="selected"</c:if> >新厂</option>

@@ -1,5 +1,6 @@
 package com.github.hzw.security.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,7 @@ import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.DateVersionService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
+import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.security.service.OrderSummaryService;
@@ -52,6 +54,9 @@ public class OrderInputSummaryController extends BaseController {
 	
 	@Inject
 	private FlowerAdditionalService flowerAdditionalService;
+	
+	@Inject
+	private FlowerInfoService flowerInfoService;
 	
 	@Inject
 	private SalesmanInfoService salesmanInfoService;
@@ -100,6 +105,35 @@ public class OrderInputSummaryController extends BaseController {
 		//pageView = orderInputSummaryService.queryVO(getPageView(pageNow,"100"), info);
 		pageView= orderInputSummaryService.queryOrderInputBySummaryId(getPageView(pageNow,"100"), info);
 		return pageView.getRecords();
+	}
+	
+	/**
+	 * 跑到修改界面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("editUI")
+	public String editUI(Model model,String addId,HttpServletRequest request) {
+		String[] addIdsa=addId.split(",");
+		String[] newArr=new String[addIdsa.length];
+		int i=0;
+		for(String ids:addIdsa){
+			String[] idsa=ids.split("_");
+			newArr[i++]=idsa[0];
+		}
+		List<OrderInputVO> list=orderInputService.queryByIds(newArr);
+		List<String> mycompanyCodes=null;
+		for(OrderInputVO vo:list){
+			mycompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(vo.getClothId());
+			vo.setMyCompanyCodes(mycompanyCodes);
+		}
+		List<ClothInfo> cloths = clothInfoService.queryAll(null);
+		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		model.addAttribute("cloths", cloths);
+		model.addAttribute("salesmanInfos", salesmanInfos);
+		model.addAttribute("list", list);
+		return Common.BACKGROUND_PATH+"/inputsummary/edit";
 	}
 	
 	/**

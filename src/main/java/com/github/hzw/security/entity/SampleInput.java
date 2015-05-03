@@ -258,27 +258,29 @@ public class SampleInput {
     }
 
     public void setStatus(Integer status) {
-        this.status = status;
-        //  0 未回  1 新版 2 新厂 3 新色 4已回
-        switch (status) {
-		case 0:
-			this.setStatusStr("未回");
-			break;
-		case 1:
-			this.setStatusStr("新版");
-			break;
-		case 2:
-			this.setStatusStr("新厂");
-			break;
-		case 3:
-			this.setStatusStr("新色");
-			break;
-		case 4:
-			this.setStatusStr("已回");
-			break;
-		default:
-			break;
-		}
+    	this.status = status;
+    	if(null!=status){
+            //  0 未回  1 新版 2 新厂 3 新色 4已回
+            switch (status) {
+    		case 0:
+    			this.setStatusStr("未回");
+    			break;
+    		case 1:
+    			this.setStatusStr("新版");
+    			break;
+    		case 2:
+    			this.setStatusStr("新厂");
+    			break;
+    		case 3:
+    			this.setStatusStr("新色");
+    			break;
+    		case 4:
+    			this.setStatusStr("已回");
+    			break;
+    		default:
+    			break;
+    		}
+    	}
     }
 
     public Date getReplyDate() {

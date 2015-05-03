@@ -11,7 +11,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
 }, "编号由6至16位字符组合构成");
 
-
 	$(function() {
 		$("form").validate({
 			submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
@@ -61,7 +60,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			}
 		});
 		
-		
 		$("#myCompanyCode_text").ligerComboBox({
             url: '/background/pinyin/factory.html',
             valueField: 'id',
@@ -72,7 +70,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
             onSelected:function(e) {
             	alert(e);
                 //$("#factoryId").val(e);
-                 // alert($("#factoryId").val());
             }
        });
 		
@@ -307,7 +304,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th>备注</th>
 					<th align="right">业务员</th>
 					<th>未回数量</th>
-				</tr><tr>
+				</tr>
+				<c:forEach items="${list }" var="input">
+				<tr>
 					<td>
 						<input type="checkbox" id="checkId" name="checkId" value="1">
 					</td>
@@ -315,36 +314,41 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:110px;">
 							<option value="">请选择</option>
 							<c:forEach items="${ cloths }" var = "cloth">
-								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
+								<option <c:if test="${cloth.id eq input.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
 					</td>
 					<td>
-						
+						<c:if test="${fn:length(input.myCompanyCodes)>0 }">
 						<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">
 							<option value="">请选择</option>
+							<c:forEach items="${input.myCompanyCodes }" var="myCompanyCode">
+								<option value="${myCompanyCode }" <c:if test="${myCompanyCode ==input.myCompanyCode }"></c:if> >${myCompanyCode }</option>
+							</c:forEach>
 						</select>
-						
-						
+						</c:if><c:if test="${fn:length(input.myCompanyCodes)==0 }">
+							<input type="text" id="myCompanyCode" name="myCompanyCode" value="${input.myCompanyCode}" style="width:92%;">
+						</c:if>
 					</td><td class="l_left">
-						<input type="text" name="myCompanyColor" style="width:150px;" value="" onchange="queryNoReturnNum(this)">
+						<input type="text" name="myCompanyColor" style="width:150px;" value="${input.myCompanyColor }" onchange="queryNoReturnNum(this)">
 					</td>
 					<td >
-						<input type="text" id="num" name="num" value="" style="width: 80px">
+						<input type="text" id="num" name="num" value="${input.num }" style="width: 80px">
 					</td><td style="font-weight: bold;text-align: center;">
-						条
+						${input.unitName }
 					</td>
-					<td><input type="text" id="mark" name="mark" value=""></td>
+					<td><input type="text" id="mark" name="mark" value="${input.mark }"></td>
 					<td>
 						<select id="salesmanId" name="salesmanId" style="width:140px;">
 							<option value="">请选择</option>
 							<c:forEach items="${salesmanInfos }" var="saleman">
-								<option value="${saleman.id }">${saleman.name }</option>
+								<option value="${saleman.id }" <c:if test="${input.salesmanId== saleman.id}">selected="selected"</c:if> >${saleman.name }</option>
 							</c:forEach>
 						</select>
 					</td>
 					<td>0</td>
 				</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		
@@ -355,7 +359,5 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		</tr></table>
 	</form>
 	</div>
-	
 </body>
-
 </html>
