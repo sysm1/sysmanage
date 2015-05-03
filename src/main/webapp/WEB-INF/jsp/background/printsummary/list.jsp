@@ -50,8 +50,7 @@
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="1">
-				<a class="btn btn-primary" href="javascript:void(0)"
-					id="printSummary"> 打印 </a> 
+				<a class="btn btn-primary" href="javascript:void(0)" id="printSummary"> 打印 </a> 
 				<a class="btn btn-primary"
 					href="javascript:myrefresh();" id="refresh"> 刷新 </a>
 			</form>
