@@ -428,12 +428,14 @@ ul { list-style:none;}
 					<th class="specalt" rowspan="2">工厂编号</th>
 					<th class="specalt" rowspan="2">工厂颜色</th>
 					<th class="specalt" rowspan="2">数量</th>
-					<th class="specalt" rowspan="2">规格</th>
+					<th class="specalt" colspan="2" style="text-align: center">规格</th>
 					<th class="specalt" colspan="3" style="text-align: center">包装方式</th>
 					
 					<th class="specalt" rowspan="2" style="text-align: center">备注</th>
 					<th class="specalt" rowspan="2">业务员</th>
 				</tr><tr>
+					<th class="specalt" >宽幅</th>
+					<th class="specalt" >克重</th>
 					<th class="specalt" >纸管</th>
 					<th class="specalt" >空差</th>
 					<th class="specalt" >胶袋</th>
@@ -466,7 +468,17 @@ ul { list-style:none;}
 					 	</td><td style="text-align: right;">
 					 		${item.numText }
 					 	</td><td>
-					 		${item.standard }
+					 		${item.kuanfu }CM
+					 		<c:if test="${item.kuanfufs==0 }">包边</c:if>
+					 		<c:if test="${item.kuanfufs==1 }">实用</c:if>
+					 	</td>
+					 	<td>
+					 		${item.kezhong }
+					 		<c:if test="${item.kezhongUnit==0 }">G/M2</c:if>
+					 		<c:if test="${item.kezhongUnit==1 }">G/Y</c:if>
+					 		<c:if test="${item.kezhongUnit==2 }">G/M</c:if>
+					 		<c:if test="${item.kezhongfs==0 }">回后</c:if>
+					 		<c:if test="${item.kezhongfs==1 }">出机</c:if>
 					 	</td><td>
 					 		${item.zhiguan }
 					 	</td><td>
@@ -485,7 +497,7 @@ ul { list-style:none;}
 				</c:forEach>
 				<!-- 分页 -->
 				<tr style="height: 35px">
-					<td colspan="9" style="text-align: center;font-size: 14px;">
+					<td colspan="14" style="text-align: center;font-size: 14px;">
 <div id="pagelist">
   <ul style="font-size: 14px;">
   	<c:if test="${pageView.pageNow==1}">
