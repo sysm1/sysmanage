@@ -217,5 +217,8 @@ public class SampleProcessListController extends BaseController{
 		model.addAttribute("technologys", this.technologyInfoService.queryAll(null));
 		return Common.BACKGROUND_PATH+"/sampleProcessList/addtoFlower";
 	}
+	
+	
+	
 
 }

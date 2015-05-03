@@ -40,7 +40,7 @@ public class ClothAllowanceServiceTest {
 	public void testSave() throws Exception {
 		ClothAllowance ae = new ClothAllowance();
 		// ae.setAllowance(12.0);
-		ae.setChangeSum(-20.0);
+		ae.setChangeSum(-20);
 		ae.setClothId(4);
 		ae.setFactoryId(4);
 		ae.setCreateTime(new Date());
