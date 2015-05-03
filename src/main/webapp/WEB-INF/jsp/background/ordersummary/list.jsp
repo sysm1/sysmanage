@@ -289,7 +289,7 @@ ul { list-style:none;}
 </script>
 </head>
 <body  >
-	<div class="divBody" style="width: 1500px">
+	<div class="divBody" style="width: 1550px">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
@@ -420,7 +420,7 @@ ul { list-style:none;}
 					</th>
 					<th class="specalt" style="width:40px" rowspan="2">id</th>
 					<th class="specalt" style="width:45px" rowspan="2">日期</th>
-					<th class="specalt" style="width:75px" rowspan="2">布种</th>
+					<th class="specalt" style="width:85px" rowspan="2">布种</th>
 					<th class="specalt" rowspan="2">工艺</th>
 					<th class="specalt" rowspan="2">我司编号</th>
 					<th class="specalt" rowspan="2">我司颜色</th>

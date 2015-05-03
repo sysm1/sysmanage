@@ -75,16 +75,16 @@
 				<thead>
 					<tr>
 						<th></th>
-						<th>下单日期</th>
-						<th>工厂</th>
-						<th>布种</th>
-						<th>工艺</th>
-						<th>编号</th>
-						<th>颜色</th>
-						<th>数量</th>
-						<th>规格</th>
-						<th>包装方式</th>
-						<th>备注</th>
+						<th style="font-size: 14px;">下单日期</th>
+						<th style="font-size: 14px;">工厂</th>
+						<th style="font-size: 14px;">布种</th>
+						<th style="font-size: 14px;">工艺</th>
+						<th style="font-size: 14px;">编号</th>
+						<th style="font-size: 14px;">颜色</th>
+						<th style="font-size: 14px;">数量</th>
+						<th style="font-size: 14px;">规格</th>
+						<th style="font-size: 14px;">包装方式</th>
+						<th style="font-size: 14px;">备注</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -92,16 +92,16 @@
 						<tr>
 							<td><input type="checkbox" name="checkId"
 								value="${summary.factoryId}-${summary.id}" /></td>
-							<td>${summary.createTimeStr}</td>
-							<td>${summary.factoryName}</td>
-							<td>${summary.clothName}</td>
-							<td>${summary.technologyName}</td>
-							<td>${summary.factoryCode}</td>
-							<td>${summary.factoryColor}</td>
-							<td>${summary.num}</td>
-							<td>${summary.standard}</td>
-							<td>${summary.packingStyle}</td>
-							<td>${summary.mark }</td>
+							<td style="font-size: 12px;">${summary.createTimeStr}</td>
+							<td style="font-size: 12px;">${summary.factoryName}</td>
+							<td style="font-size: 12px;">${summary.clothName}</td>
+							<td style="font-size: 12px;">${summary.technologyName}</td>
+							<td style="font-size: 12px;">${summary.factoryCode}</td>
+							<td style="font-size: 12px;">${summary.factoryColor}</td>
+							<td style="font-size: 12px;">${summary.num}</td>
+							<td style="font-size: 12px;">${summary.standard}</td>
+							<td style="font-size: 12px;">${summary.packingStyle}</td>
+							<td style="font-size: 12px;">${summary.mark }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
