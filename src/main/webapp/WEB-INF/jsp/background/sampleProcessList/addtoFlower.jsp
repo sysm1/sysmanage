@@ -195,7 +195,7 @@ $(function() {
 			<c:forEach var="item" items="${facotoryCodeMap}" varStatus="status1">
 			<tr>
 				<td>工厂编号：</td>
-				<td>				
+				<td style="width:200px;">				
 					<span class="factoryCodeInputcss" id="factoryCodeInputID">
 					<input id="factoryCodes" name="factoryCodes" type="text" value="${item.key }" style="width:200px;"/>
 					</span>

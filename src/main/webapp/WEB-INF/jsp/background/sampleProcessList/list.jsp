@@ -285,15 +285,14 @@ ul { list-style:none;}
 			    data: {id:id}, //要发送的数据
 			    success: function(data){
 			    	if(data==0){
-			    		//$('#addtoFlower').hide();
-			    		
+			    		$('#addtoFlower').attr("disabled",true);
 			    	}else{
-			    		$('#addtoFlower').show();
+			    		$('#addtoFlower').attr("disabled",false);
 			    	}
 				}
 			});
 		}else{
-			$('#addtoFlower').show();
+			$('#addtoFlower').attr("disabled",false);
 		}
 	}
 	function changeTextValue(id,obj){

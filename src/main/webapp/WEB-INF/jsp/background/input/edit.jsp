@@ -121,6 +121,51 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		});
 	}
 	
+	/**改变布种的值时联动**/
+	function initClothSelect(obj,myCompanyCode){
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/cloth/getClothUnit.html', //要访问的后台地址
+		    data: {id:obj.value}, //要发送的数据
+		    success: function(data){
+		    	changeUnitName(data,obj);
+			},error : function() {    
+		          // view("异常！");    
+		          alert("异常！");    
+		     } 
+		});
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
+		    data: {clothId:obj.value}, //要发送的数据
+		    success: function(data){
+		    	var td2 = obj.parentNode.parentNode.children[2];
+		    	if(data!=null&&data!=''){
+			    	var selectb=null;
+			    	var selecte=null;
+			    	var options='';
+			    	selectb='<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">';
+			    	for(var i=0;i<data.length;i++){
+			    		if(null!=data[i]){
+			    			options+='<option value="'+data[i]+'">'+data[i]+'</option>';
+			    		}
+			    	}
+			    	selecte='</select>';
+			    	td2.innerHTML=selectb+options+selecte;
+		    	}else{
+		    		td2.innerHTML='<input type="text" id="myCompanyCode" name="myCompanyCode" value="'+myCompanyCode+'" style="width:92%;">';
+		    	}
+			},error : function() {    
+		          // view("异常！");
+		          alert("异常！");    
+		     } 
+		});
+	}
+	
 	function changeUnitName(name,obj){
 		obj.parentNode.parentNode.children[5].innerHTML=name;
 	}
@@ -143,9 +188,45 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	var i=2;
 	$(document).ready(function(){
 	    $("#addTable").click(function(){
-	    	var tr=$("#table1 tr:eq(2) ");
-			i++;
-	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
+	    	var newtr=$("#table1 tr:last").clone();
+	  		newtr.insertAfter($("#table1 tr:last"))
+	  		var select='<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">'+
+				'<option value="">请选择</option>'+
+				'</select>';
+			newtr.children('td').eq(2).html(select);
+	  		newtr.find("input").eq(0).attr("value",'');
+	　  		newtr.find("input").eq(1).attr("value",'');
+	　  		newtr.find("input").eq(2).attr("value",'');
+	　  		newtr.find("input").eq(3).attr("value",'');
+	　  		newtr.find("input").eq(4).attr("value",'');
+	　  		newtr.find("select").eq(0).attr("value",'');
+	　  		newtr.find("select").eq(1).attr("value",'');
+	　  		newtr.find("select").eq(2).attr("value",'');
+	　  		$("input[name='checkId']").attr("checked",false);
+	    });
+	    $('#copyone').click(function(){
+	    	var i=0;
+	    	$('input:checkbox[name=checkId]:checked').each(function(){
+	    		 i++;
+	    		 //alert($(this).parent().parent());
+	    		 row=$(this).parent().parent();
+	    		 newRow=row.clone();
+	    		 
+	    		 newRow.insertAfter($("#table1 tr:last"));
+	    		 
+	    	});
+	    	if(i==0){
+	    		alert("请选择一条数据复制");
+	    	}
+	　  		$("input[name='checkId']").attr("checked",false);
+	    });
+	    $("#deleteTable").click(function(){
+	    	var checkId=document.getElementsByName("checkId");
+	    	for(var i=checkId.length-1;i>=0;i--){
+	    		if(checkId[i].checked){
+	    			checkId[i].parentNode.parentNode.parentNode.removeChild(checkId[i].parentNode.parentNode);
+	    		}
+	    	}
 	    });
 	});
 	
@@ -158,7 +239,22 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
+	<div style="width: 1150px;">
+		<table width="400px">
+			<tr>
+				<td style="width: 80px;">
+					<a class="btn btn-primary" href="javascript:void(0)" id="copyone"><span>复制新增</span> </a>
+				</td><td style="width: 80px;">
+					<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
+				</td><td style="width: 80px;">
+					<a class="btn btn-primary" href="javascript:void(0)" style=width:60px;"
+						id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
+				</td><td style="text-align: right;">
+					<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" style="background-color: red;"><span>删除</span></a>
+				</td>
+			</tr>
+		</table>
+	</div>
 	<form name="form" id="form" action="${ctx}/background/input/add.html" method="post">
 		<table id="table1" border="1" name="table1">
 			<tbody>
@@ -173,14 +269,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th>单位</th>
 					<th>备注</th>
 					<th align="right">业务员</th>
-					<th></th>
 				</tr><tr>
 					<td>
 						<input type="checkbox" id="checkId" name="checkId" value="1">
 					</td>
 					<td class="l_left">
 						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:150px;">
-							<option>请选择布种</option>
+							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq input.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
@@ -207,24 +302,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 								<option value="${saleman.id }" <c:if test="${saleman.id==input.salesmanId }">selected="selected"</c:if> >${saleman.name }</option>
 							</c:forEach>
 						</select>
-					</td><td>
-						<input type="button" id="deleteRowTr" name="deleteRowTr" value="删除" onclick="deleteRow1(this);">
 					</td>
 				</tr>
 			</tbody>
-		</table>
-		<table width="850px">
-			<tr>
-				<td>
-					<div class="l_btn_centent">
-						<!-- saveWin_form   from是表单Ｉd>
-						<a class="btn btn-primary" href="javascript:void(0)" id="copyaddTable"><span>复制新增</span> </a-->
-						<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
-						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
-						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
-					</div>
-				</td>
-			</tr>
 		</table>
 	</form>
 	</div>
@@ -232,7 +312,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <script type="text/javascript">
 	//initUnit(${input.clothId});
 	var cloth=document.getElementById("clothId");
-	//alert(cloth);
-	changeClothSelect(cloth);
+	//alert(${input.myCompanyCode});
+	initClothSelect(cloth,'${input.myCompanyCode}');
 </script>
 </html>

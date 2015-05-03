@@ -430,7 +430,7 @@ th.specalt {
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
-					<td id="1${item.id }">${item.returnStatusName }</td>
+					<td id="1${item.id }">${item.status }</td>
 					<td id="2${item.id }">${item.id }</td>
 					<td  title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
