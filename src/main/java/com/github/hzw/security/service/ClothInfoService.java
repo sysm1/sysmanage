@@ -8,4 +8,6 @@ import com.github.hzw.security.entity.ClothInfo;
 public interface ClothInfoService extends BaseService<ClothInfo> {
 
 	public List<ClothInfo> queryPinyin(String name);
+	
+	public ClothInfo isExist(String clothName);
 }

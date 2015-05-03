@@ -71,4 +71,9 @@ public class ClothInfoServiceImpl implements ClothInfoService {
 		return clothInfoMapper.queryPinyin(map);
 	}
 	
+	
+	public ClothInfo isExist(String clothName){
+		return clothInfoMapper.isExist(clothName);
+	}
+	
 }

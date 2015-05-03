@@ -98,5 +98,12 @@
 		where id=#{id}
 	</update>
 	
+	
+	<select id="isExist" resultType="ClothInfo" parameterType="String">
+		select
+		<include refid="selectId" />
+		from cloth_info
+		where cloth_name = #{clothName}
+	</select>
   
 </mapper>

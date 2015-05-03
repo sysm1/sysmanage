@@ -30,7 +30,7 @@ create table cloth_info (
 	order_name varchar(255) not null unique, -- 下单名称
 	create_time date not null,
 	mark text,
-	tiao_kg double(12,2),--条/KG
+	tiao_kg double(12,2),	--条/KG
 	unit int,   			-- /**布种单位 0条 1 kg 2cm 3码***/
 	loss_rate int 			-- 折扣率
 	tiao_kg double(10,2),--条和公斤换算单位
@@ -172,7 +172,6 @@ create table flower_additional(
 	flower_id int,
 	factory_code varchar(255),       -- 工厂编号
 	my_company_code varchar(255),	 -- 我司编号(冗余)
-	
 	factory_color varchar(255) null, -- 工厂color
 	my_company_color varchar(255),
 	mark varchar(255),   -- 备注

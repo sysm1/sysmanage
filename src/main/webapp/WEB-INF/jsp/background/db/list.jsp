@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
-<script type="text/javascript" src="/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 
 <script type="text/javascript">
 var dialog;
@@ -92,6 +92,36 @@ $(function() {
 		f.submit();
 	});
 	
+	
+	$("#uploadFlowerFile").click("click", function(){
+		alert("uploadFlowerFile");
+		ajaxFileUpload();
+	});
+	
+	function ajaxFileUpload() {
+        $.ajaxFileUpload(
+            {
+                url: '/background/report/flowerFileImport.html', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'flowerFile', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数 
+                {
+                    if( data.code == '0') { // 失败
+                    	alert(data.msg);
+                    } else {
+                    	alert(data.msg);  // 成功
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert(e);
+                }
+            }
+        )
+        return false;
+    }
+	
 });
 </script>
 </head>
@@ -117,19 +147,33 @@ $(function() {
 				class="t_table">
 				<table id="mytable"
 					class="pp-list table table-striped table-bordered"
-					style="margin-bottom: -3px;width:400px">
+					style="margin-bottom: -3px;width:600px">
 					
 					<tr><td>
 						<a class="btn btn-large btn-success" href="javascript:void(0)" id="flower">花号基础资料导出</a></td>
-						<td>
-						<a class="btn btn-large btn-success" href="javascript:void(0)" id="2">花号基础资料导入</a></td></tr>
+					</tr>
 					<tr><td>
 						<a class="btn btn-large btn-success" href="javascript:void(0)" id="summary">下单历史记录导出</a></td>
-					<td><a class="btn btn-large btn-success" href="javascript:void(0)" id="4">下单历史记录导入</a></td></tr>
-					
+					</tr>
 					<tr><td>
 					<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportAll">软件数据备份</a></td>
-					<td><a class="btn btn-large btn-success" href="javascript:void(0)" id="importAll">软件数据还原</a></td></tr>
+					</tr>
+					<tr>
+					<td><a class="btn btn-large btn-success" href="javascript:void(0)" id="importAll">软件数据还原</a></td>
+					</tr>
+					
+					<tr>
+					<td>
+						<div class="search">
+						<form name="fenye" id="fenye">
+							花号基础资料导入：<input type="file" id="flowerFile" name="flowerFile" />
+							<input class="btn btn-large btn-success" id="uploadFlowerFile" type="button" value="上传" />
+						
+						<a class="btn btn-large btn-success" href="/template/flower_template.xlsx">模板下载</a>
+						</form>
+						</div>
+					</td>
+					</tr>
 					
 				</table>
 			</div>

@@ -69,7 +69,7 @@ public class POIUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<List<String>> getExcelData(MultipartFile file , String fileName,int sheetIndex) throws Exception {
+	public static List<List<String>> getExcelData(MultipartFile file , String fileName, int sheetIndex) throws Exception {
 		List<List<String>> dataLst = new ArrayList<List<String>>();
 		Workbook wb = openWorkbook(file.getInputStream(), fileName);
 		Sheet sheet = (Sheet) wb.getSheetAt(sheetIndex);// 切换工作薄
@@ -78,9 +78,9 @@ public class POIUtils {
 
 		int totalRows = sheet.getPhysicalNumberOfRows();
 		/** 得到Excel的列数 */
-		int totalCells = totalRows >= 1 && sheet.getRow(0) != null ? sheet
-				.getRow(0).getPhysicalNumberOfCells() : 0;
-		for (int r = 0; r < totalRows; r++) {
+		int totalCells = totalRows >= 1 && sheet.getRow(0) != null ? sheet.getRow(0).getPhysicalNumberOfCells() : 0;
+		// 忽略第一行
+		for (int r = 1; r < totalRows; r++) {
 			row = sheet.getRow(r);
 			if (row == null || curRowInsideNull(row, totalCells))
 				continue;

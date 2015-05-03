@@ -34,7 +34,7 @@ $(function() {
 			width : 750,
 			height : 500,
 			url : rootPath + '/background/flower/addUI.html',
-			title : "花号录入",
+			title : "花色基本资料录入",
 			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 		});
 	});

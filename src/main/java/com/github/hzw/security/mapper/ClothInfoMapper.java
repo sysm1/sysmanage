@@ -9,4 +9,7 @@ import com.github.hzw.security.entity.ClothInfo;
 public interface ClothInfoMapper extends BaseMapper<ClothInfo> {
 
 	public List<ClothInfo> queryPinyin(Map<String, Object> map);
+	
+	public ClothInfo isExist(String clothName);
+	
 }
