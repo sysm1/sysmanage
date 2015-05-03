@@ -96,7 +96,7 @@
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 1350,
+				width : 1150,
 				height :550,
 				url : rootPath + '/background/input/editUI.html?id='+cbox+"&type=copy",
 				title : "复制新增下单预录入",

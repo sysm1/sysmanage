@@ -30,6 +30,7 @@ create table cloth_info (
 	order_name varchar(255) not null unique, -- 下单名称
 	create_time date not null,
 	mark text,
+	tiao_kg double(12,2),--条/KG
 	unit int,   			-- /**布种单位 0条 1 kg 2cm 3码***/
 	loss_rate int 			-- 折扣率
 	tiao_kg double(10,2),--条和公斤换算单位

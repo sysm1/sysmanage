@@ -281,18 +281,18 @@ $(function() {
 <div class="divdialog">
 <div style="padding-left: 350px;"><b>开版录入</b></div>
 	<div >
-<table width="550px;" >
+<table width="400px;" border="0">
 	<tr>
-		<td style="width: 100px;">
+		<td style="width: 80px;">
 			<a class="btn btn-primary" href="javascript:void(0)" id="copyone" ><span>复制新增</span></a>
-		</td><td style="width: 100px;">
+		</td><td style="width: 80px;">
 			<a class="btn btn-primary" href="javascript:void(0)" id="addTable" ><span>新增一行</span></a>
-		</td><td style="width: 100px;">
+		</td><td style="width: 60px;">
 			<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" 
-				style=width:60px;" onclick="saveWin();"><span>保存</span></a>
-		</td><td style="width: 100px;">	
-			<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" style=width:60px;"
-				onclick="javascript:history.go(-1);"><span>返回</span> </a>
+				 onclick="saveWin();"><span>保&nbsp;&nbsp;存</span></a>
+		</td><td style="width: 80px;">	
+			<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" 
+				onclick="javascript:history.go(-1);"><span>返&nbsp;&nbsp;回</span> </a>
 		</td><td style="text-align: right;">
 			<a class="btn btn-primary" style="background-color: red;" href="javascript:void(0)" id="deleteTable" ><span>删除</span></a>
 		</td>

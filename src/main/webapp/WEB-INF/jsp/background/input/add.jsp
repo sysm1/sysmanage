@@ -275,13 +275,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <body>
 <div class="divdialog">
 	<div style="width: 1150px;">
-		<table width="550px">
+		<table width="450px">
 			<tr>
-				<td style="width: 100px;">
+				<td style="width: 80px;">
 					<a class="btn btn-primary" href="javascript:void(0)" id="copyone"><span>复制新增</span> </a>
-				</td><td style="width: 100px;">
+				</td><td style="width: 80px;">
 					<a class="btn btn-primary" href="javascript:void(0)" id="addTable"><span>新增一行</span> </a>
-				</td><td style="width: 100px;">
+				</td><td style="width: 80px;">
 					<a class="btn btn-primary" href="javascript:void(0)" style=width:60px;"
 						id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
 				</td><td style="text-align: right;">
