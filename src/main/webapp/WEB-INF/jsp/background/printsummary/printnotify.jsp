@@ -48,29 +48,52 @@
 			<table id="rowspan" cellspacing="0" class="tablesorter">
 				<thead>
 					<tr>
-						<th>序号</th>
-						<th>布种</th>
-						<th>工艺</th>
-						<th>编号</th>
-						<th>颜色</th>
-						<th>数量</th>
-						<th>规格</th>
-						<th>包装方式</th>
-						<th>备注</th>
+						<th rowspan="2" style="font-size: 14px;text-align: center;">序号</th>
+						<th rowspan="2" style="font-size: 14px;text-align: center;">布种</th>
+						<th rowspan="2" style="font-size: 14px;text-align: center;">工艺</th>
+						<th rowspan="2" style="font-size: 14px;text-align: center;">编号</th>
+						<th rowspan="2" style="font-size: 14px;text-align: center;">颜色</th>
+						<th rowspan="2" style="font-size: 14px;text-align: center;">数量</th>
+						<th colspan="2" style="font-size: 14px;text-align: center;">规格</th>
+						<th colspan="3" style="font-size: 14px;text-align: center;">包装方式</th>
+						<th rowspan="2" style="font-size: 14px;text-align: center;">备注</th>
+					</tr><tr>
+						<th style="font-size: 12px;width: 75px;">宽幅</th>
+						<th style="font-size: 12px;width: 85px;">克重</th>
+						<th style="font-size: 12px;">纸管</th>
+						<th style="font-size: 12px;">空差</th>
+						<th style="font-size: 12px;">胶袋</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${ list }" var="summary">
 						<tr>
-							<td><input name="ids" type="hidden" value="${summary.id}" />${summary.id}</td>
-							<td>${summary.clothName}</td>
-							<td>${summary.technologyName}</td>
-							<td>${summary.factoryCode}</td>
-							<td>${summary.factoryColor}</td>
-							<td>${summary.num}</td>
-							<td>${summary.standard}</td>
-							<td>${summary.packingStyle}</td>
-							<td>${summary.mark }</td>
+							<td style="font-size: 12px;"><input name="ids" type="hidden" value="${summary.id}" />${summary.id}</td>
+							<td style="font-size: 12px;">${summary.clothName}</td>
+							<td style="font-size: 12px;">${summary.technologyName}</td>
+							<td style="font-size: 12px;">${summary.factoryCode}</td>
+							<td style="font-size: 12px;">${summary.factoryColor}</td>
+							<td style="font-size: 12px;">${summary.num}</td>
+							<td style="font-size: 12px;">
+						 		${summary.kuanfu }CM
+						 		<c:if test="${summary.kuanfufs==0 }">包边</c:if>
+						 		<c:if test="${summary.kuanfufs==1 }">实用</c:if>
+						 	</td>
+						 	<td style="font-size: 12px;">
+						 		${summary.kezhong }
+						 		<c:if test="${summary.kezhongUnit==0 }">G/M2</c:if>
+						 		<c:if test="${summary.kezhongUnit==1 }">G/Y</c:if>
+						 		<c:if test="${summary.kezhongUnit==2 }">G/M</c:if>
+						 		<c:if test="${summary.kezhongfs==0 }">回后</c:if>
+						 		<c:if test="${summary.kezhongfs==1 }">出机</c:if>
+						 	</td><td style="font-size: 12px;">
+						 		${summary.zhiguan }
+						 	</td><td style="font-size: 12px;">
+						 		${summary.kongcha }
+						 	</td><td style="font-size: 12px;">
+						 		${summary.jiaodai }
+						 	</td>
+							<td style="font-size: 12px;">${summary.mark }</td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
-
 <link rel="stylesheet" href="${ctx}/themes/blue/style.css"
 	type="text/css" id="" media="print, projection, screen" />
 <script type="text/javascript" src="${ctx}/js/jquery.tablesorter.js"></script>
@@ -74,17 +73,24 @@
 			<table id="rowspan" cellspacing="0" class="tablesorter">
 				<thead>
 					<tr>
-						<th></th>
-						<th style="font-size: 14px;">下单日期</th>
-						<th style="font-size: 14px;">工厂</th>
-						<th style="font-size: 14px;">布种</th>
-						<th style="font-size: 14px;">工艺</th>
-						<th style="font-size: 14px;">编号</th>
-						<th style="font-size: 14px;">颜色</th>
-						<th style="font-size: 14px;">数量</th>
-						<th style="font-size: 14px;">规格</th>
-						<th style="font-size: 14px;">包装方式</th>
-						<th style="font-size: 14px;">备注</th>
+						<th rowspan="2"></th>
+						<th rowspan="2" style="font-size: 14px;">下单日期</th>
+						<th rowspan="2" style="font-size: 14px;">工厂</th>
+						<th rowspan="2" style="font-size: 14px;">布种</th>
+						<th rowspan="2" style="font-size: 14px;">工艺</th>
+						<th rowspan="2" style="font-size: 14px;">编号</th>
+						<th rowspan="2" style="font-size: 14px;">颜色</th>
+						<th rowspan="2" style="font-size: 14px;">数量</th>
+						<th colspan="2" style="font-size: 14px;text-align: center;">规格</th>
+						<th colspan="3" style="font-size: 14px;text-align: center;">包装方式</th>
+						<th rowspan="2" style="font-size: 14px;">备注</th>
+					</tr>
+					<tr>
+						<th style="font-size: 12px;">宽幅</th>
+						<th style="font-size: 12px;">克重</th>
+						<th style="font-size: 12px;">纸管</th>
+						<th style="font-size: 12px;">空差</th>
+						<th style="font-size: 12px;">胶袋</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -98,9 +104,32 @@
 							<td style="font-size: 12px;">${summary.technologyName}</td>
 							<td style="font-size: 12px;">${summary.factoryCode}</td>
 							<td style="font-size: 12px;">${summary.factoryColor}</td>
-							<td style="font-size: 12px;">${summary.num}</td>
-							<td style="font-size: 12px;">${summary.standard}</td>
-							<td style="font-size: 12px;">${summary.packingStyle}</td>
+							<td style="font-size: 12px;">
+								<c:if test="${summary.unit==4 }">${summary.num}KG</c:if>
+								<c:if test="${summary.unit==0 }">
+									<fmt:formatNumber var="c" value="${summary.num}" pattern="#"/>
+									${c}条
+								</c:if>
+							</td>
+							<td style="font-size: 12px;">
+						 		${summary.kuanfu }CM
+						 		<c:if test="${summary.kuanfufs==0 }">包边</c:if>
+						 		<c:if test="${summary.kuanfufs==1 }">实用</c:if>
+						 	</td>
+						 	<td style="font-size: 12px;">
+						 		${summary.kezhong }
+						 		<c:if test="${summary.kezhongUnit==0 }">G/M2</c:if>
+						 		<c:if test="${summary.kezhongUnit==1 }">G/Y</c:if>
+						 		<c:if test="${summary.kezhongUnit==2 }">G/M</c:if>
+						 		<c:if test="${summary.kezhongfs==0 }">回后</c:if>
+						 		<c:if test="${summary.kezhongfs==1 }">出机</c:if>
+						 	</td><td style="font-size: 12px;">
+						 		${summary.zhiguan }
+						 	</td><td style="font-size: 12px;">
+						 		${summary.kongcha }
+						 	</td><td style="font-size: 12px;">
+						 		${summary.jiaodai }
+						 	</td>
 							<td style="font-size: 12px;">${summary.mark }</td>
 						</tr>
 					</c:forEach>

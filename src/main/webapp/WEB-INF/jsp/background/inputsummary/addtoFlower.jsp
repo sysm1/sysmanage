@@ -109,7 +109,7 @@ $(function() {
 				'onblur="changeValue(this,\'工厂颜色\');"  style="width:100px;"/>&nbsp;'+
 		    '<input name="mark2" type="text" value="备注" onclick="clickText(this,\'备注\');" '+
 		   		'onblur="changeValue(this,\'备注\');" style="width:100px;"/>&nbsp;'+
-		    '<span id="addFacotyMyCode"><a onclick="addcolors2();">+</a></span></div>';
+		    '<span id="addFacotyMyCode" style="font-size: 22px;font-weight: bold;cursor: pointer;vertical-align: middle;"><a onclick="addcolors2();">&nbsp;+&nbsp;&nbsp;</a></span></div>';
 		$('#addonerow')[0].innerHTML="";
 	}
 	
@@ -216,7 +216,9 @@ $(function() {
 					<span class="factoryCodeInputcss" id="factoryCodeInputID">
 					<input name="factoryCodes" type="text" value="${factoryCode}" />
 					</span>
-					<span id="addonerow"><a onclick="addOneRow();">++</a></span>
+					<span id="addonerow" style="font-size: 22px;font-weight: bold;cursor: pointer;vertical-align: middle;">
+						<a onclick="addOneRow();">&nbsp;+&nbsp;&nbsp;</a>
+					</span>
 				</td>
 				<td colspan="2">
 						<div id="colors0">
@@ -225,7 +227,7 @@ $(function() {
 						<input name="factoryColors" type="text"  value="${item2.factoryColor }" style="width:100px;"/>
 						<input name="mark" type="text" value="备注" onclick="clickText(this,'备注');" 
 							onblur="changeValue(this,'备注');" style="width:100px;"/>
-						<span id="addFacotyMyCode"><a onclick="addcolors();">+</a></span>
+						<span id="addFacotyMyCode" style="font-size: 22px;font-weight: bold;cursor: pointer;vertical-align: middle;"><a onclick="addcolors();">&nbsp;+&nbsp;&nbsp;</a></span>
 					</div>
 				</td>
 			</tr>
