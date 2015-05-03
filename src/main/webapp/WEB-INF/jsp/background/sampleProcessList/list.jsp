@@ -439,6 +439,7 @@ ul { list-style:none;}
 						</td>
 						<td>
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								 <c:if test="${status1.index==1 }"><br></c:if>
 								 ${item1.key }
 							</c:forEach>
 						</td>
