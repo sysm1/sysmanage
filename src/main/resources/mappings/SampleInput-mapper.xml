@@ -71,10 +71,10 @@
 		from sample_input
 		<where>
 			<if test="beginTime != null and beginTime != ''">
-				and create_time &gt; #{beginTime}
+				and sample_date &gt; #{beginTime}
 			</if>
       		<if test="endTime != null and endTime != ''">
-				and create_time &lt; #{endTime}
+				and sample_date &lt; #{endTime}
 			</if>
 		</where>
   </select>

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.SampleInputVO;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerInfo;
+import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.SampleInput;
@@ -30,6 +33,7 @@ import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.CompressPic;
 import com.github.hzw.util.DateUtil;
+import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PropertiesUtils;
 import com.github.hzw.util.UploadFileUtils;
 
@@ -303,4 +307,17 @@ public class SampleInputController extends BaseController {
 		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(clothId);
 		return list;
 	}
+	
+	@RequestMapping("exportExcel")
+	public void exportExcel(HttpServletRequest request, HttpServletResponse response) {
+		
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("beginTime", beginTime);
+		map.put("endTime", endTime);
+		List<SampleInputVO> acs = sampleInputService.queryReport(map);
+		POIUtils.exportToExcel(response, "开版进度报表", acs, OrderSummary.class, "开版进度", acs.size());
+	}
+	
 }

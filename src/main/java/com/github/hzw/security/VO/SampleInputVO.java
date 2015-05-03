@@ -253,6 +253,25 @@ public class SampleInputVO {
     
     public void setStatus(Integer status) {
         this.status = status;
+        switch (status) {
+		case 0:
+			this.setStatusStr("未回");
+			break;
+		case 1:
+			this.setStatusStr("新版");
+			break;
+		case 2:
+			this.setStatusStr("新厂");
+			break;
+		case 3:
+			this.setStatusStr("新色");
+			break;
+		case 4:
+			this.setStatusStr("已回");
+			break;
+		default:
+			break;
+		}
     }
 
     

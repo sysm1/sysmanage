@@ -65,7 +65,7 @@
 			}
 			var f = $('#fenye');
 			f.attr('target','_blank');
-			f.attr('action','${pageContext.request.contextPath}/background/flower/exportSampleExcel.html');
+			f.attr('action','${pageContext.request.contextPath}/background/sample/exportExcel.html');
 			f.submit();
 		});
 		
