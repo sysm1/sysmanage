@@ -317,7 +317,7 @@ public class SampleInputController extends BaseController {
 		map.put("beginTime", beginTime);
 		map.put("endTime", endTime);
 		List<SampleInputVO> acs = sampleInputService.queryReport(map);
-		POIUtils.exportToExcel(response, "开版进度报表", acs, OrderSummary.class, "开版进度", acs.size());
+		POIUtils.exportToExcel(response, "开版进度报表", acs, SampleInputVO.class, "开版进度", acs.size());
 	}
 	
 }
