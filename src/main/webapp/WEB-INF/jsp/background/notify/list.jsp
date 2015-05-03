@@ -44,7 +44,13 @@
 				}
 			});
 		});
-		
+		$('#checkAllId').click(function(){
+	         //判断apple是否被选中
+	         var bischecked=$('#checkAllId').is(':checked');
+	         //alert(bischecked);
+	         var fruit=$('input[name="checkId"]');
+	         bischecked?fruit.attr('checked',true):fruit.attr('checked',false);
+	    });
 		
 		$("#seach").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
@@ -150,7 +156,7 @@
 			<table id="rowspan" cellspacing="0" class="tablesorter">
 				<thead>
 					<tr>
-						<th><input type="checkbox" /></th>
+						<th><input type="checkbox" id="checkAllId" onclick="checkAllId();"/></th>
 						<th style="font-size: 14px;">序号</th>
 						<th style="font-size: 14px;">单号</th>
 						<th style="font-size: 14px;">工厂</th>
