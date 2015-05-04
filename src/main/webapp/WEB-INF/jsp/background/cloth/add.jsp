@@ -86,13 +86,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</div></td>
 				</tr>
 				
-				<tr>
+				<!--tr>
 					<td class="l_right">下单名称：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='orderName' name="orderName" type="text" value="">
 						</div></td>
-				</tr><tr>
+				</tr-->
+				<tr>
 					<td class="l_right">布种单位：</td>
 					<td class="l_left">
 						<select id="unit" name="unit">
@@ -104,7 +105,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr><tr>
 					<td>默认公斤数：</td>
 					<td>
-						<input type="text" id="tiaoKg" name="tiaoKg" value="">条/KG
+						<input type="text" id="tiaoKg" name="tiaoKg" value="">KG/条
 					</td>
 				</tr>		
 				<tr>

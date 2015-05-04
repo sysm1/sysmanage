@@ -88,12 +88,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<input id='id' name="id" type="hidden" value="${cloth.id}">
 					<input id='clothName' name="clothName" type="text" value="${cloth.clothName}">
 					</td>
-				</tr><tr>
+				</tr>
+				<!--tr>
 					<td class="l_right">下单名称：</td>
 					<td class="l_left">
 					<input id='orderName' name="orderName" type="text" value="${cloth.orderName}">
 					</td>
-				</tr><tr>
+				</tr--><tr>
 					<td class="l_right">布种单位：</td>
 					<td class="l_left">
 						<select id="unit" name="unit">
@@ -105,7 +106,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr><tr>
 					<td>默认公斤数：</td>
 					<td>
-						<input type="text" id="tiaoKg" name="tiaoKg" value="${cloth.tiaoKg }">条/KG
+						<input type="text" id="tiaoKg" name="tiaoKg" value="${cloth.tiaoKg }">KG/条
 					</td>
 				</tr><tr>
 					<td class="l_right">备注：</td>

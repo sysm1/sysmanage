@@ -19,16 +19,22 @@
 						width : "50px"
 					}, {
 						colkey : "clothName",
-						name : "布种名称"
-					},{
+						name : "布种名称",
+						width : "150px"
+					},
+					/**{
 						colkey : "orderName",
-						name : "下单名称"
-					}, {
+						name : "下单名称",
+						width : "150px"
+					}, */
+					{
 						colkey : "unitName",
-						name : "布种单位"
+						name : "布种单位",
+						width : "80px"
 					},{
 						colkey : "tiaoKg",
-						name : "条/KG"
+						name : "KG/条",
+						width : "100px"
 					},{
 						colkey : "mark",
 						name : "备注"
