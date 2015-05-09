@@ -43,6 +43,7 @@ public class AccountController extends BaseController{
 		pageView = accountService.query(getPageView(pageNow,pagesize), account);
 		return pageView;
 	}
+	
 	@RequestMapping("exportExcel")
 	public void exportExcel(HttpServletResponse response,Account account) {
 		 List<Account> acs =accountService.queryAll(account);

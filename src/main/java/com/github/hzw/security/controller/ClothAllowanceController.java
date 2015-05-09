@@ -93,6 +93,27 @@ public class ClothAllowanceController extends BaseController {
 		return "无坯布";
 	}
 	
+	/**
+	 * 查询现余量
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryAllowance")
+	public String[] queryAllowance(HttpServletRequest request){
+		String[] stra=new String[2];
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clothId", request.getParameter("clothId"));
+		map.put("factoryId", request.getParameter("factoryId"));
+		map.put("color", request.getParameter("color"));
+		pageView = clothAllowanceService.queryByFind(getPageView("1","10"), map);
+		if(pageView.getRowCount()>0){
+			ClothAllowance clothAllowance=(ClothAllowance) pageView.getRecords().get(0);
+			stra[0]=clothAllowance.getAllowance()+"";
+			stra[1]=clothAllowance.getAllowancekg()+"";
+		}
+		return stra;
+	}
 	
 	/**
 	 * @param model

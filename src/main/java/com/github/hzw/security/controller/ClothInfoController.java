@@ -21,7 +21,6 @@ import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.util.Common;
-import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PinyinUtil;
 
