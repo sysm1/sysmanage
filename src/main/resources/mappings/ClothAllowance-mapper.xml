@@ -3,7 +3,7 @@
 <mapper namespace="com.github.hzw.security.mapper.ClothAllowanceMapper" >
   
   <sql id="selectId" >
-    id, cloth_id as clothId, factory_id as factoryId, 
+    id, cloth_id as clothId, factory_id as factoryId, supplier_id supplierId,
     allowance, unit, old_sum as oldSum, change_sum as changeSum, 
     allowancekg, unitkg, old_sumkg as oldSumkg, change_sumkg as changeSumkg,
     create_time as createTime, mark, input_date as inputDate
@@ -11,11 +11,12 @@
   
   <sql id="selectIdExt" >
     id, 
-    cloth_id as clothId, 
+    cloth_id as clothId,color,
     (select cloth.cloth_name from cloth_info cloth where cloth.id = cloth_allowance.cloth_id ) as clothName,
     factory_id as factoryId, 
     (select factory.name from factory_info factory where factory.id = cloth_allowance.factory_id ) as factoryName,
-    allowance, 
+    allowance, supplier_id supplierId,
+    (select supplier.name from supplier supplier where supplier.id = cloth_allowance.supplier_id ) as supplierName,
     unit,
     old_sum as oldSum, 
     change_sum as changeSum, 
@@ -24,7 +25,6 @@
     unitkg,
     old_sumkg as oldSumkg, 
     change_sumkg as changeSumkg,
-     
     create_time as createTime, 
     mark,
     input_date as inputDate
@@ -40,6 +40,8 @@
 		</if>
 		<if test="t.factoryId != null and t.factoryId != ''">
 			and	factory_id = #{t.factoryId}
+		</if><if test="t.color != null and t.color != ''">
+			and	color = #{t.color}
 		</if>
 		</where>
 		order by id desc
@@ -65,6 +67,9 @@
       	</if>
       	<if test="factoryId != null and factoryId != ''" >
         	and factory_id = #{factoryId}
+      	</if>
+      	<if test="color != null and color != ''" >
+        	and color = #{color}
       	</if>
 		<if test="mark != null and mark != ''">
 			and mark like '%${mark}%'
@@ -126,22 +131,17 @@
 
 	<insert id="add" parameterType="ClothAllowance" useGeneratedKeys="true" keyProperty="id">
 		insert into cloth_allowance (
-			cloth_id, factory_id, allowance, unit, old_sum, change_sum, allowancekg, unitkg, old_sumkg, change_sumkg, create_time, mark, input_date
+			cloth_id, factory_id, allowance, unit, old_sum, change_sum, allowancekg, unitkg, 
+			old_sumkg, change_sumkg, create_time, mark, input_date,color,supplier_Id
 		)
 		values(
-			#{clothId},
-			#{factoryId},
-			#{allowance},
-			#{unit},
-			#{oldSum},
-			#{changeSum},
-			#{allowancekg},
-			#{unitkg},
-			#{oldSumkg},
-			#{changeSumkg},
-			#{createTime},
-			#{mark},
-			#{inputDate}
+			#{clothId},#{factoryId},
+			#{allowance},#{unit},
+			#{oldSum},#{changeSum},
+			#{allowancekg},#{unitkg},
+			#{oldSumkg},#{changeSumkg},
+			#{createTime},#{mark},
+			#{inputDate},#{color},#{supplierId}
 		)
 	</insert>
 	
@@ -186,11 +186,12 @@
       	</if>
       	<if test="oldSumkg != null" >
         	old_sumkg=#{oldSumkg},
-      	</if>
-      	<if test="changeSum != null" >
+      	</if><if test="changeSum != null" >
         	change_sumkg=#{changeSumkg},
       	</if>
-      	
+      	<if test="color != null" >
+        	color=#{color},
+      	</if>
 		<if test="mark != null" >
         	mark=#{mark},
       	</if>
@@ -199,6 +200,8 @@
       	</if>
       	<if test="inputDate != null" >
         	input_date=#{inputDate},
+      	</if><if test="supplierId != null" >
+        	supplier_id=#{supplierId},
       	</if>
 		</set>
 		where id=#{id}
