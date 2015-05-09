@@ -254,8 +254,8 @@ public class ImportController extends BaseController {
 		try {
 			
 			List<List<String>> list = POIUtils.getExcelData(orderSummaryFile,filename, 0);
-			// reportService.importFlower(list);
-			
+			reportService.importSummary(list);
+
 			System.out.println(list);
 			map.put("code", "1");
 			map.put("msg", "sucess");

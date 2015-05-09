@@ -16,14 +16,17 @@ import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
+import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
+import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReportService;
 import com.github.hzw.security.service.TechnologyInfoService;
+import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.PinyinUtil;
 
 
@@ -47,6 +50,10 @@ public class ReportServiceImpl implements ReportService {
 	
 	@Resource
 	private ClothAllowanceService clothAllowanceService;
+	
+	@Resource
+	private OrderSummaryService orderSummaryService;
+	
 	
 	public void importFlower(List<List<String>> list) throws Exception{
 		
@@ -292,4 +299,201 @@ public class ReportServiceImpl implements ReportService {
 		}
 		
 	}
+	
+	
+	public void importSummary(List<List<String>> list) {
+		
+		for(List<String> li : list) {
+			
+			try{
+				OrderSummary os = importSummaryItem(li);
+				if(os != null) {
+					orderSummaryService.add(os);
+				}
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+	}
+	
+	private OrderSummary importSummaryItem(List<String> list) {
+		OrderSummary os = null;
+		try{
+			os = new OrderSummary();
+			// 0
+			String orderCode = list.get(0);
+			os.setOrderCode(orderCode);
+			
+			// 1
+			String orderDate = list.get(1);
+			os.setOrderDate(DateUtil.str2Date(orderDate, "yyyy-MM-dd HH:mm:ss"));
+			
+			// 2
+			String clothName = list.get(2);
+			if (StringUtils.isEmpty(clothName)) {
+				return null;
+			}
+			ClothInfo clothInfo = clothInfoService.isExist(clothName.trim());
+			if (clothInfo == null) {
+				clothInfo = new ClothInfo();
+				clothInfo.setClothName(clothName.trim());
+				clothInfo.setCreateTime(new Date());
+				clothInfo.setLossRate(1);
+				clothInfo.setMark("excel导入");
+				clothInfo.setOrderName(clothName);
+				clothInfo.setPinyin(PinyinUtil.getPinYinHeadChar(clothName).toUpperCase());
+				clothInfo.setTiaoKg(1.0);
+				clothInfo.setUnit(0);
+				clothInfoService.add(clothInfo);
+			}
+			os.setClothId(clothInfo.getId());
+			
+			// 3  factoryName
+			String factoryName = (String) list.get(3);
+			if (StringUtils.isEmpty(factoryName)) {
+				return null;
+			}
+			FactoryInfo factoryInfo = factoryInfoService.isExist(factoryName.trim());
+			if (factoryInfo == null) {
+				factoryInfo = new FactoryInfo();
+				factoryInfo.setMark("excel导入");
+				factoryInfo.setName(factoryName);
+				factoryInfo.setPinyin(PinyinUtil.getPinYinHeadChar(factoryName).toUpperCase());
+				factoryInfoService.add(factoryInfo);
+			}
+			os.setFactoryId(factoryInfo.getId());
+			
+			// 4 technologyName
+			String technologyName = (String) list.get(4);
+			if (StringUtils.isEmpty(technologyName)) {
+				return null;
+			}
+			TechnologyInfo technologyInfo = technologyInfoService.isExist(technologyName.trim());
+			if (technologyInfo == null) {
+				technologyInfo = new TechnologyInfo();
+				technologyInfo.setMark(technologyName);
+				technologyInfo.setName(technologyName);
+				technologyInfo.setPinyin(PinyinUtil.getPinYinHeadChar(technologyName).toUpperCase());
+				technologyInfoService.add(technologyInfo);
+			}
+			os.setTechnologyId(technologyInfo.getId());
+			
+			// 5  myCompanyCode
+			String myCompanyCode = list.get(5);
+			os.setMyCompanyCode(myCompanyCode);
+			
+			// 6 myCompanyColor
+			String myCompanyColor = list.get(6);
+			os.setMyCompanyColor(myCompanyColor);
+			
+			// 7 factoryCode
+			String factoryCode = list.get(7);
+			os.setFactoryCode(factoryCode);
+			
+			// 8 factoryColor
+			String factoryColor = list.get(8);
+			os.setFactoryColor(factoryColor);
+			
+			// 9 cloth_num
+			String clothNum = list.get(9);
+			int cloth_num = Integer.parseInt(clothNum.trim());
+			os.setClothNum(cloth_num);
+			
+			// 10 num
+			String num = list.get(10);
+			Double num_1 = Double.parseDouble(num.trim());
+			os.setNum(num_1);
+			
+			os.setUnit(0);
+			 
+			// 11 packing_style
+			os.setPackingStyle((String)list.get(11).trim());
+			
+			// 12 mark
+			os.setMark(list.get(12));
+			
+			// 13 差额业务员备注
+			os.setBalancemark(list.get(13));
+			
+			os.setPrintStatus(0);
+			os.setPrintNum(0);
+			
+			// 14  status
+			os.setStatus(list.get(14));
+			
+			os.setReturnStatus(0);
+			os.setCreateTime(new Date());
+			
+			// 15 zhiguan
+			String zhiguan = list.get(15);
+			Double d = null;
+			if(zhiguan != null){
+				d = Double.parseDouble(zhiguan);
+			}
+			os.setZhiguan(d);
+			
+			// 16 kongcha
+			String kongcha = list.get(16);
+			Double t = null;
+			if(kongcha != null){
+				t = Double.parseDouble(kongcha);
+			}
+			os.setKongcha(t);
+			
+			// 17 jiaodai
+			String jiaodai = list.get(17);
+			Double j = null;
+			if(jiaodai != null){
+				j = Double.parseDouble(jiaodai);
+			}
+			os.setJiaodai(j);
+			
+			// 18 balance
+			String balance = list.get(18);
+			Integer b = null;
+			if(balance != null){
+				b = Integer.parseInt(balance);
+			}
+			os.setBalance(b);
+			
+			// 19 kuanfu
+			String kuanfu = list.get(19);
+			Integer k = null;
+			if( kuanfu != null) {
+				k = Integer.parseInt(kuanfu);
+			}
+			os.setKuanfu(k);
+			
+			// 20 kuanfufs
+			String kuanfufs = list.get(20);
+			Integer ks = null;
+			if( kuanfufs != null) {
+				ks = Integer.parseInt(kuanfufs);
+			}
+			os.setKuanfufs(ks);
+			
+			// 21 kezhongUnit
+			String kezhongUnit = list.get(21);
+			Integer ku = null;
+			if( kezhongUnit != null) {
+				ku = Integer.parseInt(kezhongUnit);
+			}
+			os.setKezhongUnit(ku);
+			
+			// 22 kezhongfs
+			String kezhongfs = list.get(22);
+			Integer kfs = null;
+			if( kezhongfs != null) {
+				kfs = Integer.parseInt(kezhongfs);
+			}
+			os.setKezhongfs(kfs);
+			return os;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+
+	}
+	
 }
