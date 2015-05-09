@@ -1,11 +1,13 @@
 package com.github.hzw.security.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.ClothColor;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.util.Common;
+import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PinyinUtil;
 
@@ -57,6 +61,12 @@ public class ClothInfoController extends BaseController {
 		return unitName;
 	}
 	
+	@ResponseBody
+	@RequestMapping("getClothColor")
+	public List<ClothColor> getClothColor(String clothId){
+		List<ClothColor> list = clothInfoService.queryColorsById(clothId);
+		return list;
+	}	
 	
 	/**
 	 * 保存数据
@@ -68,16 +78,25 @@ public class ClothInfoController extends BaseController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(ClothInfo info) {
+	public Map<String, Object> add(ClothInfo info,HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			info.setCreateTime(new Date());
 			// pinyin
 			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getClothName()).toUpperCase());
-			clothInfoService.add(info);
+			List<ClothColor> list=new ArrayList<ClothColor>();
+			String[] colors=request.getParameterValues("color");
+			ClothColor clothColor=new ClothColor();
+			for(String color:colors){
+				clothColor=new ClothColor();
+				clothColor.setColor(color);
+				list.add(clothColor);
+			}
+			clothInfoService.addClothInfo(info,list);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
+			e.printStackTrace();
 		}
 		return map;
 	}
@@ -104,7 +123,9 @@ public class ClothInfoController extends BaseController {
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
 		ClothInfo clothInfo = clothInfoService.getById(id);
+		List<ClothColor> clothColors=clothInfoService.queryColorsById(id);
 		model.addAttribute("cloth", clothInfo);
+		model.addAttribute("clothColors", clothColors);
 		return Common.BACKGROUND_PATH+"/cloth/edit";
 	}
 	

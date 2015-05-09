@@ -21,6 +21,7 @@ import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.SupplierService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
@@ -36,7 +37,8 @@ public class ClothAllowanceController extends BaseController {
 	private ClothInfoService clothInfoService;
 	@Inject
 	private FactoryInfoService factoryInfoService;
-	
+	@Inject
+	private SupplierService supplierService;
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow) {
@@ -44,7 +46,6 @@ public class ClothAllowanceController extends BaseController {
 		model.addAttribute("factorys",factoryInfoService.queryAll(null));
 		return Common.BACKGROUND_PATH+"/allowance/list";
 	}
-	
 	
 	/**
 	 * @param model
@@ -148,8 +149,10 @@ public class ClothAllowanceController extends BaseController {
 	 */
 	@RequestMapping("addUI")
 	public String addUI(Model model) {
+		model.addAttribute("today", DateUtil.date2Str(new Date(),"yyyy-MM-dd"));
 		model.addAttribute("cloths",clothInfoService.queryAll(null));
 		model.addAttribute("factorys",factoryInfoService.queryAll(null));
+		model.addAttribute("suppliers",supplierService.queryAll(null) );
 		return Common.BACKGROUND_PATH+"/allowance/add";
 	}
 	
@@ -163,6 +166,7 @@ public class ClothAllowanceController extends BaseController {
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
 		ClothAllowance info = clothAllowanceService.getById(id);
+		model.addAttribute("suppliers",supplierService.queryAll(null) );
 		model.addAttribute("allowance", info);
 		return Common.BACKGROUND_PATH+"/allowance/edit";
 	}

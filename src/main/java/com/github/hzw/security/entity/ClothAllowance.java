@@ -18,10 +18,18 @@ public class ClothAllowance {
 
     private String clothName; // 冗余
     
+    /**坯布颜色**/
+    private String color;
+    
     private Integer factoryId;
+    
+    /**供应商ID**/
+    private Integer supplierId;
     
     // 工厂名称
     private String factoryName; // 冗余
+    /**坯布供应商*/
+    private String supplierName;
     private Integer allowance;
     private int unit; // 布种单位   0条 1 kg 2cm 3码 4包
     private Double oldSum;
@@ -52,14 +60,21 @@ public class ClothAllowance {
     public void setId(Integer id) {
         this.id = id;
     }
-
     
     public Integer getClothId() {
         return clothId;
     }
 
-    
-    public void setClothId(Integer clothId) {
+    /**坯布供应商*/
+    public String getSupplierName() {
+		return supplierName;
+	}
+    /**坯布供应商*/
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
+	public void setClothId(Integer clothId) {
         this.clothId = clothId;
     }
 
@@ -217,13 +232,10 @@ public class ClothAllowance {
 	}
 	/***现余量信息**/
 	public String getAllowanceInfo() {
-		String unitName="条";
 		if(0!=unit){
-			unitName="包";
-		}
-		allowanceInfo=allowance+unitName;
-		if(null!=noReturn&&0<noReturn&&unit==0){
-			allowanceInfo=(allowance)+unitName+"(未回"+noReturn+unitName+")";
+			allowanceInfo="-";
+		}else{
+			allowanceInfo=allowance+"";
 		}
 		return allowanceInfo;
 	}
@@ -243,6 +255,22 @@ public class ClothAllowance {
 	/***现余量信息KG**/
 	public void setAllowanceKgInfo(String allowanceKgInfo) {
 		this.allowanceKgInfo = allowanceKgInfo;
+	}
+	/**坯布颜色**/
+	public String getColor() {
+		return color;
+	}
+	/**坯布颜色**/
+	public void setColor(String color) {
+		this.color = color;
+	}
+	/**供应商ID**/
+	public Integer getSupplierId() {
+		return supplierId;
+	}
+	/**供应商ID**/
+	public void setSupplierId(Integer supplierId) {
+		this.supplierId = supplierId;
 	}
 
 }

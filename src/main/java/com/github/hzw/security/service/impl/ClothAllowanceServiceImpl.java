@@ -109,7 +109,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 			
 			// 公斤
 			t.setOldSumkg(tm.getAllowancekg());
-			t.setAllowancekg(t.getChangeSumkg() + tm.getAllowancekg());
+			t.setAllowancekg(tm.getAllowancekg());
 
 			t.setCreateTime(new Date());
 			this.clothAllowanceMapper.update(t);
