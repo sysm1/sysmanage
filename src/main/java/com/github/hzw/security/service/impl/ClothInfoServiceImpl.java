@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.ClothColor;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.mapper.ClothInfoMapper;
 import com.github.hzw.security.service.ClothInfoService;
@@ -60,6 +61,21 @@ public class ClothInfoServiceImpl implements ClothInfoService {
 	public void add(ClothInfo t) throws Exception {
 		t.setPinyin(PinyinUtil.getPinYinHeadChar(t.getClothName()).toUpperCase());
 		this.clothInfoMapper.add(t);
+	}
+	
+	@Override
+	public void addClothInfo(ClothInfo t,List<ClothColor> list) throws Exception {
+		t.setPinyin(PinyinUtil.getPinYinHeadChar(t.getClothName()).toUpperCase());
+		this.clothInfoMapper.add(t);
+		for(ClothColor clothColor:list){
+			clothColor.setClothId(t.getId());
+			clothInfoMapper.addColor(clothColor);
+		}
+	}
+	
+	@Override
+	public List<ClothColor> queryColorsById(String id){
+		return clothInfoMapper.queryColorsById(id);
 	}
 
 	public List<ClothInfo> queryPinyin(String name){

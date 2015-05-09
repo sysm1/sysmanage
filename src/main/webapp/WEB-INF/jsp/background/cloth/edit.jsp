@@ -65,6 +65,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				$(".l_err").css('display','none');
 			}
 		});
+		
+		$("#addone").click("click", function() {
+			var newtr=$("#table1 tr:last").clone();
+			newtr.insertAfter($("#table1 tr:last"));
+			newtr.find("input").eq(0).attr("value",'');
+		});
 	});
 	
 	function saveWin() {
@@ -80,7 +86,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 485px;"></div>
 	<form name="form" id="form" action="${ctx}/background/cloth/update.html" method="post">
-		<table style="width: 485px; height: 200px;">
+		<table style="width: 485px; height: 200px;" id="table1">
 			<tbody>
 				<tr>
 					<td class="l_right">名称：</td>
@@ -88,24 +94,23 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<input id='id' name="id" type="hidden" value="${cloth.id}">
 					<input id='clothName' name="clothName" type="text" value="${cloth.clothName}">
 					</td>
-				</tr><tr>
+				</tr>
+				<!--tr>
 					<td class="l_right">下单名称：</td>
 					<td class="l_left">
 					<input id='orderName' name="orderName" type="text" value="${cloth.orderName}">
 					</td>
-				</tr><tr>
+				</tr--><tr>
 					<td class="l_right">布种单位：</td>
 					<td class="l_left">
 						<select id="unit" name="unit">
-							<option value="">选择单位</option>
 							<option value="0" <c:if test="${cloth.unit eq 0 }">selected</c:if>>条</option>
-							<option value="4" <c:if test="${cloth.unit eq 4 }">selected</c:if>>包</option>
 						</select>
 					</td>
 				</tr><tr>
 					<td>默认公斤数：</td>
 					<td>
-						<input type="text" id="tiaoKg" name="tiaoKg" value="${cloth.tiaoKg }">条/KG
+						<input type="text" id="tiaoKg" name="tiaoKg" value="${cloth.tiaoKg }">KG/条
 					</td>
 				</tr><tr>
 					<td class="l_right">备注：</td>
@@ -115,19 +120,20 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						name="mark" type="text" class="checkdesc" value="${cloth.mark}">
 						</div>
 						</td>
-				</tr><tr>
-					<td colspan="2">
-						<div class="l_btn_centent">
-								<!-- saveWin_form   from是表单Ｉd-->
-								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-									onclick="closeWin()"><span>关闭</span> </a>
-							</div>
-					</td>
 				</tr>
+				<c:forEach items="${clothColors }" var="clothColor">
+				<tr style="background-color:#DEDEDE; ">
+					<td>颜色：</td>
+					<td><input type="text" name="color" value="${clothColor.color }"></td>
+				</tr>
+				</c:forEach>
 			</tbody>
 		</table>
+		<div class="l_btn_centent">
+			<!-- saveWin_form   from是表单Ｉd-->
+			<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
+			<a class="btn btn-primary" id="addone" ><span>新增一行</span> </a>
+		</div>
 	</form>
 	</div>
 </body>

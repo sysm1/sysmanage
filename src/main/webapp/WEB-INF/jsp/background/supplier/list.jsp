@@ -18,32 +18,16 @@
 						name : "id",
 						width : "50px"
 					}, {
-						colkey : "clothName",
-						name : "布种名称",
-						width : "150px"
-					},
-					/**{
-						colkey : "orderName",
-						name : "下单名称",
-						width : "150px"
-					}, */
-					{
-						colkey : "unitName",
-						name : "布种单位",
-						width : "80px"
-					},{
-						colkey : "tiaoKg",
-						name : "KG/条",
-						width : "100px"
-					},{
-						colkey: "colors",
-						name  :"颜色"
-					},{
+						colkey : "name",
+						name : "名称",
+						width:"300px"
+					}
+					/**, {
 						colkey : "mark",
-						name : "备注",
-						width: "150px"
-					}],
-					jsonUrl : '${pageContext.request.contextPath}/background/cloth/query.html',
+						name : "备注"
+					}*/
+					],
+					jsonUrl : '${pageContext.request.contextPath}/background/supplier/query.html',
 					checkbox : true
 				});
 		
@@ -56,17 +40,17 @@
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
 			f.attr('target','_blank');
-			f.attr('action','${pageContext.request.contextPath}/background/cloth/exportExcel.html');
+			f.attr('action','${pageContext.request.contextPath}/background/supplier/exportExcel.html');
 			f.submit();
 		});
 		
 		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 450,
-				height : 520,
-				url : rootPath + '/background/cloth/addUI.html',
-				title : "增加布种信息",
+				width : 300,
+				height : 310,
+				url : rootPath + '/background/supplier/addUI.html',
+				title : "增加工厂信息",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 			});
 		});
@@ -78,10 +62,25 @@
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 400,
-				height : 520,
-				url : rootPath + '/background/cloth/editUI.html?id='+cbox,
-				title : "修改布种信息",
+				width : 300,
+				height : 310,
+				url : rootPath + '/background/supplier/editUI.html?id='+cbox,
+				title : "修改工厂信息",
+				isHidden : false
+			});
+		});
+		
+		$("#view").click("click", function() {//绑定查询按扭
+			var cbox=grid.getSelectedCheckbox();
+			if (cbox.length > 1||cbox=="") {
+				parent.$.ligerDialog.alert("只能选中一个");
+				return;
+			}
+			dialog = parent.$.ligerDialog.open({
+				width : 300,
+				height : 310,
+				url : rootPath + '/background/supplier/viewUI.html?id='+cbox,
+				title : "查看工厂信息",
 				isHidden : false
 			});
 		});
@@ -98,7 +97,7 @@
 					    type: "post", //使用get方法访问后台
 					    dataType: "json", //json格式的数据
 					    async: false, //同步   不写的情况下 默认为true
-					    url: rootPath + '/background/cloth/deleteById.html', //要访问的后台地址
+					    url: rootPath + '/background/supplier/deleteById.html', //要访问的后台地址
 					    data: {ids:cbox.join(",")}, //要发送的数据
 					    success: function(data){
 					    	if (data.flag == "true") {
@@ -123,9 +122,8 @@
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-				布种名称：<input type="text" name="clothName" value="${param.clothName}" style="height: 20px" /> 
-				下单名称：<input type="text" name="orderName" value="${param.orderName}" style="height: 20px" />
-				<a class="btn btn-primary"
+				名称：<input type="text" name="name" value="${param.name}"
+					style="height: 20px" /> <a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>
 			</form>
@@ -140,17 +138,20 @@
 			</a> --> 
 			
 			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> Edit
+				class="icon-edit icon-white"></i> 修改
 			</a> 
 			
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> Delete
+				class="icon-trash icon-white"></i> 删除
 			</a>
-			<!-- 
+			
+			<a class="btn btn-primary" href="javascript:void(0)" id="view"> <i
+				class="icon-zoom-add icon-white"></i> 查看
+			</a>
+			
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
 				导出excel
 			</a>
-			 -->
 		</div>
 		<div id="paging" class="pagclass"></div>
 	</div>

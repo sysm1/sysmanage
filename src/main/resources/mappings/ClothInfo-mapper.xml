@@ -3,7 +3,9 @@
 <mapper namespace="com.github.hzw.security.mapper.ClothInfoMapper" >
 
   <sql id="selectId" >
-    id,  cloth_name  clothName,unit, order_name as orderName, mark, create_time as createTime,pinyin,tiao_kg tiaoKg
+    id,  cloth_name  clothName,unit, order_name as orderName, mark,
+    (select GROUP_CONCAT(color) from cloth_color where cloth_id=id ) colors,
+    create_time as createTime,pinyin,tiao_kg tiaoKg
   </sql>
   
   <select id="query" resultType="ClothInfo" parameterType="ClothInfo">
@@ -37,6 +39,10 @@
 		</where>
 		order by id desc
 	</select>
+	
+	<select id="queryColorsById" parameterType="String" resultType="com.github.hzw.security.entity.ClothColor">
+		select color from cloth_color where cloth_id=#{clothId}
+	</select>
 
 	<select id="queryAll" resultType="ClothInfo">
 		select
@@ -59,6 +65,11 @@
 			#{unit},
 			#{tiaoKg}
 		)
+	</insert>
+	
+	<insert id="addColor" parameterType="com.github.hzw.security.entity.ClothColor">
+		insert into cloth_color(cloth_id,color)
+		values(#{clothId},#{color})
 	</insert>
 	
 	<delete id="delete" parameterType="String">

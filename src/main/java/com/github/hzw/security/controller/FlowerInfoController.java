@@ -265,9 +265,6 @@ public class FlowerInfoController extends BaseController{
 		return Common.BACKGROUND_PATH+"/flower/edit";
 	}
 	
-	
-	
-	
 	/**
 	 * 删除
 	 * 

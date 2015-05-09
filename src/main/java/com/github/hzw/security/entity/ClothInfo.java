@@ -18,6 +18,9 @@ public class ClothInfo {
     private String orderName;
 
     private Date createTime;
+    
+    /**布种颜色**/
+    private String colors;
 
     private String mark;
     
@@ -137,5 +140,13 @@ public class ClothInfo {
 
 	public void setTiaoKg(Double tiaoKg) {
 		this.tiaoKg = tiaoKg;
+	}
+
+	public String getColors() {
+		return colors;
+	}
+
+	public void setColors(String colors) {
+		this.colors = colors;
 	}
 }

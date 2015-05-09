@@ -33,36 +33,28 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 						width : "75px"
 					},{
 						colkey : "clothName",
-						name : "布种名称",
-						width : "150px"
+						name : "坯布名称",
+						width : "130px"
 					},{
-						colkey : "factoryName",
-						name : "工厂",
-						width : "150px"
+						colkey : "supplierName",
+						name : "坯布供应商",
+						width : "130px"
+					},{
+						colkey : "color",
+						name : "坯布颜色",
+						width : "130px"
 					}, {
 						colkey : "allowanceInfo",
-						name : "现余量",
-						width : "150px"
-					}, {
-						colkey : "oldSum",
-						name : "前余量",
-						width : "50px"
-					}, {
-						colkey : "changeSum",
-						name : "新增量",
-						width : "50px"
+						name : "坯布条数",
+						width : "75px"
 					},{
-						colkey : "allowanceKgInfo",
-						name : "现余量(公斤)",
-						width : "150px"
-					}, {
-						colkey : "oldSumkg",
-						name : "前余量(公斤)",
-						width : "50px"
-					}, {
-						colkey : "changeSumkg",
-						name : "新增量(公斤)",
-						width : "50px"
+						colkey : "allowancekg",
+						name : "坯布公斤数",
+						width : "80px"
+					},{
+						colkey : "factoryName",
+						name : "收坯单位",
+						width : "130px"
 					}, {
 						colkey : "mark",
 						name : "备注"
@@ -91,9 +83,9 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
 				width : 400,
-				height : 510,
+				height : 400,
 				url : rootPath + '/background/allowance/addUI.html',
-				title : "增加坯布余量",
+				title : "增加坯布采购单",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 			});
 		});
@@ -106,9 +98,9 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 			}
 			dialog = parent.$.ligerDialog.open({
 				width : 400,
-				height : 510,
+				height : 400,
 				url : rootPath + '/background/allowance/editUI.html?id='+cbox,
-				title : "修改坯布余量",
+				title : "坯布采购单修改",
 				isHidden : false
 			});
 		});
