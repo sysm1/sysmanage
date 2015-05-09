@@ -98,7 +98,6 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 		parent.$(".l-dialog,.l-window-mask").css("display","none"); 
 	}
 	
-	
 </script>
 </head>
 <body>
@@ -106,77 +105,75 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 	<div class="l_err" style="width: 370px;"></div>
 	<form name="form" id="form" action="${ctx}/background/allowance/update.html" method="post">
 		<input id='id' name="id" type="hidden" value="${allowance.id}">
-		<table style="width: 385px; height: 300px;">
+		<table style="width: 385px; height: 300px;" border="1">
 			<tbody>
 			
 			<tr>
-				<td class="l_right">日期：</td>
+				<td style="text-align: right;background-color: #54FF9F;">日期：</td>
 				<td class="l_left">
-					<div class="lanyuan_input">
-						<input type="text" id="inputDate" name="inputDate" 
-							value="<fmt:formatDate value='${allowance.inputDate}' pattern='yyyy-MM-dd'/>" 
-							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
-					</div>
+					<input type="text" id="inputDate" name="inputDate" 
+						value="<fmt:formatDate value='${allowance.inputDate}' pattern='yyyy-MM-dd'/>" 
+						onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">布种：</td>
+			</tr><tr>
+				<td style="text-align: right;background-color: #54FF9F;height: 35px;">坯布供应商：</td>
+				<td>
+					&nbsp;${allowance.supplierName }
+					<input type="hidden" id="supplierId" name="supplierId" value="${allowance.supplierId }">
+				</td>
+			</tr><tr>
+				<td style="text-align: right;background-color: #54FF9F;height: 35px;">布种：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 						<input id='clothId' name="clothId" type="hidden" value="${allowance.clothId}">
-						<input id='clothName' name="clothName" type="text" value="${allowance.clothName}" readonly="readonly">
-						<c:if test="${allowance.unit==0 }">条</c:if>
-						<c:if test="${allowance.unit==4 }">包</c:if>
+						&nbsp;${allowance.clothName}
 					</div>
 				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">工厂：</td>
+			</tr><tr>
+				<td style="text-align: right;background-color: #54FF9F;height: 35px;">颜色：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+						<input id='color' name="color" type="hidden" value="${allowance.color}">
+						&nbsp;${allowance.color}
+					</div>
+				</td>
+			</tr><tr>
+				<td style="text-align: right;background-color: #54FF9F;height: 35px;">工厂：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 						<input id='factoryId' name="factoryId" type="hidden" value="${allowance.factoryId}">
-						<input id='factoryName' name="factoryName" type="text" value="${allowance.factoryName}" readonly="readonly">
+						&nbsp;${allowance.factoryName}
 					</div>
 				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">新增量：</td>
+			</tr><tr>
+				<td style="text-align: right;background-color: #54FF9F;">坯布条数：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-					<input id='changeSum' name="changeSum" type="text" class="isNum" value="${allowance.changeSum}">
+					<input id='allowance' name="allowance" type="text" class="isNum" value="${allowance.changeSum}">
 					<c:if test="${allowance.unit==0 }">条</c:if>
 					<c:if test="${allowance.unit==4 }">包</c:if>
 					</div>
 				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">新增量：</td>
+			</tr><tr>
+				<td style="text-align: right;background-color: #54FF9F;">坯布公斤数：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="${allowance.changeSumkg}">公斤
+						<input id='allowancekg' name="allowancekg" type="text" value="${allowance.allowancekg}">公斤
 					</div>
 				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">备注：</td>
+			</tr><tr>
+				<td style="text-align: right;background-color: #54FF9F;">备注：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='mark' name="mark" type="text" value="${allowance.mark}">
 					</div>
 				</td>
-			</tr>
-	
-			<tr>
+			</tr><tr>
 				<td colspan="2">
 					<div class="l_btn_centent">
 						<!-- saveWin_form   from是表单Ｉd-->
-						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
-						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保&nbsp;&nbsp;&nbsp;&nbsp;存</span> </a> 
+						<!--a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a-->
 					</div>
 				</td>
 			</tr>

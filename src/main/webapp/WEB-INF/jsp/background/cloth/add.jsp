@@ -65,6 +65,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				$(".l_err").css('display','none');
 			}
 		});
+		
+		$("#addone").click("click", function() {
+			var newtr=$("#table1 tr:last").clone();
+			newtr.insertAfter($("#table1 tr:last"));
+			newtr.find("input").eq(0).attr("value",'');
+		});
 	});
 	function saveWin() {
 		$("#form").submit();
@@ -75,11 +81,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 485px;"></div>
 	<form name="form" id="form" action="${ctx}/background/cloth/add.html" method="post">
-		<table style="width: 485px; height: 200px;">
+		<table style="width: 485px; height: 200px;" id="table1">
 			<tbody>
 			
 				<tr>
-					<td class="l_right">布种名称：</td>
+					<td style="text-align: right;">布种名称：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='clothName' name="clothName" type="text" value="">
@@ -94,22 +100,20 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</div></td>
 				</tr-->
 				<tr>
-					<td class="l_right">布种单位：</td>
+					<td style="text-align: right;">布种单位：</td>
 					<td class="l_left">
 						<select id="unit" name="unit">
-							<option value="">选择单位</option>
 							<option value="0">条</option>
-							<option value="4">包</option>
 						</select>
 					</td>
 				</tr><tr>
-					<td>默认公斤数：</td>
+					<td style="text-align: right;">默认公斤数：</td>
 					<td>
 						<input type="text" id="tiaoKg" name="tiaoKg" value="">KG/条
 					</td>
 				</tr>		
 				<tr>
-					<td class="l_right">备注：</td>
+					<td style="text-align: right;">备注：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='mark'
@@ -117,20 +121,19 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</div>
 						</td>
 				</tr>
-				
-				<tr>
-					<td colspan="2">
-						<div class="l_btn_centent">
-								<!-- saveWin_form   from是表单Ｉd-->
-								<a class="btn btn-primary" 
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-									onclick="closeWin()"><span>关闭</span> </a>
-							</div>
-						</td>
+				<tr style="background-color:#DEDEDE ">
+					<td style="text-align: right;">颜色：</td>
+					<td class="l_left">
+						<input id='color' name="color" class="checkdesc" type="text" value="">
+					</td>
 				</tr>
 			</tbody>
 		</table>
+		<div class="l_btn_centent">
+			<!-- saveWin_form   from是表单Ｉd-->
+			<a class="btn btn-primary" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
+			<a class="btn btn-primary" id="addone" ><span>新增一行颜色</span> </a>
+		</div>
 	</form>
 	</div>
 </body>

@@ -18,35 +18,39 @@
 						name : "id",
 						width : "50px"
 					}, {
-						colkey : "clothName",
-						name : "布种名称",
+						colkey : "cash",
+						name : "当日现金"
+					}, {
+						colkey : "sales",
+						name : "当日销售额",
+						width:"70px"
+					}, {
+						colkey : "arrears",
+						name : "当日合计欠款",
 						width : "150px"
-					},
-					/**{
-						colkey : "orderName",
-						name : "下单名称",
-						width : "150px"
-					}, */
-					{
-						colkey : "unitName",
-						name : "布种单位",
-						width : "80px"
-					},{
-						colkey : "tiaoKg",
-						name : "KG/条",
-						width : "100px"
-					},{
-						colkey: "colors",
-						name  :"颜色"
-					},{
-						colkey : "mark",
-						name : "备注",
-						width: "150px"
+					}, {
+						colkey : "balanceYesterday",
+						name : "昨日实际结余"
+					}, {
+						colkey : "balanceToday",
+						name : "当日应结余现金"
+					}, {
+						colkey : "balanceActual",
+						name : "当日实际结余现金"
+					}, {
+						colkey : "balanceShouldActual",
+						name : "当日应结实结金额"
+					} , {
+						colkey : "today",
+						name : "日期",
+						width:"70px"
+					}, {
+						colkey : "company",
+						name : "公司"
 					}],
-					jsonUrl : '${pageContext.request.contextPath}/background/cloth/query.html',
+					jsonUrl : '${pageContext.request.contextPath}/background/dailyStatistics/query.html',
 					checkbox : true
 				});
-		
 		$("#seach").click("click", function() {//绑定查询按扭
 			var searchParams = $("#fenye").serialize();
 			grid.setOptions({
@@ -56,21 +60,18 @@
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
 			f.attr('target','_blank');
-			f.attr('action','${pageContext.request.contextPath}/background/cloth/exportExcel.html');
+			f.attr('action','${pageContext.request.contextPath}/background/account/exportExcel.html');
 			f.submit();
 		});
-		
-		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 450,
-				height : 520,
-				url : rootPath + '/background/cloth/addUI.html',
-				title : "增加布种信息",
+				width : 300,
+				height : 310,
+				url : rootPath + '/background/account/addUI.html',
+				title : "增加账号",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 			});
 		});
-		
 		$("#editView").click("click", function() {//绑定查询按扭
 			var cbox=grid.getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
@@ -78,14 +79,27 @@
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 400,
-				height : 520,
-				url : rootPath + '/background/cloth/editUI.html?id='+cbox,
-				title : "修改布种信息",
+				width : 300,
+				height : 310,
+				url : rootPath + '/background/account/editUI.html?accountId='+cbox,
+				title : "修改账号",
 				isHidden : false
 			});
 		});
-		
+		$("#perrole").click("click", function() {//绑定查询按扭
+			var cbox=grid.selectRow();
+			if (cbox.id == undefined || cbox.id=="") {
+				parent.$.ligerDialog.alert("请选择一条数据!");
+				return;
+			}
+			dialog = parent.$.ligerDialog.open({
+				width : 500,
+				height : 410,
+				url : rootPath + '/background/account/accRole.html?id='+cbox.id+'&accountName='+encodeURI(encodeURI(cbox.accountName))+'&roleName='+encodeURI(encodeURI(cbox.roleName)),
+				title : "分配角色",
+				isHidden : false
+			});
+		});
 		$("#deleteView").click("click", function() {//绑定查询按扭
 			var cbox=grid.getSelectedCheckbox();
 			if (cbox=="") {
@@ -98,7 +112,7 @@
 					    type: "post", //使用get方法访问后台
 					    dataType: "json", //json格式的数据
 					    async: false, //同步   不写的情况下 默认为true
-					    url: rootPath + '/background/cloth/deleteById.html', //要访问的后台地址
+					    url: rootPath + '/background/account/deleteById.html', //要访问的后台地址
 					    data: {ids:cbox.join(",")}, //要发送的数据
 					    success: function(data){
 					    	if (data.flag == "true") {
@@ -123,9 +137,8 @@
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-				布种名称：<input type="text" name="clothName" value="${param.clothName}" style="height: 20px" /> 
-				下单名称：<input type="text" name="orderName" value="${param.orderName}" style="height: 20px" />
-				<a class="btn btn-primary"
+				名称：<input type="text" name="accountName" value="${param.name}"
+					style="height: 20px" /> <a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>
 			</form>
@@ -133,24 +146,19 @@
 		<div class="topBtn">
 			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
 				class="icon-zoom-add icon-white"></i> <span>add</span>
-			</a> 
-			
-			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
+			</a> <!-- <a class="btn btn-success" href="javascript:void(0)"> <i
 				class="icon-zoom-in icon-white" id="View"></i> View
-			</a> --> 
-			
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
+			</a> --> <a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
 				class="icon-edit icon-white"></i> Edit
-			</a> 
-			
-			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
+			</a> <a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete
 			</a>
-			<!-- 
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
 				导出excel
 			</a>
-			 -->
+			<a class="btn btn-large btn-success" href="javascript:void(0)" id="perrole">
+				分配角色
+			</a>
 		</div>
 		<div id="paging" class="pagclass"></div>
 	</div>

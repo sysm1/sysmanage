@@ -94,7 +94,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				$(".l_err").css('display','none');
 			}
 		});
-		
 	});
 	function saveWin() {
 		$("#form").submit();
@@ -129,6 +128,27 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				
 			}
 			//alert($("#unit").val());
+			//alert($(this).val());
+			$.ajax({
+			    type: "post", //使用get方法访问后台
+			    dataType: "json", //json格式的数据
+			    async: false, //同步   不写的情况下 默认为true
+			    url: rootPath + '/background/cloth/getClothColor.html', //要访问的后台地址
+			    data: {clothId:$(this).val()}, //要发送的数据
+			    success: function(data){
+			    	if(data!=null&&data!=''){
+				    	var color = $("#color");
+				    	color.empty();
+				    	color.append($("<option>").text("请选择").val(""));
+				    	for(var i=0;i<data.length;i++) {
+				    	    var option = $("<option>").text(data[i].color).val(data[i].color);
+				    	    color.append(option);
+				    	}
+			    	}else{
+			    		//alert('没有相关联的我司编号');
+			    	}
+				}
+			});
 		});
 	});
 </script>
@@ -145,13 +165,22 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td class="l_right">日期：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input type="text" id="inputDate" name="inputDate" 
-							value="<fmt:formatDate value='${bean.startDate}' pattern='yyyy-MM-dd'/>" 
+						<input type="text" id="inputDate" name="inputDate" value="${today}" 
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 					</div>
 				</td>
 			</tr>
-			
+			<tr>
+				<td class="l_right">坯布供应商：</td>
+				<td>
+					<select id="supplierId" name="supplierId">
+						<option value="">请选择供应商</option>
+						<c:forEach items="${suppliers }" var="supplier">
+						<option value="${supplier.id }">${supplier.name }</option>
+						</c:forEach>
+					</select>
+				</td>
+			</tr>
 			<tr>
 				<td class="l_right">布种：</td>
 				<td class="l_left">
@@ -166,6 +195,18 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					</div>
 				</td>
 			 </tr>
+			 <tr>
+				<td class="l_right">颜色：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+						
+						<select id="color" name="color">
+							<option value="">请选择颜色</option>
+						</select>
+						
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<td class="l_right">工厂：</td>
 				<td class="l_left">
@@ -182,45 +223,37 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				</td>
 			</tr>
 			<tr>
-				<td class="l_right">新增量：</td>
+				<td class="l_right">坯布条数：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 						<input id='changeSum' name="changeSum" type="text" class="isNum" value="" >
 						<span class="lanyuan_input" id="clothUnit"></span>
 					</div>
 				</td>
-			</tr>
-			
-			<tr>
-				<td class="l_right">新增量：</td>
+			</tr><tr>
+				<td class="l_right">坯布公斤数：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="" >
 						<span class="lanyuan_input" id="clothUnit">公斤</span>
 					</div>
 				</td>
-			</tr>
-			
-			<tr>
+			</tr><tr>
 				<td class="l_right">备注：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='mark' name="mark" type="text" value="">
 					</div>
 				</td>
+			</tr><tr>
+				<td colspan="2">
+					<div class="l_btn_centent">
+						<!-- saveWin_form   from是表单Ｉd-->
+						<a class="btn btn-primary" href="javascript:void(0)"
+							id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
+					</div>
+				</td>
 			</tr>
-				
-				<tr>
-					<td colspan="2">
-						<div class="l_btn_centent">
-								<!-- saveWin_form   from是表单Ｉd-->
-								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-									onclick="closeWin()"><span>关闭</span> </a>
-							</div>
-						</td>
-				</tr>
 			</tbody>
 		</table>
 	</form>
