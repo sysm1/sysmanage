@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.ClothManageMapper" >
+
+  <sql id="selectId" >
+    id,
+    factory_id factoryId,
+    (select cloth_name from cloth_info where id=cloth_id) clothName,
+    (select factory.name from factory_info factory where factory.id = factory_id ) as factoryName, 
+    cloth_Id clothId,color,
+    fact_num factNum,fact_numkg factNumkg,
+    paper_num paperNum,
+    paper_numkg paperNumKg,
+    create_time createTime,mark
+  </sql>
+  
+  <select id="query" resultType="ClothManage" parameterType="ClothManage">
+		select
+		<include refid="selectId" />
+		from cloth_manage
+		<where> 1=1
+		<if test="t.factoryId != null and t.factoryId != ''">
+			and factory_id = #{t.factoryId}
+		</if><if test="t.clothId != null and t.clothId != ''">
+			and cloth_Id = #{t.clothId}
+		</if><if test="t.color != null and t.color != ''">
+			and color = #{t.color}
+		</if><if test="t.factNum != null and t.factNum != '' and t.factNum !=0 ">
+			and fact_num = #{t.factNum}
+		</if><if test="t.factNumKg != null and t.factNumKg != '' ">
+			and fact_numkg = #{t.factNumKg}
+		</if><if test="t.mark != null and t.mark != ''">
+			and mark like '%${t.mark}%'
+		</if>
+		<if test="t.id != null and t.id != ''">
+			and id=#{t.id}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryPinyin" resultType="ClothInfo" parameterType="map">
+		select
+		<include refid="selectId" />
+		from cloth_info
+		<where>
+		<if test="t != null and t != ''">
+			cloth_name like '%${t}%' or pinyin like '%${t}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+	
+	<select id="queryColorsById" parameterType="String" resultType="com.github.hzw.security.entity.ClothColor">
+		select color from cloth_color where cloth_id=#{clothId}
+	</select>
+
+	<select id="queryAll" resultType="ClothManage" parameterType="ClothManage">
+		select
+		<include refid="selectId" />
+		from cloth_manage
+		<where> 1=1
+		<if test="factoryId != null and factoryId != ''">
+			and factory_id = #{factoryId}
+		</if><if test="clothId != null and clothId != ''">
+			and cloth_Id = #{clothId}
+		</if><if test="color != null and color != ''">
+			and color = #{color}
+		</if><if test="factNum != null and factNum != '' and factNum !=0 ">
+			and fact_num = #{factNum}
+		</if><if test="factNumKg != null and factNumKg != '' ">
+			and fact_numkg = #{factNumKg}
+		</if><if test="mark != null and mark != ''">
+			and mark like '%${mark}%'
+		</if>
+		<if test="id != null and id != ''">
+			and id=#{id}
+		</if>
+		</where>
+		order by id desc
+	</select>
+
+	<insert id="add" parameterType="ClothManage" useGeneratedKeys="true" keyProperty="id">
+		insert into cloth_manage (
+			factory_id, cloth_Id, color,fact_num,
+			fact_numkg,create_time,mark,paper_num,paper_numkg
+		)values(
+			#{factoryId},
+			#{clothId},
+			#{color},
+			#{factNum},
+			#{factNumKg},
+			#{createTime},
+			#{mark},
+			#{paperNum},
+			#{paperNumKg}
+		)
+	</insert>
+	
+	<insert id="addColor" parameterType="com.github.hzw.security.entity.ClothColor">
+		insert into cloth_color(cloth_id,color)
+		values(#{clothId},#{color})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from cloth_manage where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="ClothManage">
+		select
+		<include refid="selectId" />
+		from cloth_manage where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="ClothManage">
+		update cloth_manage
+		<set>
+		<if test="factoryId != null" >
+        	factory_id=#{factoryId},
+      	</if>
+      	<if test="clothId != null" >
+        	cloth_id=#{clothId},
+      	</if>
+		<if test="color != null" >
+        	color=#{color},
+      	</if>
+		<if test="factNum != null" >
+        	fact_num=#{factNum},
+      	</if>
+		<if test="factNumKg != null" >
+        	fact_numkg=#{factNumKg},
+      	</if><if test="mark != null" >
+        	mark=#{mark},
+      	</if><if test="createTime != null" >
+        	create_time=#{createTime},
+      	</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	
+	<select id="isExist" resultType="ClothInfo" parameterType="String">
+		select
+		<include refid="selectId" />
+		from cloth_info
+		where cloth_name = #{clothName}
+	</select>
+  
+</mapper>
