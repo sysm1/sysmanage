@@ -111,6 +111,9 @@ public class ClothAllowanceController extends BaseController {
 			ClothAllowance clothAllowance=(ClothAllowance) pageView.getRecords().get(0);
 			stra[0]=clothAllowance.getAllowance()+"";
 			stra[1]=clothAllowance.getAllowancekg()+"";
+		}else{
+			stra[0]="0";
+			stra[1]="0.0";
 		}
 		return stra;
 	}
