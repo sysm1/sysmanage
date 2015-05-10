@@ -37,8 +37,6 @@ AUTO_INCREMENT=7
 ROW_FORMAT=COMPACT
 ;
 
-
-
 -- 布种信息  关键字 cloth
 create table cloth_info (
 	id int not null auto_increment,
@@ -65,7 +63,25 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_bin
 ROW_FORMAT=COMPACT
 ;
 
-
+----坯布管理
+CREATE TABLE `cloth_manage` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`factory_id`  int(11) NULL DEFAULT NULL ,
+`cloth_Id`  int(11) NULL DEFAULT NULL ,
+`color`  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`fact_num`  int(11) NULL DEFAULT NULL ,
+`fact_numkg`  double(11,0) NULL DEFAULT NULL ,
+`create_time`  datetime NULL DEFAULT NULL ,
+`mark`  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`paper_num`  int(11) NULL DEFAULT NULL ,
+`paper_numkg`  int(11) NULL DEFAULT NULL COMMENT '账面公斤数' ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_bin
+AUTO_INCREMENT=13
+ROW_FORMAT=COMPACT
+;
 
 -- 布种的价格情况
 create table cloth_price (
