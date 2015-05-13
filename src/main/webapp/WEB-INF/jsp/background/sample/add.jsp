@@ -279,7 +279,7 @@ $(function() {
 </head>
 <body style="width: 1100px;">
 <div class="divdialog">
-<div style="padding-left: 350px;"><b>开版录入</b></div>
+<div style="padding-left: 350px;height: 30px;font-size: 14px;"><b>开版录入</b></div>
 	<div >
 <table width="400px;" border="0">
 	<tr>
@@ -303,7 +303,7 @@ $(function() {
 		<table style="height: 100%;" id="table1" border="2" name="table1">
 			<tbody>
 				<tr>
-					<td style="height: 30px;">
+					<td style="height: 30px;width: 30px;text-align: center;">
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</td>
 					<td>开版日期</td>
@@ -318,7 +318,7 @@ $(function() {
 				</tr>
 			
 				<tr id="1">
-					<td>
+					<td style="text-align: center;">
 						<input type="checkbox" id="checkId" name="checkId" value="1">
 					</td><td>
 						<input id='sampleDate' name="sampleDate" class="isNum" style="height:20px;width: 70px;" 

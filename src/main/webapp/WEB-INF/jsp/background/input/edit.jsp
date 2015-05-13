@@ -259,7 +259,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		<table id="table1" border="1" name="table1">
 			<tbody>
 				<tr>
-					<th>
+					<th style="height: 30px;width: 35px;text-align: center;">
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</th>
 					<th align="right">布种</th>
@@ -270,7 +270,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th>备注</th>
 					<th align="right">业务员</th>
 				</tr><tr>
-					<td>
+					<td style="text-align: center;">
 						<input type="checkbox" id="checkId" name="checkId" value="1">
 					</td>
 					<td class="l_left">

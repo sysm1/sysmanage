@@ -121,18 +121,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</div>
 						</td>
 				</tr>
-				<c:forEach items="${clothColors }" var="clothColor">
-				<tr style="background-color:#DEDEDE; ">
-					<td>颜色：</td>
-					<td><input type="text" name="color" value="${clothColor.color }"></td>
-				</tr>
-				</c:forEach>
 			</tbody>
 		</table>
 		<div class="l_btn_centent">
 			<!-- saveWin_form   from是表单Ｉd-->
 			<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
-			<a class="btn btn-primary" id="addone" ><span>新增一行</span> </a>
+			<!--a class="btn btn-primary" id="addone" ><span>新增一行</span> </a-->
 		</div>
 	</form>
 	</div>

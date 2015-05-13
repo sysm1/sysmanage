@@ -102,7 +102,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		} else {
 			
 			t.setId(tm.getId());
-			t.setOldSum(null==tm.getAllowance()?0:tm.getAllowance().doubleValue());
+			/**t.setOldSum(null==tm.getAllowance()?0:tm.getAllowance().doubleValue());
 			//t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()) + tm.getAllowance());
 			t.setAllowance((null==t.getChangeSum()?0:t.getChangeSum().intValue()) + tm.getAllowance());
 			t.setUnit(cloth.getUnit());
@@ -111,7 +111,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 			t.setOldSumkg(tm.getAllowancekg());
 			t.setAllowancekg(tm.getAllowancekg());
 
-			t.setCreateTime(new Date());
+			t.setCreateTime(new Date());*/
 			this.clothAllowanceMapper.update(t);
 		}
 	}

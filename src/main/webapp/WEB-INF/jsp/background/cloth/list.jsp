@@ -35,10 +35,12 @@
 						colkey : "tiaoKg",
 						name : "KG/条",
 						width : "100px"
-					},{
+					},
+					/**{
 						colkey: "colors",
 						name  :"颜色"
-					},{
+					},*/
+					{
 						colkey : "mark",
 						name : "备注",
 						width: "150px"

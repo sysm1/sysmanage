@@ -70,7 +70,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				$(".l_err").css('display','none');
 			}
 		});
-		$('#clothId').change(function(){
+		/**$('#clothId').change(function(){
 			$.ajax({
 				type: "post",
 				dataType: "json", //json格式的数据
@@ -92,10 +92,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				}
 			});
 			ajaxQuery();
-		});
+		});**/
+		/**
 		$('#color').change(function(){
 			ajaxQuery();
-		});
+		});*/
 		$('#factoryId').change(function(){
 			ajaxQuery();
 		});
@@ -103,9 +104,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	
 	function ajaxQuery(){
 		var clothId=$('#clothId').val();
-		var color=$('#color').val();
+		//var color=$('#color').val();
 		var factoryId=$('#factoryId').val();
-		if(clothId!=''&&color!=''&&factoryId!=''){
+		if(clothId!=''&&factoryId!=''){
 			$.ajax({
 				type: "post",
 				dataType: "json", //json格式的数据
@@ -144,14 +145,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</select>
 					</td>
 				</tr>
-				<tr>
+				<!--tr>
 					<td class="l_right">布种颜色：</td>
 					<td class="l_left">
 						<select id="color" name="color">
 							<option value="">请选择布种</option>
 						</select>
 					</td>
-				</tr>
+				</tr-->
 				<tr>
 					<td class="l_right">工厂：</td>
 					<td class="l_left">

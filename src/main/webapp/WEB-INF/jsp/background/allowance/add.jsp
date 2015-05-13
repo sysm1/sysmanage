@@ -129,6 +129,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			}
 			//alert($("#unit").val());
 			//alert($(this).val());
+			/**
 			$.ajax({
 			    type: "post", //使用get方法访问后台
 			    dataType: "json", //json格式的数据
@@ -148,7 +149,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			    		//alert('没有相关联的我司编号');
 			    	}
 				}
-			});
+			});*/
 		});
 	});
 </script>
@@ -195,7 +196,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					</div>
 				</td>
 			 </tr>
-			 <tr>
+			 <!--tr>
 				<td class="l_right">颜色：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
@@ -206,7 +207,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 						
 					</div>
 				</td>
-			</tr>
+			</tr-->
 			<tr>
 				<td class="l_right">工厂：</td>
 				<td class="l_left">
@@ -226,7 +227,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td class="l_right">坯布条数：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='changeSum' name="changeSum" type="text" class="isNum" value="" >
+						<input id='allowance' name="allowance" type="text" class="isNum" value="" >
 						<span class="lanyuan_input" id="clothUnit"></span>
 					</div>
 				</td>
@@ -234,7 +235,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td class="l_right">坯布公斤数：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						<input id='changeSumkg' name="changeSumkg" type="text" class="isNum" value="" >
+						<input id='allowancekg' name="allowancekg" type="text" class="isNum" value="" >
 						<span class="lanyuan_input" id="clothUnit">公斤</span>
 					</div>
 				</td>

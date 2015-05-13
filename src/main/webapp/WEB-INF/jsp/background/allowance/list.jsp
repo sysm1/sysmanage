@@ -39,12 +39,13 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 						colkey : "supplierName",
 						name : "坯布供应商",
 						width : "130px"
-					},{
+					},
+					/**{
 						colkey : "color",
 						name : "坯布颜色",
 						width : "130px"
-					}, {
-						colkey : "allowanceInfo",
+					},*/ {
+						colkey : "allowance",
 						name : "坯布条数",
 						width : "75px"
 					},{
@@ -262,7 +263,7 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 		</div>
 		<div class="topBtn">
 			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>add</span>
+				class="icon-zoom-add icon-white"></i> <span>新增</span>
 			</a> 
 			
 			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
@@ -270,16 +271,16 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 			</a> --> 
 			
 			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> Edit
+				class="icon-edit icon-white"></i> 修改
 			</a> 
 			
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> Delete
+				class="icon-trash icon-white"></i> 删除
 			</a>
 			 
-			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
+			<!--a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
 				导出excel
-			</a>
+			</a-->
 			
 		</div>
 		<div id="paging" class="pagclass"></div>

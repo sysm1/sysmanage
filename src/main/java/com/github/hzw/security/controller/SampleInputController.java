@@ -174,7 +174,7 @@ public class SampleInputController extends BaseController {
 				//sampleInput.setSampleDate(DateUtil.str2Date(sampleDates[i],"YYYY-mm-DD"));
 				sampleInput.setSampleDate(DateUtil.DatePattern(new Date()));
 				sampleInput.setCodeValue(codeValues[i]);
-				sampleInput.setTechnologyId(null==technologyIds[i]?null:Integer.parseInt(technologyIds[i]));
+				sampleInput.setTechnologyId((null==technologyIds[i]||"".equals(technologyIds[i]))?null:Integer.parseInt(technologyIds[i]));
 				sampleInput.setSalemanId(Integer.parseInt(salemanIds[i]));
 				sampleInput.setMark(marks[i]);
 				sampleInput.setStatus(0);

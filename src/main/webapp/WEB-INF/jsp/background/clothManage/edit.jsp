@@ -83,12 +83,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						${clothManage.clothName }
 					</td>
 				</tr>
-				<tr>
+				<!--tr>
 					<td class="l_right">布种颜色：</td>
 					<td class="l_left">
 						${clothManage.color }
 					</td>
-				</tr>
+				</tr-->
 				<tr>
 					<td class="l_right">工厂：</td>
 					<td class="l_left">

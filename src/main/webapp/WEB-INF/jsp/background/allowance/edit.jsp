@@ -129,7 +129,7 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 						&nbsp;${allowance.clothName}
 					</div>
 				</td>
-			</tr><tr>
+			</tr><!--tr>
 				<td style="text-align: right;background-color: #54FF9F;height: 35px;">颜色：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
@@ -137,7 +137,7 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 						&nbsp;${allowance.color}
 					</div>
 				</td>
-			</tr><tr>
+			</tr--><tr>
 				<td style="text-align: right;background-color: #54FF9F;height: 35px;">工厂：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">

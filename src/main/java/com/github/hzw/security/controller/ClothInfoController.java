@@ -84,13 +84,13 @@ public class ClothInfoController extends BaseController {
 			// pinyin
 			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getClothName()).toUpperCase());
 			List<ClothColor> list=new ArrayList<ClothColor>();
-			String[] colors=request.getParameterValues("color");
+			/**String[] colors=request.getParameterValues("color");
 			ClothColor clothColor=new ClothColor();
 			for(String color:colors){
 				clothColor=new ClothColor();
 				clothColor.setColor(color);
 				list.add(clothColor);
-			}
+			}*/
 			clothInfoService.addClothInfo(info,list);
 			map.put("flag", "true");
 		} catch (Exception e) {

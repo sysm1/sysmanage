@@ -31,8 +31,8 @@
     code_value codeValue,
     factory_code factoryCode, 
     my_company_code myCompanyCode, 
-    technology_id technologyId,
-    t.name technologyName,
+    technology_id technologyId,    
+    (select t.name technologyName from technology_info t where  s.technology_id=t.id ) technologyName,
     saleman_id salemanId, 
     picture, status, 
     reply_date replyDate, 
@@ -82,9 +82,9 @@
   <select id="query" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
 		select
 		<include refid="selectId" />
-		from sample_input s,cloth_info c,factory_info f,technology_info t
+		from sample_input s,cloth_info c,factory_info f
 		<where>
-		s.cloth_id=c.id and s.factory_id=f.id and s.technology_id=t.id 
+		s.cloth_id=c.id and s.factory_id=f.id 
 		<if test="t.factoryId != null and t.factoryId != ''">
 			and factory_id = #{t.factoryId}
 		</if>
@@ -130,9 +130,9 @@
 	<select id="queryReplay" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
 		select
 		<include refid="selectId" />
-		from sample_input s,cloth_info c,factory_info f,technology_info t
+		from sample_input s,cloth_info c,factory_info f
 		<where>
-		s.cloth_id=c.id and s.factory_id=f.id and s.technology_id=t.id 
+		s.cloth_id=c.id and s.factory_id=f.id 
 		<if test="t.factoryId != null and t.factoryId != ''">
 			and factory_id = #{t.factoryId}
 		</if>

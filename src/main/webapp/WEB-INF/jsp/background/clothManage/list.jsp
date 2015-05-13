@@ -21,11 +21,12 @@
 						colkey : "clothName",
 						name : "布种",
 						width: "80px"
-					}, {
+					},
+					/**{
 						colkey : "color",
 						name : "布种颜色",
 						width:"70px"
-					}, {
+					},*/ {
 						colkey : "factoryName",
 						name : "工厂",
 						width: "100px"
