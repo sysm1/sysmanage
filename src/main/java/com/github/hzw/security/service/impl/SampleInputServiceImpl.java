@@ -129,6 +129,7 @@ public class SampleInputServiceImpl implements SampleInputService {
 		SampleInput bean=new SampleInput();
 		bean=getById(sampleInput.getId()+"");
 		bean.setPicture(sampleInput.getPicture());
+		bean.setSmallPicture(sampleInput.getSmallPicture());
 		bean.setFileCode(sampleInput.getFileCode());
 		if(null!=sampleInput.getMyCompanyCode()){
 			bean.setMyCompanyCode(sampleInput.getMyCompanyCode());

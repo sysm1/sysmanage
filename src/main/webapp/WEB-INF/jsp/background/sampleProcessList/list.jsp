@@ -260,14 +260,17 @@ ul { list-style:none;}
 	}
 	
 	/***显示图片**/
-	function show(id,sampId){
+	function show(id,sampId,picture){
 		document.getElementById(id).style.display="";
 		var height=(document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2);
 		if(height>16){
 			height=16;
 		}
-		document.getElementById(id).style.top = height + "px"; 
+		document.getElementById(id).style.top = height + "px";
+		
 		document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
+		//alert(picture);
+		//document.getElementById(id).src=picture;
 	}
 	/***隐藏图片**/
 	function hiddenDiv(id){
@@ -415,7 +418,7 @@ ul { list-style:none;}
 					 	<td style="width: 20px;">
 					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" onclick="changeCheckId(this);" style="width:18px">
 					 	</td>
-						<td onmouseover="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
+						<td onmouseover="show('DivMain','${item.id}','${item.picture }')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
 						<td>
 							<c:if test="${item.status eq 0 }">未回</c:if>
 							<c:if test="${item.status eq 1 }">新版</c:if>

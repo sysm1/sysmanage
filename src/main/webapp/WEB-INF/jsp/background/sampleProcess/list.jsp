@@ -389,9 +389,18 @@ html>body td{ font-size:13px;}
 	
 	/**图片上传**/
 	function ajaxFileUpload(id,index) {
+		//alert(id+"||"+index);
+		if($('#'+index+'myCompanyCode').val()==''){
+			alert("请填写我司编号");
+			return false;
+		}
+		if($('#'+index+'factoryCode1').val()==''){
+			alert("请填写工厂编号");
+			return false;
+		}
         $.ajaxFileUpload(
             {
-                url: '/background/upload.html?myCompanyCode='+$('#'+index+'myCompanyCode').val(), //用于文件上传的服务器端请求地址
+                url: '/background/upload.html?myCompanyCode='+$('#'+index+'myCompanyCode').val()+"&factoryCode1="+$('#'+index+'factoryCode1').val()+"&factoryCode2="+$('#'+index+'factoryCode2').val(), //用于文件上传的服务器端请求地址
                 secureuri: false, //是否需要安全协议，一般设置为false
                 fileElementId: id, //文件上传域的ID
                 dataType: 'json', //返回值类型 一般设置为json
@@ -399,9 +408,12 @@ html>body td{ font-size:13px;}
                     if( data.code == '0') {
                     	alert(data.msg);
                     } else {
-                    	//alert(data);
+                    	//alert(data.picture.split("|")[0]);
+                    	var pics=data.picture;
                     	//$("#img1").attr("src", data.url);
-                    	$("#"+id+"_picture").val(data.picture);
+                    	$("#"+index+"_picture").attr("value",pics.split("|")[0]);
+                    	$("#"+index+"_smallPicture").attr("value",pics.split("|")[1]);
+                    	//alert($("#"+index+"_smallPicture").val());
                     }
                 },
                 error: function (data, status, e)//服务器响应失败处理函数
@@ -510,6 +522,7 @@ html>body td{ font-size:13px;}
 								onchange="changeValue(this,'${item.id }myCompanyCode')" value="${item.myCompanyCode }">
 							<input type="file" id="file${item.id }" name="file" style="width: 135px" onchange="ajaxFileUpload('file${item.id }',${item.id })">
 							<input type="hidden" id="${item.id }_picture" name="picture" value="${item.picture }">
+							<input type="hidden" id="${item.id }_smallPicture" name="smallPicture" value="${item.smallPicture }">
 						</td>
 						<td id="6_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
 						<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.technologyName }</td>

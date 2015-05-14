@@ -31,13 +31,10 @@ public class SampleInput {
     private Integer factoryId;
 
     private String factoryName;
-    
-    
 
 	private Integer clothId;
     
     private String clothName;
-    
 
 	private Integer codeType;
     
@@ -56,8 +53,6 @@ public class SampleInput {
     private Integer technologyId;
 
     private String technologyName;
-    
-    
 
 	private Integer salemanId;
 
@@ -89,7 +84,6 @@ public class SampleInput {
     public void setId(Integer id) {
         this.id = id;
     }
-
     
     @JsonSerialize(using=JsonDate4YYYYMMDD.class)
     public Date getSampleDate() {

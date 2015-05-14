@@ -53,6 +53,8 @@ public class SampleInputVO {
     private Integer salemanId;
 
     private String picture;
+    
+    private String smallPicture;
 
     private Integer status;
     
@@ -344,7 +346,13 @@ public class SampleInputVO {
 				+ ", createTime=" + createTime + ", demand=" + demand
 				+ ", mark=" + mark + "]";
 	}
-    
-	
+
+	public String getSmallPicture() {
+		return smallPicture;
+	}
+
+	public void setSmallPicture(String smallPicture) {
+		this.smallPicture = smallPicture;
+	}
     
 }

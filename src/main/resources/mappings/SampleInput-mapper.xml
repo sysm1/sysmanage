@@ -22,11 +22,11 @@
   <sql id="selectId" >
     s.id id, 
     sample_date sampleDate, 
-    s.factory_id factoryId,
-    f.name factoryName,
-    cloth_id clothId,
+    factory_id factoryId,
+    (select factory.name from factory_info factory where factory.id = factory_id ) as factoryName, 
+    cloth_id clothId, 
+    (select cloth.cloth_name from cloth_info cloth where cloth.id = cloth_id ) as clothName, 
     file_code fileCode,
-    cloth_name  clothName,
     s.code_type codeType, 
     code_value codeValue,
     factory_code factoryCode, 
@@ -34,7 +34,8 @@
     technology_id technologyId,    
     (select t.name technologyName from technology_info t where  s.technology_id=t.id ) technologyName,
     saleman_id salemanId, 
-    picture, status, 
+    picture, status,
+    small_picture smallPicture,
     reply_date replyDate, 
     s.create_time createTime, 
     demand, s.mark mark,s.reply_mark replyMark
@@ -82,9 +83,8 @@
   <select id="query" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
 		select
 		<include refid="selectId" />
-		from sample_input s,cloth_info c,factory_info f
+		from sample_input s
 		<where>
-		s.cloth_id=c.id and s.factory_id=f.id 
 		<if test="t.factoryId != null and t.factoryId != ''">
 			and factory_id = #{t.factoryId}
 		</if>
@@ -123,16 +123,15 @@
 	<select id="queryAll" resultType="SampleInput">
 		select
 		<include refid="selectId" />
-		from sample_input s,cloth_info c where s.cloth_id=c.id where status=0
+		from sample_input s where status=0
 		order by s.id desc
 	</select>
 	
 	<select id="queryReplay" resultType="com.github.hzw.security.VO.SampleInputVO" parameterType="SampleInput">
 		select
 		<include refid="selectId" />
-		from sample_input s,cloth_info c,factory_info f
+		from sample_input s
 		<where>
-		s.cloth_id=c.id and s.factory_id=f.id 
 		<if test="t.factoryId != null and t.factoryId != ''">
 			and factory_id = #{t.factoryId}
 		</if>

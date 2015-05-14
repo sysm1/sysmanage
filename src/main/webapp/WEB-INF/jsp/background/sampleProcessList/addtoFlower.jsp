@@ -220,7 +220,9 @@ $(function() {
 					<input type="file" id="file1" name="file" style="height: 23px;"/>
 					<input id="uploadFile" type="button" value="上传" />
 				</td>
-				<td colspan="2" rowspan="2"><img id="img1" alt="图片预览" src="" /></td>
+				<td colspan="2" rowspan="2">
+					=${item.picture }<img id="img1" alt="图片预览" src="" />
+				</td>
 			</tr><tr>
 				<td colspan="2">
 					<div class="l_btn_centent">
