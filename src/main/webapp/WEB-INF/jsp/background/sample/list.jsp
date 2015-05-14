@@ -288,7 +288,6 @@ ul { list-style:none;}
 		//alert((document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2));
 		document.getElementById(id).style.top = (document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2) + "px"; 
 		document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
-		
 	}
 	
 	function show(id,sampId){
@@ -392,11 +391,12 @@ ul { list-style:none;}
 				<i class="icon-edit icon-white"></i> 修改
 			</a> <a class="btn btn-danger" href="javascript:void(0)" id="copyadd"> 
 				<i class="icon-zoom-add icon-white"></i> 复制新增
-			</a> <a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> 
-				<i class="icon-trash icon-white"></i> 删除
-			</a>
+			</a> 
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="search">
 				查询
+			</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> 
+				<i class="icon-trash icon-white"></i> 删除
 			</a>
 		</div>
 		<div id="paging" class="pagclass">
