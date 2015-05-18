@@ -19,7 +19,6 @@ import com.github.hzw.security.VO.SampleInputVO;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerInfo;
-import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.SampleInput;

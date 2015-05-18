@@ -68,6 +68,22 @@
 		</where>
 		order by id desc
 	</select>
+	
+	<select id="queryMyCompanyCodeByClothId" resultType="String" parameterType="String">
+		select
+		distinct my_company_code myCompanyCode
+		from order_input_summary
+		where cloth_id = #{clothId}
+		order by myCompanyCode 
+	</select>
+	
+	<select id="queryMyCompanyColorByMyCompanyCode" resultType="String" parameterType="String">
+		select
+		distinct my_company_color myCompanyColor
+		from order_input_summary
+		where my_company_code = #{myCompanyCode}
+		order by myCompanyColor 
+	</select>
 
 	<!-- 
 	select oa.id,ci.cloth_name clothName,oi.my_company_code myCompanyCode,#{t.id} summId,

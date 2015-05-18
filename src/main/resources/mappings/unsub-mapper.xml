@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.hzw.security.mapper.UnsubMapper">
+
+	<!--mybatis ehcache缓存配置 -->
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 <cache type="org.mybatis.caches.ehcache.LoggingEhcache" 
+		/> -->
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		unsubdate,
+		cloth_id clothId,
+		(select cloth_name from cloth_info where id=cloth_id) clothName,
+		(select name from factory_info where id=factory_id) factoryName,
+		myCompanyCode ,
+		myCompanyColor ,
+		num,
+		qualityProblem ,
+		factory_id factoryId,
+		factoryCode ,
+		factoryColor ,
+		returnDate,
+		myCompanyReport ,
+		negotiate 
+	</sql>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="queryAll" resultType="Account" parameterType="Account">
+		select
+		<include refid="selectId" />
+		from unsub
+		<where>
+			<if test="accountName != null and accountName != ''">
+				accountName like '%${accountName}%'
+			</if>
+		</where>
+	</select>
+
+	<select id="isExist" resultType="Account" parameterType="String">
+		select
+		<include refid="selectId" />
+		from account
+		where accountName = #{accountName}
+	</select>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="query" resultType="Unsub" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from unsub
+		<where> 1=1 
+			<if test="t.id != null and t.id != ''">
+				and id = #{t.id}
+			</if>
+			<if test="t.unsubdates != null and t.unsubdates != ''">
+				and unsubdate &gt; #{t.unsubdates}
+			</if>
+      		<if test="t.unsubdatee != null and t.unsubdatee != ''">
+				and unsubdate &lt; #{t.unsubdatee}
+			</if><if test="t.returnDates != null and t.returnDates != ''">
+				and returnDate &gt; #{t.unsubdates}
+			</if>
+      		<if test="t.returnDatee != null and t.returnDatee != ''">
+				and returnDate &lt; #{t.unsubdatee}
+			</if>
+			<if test="t.clothId != null and t.clothId != ''">
+				and cloth_id = #{t.clothId}
+			</if>
+			<if test="t.factoryId != null and t.factoryId != ''">
+				and factory_id = #{t.factoryId}
+			</if>
+			<if test="t.factoryCode != null and t.factoryCode != ''">
+				and factory_code = #{t.factoryCode}
+			</if>
+			<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
+				and myCompanyCode = #{t.myCompanyCode}
+			</if>
+			<if test="t.myCompanyColor != null and t.myCompanyColor != ''">
+				and myCompanyColor = #{t.myCompanyColor}
+			</if>
+			<if test="t.factoryColor != null and t.factoryColor != ''">
+				and factoryColor = #{t.factoryColor}
+			</if>
+			<if test="t.qualityProblem != null and t.qualityProblem != ''">
+				and qualityProblem like '%${t.qualityProblem}%'
+			</if>
+			<if test="t.myCompanyReport != null and t.myCompanyReport != ''">
+				and myCompanyReport like '%${t.myCompanyReport}%' 
+			</if><if test="t.negotiate != null and t.negotiate != ''">
+				and negotiate like '%${t.negotiate}%' 
+			</if>
+		</where>
+	</select>
+
+	<insert id="add" parameterType="Unsub" useGeneratedKeys="true" keyProperty="id" >
+    insert into unsub
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="unsubdate != null" >
+        unsubdate,
+      </if>
+      <if test="clothId != null" >
+        cloth_id,
+      </if>
+      <if test="myCompanyCode != null" >
+        myCompanyCode,
+      </if>
+      <if test="myCompanyColor != null" >
+        myCompanyColor,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="qualityProblem != null" >
+        qualityProblem,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
+      </if>
+      <if test="factoryCode != null" >
+        factoryCode,
+      </if>
+      <if test="factoryColor != null" >
+        factoryColor,
+      </if>
+      <if test="returnDate != null" >
+        returnDate,
+      </if>
+      <if test="myCompanyReport != null" >
+        myCompanyReport,
+      </if><if test="negotiate != null" >
+        negotiate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="unsubdate != null" >
+        #{unsubdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clothId != null" >
+        #{clothId,jdbcType=INTEGER},
+      </if>
+      <if test="myCompanyCode != null" >
+        #{myCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="myCompanyColor != null" >
+        #{myCompanyColor,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="qualityProblem != null" >
+        #{qualityProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=INTEGER},
+      </if>
+      <if test="factoryCode != null" >
+        #{factoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryColor != null" >
+        #{factoryColor,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDate != null" >
+        #{returnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="myCompanyReport != null" >
+        #{myCompanyReport,jdbcType=VARCHAR},
+      </if>
+      <if test="negotiate != null" >
+        #{negotiate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+	<delete id="delete" parameterType="String">
+		delete from account where
+		id=#{id}
+	</delete>
+
+	<select id="getById" parameterType="String" resultType="Unsub">
+		select
+		<include refid="selectId" />
+		from unsub where id=#{id}
+	</select>
+
+	<update id="update" parameterType="Account">
+		update unsub
+		<set>
+			<if test="unsubdate != null and unsubdate!='' " >
+		        unsubdate=#{unsubdate},
+		      </if>
+		      <if test="clothId != null and clothId !=''" >
+		        cloth_id=#{clothId},
+		      </if>
+		      <if test="myCompanyCode != null and myCompanyCode !=''" >
+		        myCompanyCode=#{myCompanyCode},
+		      </if>
+		      <if test="myCompanyColor != null and myCompanyColor != ''" >
+		        myCompanyColor=#{myCompanyColor},
+		      </if>
+		      <if test="num != null and num != ''" >
+		        num=#{num},
+		      </if>
+		      <if test="qualityProblem != null and qualityProblem != ''" >
+		        qualityProblem=#{qualityProblem},
+		      </if>
+		      <if test="factoryId != null and factoryId !=''" >
+		        factory_id=#{factoryId},
+		      </if>
+		      <if test="factoryCode != null and factoryCode != ''" >
+		        factoryCode=#{factoryCode},
+		      </if>
+		      <if test="factoryColor != null and factoryColor != ''" >
+		        factoryColor=#{factoryColor},
+		      </if>
+		      <if test="returnDate != null and returnDate !=''" >
+		        returnDate =#{returnDate},
+		      </if>
+		      <if test="myCompanyReport != null and myCompanyReport !=''" >
+		        myCompanyReport=#{myCompanyReport},
+		      </if><if test="negotiate != null and negotiate !=''" >
+		        negotiate=#{negotiate},
+		      </if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 验证用户登陆 -->
+	<select id="countAccount" parameterType="Account" resultType="Account">
+		select
+		<include refid="selectId" />
+		from account where
+		accountName=#{accountName} and password=#{password}
+	</select>
+
+	<!-- 根据用户名查出id -->
+	<select id="querySingleAccount" parameterType="String"
+		resultType="Account">
+		select
+		<include refid="selectId" />
+		from account where accountName=#{accountName}
+	</select>
+</mapper>
