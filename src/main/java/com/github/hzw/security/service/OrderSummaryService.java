@@ -48,4 +48,8 @@ public interface OrderSummaryService extends BaseService<OrderSummary> {
 	
 	public List<OrderSummary> queryReportBySummary(Map<String, Object> map);
 	
+	public List<String> queryFactoryCodeByFactoryId(String factoryId);
+	
+	public List<String> queryFactoryColor(OrderSummary orderSummary);
+	
 }

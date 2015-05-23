@@ -37,7 +37,7 @@ public class UnsubInputServiceImpl implements UnsubInputService {
 
 	@Override
 	public void delete(String id) throws Exception {
-
+		unsubMapper.delete(id);
 	}
 
 	@Override

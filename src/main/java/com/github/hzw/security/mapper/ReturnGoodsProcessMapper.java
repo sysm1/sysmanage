@@ -32,6 +32,8 @@ public interface ReturnGoodsProcessMapper extends
 	 * @return
 	 */
 	public String queryDelayDates(String dates);
+	
+	public List<String> queryReturnTime(String summaryId);
 
 	
 }

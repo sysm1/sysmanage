@@ -768,4 +768,15 @@
 		order by cloth_id desc
   </select>
   
+  <!-- 根据ID查询工厂编号 -->
+  <select id="queryFactoryCodeByFactoryId" resultType="String" parameterType="String">
+  	select distinct factory_code factoryCode from order_summary where factory_id=#{factoryId}
+  </select>
+  
+  <!-- 根据ID查询工厂编号 -->
+  <select id="queryFactoryColor" resultType="String" parameterType="OrderSummary">
+  	select distinct factory_color factoryColor from order_summary 
+  	where factory_id=#{factoryId} and factory_code=#{factoryCode}
+  </select>
+  
 </mapper>

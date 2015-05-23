@@ -319,4 +319,19 @@ public class OrderSummaryController extends BaseController {
 		return orderSummaryService.queryNoReturnNum(orderSummary);
 	}
 	
+	@ResponseBody
+	@RequestMapping("queryFactoryCodeByFactoryId")
+	public List<String> queryFactoryCodeByFactoryId(String factoryId){
+		return orderSummaryService.queryFactoryCodeByFactoryId(factoryId);
+	}
+	
+	@ResponseBody
+	@RequestMapping("queryFactoryColor")
+	public List<String> queryFactoryColor(OrderSummary orderSummary){
+		OrderSummary os=new OrderSummary();
+		os.setFactoryId(orderSummary.getFactoryId());
+		os.setFactoryCode(orderSummary.getFactoryCode());
+		return orderSummaryService.queryFactoryColor(os);
+	}
+	
 }

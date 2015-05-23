@@ -43,5 +43,7 @@ public interface ReturnGoodsProcessService extends
 	 * @return
 	 */
 	public String queryDelayDates(String dates);
+	
+	public List<String> queryReturnTime(String summaryId);
 
 }

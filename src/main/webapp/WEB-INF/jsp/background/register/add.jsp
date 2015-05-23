@@ -4,13 +4,11 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
-<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
 	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
 }, "密码由6至16位字符组合构成");
-
 
 	$(function() {
 		$("form").validate({
@@ -91,18 +89,18 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/unsubInput/add.html" method="post">
-		<table style="width: 100%; height: 100%;" class="dataintable">
+		<table style="width: 100%; height: 100%;">
 			<tbody>
 				<tr>
-					<td style="text-align: right;height: 35px;">退货日期：</td>
-					<td style="text-align: left;">
+					<td style="text-align: right;height: 40px;">退货日期：</td>
+					<td class="l_left">
 					<div class="lanyuan_input">
 					<input type="text" id="unsubdate" name="unsubdate" value="<fmt:formatDate value='${now }' pattern='yyyy-MM-dd'/>" 
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 					</div>
 					</td>
 					<td style="text-align: right;">布种：</td>
-					<td style="text-align: left;">
+					<td class="l_left">
 					<div class="lanyuan_input">
 						<select id="clothId" name="clothId" onchange="selectCloth(this)">
 							<option>-请选择布种-</option>
@@ -114,8 +112,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right;height: 35px;">我司编号：</td>
-					<td style="text-align: left;">
+					<td style="text-align: right;height: 40px;">我司编号：</td>
+					<td class="l_left">
 					<div class="lanyuan_input">
 						<select id="myCompanyCode" name="myCompanyCode" onchange="selectMyCompanyCode(this)">
 							<option value="">请选择</option>
@@ -126,29 +124,31 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</div>
 					</td>
 					<td style="text-align: right;">我司颜色：</td>
-					<td style="text-align: left;">
+					<td class="l_left">
 						<select id="myCompanyColor" name="myCompanyColor" >
 							<option value="">请选择</option>
 						</select>
 					</td>
 				</tr><tr>
-					<td style="text-align: right;height: 35px;">数量：</td>
-					<td colspan="3" style="text-align: left;">
-						<input type="text" id="num" name="num" value="">条
+					<td style="text-align: right;height: 40px;">数量：</td>
+					<td colspan="3">
+						<input type="text" id="num" name="num" value="">
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #E0EEE0;">客户反映质量问题</td>
+					<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户反映质量问题</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: center;">
-						<textarea rows="6" style="width: 98%;" id="qualityProblem" name="qualityProblem"></textarea>
+						<textarea rows="3" style="width: 95%;" id="qualityProblem" name="qualityProblem"></textarea>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4">
+					<td colspan="2">
 						<div class="l_btn_centent">
 								<!-- saveWin_form   from是表单Ｉd-->
 								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
+									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
+									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
+									onclick="closeWin()"><span>关闭</span> </a>
 							</div>
 						</td>
 				</tr>

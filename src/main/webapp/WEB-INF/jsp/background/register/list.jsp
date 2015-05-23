@@ -42,7 +42,7 @@ table.dataintable td.blue{
 		
 		$("#seach").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
-			f.attr('action','${pageContext.request.contextPath}/background/examine/list.html');
+			f.attr('action','${pageContext.request.contextPath}/background/register/list.html');
 			f.submit();
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
@@ -71,8 +71,8 @@ table.dataintable td.blue{
 			}
 			dialog = parent.$.ligerDialog.open({
 				width : 650,
-				height : 500,
-				url : rootPath + '/background/examine/editUI.html?id='+cbox,
+				height : 550,
+				url : rootPath + '/background/register/editUI.html?id='+cbox,
 				title : "修改下单预录入",
 				isHidden : false
 			});
@@ -131,20 +131,19 @@ table.dataintable td.blue{
 	    });
 		
 		$("#view").click("click", function() {//查看按钮
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 950,
+				width : 650,
 				height : 550,
-				url : rootPath + '/background/input/editUI.html?id='+cbox+"&type=view",
-				title : "复制新增下单预录入",
+				url : rootPath + '/background/register/editUI.html?id='+cbox+"&type=view",
+				title : "查看退货次品登记",
 				isHidden : false
 			});
 		});
-		
 	});
 	function loadGird(){
 		 window.location.reload();
@@ -195,7 +194,7 @@ table.dataintable td.blue{
 <body style="width: 1500px;">
 	<div class="divBody" >
 		<div class="search" >
-			<form name="fenye" id="fenye" method="post" action="${ctx}/background/examine/list.html">
+			<form name="fenye" id="fenye" method="post" action="${ctx}/background/register/list.html">
 			<table class="dataintable">
 				<tr>
 					<td align="right">退货日期：</td>
@@ -246,17 +245,11 @@ table.dataintable td.blue{
 				class="icon-zoom-add icon-white"></i> <span>验收</span>
 			</a-->
 			
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> 验货
-			</a> 
-			
+			<a class="btn btn-info" href="javascript:void(0)" id="editView"> 登记</a> &nbsp;&nbsp;
 			<!--<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete-->
 			</a>
-			
-			<!--a class="btn btn-large btn-success" href="javascript:void(0)" id="view">
-				查看
-			</a-->
+			<a class="btn btn-large btn-success" href="javascript:void(0)" id="view">查看</a>&nbsp;&nbsp;
 			<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询</a>
 		</div>
 		<div id="paging" class="pagclass">
@@ -273,8 +266,9 @@ table.dataintable td.blue{
 					<th>工厂</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
-					<th>到货日期</th>
+					<th style="width:80px;">到货日期</th>
 					<th>我司验货报告</th>
+					<th>工厂交涉情况</th>
 				</tr>
 				
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
@@ -298,7 +292,14 @@ table.dataintable td.blue{
 						<td >
 							<fmt:formatDate value="${item.returnDate }" pattern="yyyy-MM-dd"/>
 						</td>
-						<td >${item.myCompanyReport }</td>
+						<td title="${item.myCompanyReport }">
+							${fn:substring(item.myCompanyReport,0,10) }
+							<c:if test="${fn:length(item.myCompanyReport)>10 }">...</c:if>
+						</td>
+						<td title="${item.negotiate }">
+							${fn:substring(item.negotiate,0,10) }
+							<c:if test="${fn:length(item.negotiate)>10 }">...</c:if>
+						</td>
 					<tr>
 				</c:forEach>
 				

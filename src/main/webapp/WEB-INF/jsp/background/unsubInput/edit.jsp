@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 	$(function() {
@@ -38,10 +39,10 @@
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/unsubInput/update.html" method="post">
 		<input type="hidden" id="id" name="id" value="${unsub.id }">
-		<table style="width: 100%; height: 100%;" border="1">
+		<table style="width: 100%; height: 100%;" border="1" class="dataintable">
 			<tbody>
 				<tr>
-					<td style="text-align: right;height: 40px;width: 15%;">退货日期：</td>
+					<td style="text-align: right;height: 35px;width: 15%;">退货日期：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
 					<input type="text" id="unsubdate" name="unsubdate" value="<fmt:formatDate value='${unsub.unsubdate }' pattern='yyyy-MM-dd'/>" 
@@ -49,30 +50,30 @@
 					</div>
 					</td>
 					<td style="text-align: right;width: 15%;">布种：</td>
-					<td class="l_left" style="width: 35%;">
+					<td style="width: 35%;text-align: left;">
 					<div class="lanyuan_input">${unsub.clothName }
 					</div>
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right;height: 40px;">我司编号：</td>
-					<td class="l_left">
+					<td style="text-align: right;height: 35px;">我司编号：</td>
+					<td style="text-align: left;">
 					<div class="lanyuan_input">${unsub.myCompanyCode }
 					</div>
 					</td>
 					<td style="text-align: right;">我司颜色：</td>
-					<td class="l_left">${unsub.myCompanyColor }
+					<td style="text-align: left;">${unsub.myCompanyColor }
 					</td>
 				</tr><tr>
-					<td style="text-align: right;height: 40px;">数量：</td>
-					<td colspan="3">
-						<input type="text" id="num" name="num" value="${unsub.num }">
+					<td style="text-align: right;height: 35px;">数量：</td>
+					<td colspan="3" style="text-align: left;">
+						<input type="text" id="num" name="num" value="${unsub.num }">条
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户反映质量问题</td>
+					<td colspan="4" style="background-color: #E0EEE0;">客户反映质量问题</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: center;">
-						<textarea rows="3" style="width: 95%;" id="qualityProblem" name="qualityProblem">${unsub.qualityProblem }</textarea>
+						<textarea rows="6" style="width: 98%;" id="qualityProblem" name="qualityProblem">${unsub.qualityProblem }</textarea>
 					</td>
 				</tr>
 				<tr>

@@ -323,6 +323,11 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 	public void add(ReturnGoodsProcess t) throws Exception {
 		this.returnGoodsProcessMapper.add(t);
 	}
+	
+	@Override
+	public List<String> queryReturnTime(String summaryId){
+		return returnGoodsProcessMapper.queryReturnTime(summaryId);
+	}
 
 
 }

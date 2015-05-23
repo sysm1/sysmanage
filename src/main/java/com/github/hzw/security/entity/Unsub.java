@@ -40,6 +40,8 @@ public class Unsub implements java.io.Serializable{
 	
 	private Integer factoryId;
 	
+	private String factoryName;
+	
 	private String factoryCode;
 
     private String factoryColor;
@@ -49,6 +51,8 @@ public class Unsub implements java.io.Serializable{
     private Date returnDates;
     
     private Date returnDatee;
+    
+    private String rdate;
     
     /****我司验货报告**/
     private String myCompanyReport;
@@ -114,6 +118,9 @@ public class Unsub implements java.io.Serializable{
 	}
 
 	public String getFactoryCode() {
+		if(null==factoryCode){
+			factoryCode="";
+		}
 		return factoryCode;
 	}
 
@@ -122,6 +129,9 @@ public class Unsub implements java.io.Serializable{
 	}
 
 	public String getFactoryColor() {
+		if(null==factoryColor){
+			factoryColor="";
+		}
 		return factoryColor;
 	}
 
@@ -134,11 +144,27 @@ public class Unsub implements java.io.Serializable{
 		return returnDate;
 	}
 
+	public String getRdate() {
+		if(null==returnDate){
+			rdate="";
+		}else{
+			getReturnDate().toString();
+		}
+		return rdate;
+	}
+
+	public void setRdate(String rdate) {
+		this.rdate = rdate;
+	}
+
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
 
 	public String getMyCompanyReport() {
+		if(null==myCompanyReport){
+			myCompanyReport="";
+		}
 		return myCompanyReport;
 	}
 
@@ -148,6 +174,9 @@ public class Unsub implements java.io.Serializable{
 
 	/**工厂交涉情况**/
 	public String getNegotiate() {
+		if(null==negotiate){
+			negotiate="";
+		}
 		return negotiate;
 	}
 
@@ -202,6 +231,17 @@ public class Unsub implements java.io.Serializable{
 
 	public void setClothName(String clothName) {
 		this.clothName = clothName;
+	}
+
+	public String getFactoryName() {
+		if(null==factoryName){
+			factoryName="";
+		}
+		return factoryName;
+	}
+
+	public void setFactoryName(String factoryName) {
+		this.factoryName = factoryName;
 	}
 
 }

@@ -236,5 +236,9 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+  <select id="queryReturnTime" parameterType="String" resultType="String">
+  	select return_date returnDate from return_goods_process where summary_id=#{summaryId}
+  </select>
+  
   
 </mapper>

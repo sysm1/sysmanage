@@ -19,15 +19,9 @@ import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.UnsubInputService;
 import com.github.hzw.util.Common;
 
-/**
- * 次品验货
- * @author wuyb
- *
- */
 @Controller
-@RequestMapping("/background/examine/")
-public class ExamineController extends BaseController{
-	
+@RequestMapping("/background/register/")
+public class RegisterController extends BaseController{
 	@Inject
 	private UnsubInputService unsubInputService;
 	
@@ -40,7 +34,7 @@ public class ExamineController extends BaseController{
 		pageView = unsubInputService.query(getPageView(pageNow,pagesize), unsub);
 		request.setAttribute("pageView", pageView);
 		request.setAttribute("bean", unsub);
-		return Common.BACKGROUND_PATH+"/examine/list";
+		return Common.BACKGROUND_PATH+"/register/list";
 	}
 	
 	/**
@@ -61,12 +55,15 @@ public class ExamineController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("editUI")
-	public String editUI(Model model,String id) {
+	public String editUI(Model model,String id,String type) {
 		Unsub unsub = unsubInputService.getById(id);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		model.addAttribute("unsub", unsub);
 		model.addAttribute("factoryInfos", factoryInfos);
-		return Common.BACKGROUND_PATH+"/examine/edit";
+		if("view".equals(type)){
+			return Common.BACKGROUND_PATH+"/register/view";
+		}
+		return Common.BACKGROUND_PATH+"/register/edit";
 	}
 	/**
 	 * 更新类型

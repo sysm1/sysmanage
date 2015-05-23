@@ -14,14 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.Account;
-import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.Unsub;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.UnsubInputService;
 import com.github.hzw.util.Common;
-import com.github.hzw.util.Md5Tool;
 
 /**
  * 退货次品预登记
@@ -39,7 +36,9 @@ public class UnsubInputController extends BaseController{
 	private ClothInfoService clothInfoService;
 	
 	@RequestMapping("list")
-	public String list(Model model, HttpServletRequest request,String pagesize){
+	public String list(Model model, Unsub unsub,String pageNow,String pagesize){
+		pageView = unsubInputService.query(getPageView(pageNow,pagesize), unsub);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/unsubInput/list";
 	}
 	
@@ -98,9 +97,12 @@ public class UnsubInputController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("editUI")
-	public String editUI(Model model,String id) {
+	public String editUI(Model model,String id,String type) {
 		Unsub unsub = unsubInputService.getById(id);
 		model.addAttribute("unsub", unsub);
+		if("view".equals(type)){
+			return Common.BACKGROUND_PATH+"/unsubInput/view";
+		}
 		return Common.BACKGROUND_PATH+"/unsubInput/edit";
 	}
 	/**
@@ -116,6 +118,23 @@ public class UnsubInputController extends BaseController{
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			unsubInputService.update(unsub);
+			map.put("flag", "true");
+		} catch (Exception e) {
+			map.put("flag", "false");
+		}
+		return map;
+	}
+	@ResponseBody
+	@RequestMapping("deleteById")
+	public Map<String, Object> deleteById(Model model, String ids) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			String id[] = ids.split(",");
+			for (String string : id) {
+				if(!Common.isEmpty(string)){
+					unsubInputService.delete(string);
+				}
+			}
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");

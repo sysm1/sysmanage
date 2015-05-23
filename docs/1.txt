@@ -363,6 +363,29 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_bin
 AUTO_INCREMENT=1
 ROW_FORMAT=COMPACT
 ;
+---退货管理
+CREATE TABLE `unsub` (
+`id`  int(12) NOT NULL AUTO_INCREMENT ,
+`unsubdate`  timestamp NULL DEFAULT NULL ,
+`cloth_Id`  int(11) NULL DEFAULT NULL ,
+`myCompanyCode`  varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`myCompanyColor`  varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`num`  int(11) NULL DEFAULT NULL ,
+`qualityProblem`  varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`factory_Id`  int(11) NULL DEFAULT NULL ,
+`factoryCode`  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`factoryColor`  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`returnDate`  timestamp NULL DEFAULT NULL ,
+`myCompanyReport`  varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`negotiate`  varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_bin
+AUTO_INCREMENT=6
+ROW_FORMAT=COMPACT
+;
+
 
 
 -- 联想查询： 布种，工厂，工艺, 我司编号 我司color,

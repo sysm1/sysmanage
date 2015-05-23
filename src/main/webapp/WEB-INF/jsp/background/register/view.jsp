@@ -4,22 +4,7 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
-<style type="text/css">
-table.dataintable{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid;border-collapse:collapse;}
-table.dataintable th{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid; margin-top:2px; vertical-align:middle; padding-top:2px;
-	background:url(../images/main/tabtopbg.jpg) repeat-x top; background-color:#F3F8FE;color:#1A4995;height:17px;}
-table.dataintable td{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid; background-color:#fff; padding:2px; text-align:center}
-table.dataintable td.blue{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;border-left:#89aad7 1px solid;
-	background-color:#fff; padding:2px; background-color:#F3F9FD}
-	
-</style>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 	$(function() {
@@ -33,7 +18,7 @@ table.dataintable td.blue{
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.examine.loadGird();
+								parent.register.loadGird();
 								closeWin();
 							});
 						} else {
@@ -121,12 +106,12 @@ table.dataintable td.blue{
 	}
 </script>
 </head>
-<body>
+<body >
 <div class="divdialog" style="text-align: center;">
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/examine/update.html" method="post">
 		<input type="hidden" id="id" name="id" value="${unsub.id }">
-		<table style="width: 98%; height: 100%;margin-left: 6px;" border="1" class="dataintable">
+		<table style="width: 98%; height: 100%;background-color: #9AFF9A;margin-left: 6px;" border="1" class="dataintable">
 			<tbody>
 				<tr>
 					<td style="text-align: right;height: 30px;width: 15%;">退货日期：</td>
@@ -156,52 +141,41 @@ table.dataintable td.blue{
 						${unsub.num }条
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户反映质量问题</td>
+					<td colspan="4" style="background-color: #E0EEE0;">客户反映质量问题</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: left;">
 						${unsub.qualityProblem }
 					</td>
 				</tr><tr style="height: 30px;">
-					<td>工厂</td>
-					<td>
-						<select id="factoryId" name="factoryId" onchange="selectFactory(this);">
-							<option>--请选择工厂--</option>
-							<c:forEach items="${factoryInfos }" var="factoryInfo">
-							<option value="${factoryInfo.id }" <c:if test="${unsub.factoryId eq factoryInfo.id }">selected="selected"</c:if>  >${factoryInfo.name }</option>
-							</c:forEach>
-						</select>
-					</td>
-					<td>工厂编号</td>
-					<td>
-						<select id="factoryCode" name="factoryCode" onchange="selectFactoryCode(this.value);">
-							<c:if test="${unsub.factoryCode ==null }">
-								<option>--请选择--</option>
-							</c:if><c:if test="${unsub.factoryCode !=null }">
-								<option>${unsub.factoryCode}</option>
-							</c:if>
-						</select>
-					</td>
-				</tr><tr style="height: 30px;">
-					<td>工厂颜色</td>
-					<td>
-						<select id="factoryColor" name="factoryColor" onchange="selectFactoryColor(this.value);">
-							<c:if test="${unsub.factoryColor ==null}">
-								<option>--请选择--</option>
-							</c:if><c:if test="${unsub.factoryColor !=null}">
-								<option>${unsub.factoryColor}</option>
-							</c:if>
-						</select>
-					</td>
-					<td>到货日期</td>
+					<td style="text-align: right;">工厂：</td>
 					<td style="text-align: left;">
-					<span id="returnDatespan"><fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/></span>
-					<input type="hidden" id="returnDate" name="returnDate" value='<fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/>'>
+						${unsub.factoryName}
+					</td>
+					<td style="text-align: right;">工厂编号：</td>
+					<td style="text-align: left;">
+						${unsub.factoryCode}
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4">我司验收报告</td>
+					<td style="text-align: right;">工厂颜色：</td>
+					<td style="text-align: left;">
+						${unsub.factoryColor}
+					</td>
+					<td style="text-align: right;">到货日期：</td>
+					<td style="text-align: left;">
+						<fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/>
+					</td>
+				</tr><tr style="height: 30px;">
+					<td colspan="4" style="background-color: #D1EEEE;">我司验收报告</td>
+				</tr><tr>
+					<td colspan="4" style="text-align: left;">
+						<c:if test="${unsub.myCompanyReport == null ||unsub.myCompanyReport == '' }">&nbsp;<br></c:if>
+						<c:if test="${unsub.myCompanyReport != null }">${unsub.myCompanyReport }</c:if>
+					</td>
+				</tr><tr style="height: 30px;">
+					<td colspan="4" style="background-color: #DEDEDE;">工厂交涉情况</td>
 				</tr><tr>
 					<td colspan="4">
-						<textarea rows="4" style="width: 98%" id="myCompanyReport" name="myCompanyReport">${unsub.myCompanyReport }</textarea>
+						${unsub.negotiate }
 					</td>
 				</tr>
 				<tr>
@@ -209,7 +183,7 @@ table.dataintable td.blue{
 						<div class="l_btn_centent">
 								<!-- saveWin_form   from是表单Ｉd-->
 								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
+									id="saveWin_form" onclick="closeWin();"><span>关闭</span> </a> 
 							</div>
 						</td>
 				</tr>

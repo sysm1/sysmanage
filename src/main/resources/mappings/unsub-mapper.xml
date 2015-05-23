@@ -174,7 +174,7 @@
   </insert>
 
 	<delete id="delete" parameterType="String">
-		delete from account where
+		delete from unsub where
 		id=#{id}
 	</delete>
 
