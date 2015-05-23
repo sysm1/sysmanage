@@ -159,7 +159,7 @@ create table cloth_allowance (
 	mark text,
 	create_time datetime not null,  -- 更新时间了
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `allowance_un` (`cloth_id`,`factory_id`) USING BTREE
+	UNIQUE KEY `allowance_un` (`cloth_id`,`factory_id`,`color`) USING BTREE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 修改时只能修改新增量。布种与工厂唯一
