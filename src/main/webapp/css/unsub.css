@@ -7,10 +7,25 @@ table.dataintable th{
 	background:url(../images/main/tabtopbg.jpg) repeat-x top; background-color:#F3F8FE;color:#1A4995;height:17px;}
 table.dataintable td{
 	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid; background-color:#fff; padding:2px; text-align:center}
+	border-left:#89aad7 1px solid; background-color:#fff; padding:2px;text-align:right; }
 table.dataintable td.blue{
 	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;border-left:#89aad7 1px solid;
 	background-color:#fff; padding:2px; background-color:#F3F9FD}
+
+table.datalist {
+	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
+	border-left:#89aad7 1px solid;border-collapse:collapse;}
+table.datalist th{
+	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
+	border-left:#89aad7 1px solid; margin-top:5px; vertical-align:middle; padding-top:5px;
+	background:url(../images/main/tabtopbg.jpg) repeat-x top; background-color:#F3F8FE;color:#1A4995;height:17px;}
+table.datalist td{
+	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
+	border-left:#89aad7 1px solid; background-color:#fff; padding:2px;text-align:right; }
+table.datalist td.blue{
+	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;border-left:#89aad7 1px solid;
+	background-color:#fff; padding:2px; background-color:#F3F9FD}
+
 	
 * { margin:0; padding:0;}
 a { color:#333; text-decoration:none;}
@@ -20,6 +35,15 @@ ul { list-style:none;}
 #pagelist ul li a, .pageinfo { display:block; padding:0px 6px; background:#e6f2fe;}
 .pageinfo  { color:#555;}
 .current { background:#CCCC00; display:block; padding:0px 6px; font-weight:bold;}
+
+
+.l_right{
+	text-align: right;width:110px;
+}
+
 .l_left{
-	text-align: left;
+	text-align: left;width:221px;
+}
+.l_left{
+	text-align: left;width:221px;
 }
