@@ -300,6 +300,7 @@ CREATE TABLE `order_summary` (
  notify_time datetime, -- 通知时间
  notify_id	int(11),  -- 通知id
  no varchar(255), -- 通知id
+ `color`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '布种颜色' ,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
