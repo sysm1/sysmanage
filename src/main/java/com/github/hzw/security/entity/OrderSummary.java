@@ -33,6 +33,9 @@ public class OrderSummary {
 
     private String clothName;
     
+    /***布种颜色**/
+    private String color;
+    
     private Integer factoryId;
     private String factoryName;
     
@@ -576,5 +579,13 @@ public class OrderSummary {
 
 	public void setNumText(String numText) {
 		this.numText = numText;
+	}
+	/***布种颜色**/
+	public String getColor() {
+		return color;
+	}
+	/***布种颜色**/
+	public void setColor(String color) {
+		this.color = color;
 	}
 }

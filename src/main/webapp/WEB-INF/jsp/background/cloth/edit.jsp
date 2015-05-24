@@ -27,7 +27,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 								parent.cloth.loadGird();
 								closeWin();
 							});
-							//parent.window.document.getElementById("username").focus();
 						} else {
 							$.ligerDialog.warn("提交失败！！");
 						}
@@ -121,12 +120,26 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</div>
 						</td>
 				</tr>
+				<tr height="30px;" style="background: #EEE9E9;">
+					<td colspan="2" align="center" style="color: FFF68F;background-color:#EEE9E9;font-weight: bold; ">
+					布&nbsp;种&nbsp;颜&nbsp;色
+					</td>
+				</tr>
+				<c:forEach items="${clothColors }" var="color">
+				<tr >
+					<td class="l_left" colspan="2" align="center" style="background-color: #FFF5EE;">
+						<input id='color' name="color" class="checkdesc" type="text" value="${color.color }">
+					</td>
+				</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<div class="l_btn_centent">
 			<!-- saveWin_form   from是表单Ｉd-->
+			<a class="btn btn-primary" id="addone" ><span>新增一行</span> </a>
+			&nbsp;&nbsp;&nbsp;
 			<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
-			<!--a class="btn btn-primary" id="addone" ><span>新增一行</span> </a-->
+			
 		</div>
 	</form>
 	</div>

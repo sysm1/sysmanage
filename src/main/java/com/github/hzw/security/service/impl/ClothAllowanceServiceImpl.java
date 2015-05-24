@@ -50,10 +50,12 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		return pageView;
 	}
 	
-	public ClothAllowance queryByClothAndFactory(Integer clothId, Integer factoryId) {
-		Map<String, Integer> map = new HashMap<String, Integer>();
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public ClothAllowance queryByClothAndFactory(Integer clothId, Integer factoryId,String color) {
+		Map map = new HashMap();
 		map.put("clothId", clothId);
 		map.put("factoryId", factoryId);
+		map.put("color", color);
 		return clothAllowanceMapper.queryByClothAndFactory(map);
 	}
 	
@@ -83,20 +85,20 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 	 */
 	@Override
 	public void add(ClothAllowance t) throws Exception {
-		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId());
+		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId(),t.getColor());
 		ClothInfo cloth = clothInfoService.getById(t.getClothId() + "");
 		if(tm == null) {
 			
 			// 按布种单位计算
-			t.setOldSum(0.0);
+			//t.setOldSum(0.0);
 			// t.setAllowance(this.changeUnit(t.getClothId(), t.getUnit(), t.getChangeSum()));
-			t.setAllowance(null==t.getChangeSum()?0:t.getChangeSum().intValue());
+			//t.setAllowance(null==t.getChangeSum()?0:t.getChangeSum().intValue());
 			t.setUnit(cloth.getUnit());
 			t.setCreateTime(new Date());
 			
 			// 公斤
-			t.setOldSumkg(0.0);
-			t.setAllowancekg(t.getChangeSumkg());
+			//t.setOldSumkg(0.0);
+			//t.setAllowancekg(t.getChangeSumkg());
 			
 			this.clothAllowanceMapper.add(t);
 		} else {
@@ -121,7 +123,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 	 */
 	@Override
 	public void addAllowance(ClothAllowance t) throws Exception {
-		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId());
+		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId(),t.getColor());
 		ClothInfo cloth = clothInfoService.getById(t.getClothId() + "");
 		if(tm == null) {
 			// 按布种单位计算

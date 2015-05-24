@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 
 //单独验证某一个input  class="checkpass"
@@ -81,15 +82,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 485px;"></div>
 	<form name="form" id="form" action="${ctx}/background/cloth/add.html" method="post">
-		<table style="width: 485px; height: 200px;" id="table1">
+		<table style="width: 485px; height: 200px;" id="table1" class="dataintable">
 			<tbody>
-			
 				<tr>
 					<td style="text-align: right;">布种名称：</td>
-					<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='clothName' name="clothName" type="text" value="">
-						</div></td>
+					<td style="text-align: left;">
+						<input id='clothName' name="clothName" type="text" value="">
+					</td>
 				</tr>
 				
 				<!--tr>
@@ -101,38 +100,42 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr-->
 				<tr>
 					<td style="text-align: right;">布种单位：</td>
-					<td class="l_left">
+					<td style="text-align: left;">
 						<select id="unit" name="unit">
 							<option value="0">条</option>
 						</select>
 					</td>
 				</tr><tr>
 					<td style="text-align: right;">默认公斤数：</td>
-					<td>
+					<td style="text-align: left;">
 						<input type="text" id="tiaoKg" name="tiaoKg" value="">KG/条
 					</td>
 				</tr>		
 				<tr>
 					<td style="text-align: right;">备注：</td>
-					<td class="l_left">
+					<td style="text-align: left;">
 					<div class="lanyuan_input">
 					<input id='mark'
 						name="mark" class="checkdesc" type="text" value="">
 						</div>
 						</td>
+				</tr><tr height="30px;" style="background: #EEE9E9;">
+					<td colspan="2" align="center" style="color: FFF68F;background-color:#EEE9E9;font-weight: bold; ">
+					布&nbsp;种&nbsp;颜&nbsp;色
+					</td>
 				</tr>
-				<!--tr style="background-color:#DEDEDE ">
-					<td style="text-align: right;">颜色：</td>
-					<td class="l_left">
+				<tr >
+					<td class="l_left" colspan="2" align="center" style="background-color: #FFF5EE;">
 						<input id='color' name="color" class="checkdesc" type="text" value="">
 					</td>
-				</tr-->
+				</tr>
 			</tbody>
 		</table>
 		<div class="l_btn_centent">
 			<!-- saveWin_form   from是表单Ｉd-->
-			<a class="btn btn-primary" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
-			<!--a class="btn btn-primary" id="addone" ><span>新增一行颜色</span> </a-->
+			<a class="btn btn-primary" id="addone" ><span>新增一行颜色</span> </a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-primary" id="saveWin_form" onclick="saveWin();"><span>保存</span></a> 
+			
 		</div>
 	</form>
 	</div>

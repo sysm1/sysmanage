@@ -186,7 +186,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				orderSummary=orderSummaryService.getById(orderSummary.getId()+"");
 				Double alreadOrderSum=orderSummary.getNum();
 				
-				ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId());
+				ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId(),orderSummary.getColor());
 				if(null!=clothAllowance){
 					//如果是条为单位的  计算条和KG的数量
 					if(0==unit){
@@ -268,7 +268,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				e.printStackTrace();
 			}
 			//修改坯布余量
-			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId());
+			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(orderSummary.getClothId(), orderSummary.getFactoryId(),orderSummary.getColor());
 			Integer unit=orderSummary.getUnit();
 			ClothInfo cloth=clothInfoService.getById(orderSummary.getClothId()+"");
 			if(0==unit){

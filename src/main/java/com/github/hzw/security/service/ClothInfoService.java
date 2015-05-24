@@ -15,4 +15,10 @@ public interface ClothInfoService extends BaseService<ClothInfo> {
 	public void addClothInfo(ClothInfo t,List<ClothColor> list) throws Exception;
 	
 	public List<ClothColor> queryColorsById(String id);
+	
+	/**
+	 * 删除布种颜色
+	 * @param clothId
+	 */
+	public void deleteColorsByClothId(String clothId);
 }

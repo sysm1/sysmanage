@@ -116,5 +116,9 @@
 		from cloth_info
 		where cloth_name = #{clothName}
 	</select>
+	
+	<delete id="deleteColorsByClothId" parameterType="String">
+		delete from cloth_color where cloth_id=#{clothId}
+	</delete>
   
 </mapper>

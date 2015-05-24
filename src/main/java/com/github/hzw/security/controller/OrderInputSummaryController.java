@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.VO.OrderInputVO;
+import com.github.hzw.security.entity.ClothColor;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
@@ -258,11 +259,13 @@ public class OrderInputSummaryController extends BaseController {
 		String noRetrun=orderSummaryService.queryNoReturnNum(orderSummary);
 		
 		ClothInfo clothInfo=clothInfoService.getById(info.getClothId()+"");
+		List<ClothColor> colors=clothInfoService.queryColorsById(clothInfo.getId()+"");
 		String unitName=clothInfo.getUnitName();
 		if("包".equals(unitName)){
 			unitName="KG";
 		}
 		model.addAttribute("clothInfo", clothInfo);
+		model.addAttribute("colors",colors);
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("unitName", unitName);
 		model.addAttribute("factoryInfos", factoryInfos);

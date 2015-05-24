@@ -16,4 +16,10 @@ public interface ClothInfoMapper extends BaseMapper<ClothInfo> {
 	
 	public List<ClothColor> queryColorsById(String id);
 	
+	/**
+	 * 删除布种颜色
+	 * @param clothId
+	 */
+	public void deleteColorsByClothId(String clothId);
+	
 }

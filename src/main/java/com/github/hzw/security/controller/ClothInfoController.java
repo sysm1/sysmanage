@@ -84,13 +84,16 @@ public class ClothInfoController extends BaseController {
 			// pinyin
 			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getClothName()).toUpperCase());
 			List<ClothColor> list=new ArrayList<ClothColor>();
-			/**String[] colors=request.getParameterValues("color");
+			String[] colors=request.getParameterValues("color");
 			ClothColor clothColor=new ClothColor();
 			for(String color:colors){
+				if(color.equals("")){
+					continue;
+				}
 				clothColor=new ClothColor();
 				clothColor.setColor(color);
 				list.add(clothColor);
-			}*/
+			}
 			clothInfoService.addClothInfo(info,list);
 			map.put("flag", "true");
 		} catch (Exception e) {
@@ -138,16 +141,41 @@ public class ClothInfoController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public Map<String, Object> update(Model model, ClothInfo info) {
+	public Map<String, Object> update(Model model, ClothInfo info,HttpServletRequest request) {
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			info.setCreateTime(new Date());
 			// pinyin
 			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getClothName()).toUpperCase());
-			clothInfoService.update(info);
+			List<ClothColor> list=new ArrayList<ClothColor>();
+			String[] colors=request.getParameterValues("color");
+			ClothColor clothColor=new ClothColor();
+			for(String color:colors){
+				if(color.equals("")){
+					continue;
+				}
+				clothColor=new ClothColor();
+				clothColor.setColor(color);
+				list.add(clothColor);
+			}
+			clothInfoService.addClothInfo(info,list);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
+			e.printStackTrace();
 		}
+		
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		try {
+//			// pinyin
+//			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getClothName()).toUpperCase());
+//			clothInfoService.update(info);
+//			map.put("flag", "true");
+//		} catch (Exception e) {
+//			map.put("flag", "false");
+//		}
 		return map;
 	}
 	

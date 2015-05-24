@@ -20,3 +20,6 @@ ul { list-style:none;}
 #pagelist ul li a, .pageinfo { display:block; padding:0px 6px; background:#e6f2fe;}
 .pageinfo  { color:#555;}
 .current { background:#CCCC00; display:block; padding:0px 6px; font-weight:bold;}
+.l_left{
+	text-align: left;
+}
