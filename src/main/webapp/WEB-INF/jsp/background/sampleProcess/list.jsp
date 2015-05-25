@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -121,16 +120,7 @@ html>body td{ font-size:13px;}
 				return;
 			}
 			for(var i=0;i<cbox.length;i++){
-				/**
 				var f = $('#'+cbox[i]+'_form');
-				f.attr('target','iframe');
-				f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html');
-				f.submit();
-				*/
-				
-				var f = $('#'+cbox[i]+'_form');
-				//f.attr('action','${pageContext.request.contextPath}/background/sampleProcess/answer.html?type=1');
-				//f.submit();
 				$.ajax({
 				    type: "post", //使用get方法访问后台
 				    dataType: "json", //json格式的数据
@@ -138,7 +128,6 @@ html>body td{ font-size:13px;}
 				    url: '${pageContext.request.contextPath}/background/sampleProcess/saveTemp.html', //要访问的后台地址
 				    data: f.serialize(), //要发送的数据
 				    success: function(data){
-				    	//alert(data);
 					},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
 						alert(XMLHttpRequest.status);
 						alert(XMLHttpRequest.readyState);
