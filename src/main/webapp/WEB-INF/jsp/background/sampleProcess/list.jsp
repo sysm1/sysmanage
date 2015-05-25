@@ -486,13 +486,14 @@ html>body td{ font-size:13px;}
 					<th class="specalt" style="width:45px">日期</th>
 					<th class="specalt" style="width:80px">分色文件号</th>
 					<th class="specalt" style="width:75px">布种</th>
-					<th class="specalt" style="width:248px">我司编号</th>
+					<th class="specalt" style="width:90px">我司编号</th>
 					<th class="specalt" style="width:100px">工厂</th>
 					<th class="specalt" style="width:75px">工艺</th>
 					<th class="specalt" style="width:110px">开版录入备注</th>
 					<th class="specalt" style="width:110px">工厂编号</th>
 					<th class="specalt"  style="min-width: 150px;">工厂颜色</th>
 					<th class="specalt">回版日期</th>
+					<th>图片</th>
 					<th class="specalt">备注</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
@@ -520,9 +521,6 @@ html>body td{ font-size:13px;}
 						<td id="5_${item.id }" onclick="onclickTr(${item.id })">
 							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:90px" 
 								onchange="changeValue(this,'${item.id }myCompanyCode')" value="${item.myCompanyCode }">
-							<input type="file" id="file${item.id }" name="file" style="width: 135px" onchange="ajaxFileUpload('file${item.id }',${item.id })">
-							<input type="hidden" id="${item.id }_picture" name="picture" value="${item.picture }">
-							<input type="hidden" id="${item.id }_smallPicture" name="smallPicture" value="${item.smallPicture }">
 						</td>
 						<td id="6_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
 						<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.technologyName }</td>
@@ -541,8 +539,9 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
 							<%}if(i!=2){ %>
 								<input type="text" id="${item.id }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
-								<span onclick="addFactoryCode(${item.id })" id="${item.id  }jiahao" style="cursor:pointer;vertical-align:bottom;">
-									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								<span onclick="addFactoryCode(${item.id })" id="${item.id  }jiahao" 
+									style="cursor:pointer;vertical-align:bottom;font-size: 27px;font-weight: bold;">
+									+
 								</span>
 							<%} %>
 						</td>
@@ -562,8 +561,8 @@ html>body td{ font-size:13px;}
 								  for(int s=ff;s<=9;s++){%>
 									  <input type="text" id="${item.id  }<%=s %>factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px;display: none" value="">
 								<%} }%>
-								<span onclick="addColor(${item.id  },${status1.index+1})" style="cursor:pointer;vertical-align:bottom;">
-									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								<span onclick="addColor(${item.id  },${status1.index+1})" style="cursor:pointer;vertical-align:bottom;font-size: 27px;font-weight: bold;">
+									+
 								</span>
 								<input type="hidden" id="${item.id }flag${status1.index+1}" value="<%=ff%>">
 								<%} %>
@@ -580,8 +579,8 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
-								<span onclick="addColor(${item.id  },1)" style="cursor:pointer;vertical-align:bottom;">
-									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								<span onclick="addColor(${item.id  },1)" style="cursor:pointer;vertical-align:bottom;font-size: 27px;font-weight: bold;">
+									+
 								</span>
 								<input type="hidden" id="${item.id  }flag1" value="4">
 							</div>
@@ -595,8 +594,9 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" style="cursor:pointer;display: none;vertical-align:bottom;">
-									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" 
+									style="cursor:pointer;display: none;vertical-align:bottom;font-size: 27px;font-weight: bold;">
+									+
 								</span>
 								<input type="hidden" id="${item.id  }flag2" value="4">
 							</div>
@@ -611,8 +611,9 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
-								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" style="cursor:pointer;display: none;vertical-align:bottom;">
-									<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
+								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" 
+									style="cursor:pointer;display: none;vertical-align:bottom;font-size: 27px;font-weight: bold;">
+									+
 								</span>
 								<input type="hidden" id="${item.id  }flag2" value="4">
 							</div>
@@ -626,6 +627,10 @@ html>body td{ font-size:13px;}
 									value="<fmt:formatDate value='${item.replyDate }' pattern='yyyy-MM-dd'/>"
 									onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 							</c:if>
+						</td><td>
+							<input type="file" id="file${item.id }" name="file" style="width: 135px" onchange="ajaxFileUpload('file${item.id }',${item.id })">
+							<input type="hidden" id="${item.id }_picture" name="picture" value="${item.picture }">
+							<input type="hidden" id="${item.id }_smallPicture" name="smallPicture" value="${item.smallPicture }">
 						</td><td id="12_${item.id }" onclick="onclickTr(${item.id })">
 							<input type="text" id="replyMark" name="replyMark" style="width:200px" value="${item.replyMark }">
 						</td>
@@ -638,7 +643,7 @@ html>body td{ font-size:13px;}
 					<td colspan="4" style="text-align: center;font-size: 14px;">
 						总${pageView.rowCount }条&nbsp;&nbsp;&nbsp;每页${pageView.pageSize }条&nbsp;&nbsp;&nbsp; 
 						共${pageView.pageCount }页&nbsp;&nbsp;当前${pageView.pageNow }页</td>
-					<td colspan="5" style="text-align: right;font-size: 14px;">
+					<td colspan="6" style="text-align: right;font-size: 14px;">
 						<a href="javascript:page(1)">首页</a>
 						<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
 						<c:if test="${pageView.pageNow>2 }">
