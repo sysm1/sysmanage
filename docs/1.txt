@@ -17,7 +17,6 @@ CREATE TABLE  factory_info(
 	 pinyin varchar(255),
 	`mark` text,
 	PRIMARY KEY (`id`),
-	UNIQUE `uniqe_1` (`code`),
 	UNIQUE `uniqe_2` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -45,10 +44,9 @@ create table cloth_info (
 	order_name varchar(255) not null unique, -- 下单名称
 	create_time date not null,
 	mark text,
-	tiao_kg double(12,2),	--条/KG
 	unit int,   			-- /**布种单位 0条 1 kg 2cm 3码 4 包***/
-	loss_rate int 			-- 折扣率
-	tiao_kg double(10,2),   --条和公斤换算单位
+	loss_rate int,			-- 折扣率
+	tiao_kg double(10,2),   -- 条和公斤换算单位
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -116,16 +114,6 @@ create table salesman_info(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 布种单位   关键字unit
-create table cloth_unit (  
-	id int not null auto_increment,
-	cloth_id not null,
-	kg  double not null,
-	cm  double not null,
-	yard double not null,
-	item int not null,  
-	PRIMARY KEY (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `cloth_unit`;
 CREATE TABLE `cloth_unit` (
   `id` int(11) NOT NULL auto_increment,
@@ -154,7 +142,7 @@ create table cloth_allowance (
 	unitkg int not null, 				-- 单位（录入单位）-- /**布种单位 0条 1 kg 2cm 3码***/
 	old_sumkg double not null,      	-- 前余量(单位需要统一)
 	change_sumkg double not null,   	-- 变动量(单位需要统一)
-	supplier_id int not null,       --供应商ID
+	supplier_id int not null,       -- 供应商ID
 	input_date datetime not null,  	-- 日期
 	mark text,
 	create_time datetime not null,  -- 更新时间了
@@ -208,7 +196,7 @@ create table flower_info(
 	technology_id int, -- 工艺id
 	picture varchar(255), -- 图片(缩略图，原图)
 	status int not null default 1, -- 0 删除 1 正常
-	create_time datatime,
+	create_time datetime,
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -256,7 +244,7 @@ create table order_input_summary(
 	my_company_code varchar(255), -- 我司code
 	my_company_color varchar(255), -- 我司color
 	num int,					  -- 单位为条(从相应的余量表中减去该数)
-	unit int,                     --下单单位
+	unit int,                     -- 下单单位
 	mark text,   				-- 如果有“备注”则显示“见明细”，如果所有的“备注”都为空则显示“无”
 	order_ids varchar(255),  	-- order_id组合，以,分隔
 	PRIMARY KEY (`id`) 
@@ -276,7 +264,7 @@ CREATE TABLE `order_summary` (
 `factory_color`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂颜色 根据编号 从花号基本表里查找' ,
 `cloth_num`  int(11) NULL DEFAULT NULL COMMENT '工厂布种余量' ,
 `num`  int(11) NULL DEFAULT NULL COMMENT '下单数量(单位为条)' ,
- unit   int,                     --下单单位
+ unit   int,                     -- 下单单位
 `standard`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `packing_style`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '包装方式' ,
 `salesmans`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '多业务员id，备注组合' ,
@@ -311,7 +299,7 @@ create table return_goods_process(
 	summary_id int,
 	return_date datetime,   -- 回货日期
 	return_num int,		-- 回货数量
-	return_Num_kg double(12,2),--回货数量KG
+	return_Num_kg double(12,2),-- 回货数量KG
 	return_unit  varchar(16), -- -- kg cm yard item
 	statistics_num int,      -- 换算单位后数量(条)
 	return_color varchar(255),  -- 实到颜色
