@@ -254,10 +254,13 @@ html>body td{ font-size:13px;}
 		document.getElementById(index+"jiahao").innerHTML='';
 	}
 	function addColor(st,param){
+		var w=$('#divBody').width()+40+"px";
+		//alert($('#divBody').width());
 		var flag=document.getElementById(st+"flag"+param).value;
 		//alert(st+""+flag+"factoryColor"+param);
 		document.getElementById(st+""+flag+"factoryColor"+param).style.display='';
 		document.getElementById(st+"flag"+param).value=parseInt(document.getElementById(st+"flag"+param).value)+parseInt(1);
+		$('#divBody').attr('style','width:'+w);
 	}
 	/**已回按钮验证**/
 	function check(id){
@@ -327,16 +330,19 @@ html>body td{ font-size:13px;}
 	}
 	
 	function show(id,sampId){
+		//alert(sampId);
 		document.getElementById(id).style.display="";
 		var height=(document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2);
 		if(height>16){
 			height=16;
 		}
 		document.getElementById(id).style.top = height + "px"; 
-		document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
+		//document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
+		document.getElementById(id).src=sampId;
 	}
 	
 	function hiddenDiv(id){
+		document.getElementById(id).src='';
 		document.getElementById(id).style.display="none";
 	}
 	
@@ -416,7 +422,7 @@ html>body td{ font-size:13px;}
 </script>
 </head>
 <body>
-	<div class="divBody" style="width: 2000px">
+	<div id="divBody" class="divBody" style="min-width: 1100px">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
@@ -475,14 +481,14 @@ html>body td{ font-size:13px;}
 					<th class="specalt" style="width:45px">日期</th>
 					<th class="specalt" style="width:80px">分色文件号</th>
 					<th class="specalt" style="width:75px">布种</th>
-					<th class="specalt" style="width:90px">我司编号</th>
+					<th class="specalt" style="width:95px">我司编号</th>
 					<th class="specalt" style="width:100px">工厂</th>
 					<th class="specalt" style="width:75px">工艺</th>
 					<th class="specalt" style="width:110px">开版录入备注</th>
-					<th class="specalt" style="width:110px">工厂编号</th>
-					<th class="specalt"  style="min-width: 150px;">工厂颜色</th>
+					<th class="specalt" style="width:120px">工厂编号</th>
+					<th class="specalt" >工厂颜色</th>
 					<th class="specalt">回版日期</th>
-					<th>图片</th>
+					<th class="specalt">图片</th>
 					<th class="specalt">备注</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
@@ -498,7 +504,7 @@ html>body td{ font-size:13px;}
 					 		<input type="hidden" id="${item.id }fileCode" name="${item.id }fileCode" value="${item.fileCode}">
 					 		<input type="hidden" id="${item.id }myCompanyCode" name="${item.id }myCompanyCode" value="${item.myCompanyCode }">
 					 	</td>
-						<td id="1_${item.id }" onclick="onclickTr(${item.id })" onmouseover="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
+						<td id="1_${item.id }" onclick="onclickTr(${item.id })" onmouseover="show('DivMain','${item.picture}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
 						<td id="2_${item.id }" onclick="onclickTr(${item.id })" title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>" >
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
@@ -529,7 +535,7 @@ html>body td{ font-size:13px;}
 							<%}if(i!=2){ %>
 								<input type="text" id="${item.id }factoryCode2" style="width:80px;display: none" name="factoryCode2" value="">
 								<span onclick="addFactoryCode(${item.id })" id="${item.id  }jiahao" 
-									style="cursor:pointer;vertical-align:bottom;font-size: 27px;font-weight: bold;">
+									style="cursor:pointer;vertical-align:bottom;font-size: 24px;font-weight: bold;">
 									+
 								</span>
 							<%} %>
@@ -547,7 +553,7 @@ html>body td{ font-size:13px;}
 								</c:forEach>
 								<%if(ff>1){ %>
 								<% if(ff<9){
-								  for(int s=ff;s<=9;s++){%>
+								  for(int s=ff;s<=10;s++){%>
 									  <input type="text" id="${item.id  }<%=s %>factoryColor${status1.index+1 }" name="factoryColor${status1.index+1 }" style="width:50px;display: none" value="">
 								<%} }%>
 								<span onclick="addColor(${item.id  },${status1.index+1})" style="cursor:pointer;vertical-align:bottom;font-size: 27px;font-weight: bold;">
@@ -568,6 +574,7 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
+								<input type="text" id="${item.id  }10factoryColor1" name="factoryColor1" style="width:50px;display: none" value="">
 								<span onclick="addColor(${item.id  },1)" style="cursor:pointer;vertical-align:bottom;font-size: 27px;font-weight: bold;">
 									+
 								</span>
@@ -583,6 +590,7 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${item.id  }10factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" 
 									style="cursor:pointer;display: none;vertical-align:bottom;font-size: 27px;font-weight: bold;">
 									+
@@ -600,6 +608,7 @@ html>body td{ font-size:13px;}
 								<input type="text" id="${item.id  }7factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }8factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<input type="text" id="${item.id  }9factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
+								<input type="text" id="${item.id  }10factoryColor2" name="factoryColor2" style="width:50px;display: none" value="">
 								<span onclick="addColor(${item.id  },2)" id="${item.id  }jiahao2" 
 									style="cursor:pointer;display: none;vertical-align:bottom;font-size: 27px;font-weight: bold;">
 									+
