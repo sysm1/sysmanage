@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
+<script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
@@ -180,14 +181,19 @@ $(function() {
 	$(document).ready(function(){
 	    $("#addTable").click(function(){
 	    	var tr=$("#table1 tr:eq(2) ");
-			i++;
+			
 	　  		$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
 	　  		var tr=$("#table1 tr:last");
 	　  		var codeValue='<input id="codeValue" name="codeValue" class="isNum" type="text" value="" style="width: 100px;">';
 	　  		var mark='<input type="text" id="mark" name="mark" style="width:200px;" value="双击选择备注信息" onblur="blurValue(this);" onclick="clearText(this);" ondblclick="pop(this)">';
+	　  		var picture='<input type="file" id="'+i+'pic"  name="file" style="width: 135px" onchange="ajaxFileUpload(this)">'+
+	   			'<input type="hidden" id="'+i+'pic_picture" name="picture" value="">'+
+				'<input type="hidden" id="'+i+'pic_smallPicture" name="smallPicture" value="">';
 	　  		tr.children('td').eq(5).html(codeValue);
+	　  		tr.children('td').eq(7).html(picture);
 	　  		tr.children('td').eq(9).html(mark);
 	　  		$("input[name='checkId']").attr("checked",false);
+	　  		i++;
 	    });
 	    $("#deleteTable").click(function(){
 	    	var checkId=document.getElementsByName("checkId");
@@ -275,6 +281,46 @@ $(function() {
 			obj.value="双击选择备注信息";
 		}
 	}
+	/**图片上传**/
+	function ajaxFileUpload(obj) {
+		var id=obj.id;
+		var mycompanyCode='';
+		var factoryCode='';
+		if($('#codeType').val()==2){
+			mycompanyCode=$('#codeValue').val();
+		}else if($('#codeType').val()==1){
+			factoryCode=$('#codeValue').val();
+		}
+		//alert(obj.id);
+        $.ajaxFileUpload({
+             url: rootPath+'/background/upload.html?myCompanyCode='+mycompanyCode+"&factoryCode1="+factoryCode, //用于文件上传的服务器端请求地址
+             secureuri: false, //是否需要安全协议，一般设置为false
+             fileElementId: obj.id, //文件上传域的ID
+             dataType: 'json', //返回值类型 一般设置为json
+             success: function (data, status){  //服务器成功响应处理函数 
+            	 //alert(data);
+                 if( data.code == '0') {
+                 	alert(data.msg);
+                 } else {
+                 	//alert(data.picture.split("|")[0]);
+                 	var pics=data.picture;
+                 	//$("#img1").attr("src", data.url);
+                 	//alert($("#"+obj.id+"_picture").attr("value"));
+                 	//alert(document.getElementById(id+"_picture").value);
+                 	document.getElementById(id+"_picture").value=pics.split("|")[0];
+                 	document.getElementById(id+"_smallPicture").value=pics.split("|")[1];
+                 	//$("#"+id+"_picture").attr("value",pics.split("|")[0]);
+                 	//$("#"+obj.id+"_smallPicture").attr("value",pics.split("|")[1]);
+                 	//alert(document.getElementById(id+"_picture").value);
+                 }
+             },
+             error: function (data, status, e)//服务器响应失败处理函数
+             {
+                 alert(e);
+             }
+         } );
+        return false;
+    }
 </script>
 </head>
 <body style="width: 1100px;">
@@ -354,7 +400,10 @@ $(function() {
 							</c:forEach>
 					    </select>
 					</td><td>
-						<input type="file" id="myFile" name="myFile" style="width: 150px"  onchange="PreviewImage(this);"/>
+						<!--input type="file" id="myFile" name="myFile" style="width: 150px"  onchange="PreviewImage(this);"/-->
+						<input type="file" id="1pic"  name="file" style="width: 135px" onchange="ajaxFileUpload(this)">
+						<input type="hidden" id="1pic_picture" name="picture" value="">
+						<input type="hidden" id="1pic_smallPicture" name="smallPicture" value="">
 					</td><td>
 						<select id="salemanId" name="salemanId" style="width: 100px;">
 							<option value="">请选择</option>
