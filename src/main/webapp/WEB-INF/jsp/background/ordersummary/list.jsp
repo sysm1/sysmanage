@@ -9,6 +9,7 @@
 <title>下单录入汇总查询</title>
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <style type="text/css">
 
 .textcss{height: 99%;border:1px solid green;}
@@ -294,7 +295,7 @@ ul { list-style:none;}
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
 				<input type="hidden" id="flag" name="flag" value="${flag }">
-				<table border="1">
+				<table border="1" class='dataintable'>
 					<tr>
 						<td style="width:70px;text-align: right;">下单日期：</td>
 						<td>
@@ -375,7 +376,7 @@ ul { list-style:none;}
 								</c:forEach>
 							</select>
 						</td><td style="width:70px;text-align: right;">下单次数：</td>
-						<td colspan="3">
+						<td colspan="3" style="text-align: left;">
 							<select id="oprator" name="oprator" style="width: 100px;height: 95%;border:1px solid green;margin-top: 1px">
 								<option value="">请选择</option>
 								<option value="1" <c:if test="${bean.oprator ==1 }">selected="selected"</c:if>>大于等于</option>
@@ -390,7 +391,7 @@ ul { list-style:none;}
 		<div class="topBtn">
 			<c:if test="${flag eq null }">
 			<a class="btn btn-primary" href="javascript:void(0)" id="add"> 
-				<i class="icon-zoom-add icon-white"></i> <span>下单预录入修改</span>
+				<span>下单预录入修改</span>
 			</a> 
 			
 			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
@@ -398,22 +399,22 @@ ul { list-style:none;}
 			</a> --> 
 			
 			<a class="btn btn-info" href="javascript:void(0)" id="editView"> 
-				<i class="icon-edit icon-white"></i> 下单汇总修改
+				下单汇总修改
 			</a> 
 			</c:if>
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="search"> 
-				<i class="icon-trash icon-white"></i> 查询
+				查询
 			</a>
 			
 			<c:if test="${flag eq 1 }">
 				<a class="btn btn-large btn-success" href="javascript:void(0)" id="out2order">
-					<i class="icon-trash icon-white"></i>输出到汇总页面
+					输出到汇总页面
 				</a>
 			</c:if>
 			
 		</div>
 		<div id="paging" class="pagclass" >
-		<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
+		<table id="mytable" cellspacing="0" border="1" style="datalist">
 				<tr >
 					<th class="specalt" style="width:15px" rowspan="2">
 						<input type="checkbox" id="checkIds" name="checkIds">
@@ -421,6 +422,7 @@ ul { list-style:none;}
 					<th class="specalt" style="width:40px" rowspan="2">id</th>
 					<th class="specalt" style="width:45px" rowspan="2">日期</th>
 					<th class="specalt" style="width:85px" rowspan="2">布种</th>
+					<th class="specalt" style="width:85px" rowspan="2">布种颜色</th>
 					<th class="specalt" rowspan="2">工艺</th>
 					<th class="specalt" rowspan="2">我司编号</th>
 					<th class="specalt" rowspan="2">我司颜色</th>
@@ -449,10 +451,10 @@ ul { list-style:none;}
 					 	</td>
 					 	<td title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>">
 							<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
-						</td>
-					 	
-					 	<td>
+						</td><td>
 					 		${item.clothName }
+					 	</td><td>
+					 		${item.color }
 					 	</td><td>
 					 		${item.technologyName }
 					 	</td><td>
@@ -471,8 +473,7 @@ ul { list-style:none;}
 					 		${item.kuanfu }CM
 					 		<c:if test="${item.kuanfufs==0 }">包边</c:if>
 					 		<c:if test="${item.kuanfufs==1 }">实用</c:if>
-					 	</td>
-					 	<td>
+					 	</td><td>
 					 		${item.kezhong }
 					 		<c:if test="${item.kezhongUnit==0 }">G/M2</c:if>
 					 		<c:if test="${item.kezhongUnit==1 }">G/Y</c:if>
@@ -485,12 +486,10 @@ ul { list-style:none;}
 					 		${item.kongcha }
 					 	</td><td>
 					 		${item.jiaodai }
-					 	</td>					 	
-					 	<td title="${item.mark }">
+					 	</td><td title="${item.mark }">
 							${fn:substring(item.mark,0,10)}  
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
-						</td>
-					 	<td >
+						</td><td >
 					 		<span id="${status.index }_salesId">${item.salesmans }</span>
 					 	</td>
 					<tr>

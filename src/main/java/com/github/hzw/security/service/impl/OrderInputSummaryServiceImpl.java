@@ -58,6 +58,19 @@ public class OrderInputSummaryServiceImpl implements OrderInputSummaryService {
 	}
 	
 	/**
+	 * 根据布种ID获取我司编号
+	 * @param id
+	 * @return
+	 */
+	public List<String> queryMyCompanyCodeByClothId(String clothId){
+		return orderInputSummaryMapper.queryMyCompanyCodeByClothId(clothId);
+	}
+	
+	public List<String> queryMyCompanyColorByMyCompanyCode(String myCompanyCode){
+		return orderInputSummaryMapper.queryMyCompanyColorByMyCompanyCode(myCompanyCode);
+	}
+	
+	/**
 	 * 获取订单号
 	 * @return
 	 */

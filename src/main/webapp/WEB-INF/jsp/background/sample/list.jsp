@@ -293,7 +293,7 @@ ul { list-style:none;}
 	function show(id,sampId){
 		document.getElementById(id).style.display="";
 		document.getElementById(id).style.top = (document.documentElement.scrollTop + (document.documentElement.clientHeight - document.getElementById(id).offsetHeight) / 2) + "px"; 
-		document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
+		document.getElementById(id).src=sampId;
 	}
 	
 	function hiddenDiv(id){
@@ -440,8 +440,7 @@ ul { list-style:none;}
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
 						<td  id="pic" >
-								<img src='${pageContext.request.contextPath}/background/pic/getSmallPic.html?id=${item.id }'/ height="30px"
-									onmousemove="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">
+							<img alt="" src="${item.smallPicture }" onmousemove="show('DivMain','${item.picture }')" onmouseout="hiddenDiv('DivMain');"/>
 						</td>
 					<tr>
 				</c:forEach>

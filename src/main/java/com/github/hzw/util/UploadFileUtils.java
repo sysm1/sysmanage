@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.github.hzw.security.controller.UploadController;
+
 /**
  * 文件上传
  * @author wuyb
@@ -48,6 +50,8 @@ public class UploadFileUtils {
         File  dst=null;
         //图片保存目标路径
         String dstPath=PropertiesUtils.findPropertiesKey("pic_path");
+        String curProjectPath = request.getSession().getServletContext().getRealPath("/");
+		dstPath = curProjectPath + "/" + UploadController.getUploadfoldername();
         try {
 	        for(MultipartFile myFile:myFiles){
 	        	if(null==myFile){

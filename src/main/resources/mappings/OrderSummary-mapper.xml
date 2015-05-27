@@ -47,7 +47,7 @@
   
   <sql id="selectId" >
     id, order_code orderCode, order_date orderDate, 
-    cloth_id clothId, 
+    cloth_id clothId, color,
     (select cloth_name from cloth_info where id=cloth_id) as clothName,
     factory_id factoryId,
     (select name from factory_info where id=factory_id) factoryName,
@@ -416,6 +416,9 @@
       </if><if test="balanceSalemanId != null" >
         balance_Saleman_Id,
       </if>
+      <if test="color != null" >
+        color,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -516,6 +519,9 @@
         #{balance,jdbcType=VARCHAR},
       </if> <if test="balanceSalemanId != null" >
         #{balanceSalemanId,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -635,6 +641,9 @@
         balance = #{balance,jdbcType=INTEGER},
       </if> <if test="balanceSalemanId != null" >
         balance_Saleman_Id = #{balanceSalemanId,jdbcType=INTEGER},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -766,6 +775,17 @@
 			</if>
 		</where>
 		order by cloth_id desc
+  </select>
+  
+  <!-- 根据ID查询工厂编号 -->
+  <select id="queryFactoryCodeByFactoryId" resultType="String" parameterType="String">
+  	select distinct factory_code factoryCode from order_summary where factory_id=#{factoryId}
+  </select>
+  
+  <!-- 根据ID查询工厂编号 -->
+  <select id="queryFactoryColor" resultType="String" parameterType="OrderSummary">
+  	select distinct factory_color factoryColor from order_summary 
+  	where factory_id=#{factoryId} and factory_code=#{factoryCode}
   </select>
   
 </mapper>

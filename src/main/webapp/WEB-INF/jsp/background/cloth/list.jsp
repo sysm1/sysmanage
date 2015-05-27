@@ -36,10 +36,10 @@
 						name : "KG/条",
 						width : "100px"
 					},
-					/**{
+					{
 						colkey: "colors",
 						name  :"颜色"
-					},*/
+					},
 					{
 						colkey : "mark",
 						name : "备注",
@@ -126,7 +126,6 @@
 		<div class="search">
 			<form name="fenye" id="fenye">
 				布种名称：<input type="text" name="clothName" value="${param.clothName}" style="height: 20px" /> 
-				下单名称：<input type="text" name="orderName" value="${param.orderName}" style="height: 20px" />
 				<a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>
@@ -134,7 +133,7 @@
 		</div>
 		<div class="topBtn">
 			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>add</span>
+				class="icon-zoom-add icon-white"></i> <span>新增</span>
 			</a> 
 			
 			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
@@ -142,11 +141,11 @@
 			</a> --> 
 			
 			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> Edit
+				class="icon-edit icon-white"></i> 修改
 			</a> 
-			
+			&nbsp;&nbsp;&nbsp;
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> Delete
+				class="icon-trash icon-white"></i> 删除
 			</a>
 			<!-- 
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">

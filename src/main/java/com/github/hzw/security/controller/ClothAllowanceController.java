@@ -66,10 +66,10 @@ public class ClothAllowanceController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("queryByClothAndFactory")
-	public String queryByClothAndFactory(Integer clothId,Integer factoryId) {
+	public String queryByClothAndFactory(Integer clothId,Integer factoryId,String color) {
 		ClothInfo clothInfo=new ClothInfo();
 		clothInfo=clothInfoService.getById(clothId+"");
-		ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(clothId, factoryId);
+		ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(clothId, factoryId,color);
 		String cloth_allowance_tiao="";
 		String cloth_allowance_kg="";
 		//确定布种的单位

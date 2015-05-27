@@ -227,4 +227,15 @@ public class ReturnGoodsProcessController extends BaseController {
 		POIUtils.exportToExcel(response, "回货进度报表", acs, ReturnGoodsProcess.class, "回货进度", acs.size());
 	}
 	
+	@ResponseBody
+	@RequestMapping("queryReturnTime")
+	public List<String> queryReturnTime(OrderSummary orderSummary){
+		List<OrderSummary> list=orderSummaryService.queryAll(orderSummary);
+		if(list.size()>0){
+			String summaryId=list.get(0).getId()+"";
+			return returnGoodsProcessService.queryReturnTime(summaryId);
+		}
+		return null;
+	}
+	
 }

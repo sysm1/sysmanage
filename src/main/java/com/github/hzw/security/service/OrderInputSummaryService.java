@@ -5,7 +5,6 @@ import java.util.List;
 import com.github.hzw.base.BaseService;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
-import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputSummary;
 
 public interface OrderInputSummaryService extends
@@ -38,5 +37,14 @@ public interface OrderInputSummaryService extends
 	 * @return
 	 */
 	public String getOrderNo();
+	
+	/**
+	 * 根据布种ID获取我司编号
+	 * @param id
+	 * @return
+	 */
+	public List<String> queryMyCompanyCodeByClothId(String id);
+	
+	public List<String> queryMyCompanyColorByMyCompanyCode(String myCompanyCode);
 
 }

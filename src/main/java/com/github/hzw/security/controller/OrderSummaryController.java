@@ -151,11 +151,12 @@ public class OrderSummaryController extends BaseController {
 			//修改坯布余量 ？？？？？
 			ClothInfo clothInfo=clothInfoService.getById(info.getClothId()+"");
 			Double tiaoKg=clothInfo.getTiaoKg();
-			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(info.getClothId(), info.getFactoryId());
+			ClothAllowance clothAllowance=clothAllowanceService.queryByClothAndFactory(info.getClothId(), info.getFactoryId(),info.getColor());
 			if(null==clothAllowance){
 				clothAllowance=new ClothAllowance();
 				clothAllowance.setClothId(info.getClothId());
 				clothAllowance.setFactoryId(info.getFactoryId());
+				clothAllowance.setColor(info.getColor());
 				clothAllowance.setChangeSum(0);
 				clothAllowance.setChangeSumkg(0D);
 				clothAllowance.setInputDate(new Date());
@@ -317,6 +318,21 @@ public class OrderSummaryController extends BaseController {
 	@RequestMapping("queryNoReturnNum")
 	public String queryNoReturnNum(OrderSummary orderSummary){
 		return orderSummaryService.queryNoReturnNum(orderSummary);
+	}
+	
+	@ResponseBody
+	@RequestMapping("queryFactoryCodeByFactoryId")
+	public List<String> queryFactoryCodeByFactoryId(String factoryId){
+		return orderSummaryService.queryFactoryCodeByFactoryId(factoryId);
+	}
+	
+	@ResponseBody
+	@RequestMapping("queryFactoryColor")
+	public List<String> queryFactoryColor(OrderSummary orderSummary){
+		OrderSummary os=new OrderSummary();
+		os.setFactoryId(orderSummary.getFactoryId());
+		os.setFactoryCode(orderSummary.getFactoryCode());
+		return orderSummaryService.queryFactoryColor(os);
 	}
 	
 }

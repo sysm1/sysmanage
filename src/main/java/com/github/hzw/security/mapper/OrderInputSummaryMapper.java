@@ -24,5 +24,9 @@ public interface OrderInputSummaryMapper extends BaseMapper<OrderInputSummary> {
 	public List<OrderInputSummaryVO> queryOrderInputBySummaryId(Map<String, Object> map);
 	
 	public OrderInputSummaryVO getVOById(String id);
+	
+	public List<String> queryMyCompanyCodeByClothId(String clothId);
+	
+	public List<String> queryMyCompanyColorByMyCompanyCode(String myCompanyCode);
 
 }

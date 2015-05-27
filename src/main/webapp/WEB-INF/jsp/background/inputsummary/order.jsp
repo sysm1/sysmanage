@@ -6,34 +6,8 @@
 <link href="css/selectUI/css/163css.css" type=text/css rel=stylesheet>
 <script type="text/javascript" src="css/selectUI/js/163css.js"></script>
 <script src="${ctx}/js/inputsummary.js" type="text/javascript"></script>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <%@ include file="/common/header.jsp"%>
-<style type="text/css">
-	.l_right{
-		text-align: right;width:110px;
-	}
-	.l_left{
-		text-align: left;width:221px;
-	}
-	.selectClss{
-		height:30px;
-	}
-	.shortselect{
-		background:#fafdfe;
-		height:28px;
-		line-height:28px;
-		border:1px solid #9bc0dd;
-		-moz-border-radius:2px;
-		-webkit-border-radius:2px;
-		border-radius:2px;
-	}
-	.bd{
-		border:1px solid green;
-	}
-	.frameborder{
-		height: 27px;
-		border:1px solid ;
-	}
-</style>
 <script type="text/javascript">
 
 var dialog;
@@ -42,8 +16,8 @@ var delarr = [];
 $(function() {
 	$("#search").click("click", function() {//绑定查询按扭
 		dialog = parent.$.ligerDialog.open({
-			width : 750,
-			height : 450,
+			width : 1050,
+			height : 550,
 			url : rootPath + '/background/ordersummary/list.html?flag=1&clothId=${inputsummary.clothId }&myCompanyCode=${inputsummary.myCompanyCode }'+
 						'&myCompanyColor=${inputsummary.myCompanyColor }',
 			title : "修改下单预录入",
@@ -152,7 +126,7 @@ function changeFactory(obj){
 	    type: "post", //使用get方法访问后台
 	    dataType: "json", //json格式的数据
 	    async: false, //同步   不写的情况下 默认为true
-	    url: rootPath + '/background/allowance/queryByClothAndFactory.html?factoryId='+obj.value+'&clothId=${inputsummary.clothId }', //要访问的后台地址
+	    url: rootPath + '/background/allowance/queryByClothAndFactory.html?factoryId='+obj.value+'&clothId=${inputsummary.clothId }&color='+$('#color').val(), //要访问的后台地址
 	    data: {}, //要发送的数据
 	    success: function(data){
 	    	$('#clothAllowance')[0].innerHTML=data;
@@ -181,25 +155,25 @@ function changeFactory(obj){
 		<input type="hidden" id="inputIds" name="inputIds" value="${inputIds }">
 		<input type="hidden" id="summId" name="summId" value="${summId }">
 		<input type="hidden" id="salesmans" name="salesmans" value="${salmanIds }">
-		<table style=" height: 200px;" border="1">
+		<table style=" height: 200px;" border="1" class='dataintable'>
 			<tbody>
-				<tr style="text-align: center;height: 30px;"><td colspan="6">下单录入汇总页面</td></tr>
+				<tr ><td colspan="6" style="text-align: center;height: 35px;">下单录入汇总页面</td></tr>
 				<tr style="height: 30px;text-align: center;">
 					<td class="l_right">单号：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							${orderNo }
 						</div>
 					</td>
 					<td class="l_right">下单日期：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							${nowDate }
 						</div>
 					</td>
 				</tr><tr>
 					<td class="l_right" style="height: 30px;">工厂：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							<select id="factoryId" name="factoryId" onchange="changeFactory(this);" class="frameborder">
 								<option value="">请选择</option>
@@ -210,34 +184,34 @@ function changeFactory(obj){
 						</div>
 					</td>
 					<td class="l_right">布种：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							${inputsummary.clothName }
 						</div>
 					</td>
 				</tr><tr>
 					<td class="l_right" style="height: 30px;">我司编号：</td>
-					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if> >
+					<td style="text-align: left;" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if> >
 						<div class="lanyuan_input" id="myCompanyCodediv"
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyCode }');" style="color: ${codeRed};cursor:pointer;" </c:if> 
 						>
 							${inputsummary.myCompanyCode }
 						</div>
 					</td>
-					<td class="l_right">工艺：</td>
-					<td class="l_left" colspan="2">
+					<td class="l_right">布种颜色：</td>
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
-							<select id='technologyId' name="technologyId" class="frameborder">
+							<select id='color' name="color" class="frameborder">
 								<option value="">请选择</option>
-								<c:forEach var="item" items="${technologyInfos }">
-								<option value="${item.id }" >${item.name }</option>
+								<c:forEach var="item" items="${colors }">
+								<option value="${item.color }" >${item.color }</option>
 								</c:forEach>
 							</select>
 						</div>
 					</td>
 				</tr><tr>
 					<td class="l_right" style="height: 30px;">工厂编号：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							<select id="factoryCode" name="factoryCode" class="frameborder">
 								<option value="">请选择</option>
@@ -248,7 +222,7 @@ function changeFactory(obj){
 						</div>
 					</td>
 					<td class="l_right">我司颜色：</td>
-					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if>>
+					<td style="text-align: left;" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if>>
 						<div class="lanyuan_input" id="myCompanyColor"
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyColor }');" style="color: ${codeRed};cursor:pointer;" </c:if>
 						> 
@@ -257,13 +231,13 @@ function changeFactory(obj){
 					</td>
 				</tr><tr>
 					<td class="l_right" style="height: 30px;">工厂坯布数量：</td>
-					<td >
+					<td style="text-align: left;">
 						<div class="lanyuan_input" id="clothAllowance"></div>
-					</td><td style="width: 100px;">
+					</td><td style="width: 100px;text-align: left;">
 						<span style="color: red;"><b>未回</b>：${noRetrun }</span>
 					</td>
 					<td class="l_right">工厂颜色：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							<select id="factoryColor" name="factoryColor" class="frameborder">
 								<option value="">请选择</option>
@@ -275,7 +249,7 @@ function changeFactory(obj){
 					</td>
 				</tr><tr>
 					<td class="l_right" style="height: 30px;">数量：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							<input id='num' name="num" class="checkdesc" type="text" value="${num }" 
 								style="width: 95px;height: 99%;border:1px solid ;" onchange="changeNum(this)">
@@ -284,7 +258,7 @@ function changeFactory(obj){
 						</div>
 					</td>
 					<td class="l_right"><span id="ywy" style="display: none">差额业务员：</span></td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							<select id="ywy2" style="display: none" id="balanceSalemanId" name="balanceSalemanId">
 								<option value="0">请选择</option>
@@ -295,14 +269,26 @@ function changeFactory(obj){
 						</div></td>
 				</tr><tr style="display: none" id="balancemarkTr">
 					<td>差额业务员备注</td>
-					<td colspan="5">
+					<td colspan="5" style="height: 30px;text-align: left;">
 						<input id='balancemark' name="balancemark" type="text" value="" style="width: 553px;height: 17px;border:1px solid ;">
 					</td>
-				</tr><tr style="height: 30px;text-align: center;">
-					<td colspan="6">规格</td>
+				</tr><tr>
+					<td class="l_right">工艺：</td>
+					<td style="text-align: left;" colspan="5">
+						<div class="lanyuan_input">
+							<select id='technologyId' name="technologyId" class="frameborder">
+								<option value="">请选择</option>
+								<c:forEach var="item" items="${technologyInfos }">
+								<option value="${item.id }" >${item.name }</option>
+								</c:forEach>
+							</select>
+						</div>
+					</td>
+				</tr><tr >
+					<td colspan="6" style="height: 30px;text-align: center;">规格</td>
 				</tr><tr>
 					<td class="l_right" style="height: 30px;">幅宽：</td>
-					<td colspan="2" style="height: 30px;">
+					<td colspan="2" style="height: 30px;text-align:left; ">
 						<input id='kuanfu' name="kuanfu" class="checkdesc" type="text" value="" 
 							style="width: 80px;height: 17px;border:1px solid ;">&nbsp;CM&nbsp;
 						<select id="kuanfufs" name="kuanfufs" class="shortselect" style="width: 65px;">
@@ -310,7 +296,7 @@ function changeFactory(obj){
 							<option value="1">实用</option>
 						</select>
 					</td><td  class="l_right">克重：</td>
-					<td colspan="2" style="height: 30px;">
+					<td colspan="2" style="height: 30px;text-align:left;">
 						<input id='kezhong' name="kezhong" class="checkdesc" type="text" value="" 
 							style="width: 70px;height: 17px;border:1px solid ;">
 						<select id="kezhongUnit" name="kezhongUnit" style="width: 67px;">
@@ -337,11 +323,11 @@ function changeFactory(obj){
 				<c:forEach	var="order" items="${orderInputList }">
 				<tr style="height: 30px;text-align: center;">
 					<td class="l_right" >业务员：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						${order.saleManName }
 					</td>
 					<td class="l_right">业务员备注：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							${order.mark }
 						</div>
@@ -350,7 +336,7 @@ function changeFactory(obj){
 				</c:forEach>
 				<tr style="height: 30px;">
 					<td class="l_right">备注：</td>
-					<td class="l_left" colspan="5">
+					<td style="text-align: left;" colspan="5">
 						<div class="lanyuan_input">
 							<input id='mark' name="mark" class="checkdesc" type="text" value="" style="width: 553px;height: 17px;border:1px solid ;">
 						</div>
@@ -360,6 +346,7 @@ function changeFactory(obj){
 						<div class="l_btn_centent">
 							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a>
 							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="javascript:history.go(-1);"><span>取消</span> </a>
+							&nbsp;&nbsp;&nbsp;
 							<a class="btn btn-primary" href="javascript:void(0)" id="search"> <span>查询</span></a>
 						</div>
 					</td>

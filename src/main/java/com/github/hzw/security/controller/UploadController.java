@@ -74,10 +74,10 @@ public class UploadController {
 					return map;
 				}
 				/***图片文件名称 以我司编号 工厂编号和分色文件号命名***/
-				String srcname = "src="+myCompanyCode+","+factoryCode1+"_"+factoryCode2+","+fileCode+ "." + fileExtension;
-				String smallname = "small="+myCompanyCode+","+factoryCode1+"_"+factoryCode2+","+fileCode+ "." + fileExtension;
+				String srcname = "src="+myCompanyCode+","+factoryCode1+"_"+factoryCode2+","+fileCode+"_"+System.currentTimeMillis()+ "." + fileExtension;
+				String smallname = "small="+myCompanyCode+","+factoryCode1+"_"+factoryCode2+","+fileCode+"_"+System.currentTimeMillis()+ "." + fileExtension;
 				file.transferTo(new File(saveDirectory, srcname)); // 保存
-				ImageUtils.scale2(saveDirectory+"/"+srcname, saveDirectory+"/" + smallname, 200, 200, true);
+				ImageUtils.scale2(saveDirectory+"/"+srcname, saveDirectory+"/" + smallname, 50, 50, true);
 				map.put("code", "1");
 				map.put("url", "/" + uploadFolderName + "/" + smallname);
 				map.put("picture", "/" + uploadFolderName + "/" + srcname + "|" + "/" + uploadFolderName + "/" + smallname);
@@ -92,6 +92,10 @@ public class UploadController {
 		}
 		logger.info(map);
 		return map;
+	}
+
+	public static String getUploadfoldername() {
+		return uploadFolderName;
 	}
 
 }

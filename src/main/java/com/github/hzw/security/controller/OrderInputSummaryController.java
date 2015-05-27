@@ -1,6 +1,5 @@
 package com.github.hzw.security.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.VO.OrderInputVO;
+import com.github.hzw.security.entity.ClothColor;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
@@ -91,6 +91,23 @@ public class OrderInputSummaryController extends BaseController {
 	public PageView query(OrderInputSummary info,String pageNow,String pagesize) {
 		pageView = orderInputSummaryService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
+	}
+	
+	/**
+	 * @param model
+	 * 存放返回界面的model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryMyCompanyCodeByClothId")
+	public List<String> queryMyCompanyCodeByClothId(String clothId) {
+		return orderInputSummaryService.queryMyCompanyCodeByClothId(clothId);
+	}
+	
+	@ResponseBody
+	@RequestMapping("queryMyCompanyColorByMyCompanyCode")
+	public List<String> queryMyCompanyColorByMyCompanyCode(String myCompanyCode) {
+		return orderInputSummaryService.queryMyCompanyColorByMyCompanyCode(myCompanyCode);
 	}
 	
 	/**
@@ -242,11 +259,13 @@ public class OrderInputSummaryController extends BaseController {
 		String noRetrun=orderSummaryService.queryNoReturnNum(orderSummary);
 		
 		ClothInfo clothInfo=clothInfoService.getById(info.getClothId()+"");
+		List<ClothColor> colors=clothInfoService.queryColorsById(clothInfo.getId()+"");
 		String unitName=clothInfo.getUnitName();
 		if("包".equals(unitName)){
 			unitName="KG";
 		}
 		model.addAttribute("clothInfo", clothInfo);
+		model.addAttribute("colors",colors);
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("unitName", unitName);
 		model.addAttribute("factoryInfos", factoryInfos);

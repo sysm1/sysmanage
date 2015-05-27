@@ -66,7 +66,12 @@ public class ClothInfoServiceImpl implements ClothInfoService {
 	@Override
 	public void addClothInfo(ClothInfo t,List<ClothColor> list) throws Exception {
 		t.setPinyin(PinyinUtil.getPinYinHeadChar(t.getClothName()).toUpperCase());
-		this.clothInfoMapper.add(t);
+		if(null==t.getId()){
+			this.clothInfoMapper.add(t);
+		}else{
+			this.clothInfoMapper.update(t);
+			clothInfoMapper.deleteColorsByClothId(t.getId()+"");
+		}
 		for(ClothColor clothColor:list){
 			clothColor.setClothId(t.getId());
 			clothInfoMapper.addColor(clothColor);
@@ -90,6 +95,14 @@ public class ClothInfoServiceImpl implements ClothInfoService {
 	
 	public ClothInfo isExist(String clothName){
 		return clothInfoMapper.isExist(clothName);
+	}
+	
+	/**
+	 * 删除布种颜色
+	 * @param clothId
+	 */
+	public void deleteColorsByClothId(String clothId){
+		clothInfoMapper.deleteColorsByClothId(clothId);
 	}
 	
 }

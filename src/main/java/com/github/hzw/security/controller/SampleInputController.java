@@ -19,7 +19,6 @@ import com.github.hzw.security.VO.SampleInputVO;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerInfo;
-import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.SampleInput;
@@ -152,23 +151,25 @@ public class SampleInputController extends BaseController {
 		String[] codeValues=request.getParameterValues("codeValue");
 		String[] technologyIds=request.getParameterValues("technologyId");
 		String[] salemanIds=request.getParameterValues("salemanId");
+		String[] pictures=request.getParameterValues("picture");
+		String[] smallPictures=request.getParameterValues("smallPicture");
 		String[] marks=request.getParameterValues("mark");
-		String picPath="";
+		String picture="";
 		SampleInput sampleInput=new SampleInput();
-		for(int i=0;i<picPaths.length;i++){
-			picPath=picPaths[i];
+		for(int i=0;i<pictures.length;i++){
+			picture=pictures[i];
 			sampleInput=new SampleInput();
-			CompressPic compressPic=new CompressPic();
-			String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
-			String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
-			String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
-			String outputFileName=inputFileName;
+//			CompressPic compressPic=new CompressPic();
+//			String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
+//			String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
+//			String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
+			//String outputFileName=inputFileName;
 			//压缩图片
-			compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
+			//compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
 			try {
-				sampleInput.setPicture(picPath);
+				sampleInput.setPicture(picture);
 				sampleInput.setClothId(Integer.parseInt(clothIds[i]));
-				sampleInput.setSmallPicture(outputDir+outputFileName);
+				sampleInput.setSmallPicture(smallPictures[i]);
 				sampleInput.setCodeType(Integer.parseInt(codeTypes[i]));
 				sampleInput.setFactoryId(Integer.parseInt(factoryIds[i]));
 				//sampleInput.setSampleDate(DateUtil.str2Date(sampleDates[i],"YYYY-mm-DD"));

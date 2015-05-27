@@ -129,7 +129,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			}
 			//alert($("#unit").val());
 			//alert($(this).val());
-			/**
 			$.ajax({
 			    type: "post", //使用get方法访问后台
 			    dataType: "json", //json格式的数据
@@ -149,7 +148,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			    		//alert('没有相关联的我司编号');
 			    	}
 				}
-			});*/
+			});
 		});
 	});
 </script>
@@ -196,18 +195,16 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					</div>
 				</td>
 			 </tr>
-			 <!--tr>
+			 <tr>
 				<td class="l_right">颜色：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
-						
 						<select id="color" name="color">
 							<option value="">请选择颜色</option>
 						</select>
-						
 					</div>
 				</td>
-			</tr-->
+			</tr>
 			<tr>
 				<td class="l_right">工厂：</td>
 				<td class="l_left">

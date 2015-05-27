@@ -70,7 +70,6 @@ public class AccountController extends BaseController{
 		}
 		return map;
 	}
-
 	
 	/**
 	 * 跑到新增界面

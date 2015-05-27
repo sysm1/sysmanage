@@ -40,11 +40,11 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 						name : "坯布供应商",
 						width : "130px"
 					},
-					/**{
+					{
 						colkey : "color",
 						name : "坯布颜色",
 						width : "130px"
-					},*/ {
+					}, {
 						colkey : "allowance",
 						name : "坯布条数",
 						width : "75px"

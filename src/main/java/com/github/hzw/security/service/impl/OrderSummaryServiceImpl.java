@@ -146,4 +146,11 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 		return orderSummaryMapper.queryReportBySummary(map);
 	}
 	
+	public List<String> queryFactoryCodeByFactoryId(String factoryId){
+		return orderSummaryMapper.queryFactoryCodeByFactoryId(factoryId);
+	}
+	
+	public List<String> queryFactoryColor(OrderSummary orderSummary){
+		return orderSummaryMapper.queryFactoryColor(orderSummary);
+	}
 }
