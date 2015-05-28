@@ -31,7 +31,7 @@ public class ClothAllowanceServiceTest {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("clothId", 4);
 		map.put("factoryId", 4);
-		ClothAllowance ae = clothAllowanceService.queryByClothAndFactory(1, 1);
+		ClothAllowance ae = clothAllowanceService.queryByClothAndFactory(1, 1, "");
 		System.out.println(ae);
 	}
 	
