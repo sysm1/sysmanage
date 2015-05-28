@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <!-- 开办录入查询 -->
 <style type="text/css">
@@ -305,12 +306,12 @@ ul { list-style:none;}
 	}
 </script>
 </head>
-<body style="width: 1250px;">
+<body style="width: 100%;">
 <div class="divBody" >
 		<div class="search">
 <form name="fenye" id="fenye">
 	<input type="hidden" id="pageNow" name="pageNow" value="">
-	<table>
+	<table class="dataintable">
 		<tr>
 			<td style="width:70px;text-align: right;">开版日期：</td>
 			<td>
@@ -379,7 +380,7 @@ ul { list-style:none;}
 	</table>
 </form>
 		</div>
-		<div class="topBtn" style="width:800px;text-align: center">
+		<div class="topBtn" style="width:900px;text-align: center">
 			<a class="btn btn-large btn-primary" href="javascript:void(0)" id="edit">
 				修改
 			</a>
@@ -389,7 +390,7 @@ ul { list-style:none;}
 			 <a class="btn btn-large btn-success" href="javascript:void(0)" id="search">查询</a>
 		</div>
 		<div id="paging" class="pagclass">
-			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
+			<table id="mytable" class="dataintable" cellspacing="0" border="1" style="1250px;">
 				<tr style="height: 30px;">
 					<th style="width:20px">
 						<input type="checkbox" id="checkIds" name="checkIds" style="width:18px">
@@ -409,12 +410,7 @@ ul { list-style:none;}
 					<th >备注</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
-				<% int i=0; %>
 					<tr style="height: 30px;">
-					<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-					 	<input type="hidden" id="id" name="id" value="${item.id }">
-					 		<input type="hidden" id="fid" name="fid" value="${bean.factoryId }">
-					 		<input type="hidden" id="cid" name="cid" value="${bean.clothId }">
 					 	<td style="width: 20px;">
 					 		<input type="checkbox" id="checkId" name="checkId" value="${item.id }" onclick="changeCheckId(this);" style="width:18px">
 					 	</td>
@@ -463,8 +459,7 @@ ul { list-style:none;}
 							${fn:substring(item.replyMark,0,10)}  
 							<c:if test="${fn:length(item.replyMark)>10}">...</c:if>
 						</td>
-						</form>
-					<tr>
+					</tr>
 				
 				</c:forEach>
 				<!-- 分页 -->

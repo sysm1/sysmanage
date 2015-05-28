@@ -304,8 +304,36 @@ html>body td{ font-size:13px;}
 	}
 	
 	/**改变默认值***/
-	function changeValue(obj,id){
-		document.getElementById(id).value=obj.value;
+	function changeValue(obj,id,picture){
+		document.getElementById(obj.id).value=obj.value;
+		if(picture==''){
+			return ;
+		}
+		
+		//得到我司编号对应的图片
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: '${pageContext.request.contextPath}/background/codePicture/queryPicture.html?code='+obj.value, //要访问的后台地址
+		    success: function(data){
+		    	//alert(data);
+		    	if(null!=data){
+		    		if(data[0]!=picture){
+		    			if (confirm("我司编号对应的图片与开版图片不一致，点击确定使用我司编号对应图片")) {
+		    				//alert(id);
+		    				document.getElementById(id+"_picture").value=data[0];
+		    				document.getElementById(id+"_smallPicture").value=data[1];
+		    				alert(document.getElementById(id+"_picture").value);
+		    	        }
+		    		}
+		    	}
+			},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+				alert(XMLHttpRequest.status);
+				alert(XMLHttpRequest.readyState);
+				alert(data);  
+		     }
+		});
 	}
 	
 	/**鼠标移动到行的颜色**/
@@ -338,7 +366,9 @@ html>body td{ font-size:13px;}
 		}
 		document.getElementById(id).style.top = height + "px"; 
 		//document.getElementById(id).src="${pageContext.request.contextPath}/background/pic/getPic.html?id="+sampId;
-		document.getElementById(id).src=sampId;
+		var pic=document.getElementById(sampId+"_picture").value;
+		//alert(pic);
+		document.getElementById(id).src=pic;
 	}
 	
 	function hiddenDiv(id){
@@ -393,6 +423,12 @@ html>body td{ font-size:13px;}
 			alert("请填写工厂编号");
 			return false;
 		}
+		//alert($('#'+index+'_picture').val());
+		if($('#'+index+'_picture').val()!=''){
+			if(!confirm("此版已经有图片，点击确定将上传新图片")){
+				return false;
+			}
+		}
         $.ajaxFileUpload(
             {
                 url: '/background/upload.html?myCompanyCode='+$('#'+index+'myCompanyCode').val()+"&factoryCode1="+$('#'+index+'factoryCode1').val()+"&factoryCode2="+$('#'+index+'factoryCode2').val(), //用于文件上传的服务器端请求地址
@@ -408,6 +444,7 @@ html>body td{ font-size:13px;}
                     	//$("#img1").attr("src", data.url);
                     	$("#"+index+"_picture").attr("value",pics.split("|")[0]);
                     	$("#"+index+"_smallPicture").attr("value",pics.split("|")[1]);
+                    	//$('#'+id).attr('value','已上传图片');
                     	//alert($("#"+index+"_smallPicture").val());
                     }
                 },
@@ -504,18 +541,18 @@ html>body td{ font-size:13px;}
 					 		<input type="hidden" id="${item.id }fileCode" name="${item.id }fileCode" value="${item.fileCode}">
 					 		<input type="hidden" id="${item.id }myCompanyCode" name="${item.id }myCompanyCode" value="${item.myCompanyCode }">
 					 	</td>
-						<td id="1_${item.id }" onclick="onclickTr(${item.id })" onmouseover="show('DivMain','${item.picture}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
+						<td id="1_${item.id }" onclick="onclickTr(${item.id })" onmouseover="show('DivMain','${item.id}')" onmouseout="hiddenDiv('DivMain');">${item.id }</td>
 						<td id="2_${item.id }" onclick="onclickTr(${item.id })" title="<fmt:formatDate value='${item.sampleDate }' pattern='yyyy-MM-dd'/>" >
 							<fmt:formatDate value='${item.sampleDate }' pattern='MM-dd'/>
 						</td>
 						<td id="3_${item.id }" style="width:80px" >
-							<input type="text" id="fileCode" name="fileCode" style="width:78px;" value="${item.fileCode }" 
-								onchange="changeValue(this,'${item.id }fileCode');" onclick="onclickTr(${item.id })" >
+							<input type="text" id="${item.id }fileCode" name="fileCode" style="width:78px;" value="${item.fileCode }" 
+								onchange="changeValue(this,'${item.id }','');" onclick="onclickTr(${item.id })" >
 						</td>
 						<td id="4_${item.id }" onclick="onclickTr(${item.id })">${item.clothName }</td>
 						<td id="5_${item.id }" onclick="onclickTr(${item.id })">
-							<input type="text" id="myCompanyCode" name="myCompanyCode" style="width:90px" 
-								onchange="changeValue(this,'${item.id }myCompanyCode')" value="${item.myCompanyCode }">
+							<input type="text" id="${item.id }myCompanyCode" name="myCompanyCode" style="width:90px" 
+								onchange="changeValue(this,'${item.id }'),'${item.picture}'" value="${item.myCompanyCode }">
 						</td>
 						<td id="6_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
 						<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.technologyName }</td>
@@ -527,7 +564,7 @@ html>body td{ font-size:13px;}
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							<% i++; %>
 								 <input type="text" id="${item.id }factoryCode${status1.index+1 }" style="width:80px" 
-								 	onchange="changeValue(this,'${item.id  }factoryCode${status1.index+1 }')" name="factoryCode${status1.index+1 }" value="${item1.key }">
+								 	onchange="changeValue(this,'${item.id  }','')" name="factoryCode${status1.index+1 }" value="${item1.key }">
 							</c:forEach>
 							<%if(i==0){ %>
 								<input type="text" id="${item.id }factoryCode1" style="width:80px" name="factoryCode1" value="">
@@ -626,7 +663,7 @@ html>body td{ font-size:13px;}
 									onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 							</c:if>
 						</td><td>
-							<input type="file" id="file${item.id }" name="file" style="width: 135px" onchange="ajaxFileUpload('file${item.id }',${item.id })">
+							<input type="file" id="file${item.id }" name="file" style="width: 105px" onchange="ajaxFileUpload('file${item.id }',${item.id })">
 							<input type="hidden" id="${item.id }_picture" name="picture" value="${item.picture }">
 							<input type="hidden" id="${item.id }_smallPicture" name="smallPicture" value="${item.smallPicture }">
 						</td><td id="12_${item.id }" onclick="onclickTr(${item.id })">

@@ -150,9 +150,9 @@ $(function() {
 	
 	/**图片预览	*/
 	function showPic(id,obj){
-		alert(obj.value+"||"+id+"||"+document.getElementById("picture").value);
+		//alert(obj.value+"||"+id+"||"+document.getElementById("picture").value);
 		var url = document.getElementById("picture").value;
-		alert(url);
+		//alert(url);
 		//document.getElementById("pictd").innerHTML=url;
 		document.getElementById("viewpic").src=url;
 	}
@@ -211,7 +211,6 @@ $(function() {
 	    	var codeType='';
 	    	var teln='';
 	    	var salman='';
-	    	var i=0;
 	    	$('input:checkbox[name=checkId]:checked').each(function(){
 	    		 i++;
 	    		 //alert($(this).parent().parent());
@@ -230,7 +229,14 @@ $(function() {
 	    		 newRow.find("select").eq(3).attr("value",teln);
 	    		 newRow.find("select").eq(4).attr("value",salman);
 	    		 $("input[name='checkId']").attr("checked",false);
-	    		 //alert(row.find("file").eq(0).val());
+	    		 
+	    		 var picture='<input type="file" id="'+i+'pic"  name="file" style="width: 135px" onchange="ajaxFileUpload(this)">'+
+		   			'<input type="hidden" id="'+i+'pic_picture" name="picture" value="">'+
+					'<input type="hidden" id="'+i+'pic_smallPicture" name="smallPicture" value="">';
+				 newRow.children('td').eq(7).html(picture);
+				 //alert(1);
+	    		 //alert(newRow.find("file").eq(0).attr("id",i));
+	    		 //alert(newRow.find("file").eq(0).attr('id'));
 	    		 //newRow.find("file").eq(0).attr("value",row.find("file").eq(0).val());
 	    	});
 	    	if(i==0){
@@ -291,7 +297,7 @@ $(function() {
 		}else if($('#codeType').val()==1){
 			factoryCode=$('#codeValue').val();
 		}
-		//alert(obj.id);
+		alert(obj.id);
         $.ajaxFileUpload({
              url: rootPath+'/background/upload.html?myCompanyCode='+mycompanyCode+"&factoryCode1="+factoryCode, //用于文件上传的服务器端请求地址
              secureuri: false, //是否需要安全协议，一般设置为false

@@ -66,23 +66,12 @@ $(function() {
                 secureuri: false, //是否需要安全协议，一般设置为false
                 fileElementId: 'file1', //文件上传域的ID
                 dataType: 'json', //返回值类型 一般设置为json
-                success: function (data, status)  //服务器成功响应处理函数 
-                // string res = "{ error:'" + error + "', msg:'" + msg + "',imgurl:'" + imgurl + "'}";
-                {
-                	/**
-                    $("#img1").attr("src", data.imgurl);
-                    if (typeof (data.error) != 'undefined') {
-                        if (data.error != '') {
-                            alert(data.error);
-                        } else {
-                            alert(data.msg);
-                        }
-                    }
-                    **/
+                success: function (data, status) { //服务器成功响应处理函数 
                     if( data.code == '0') {
                     	alert(data.msg);
                     } else {
-                    	$("#img1").attr("src", data.url);
+                    	$("#img1").attr("style","width:300px;");
+                    	$("#img1").attr("src", data.picture.split("|")[0]);
                     	$("#picture").val(data.picture);
                     }
                 },
@@ -209,7 +198,7 @@ $(function() {
 						<input name="factoryColors" type="text"  value="${item2.factoryColor }" style="width:100px;"/>
 						<input name="mark" type="text" value="备注" onclick="clickText(this,'备注');" 
 							onblur="changeValue(this,'备注');" style="width:100px;"/>
-						<span id="addFacotyMyCode"><a onclick="addcolors();">+</a></span>
+						<span id="addFacotyMyCode" style="font-size: 26px;font-weight: bold;cursor:pointer;" ><a onclick="addcolors();">+</a></span>
 					</div>
 					</c:forEach>
 				</td>
@@ -221,7 +210,7 @@ $(function() {
 					<input id="uploadFile" type="button" value="上传" />
 				</td>
 				<td colspan="2" rowspan="2">
-					=${item.picture }<img id="img1" alt="图片预览" src="" />
+					<img id="img1" alt="图片预览" src="" />
 				</td>
 			</tr><tr>
 				<td colspan="2">
