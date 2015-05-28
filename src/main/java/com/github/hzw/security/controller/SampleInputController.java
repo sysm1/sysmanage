@@ -143,7 +143,6 @@ public class SampleInputController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> add(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String[] picPaths=UploadFileUtils.saveUploadFile(request);
 		//String[] sampleDates=request.getParameterValues("sampleDate");
 		String[] factoryIds=request.getParameterValues("factoryId");
 		String[] clothIds=request.getParameterValues("clothId");

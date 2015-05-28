@@ -178,20 +178,20 @@ public class SampleProcessController extends BaseController{
 				bean.setMyCompanyCode(sampleInput.getMyCompanyCode());
 			}
 			
-			String[] picPaths=UploadFileUtils.saveUploadFile(request);
-			String picPath=null;
-			if(null!=picPaths){
-				picPath=picPaths[0];
-				CompressPic compressPic=new CompressPic();
-				String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
-				String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
-				String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
-				String outputFileName=inputFileName;
-				//压缩图片
-				compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
-				sampleInput.setPicture(picPath);
-				sampleInput.setSmallPicture(outputDir+outputFileName);
-			}
+			//String[] picPaths=UploadFileUtils.saveUploadFile(request);
+			//String picPath=null;
+//			if(null!=picPaths){
+//				picPath=picPaths[0];
+//				CompressPic compressPic=new CompressPic();
+//				String inputDir=picPath.substring(0,picPath.lastIndexOf("/"));
+//				String inputFileName=picPath.substring(picPath.lastIndexOf("/"));
+//				String outputDir= PropertiesUtils.findPropertiesKey("small_pic_path");
+//				String outputFileName=inputFileName;
+//				//压缩图片
+//				compressPic.compressPic(inputDir, outputDir, inputFileName, outputFileName, 100, 100, true);
+//				sampleInput.setPicture(picPath);
+//				sampleInput.setSmallPicture(outputDir+outputFileName);
+//			}
 			sampleInputService.saveTemp(request, sampleInput);
 			
 //			//再次查询

@@ -12,11 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.SampleInputVO;
+import com.github.hzw.security.entity.CodePicture;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.SampleAdditional;
 import com.github.hzw.security.entity.SampleInput;
 import com.github.hzw.security.mapper.SampleInputMapper;
+import com.github.hzw.security.service.CodePictureService;
 import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.SampleAdditionalService;
@@ -36,6 +38,9 @@ public class SampleInputServiceImpl implements SampleInputService {
 	
 	@Autowired
 	private FlowerAdditionalService flowerAdditionalService;
+	
+	@Autowired
+	private CodePictureService codePictureService;
 	
 	@Override
 	public PageView query(PageView pageView, SampleInput t) {
@@ -209,6 +214,19 @@ public class SampleInputServiceImpl implements SampleInputService {
 			bean.setReplyDate(sampleInput.getReplyDate());
 			bean.setReplyMark(sampleInput.getReplyMark());
 			update(bean);
+			//图片和我司编号对应关系
+			CodePicture codePicture=codePictureService.getById(bean.getMyCompanyCode());
+			if(null==codePicture){
+				codePicture=new CodePicture();
+				codePicture.setCode(bean.getMyCompanyCode());
+				codePicture.setPicture(sampleInput.getPicture());
+				codePicture.setSmallPicture(sampleInput.getSmallPicture());
+				codePictureService.add(codePicture);
+			}else{
+				codePicture.setPicture(sampleInput.getPicture());
+				codePicture.setSmallPicture(sampleInput.getSmallPicture());
+				codePictureService.update(codePicture);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
