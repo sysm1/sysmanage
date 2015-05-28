@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.hzw.security.mapper.CodePictureMapper">
+
+	<!--mybatis ehcache缓存配置 -->
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 <cache type="org.mybatis.caches.ehcache.LoggingEhcache" 
+		/> -->
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		code,picture,smallPicture
+	</sql>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="queryAll" resultType="CodePicture" parameterType="CodePicture">
+		select
+		<include refid="selectId" />
+		from code_picture
+		<where>
+			<if test="code != null and code != ''">
+				code =#{code}
+			</if>
+		</where>
+	</select>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="query" resultType="CodePicture" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from account
+		<where>
+			<if test="t.accountName != null and t.accountName != ''">
+				accountName like '%${t.accountName}%'
+			</if>
+		</where>
+	</select>
+
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="CodePicture">
+		insert into code_picture (
+		code,
+		picture,
+		smallPicture
+		)
+		values (#{code},
+		#{picture}, #{smallPicture}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from account where
+		id=#{id}
+	</delete>
+
+	<select id="getById" parameterType="String" resultType="CodePicture">
+		select
+		<include refid="selectId" />
+		from code_picture where code=#{id}
+	</select>
+
+	<update id="update" parameterType="CodePicture">
+		update code_picture
+		<set>
+			<if test="picture != null and picture != ''">
+				picture=#{picture},
+			</if>
+			<if test="smallPicture != null and smallPicture != ''">
+				smallPicture=#{smallPicture},
+			</if>
+		</set>
+		where code=#{code}
+	</update>
+
+</mapper>
