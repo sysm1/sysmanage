@@ -25,6 +25,20 @@ table.datalist td{
 table.datalist td.blue{
 	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;border-left:#89aad7 1px solid;
 	background-color:#fff; padding:2px; background-color:#F3F9FD}
+	
+table.datasearch {
+	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
+	border-left:#89aad7 1px solid;border-collapse:collapse;}
+table.datasearch th{
+	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
+	border-left:#89aad7 1px solid; margin-top:5px; vertical-align:middle; padding-top:5px;
+	background:url(../images/main/tabtopbg.jpg) repeat-x top; background-color:#F3F8FE;color:#1A4995;height:17px;}
+table.datasearch td{
+	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
+	border-left:#89aad7 1px solid; background-color:#fff; padding:1px;text-align:right; }
+table.datasearch td.blue{
+	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;border-left:#89aad7 1px solid;
+	background-color:#fff; padding:2px; background-color:#F3F9FD}
 
 	
 * { margin:0; padding:0;}

@@ -72,7 +72,7 @@
 				and factory_id = #{t.factoryId}
 			</if>
 			<if test="t.factoryCode != null and t.factoryCode != ''">
-				and factory_code = #{t.factoryCode}
+				and factoryCode like '%${t.factoryCode}%' 
 			</if>
 			<if test="t.myCompanyCode != null and t.myCompanyCode != ''">
 				and myCompanyCode = #{t.myCompanyCode}
@@ -81,7 +81,7 @@
 				and myCompanyColor = #{t.myCompanyColor}
 			</if>
 			<if test="t.factoryColor != null and t.factoryColor != ''">
-				and factoryColor = #{t.factoryColor}
+				and factoryColor like '%${t.factoryColor}%' 
 			</if>
 			<if test="t.qualityProblem != null and t.qualityProblem != ''">
 				and qualityProblem like '%${t.qualityProblem}%'

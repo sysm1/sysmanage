@@ -22,7 +22,7 @@
 		$("#add").click("click", function() {//绑定新增按扭
 			dialog = parent.$.ligerDialog.open({
 				width : 650,
-				height : 400,
+				height : 385,
 				url : rootPath + '/background/unsubInput/addUI.html',
 				title : "退货次品预登记",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -37,7 +37,7 @@
 			}
 			dialog = parent.$.ligerDialog.open({
 				width : 650,
-				height : 400,
+				height : 385,
 				url : rootPath + '/background/unsubInput/editUI.html?id='+cbox,
 				title : "修改退货次品预登记",
 				isHidden : false
@@ -174,7 +174,7 @@
 	<div class="divBody" >
 		<div class="search" >
 			<form name="fenye" id="fenye" method="post" action="${ctx}/background/register/list.html">
-			<table class="dataintable">
+			<table class="datasearch">
 				<tr>
 					<td align="right">退货日期：</td>
 					<td>

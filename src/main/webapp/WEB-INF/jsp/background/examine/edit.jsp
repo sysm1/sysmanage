@@ -4,22 +4,7 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
-<style type="text/css">
-table.dataintable{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid;border-collapse:collapse;}
-table.dataintable th{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid; margin-top:2px; vertical-align:middle; padding-top:2px;
-	background:url(../images/main/tabtopbg.jpg) repeat-x top; background-color:#F3F8FE;color:#1A4995;height:17px;}
-table.dataintable td{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid; background-color:#fff; padding:2px; text-align:center}
-table.dataintable td.blue{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;border-left:#89aad7 1px solid;
-	background-color:#fff; padding:2px; background-color:#F3F9FD}
-	
-</style>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 	$(function() {
@@ -126,7 +111,7 @@ table.dataintable td.blue{
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/examine/update.html" method="post">
 		<input type="hidden" id="id" name="id" value="${unsub.id }">
-		<table style="width: 98%; height: 100%;margin-left: 6px;" border="1" class="dataintable">
+		<table style="width: 98%; height: 100%;margin-left: 4px;"padding-left: 4px; border="1" class="dataintable">
 			<tbody>
 				<tr>
 					<td style="text-align: right;height: 30px;width: 15%;">退货日期：</td>

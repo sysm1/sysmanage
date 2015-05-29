@@ -42,7 +42,7 @@
 		<table style="width: 100%; height: 100%;" border="1" class="dataintable">
 			<tbody>
 				<tr>
-					<td style="text-align: right;height: 35px;width: 15%;">退货日期：</td>
+					<td style="text-align: right;height: 33px;width: 15%;">退货日期：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
 					<input type="text" id="unsubdate" name="unsubdate" value="<fmt:formatDate value='${unsub.unsubdate }' pattern='yyyy-MM-dd'/>" 
@@ -56,7 +56,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right;height: 35px;">我司编号：</td>
+					<td style="text-align: right;height: 33px;">我司编号：</td>
 					<td style="text-align: left;">
 					<div class="lanyuan_input">${unsub.myCompanyCode }
 					</div>
@@ -65,15 +65,15 @@
 					<td style="text-align: left;">${unsub.myCompanyColor }
 					</td>
 				</tr><tr>
-					<td style="text-align: right;height: 35px;">数量：</td>
+					<td style="text-align: right;height: 33px;">数量：</td>
 					<td colspan="3" style="text-align: left;">
 						<input type="text" id="num" name="num" value="${unsub.num }">条
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #E0EEE0;">客户反映质量问题</td>
+					<td colspan="4" style="background-color: #E0EEE0;text-align: center;">客户反映质量问题</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: center;">
-						<textarea rows="6" style="width: 98%;" id="qualityProblem" name="qualityProblem">${unsub.qualityProblem }</textarea>
+						<textarea rows="7" style="width: 98%;" id="qualityProblem" name="qualityProblem">${unsub.qualityProblem }</textarea>
 					</td>
 				</tr>
 				<tr>

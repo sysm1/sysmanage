@@ -11,7 +11,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
 }, "密码由6至16位字符组合构成");
 
-
 	$(function() {
 		$("form").validate({
 			submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
@@ -94,7 +93,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		<table style="width: 100%; height: 100%;" class="dataintable">
 			<tbody>
 				<tr>
-					<td style="text-align: right;height: 35px;">退货日期：</td>
+					<td style="text-align: right;height: 33px;">退货日期：</td>
 					<td style="text-align: left;">
 					<div class="lanyuan_input">
 					<input type="text" id="unsubdate" name="unsubdate" value="<fmt:formatDate value='${now }' pattern='yyyy-MM-dd'/>" 
@@ -114,7 +113,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right;height: 35px;">我司编号：</td>
+					<td style="text-align: right;height: 33px;">我司编号：</td>
 					<td style="text-align: left;">
 					<div class="lanyuan_input">
 						<select id="myCompanyCode" name="myCompanyCode" onchange="selectMyCompanyCode(this)">
@@ -132,15 +131,15 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</select>
 					</td>
 				</tr><tr>
-					<td style="text-align: right;height: 35px;">数量：</td>
+					<td style="text-align: right;height: 33px;">数量：</td>
 					<td colspan="3" style="text-align: left;">
 						<input type="text" id="num" name="num" value="">条
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #E0EEE0;">客户反映质量问题</td>
+					<td colspan="4" style="background-color: #E0EEE0;text-align: center;">客户反映质量问题</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: center;">
-						<textarea rows="6" style="width: 98%;" id="qualityProblem" name="qualityProblem"></textarea>
+						<textarea rows="7" style="width: 98%;" id="qualityProblem" name="qualityProblem"></textarea>
 					</td>
 				</tr>
 				<tr>

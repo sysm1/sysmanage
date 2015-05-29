@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
 <link href="${ctx}/css/list-main.css" rel="stylesheet">
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <style type="text/css">
 * { margin:0; padding:0;}
 a { color:#333; text-decoration:none;}
@@ -17,21 +18,6 @@ ul { list-style:none;}
 #pagelist ul li a, .pageinfo { display:block; padding:0px 6px; background:#e6f2fe;}
 .pageinfo  { color:#555;}
 .current { background:#CCCC00; display:block; padding:0px 6px; font-weight:bold;}
-
-table.dataintable{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid;border-collapse:collapse;}
-table.dataintable th{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid; margin-top:2px; vertical-align:middle; padding-top:2px;
-	background:url(../images/main/tabtopbg.jpg) repeat-x top; background-color:#F3F8FE;color:#1A4995;height:20px;}
-table.dataintable td{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;
-	border-left:#89aad7 1px solid; background-color:#fff; padding:2px; text-align:center}
-table.dataintable td.blue{
-	border-bottom:#89aad7 1px solid;border-top:#89aad7 1px solid;border-right:#89aad7 1px solid;border-left:#89aad7 1px solid;
-	background-color:#fff; padding:2px; background-color:#F3F9FD}
-
 
 </style>
 <script type="text/javascript">
@@ -92,6 +78,21 @@ table.dataintable td.blue{
 				isHidden : false
 			});
 		});
+		
+		/***过滤查询**/
+		$("#factory_text").ligerComboBox({
+	        url: '/background/pinyin/factory.html',
+	        valueField: 'id',
+	        textField: 'name', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:15,
+	        onSelected:function(e) {
+	            $("#factoryId").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
 		
 		/***过滤查询**/
 		$("#clothName").ligerComboBox({
@@ -195,7 +196,7 @@ table.dataintable td.blue{
 	<div class="divBody" >
 		<div class="search" >
 			<form name="fenye" id="fenye" method="post" action="${ctx}/background/register/list.html">
-			<table class="dataintable">
+			<table class="datasearch">
 				<tr>
 					<td align="right">退货日期：</td>
 					<td>
@@ -204,7 +205,7 @@ table.dataintable td.blue{
 						<input type="text" id="unsubdatee" name="unsubdatee" value="<fmt:formatDate value='${bean.unsubdatee}' pattern='yyyy-MM-dd'/>" style="width:91px;"
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 					</td>
-					<td align="right">布种：</td>
+					<td style="text-align:right ">布种：</td>
 					<td>
 						<!--select id="clothId" name="clothId">
 							<option value="">请选择布种</option>
@@ -225,7 +226,6 @@ table.dataintable td.blue{
 							</c:forEach>
 						</select>
 					</td>
-					
 				</tr><tr>
 					<td align="right">我司颜色：</td>
 					<td>
@@ -235,6 +235,29 @@ table.dataintable td.blue{
 					</td>
 					<td align="right">客户质量反应问题：</td>
 					<td><input type="text" id="qualityProblem" name="qualityProblem" value="${unsub.qualityProblem }"></td>
+					<td style="text-align:right ">工厂：</td>
+					<td>
+						<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
+						<input type="text" id="factory_text" style="width: 200px;height: 99%;border:1px solid green;margin-top: -3px" value="${factoryInfo.name }" 
+							onchange="changeTextValue('factoryId',this);"/> 
+					</td>
+				</tr><tr>
+					<td>到货日期：</td>
+					<td>
+						<input type="text" id="returnDates" name="returnDates" value="<fmt:formatDate value='${bean.returnDates}' pattern='yyyy-MM-dd'/>" style="width:91px;" 
+							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">至
+						<input type="text" id="returnDatee" name="returnDatee" value="<fmt:formatDate value='${bean.returnDatee}' pattern='yyyy-MM-dd'/>" style="width:91px;"
+							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
+					</td>
+					<td>工厂编号：</td>
+					<td><input type="text" id="factoryCode" name="factoryCode" value="${bean.factoryCode }"></td>
+					<td>工厂颜色：</td>
+					<td><input type="text" id="factoryColor" name="factoryColor" value="${bean.factoryColor }"></td>
+				</tr><tr>
+					<td>我司验证报告：</td>
+					<td><input type="text" id="myCompanyReport" name="myCompanyReport" value="${bean.myCompanyReport }"></td>
+					<td>工厂交涉情况：</td>
+					<td><input type="text" id="negotiate" name="negotiate" value="${bean.negotiate }"></td>
 				</tr>
 			</table>
 				 
