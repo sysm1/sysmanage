@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.CodePicture;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.Unsub;
+import com.github.hzw.security.service.CodePictureService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.UnsubInputService;
 import com.github.hzw.util.Common;
@@ -27,11 +30,18 @@ public class RegisterController extends BaseController{
 	
 	@Inject
 	private FactoryInfoService factoryInfoService;
+	
+	@Resource
+	private CodePictureService codePictureService;
 
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request,String pagesize,Unsub unsub){
 		String pageNow=request.getParameter("pageNow");
 		pageView = unsubInputService.query(getPageView(pageNow,pagesize), unsub);
+		List<CodePicture> codes=codePictureService.queryAllCode(request);
+		FactoryInfo factoryInfo=factoryInfoService.getById(unsub.getFactoryId()+"");
+		request.setAttribute("codes", codes);
+		model.addAttribute("factoryInfo",factoryInfo);
 		request.setAttribute("pageView", pageView);
 		request.setAttribute("bean", unsub);
 		return Common.BACKGROUND_PATH+"/register/list";

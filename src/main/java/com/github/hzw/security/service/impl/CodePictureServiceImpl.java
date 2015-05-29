@@ -1,6 +1,9 @@
 package com.github.hzw.security.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,20 @@ public class CodePictureServiceImpl implements CodePictureService {
 	@Override
 	public List<CodePicture> queryAll(CodePicture t) {
 		return codePictureMapper.queryAll(t);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CodePicture> queryAllCode(HttpServletRequest request) {
+		List<CodePicture> cps=new ArrayList<CodePicture>();
+		Object list=request.getSession().getAttribute("CodePictures");
+		if(null==list){
+			cps=codePictureMapper.queryAll(null);
+			request.getSession().setAttribute("CodePictures", cps);
+		}else{
+			cps=(List<CodePicture>) list;
+		}
+		return cps;
 	}
 
 	@Override
