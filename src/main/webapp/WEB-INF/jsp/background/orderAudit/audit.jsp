@@ -310,8 +310,8 @@ $(function() {
 							<input id='num' name="num" class="checkdesc" type="text" value="${inputsummary.num }" style="width: 100px;" onchange="changeNum(this)">
 							<c:if test="${inputsummary.balance != null}">
 							<span id="balancetext" >差额
-							<input type="text" id="balance" name="balance" value="${inputsummary.balance}" style="width: 50px;"></span>
-							</c:if>条
+							<input type="text" id="balance" name="balance" value="${inputsummary.balance}" style="width: 50px;"></span>条
+							</c:if>
 						</div>
 					</td>
 					<td class="l_right">
@@ -332,7 +332,7 @@ $(function() {
 						</c:if>
 					</td>
 				</tr>
-				<c:if test="${inputsummary.balancemark!=null && inputsummary.balancemark!=''}">
+				<c:if test="${inputsummary.balancemark!=null }">
 				<tr>
 					<td>差额业务员备注：</td>
 					<td colspan="5">

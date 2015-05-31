@@ -788,4 +788,14 @@
   	where factory_id=#{factoryId} and factory_code=#{factoryCode}
   </select>
   
+  <select id="queryByIds" resultType="OrderSummary">
+  		select
+  		<include refid="selectId" />
+		from order_summary
+		where id in
+  		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+		 #{item} 
+		</foreach> 
+  </select>
+  
 </mapper>

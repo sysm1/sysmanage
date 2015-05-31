@@ -16,6 +16,13 @@ public interface OrderSummaryMapper extends BaseMapper<OrderSummary> {
 	 public List<OrderSummary> queryNotify(Map<String, Object> map);
 	 public void updateCancel(String notifyId);
 	 
+	 /**
+	  * 查询指定ID的OrderSummary
+	  * @param ids OrderSummary id
+	  * @return
+	  */
+	 public List<OrderSummary> queryByIds(String[] ids);
+	 
 	 public List<OrderSummary> queryByNotifyId(String notifyId);
 
 	 public String queryNoReturnNum(OrderSummary orderSummary);

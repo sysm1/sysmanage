@@ -46,6 +46,13 @@ public interface OrderSummaryService extends BaseService<OrderSummary> {
 	
 	// public List<OrderSummary> queryReportBySummary(Map<String, Object> map);
 	
+	/**
+	  * 查询指定ID的OrderSummary
+	  * @param ids OrderSummary id
+	  * @return
+	  */
+	 public List<OrderSummary> queryByIds(String[] ids);
+	
 	public List<OrderSummary> queryReportBySummary(Map<String, Object> map);
 	
 	public List<String> queryFactoryCodeByFactoryId(String factoryId);

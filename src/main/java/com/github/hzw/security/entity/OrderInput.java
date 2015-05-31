@@ -9,10 +9,14 @@ public class OrderInput {
     private Integer id;
 
     private Integer clothId;
+    
+    private String clothName;
 
     private String myCompanyCode;
 
     private Integer salesmanId;
+    
+    private String saleManName;
 
     private Integer status;
 
@@ -115,5 +119,21 @@ public class OrderInput {
 
 	public void setMark(String mark) {
 		this.mark = mark;
+	}
+
+	public String getClothName() {
+		return clothName;
+	}
+
+	public void setClothName(String clothName) {
+		this.clothName = clothName;
+	}
+
+	public String getSaleManName() {
+		return saleManName;
+	}
+
+	public void setSaleManName(String saleManName) {
+		this.saleManName = saleManName;
 	}
 }

@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <style type="text/css">
 	.l_right{
 		text-align: right;width:110px;
@@ -113,9 +114,8 @@ $(function() {
 						$.ligerDialog.success('提交成功!', '提示', function() {
 							//这个是调用同一个页面趾两个iframe里的js方法
 							//account是iframe的id
-							//parent.ordersummary.loadGird();
-							//closeWin();
-							window.location.href=rootPath + "/background/ordersummary/list.html";
+							parent.orderAudit.loadGird();
+							closeWin();
 						});
 						//parent.window.document.getElementById("username").focus();
 					} else {
@@ -127,33 +127,7 @@ $(function() {
 	});
 });
 
-
-
 	function saveWin() {
-		var factoryId=$("#factoryId").val();
-		if(factoryId==""){
-			alert("工厂不能为空");
-			$("#factoryId").focus();
-			return false;
-		}
-		var technologyId=$("#technologyId").val();
-		if(technologyId==""){
-			alert("工艺不能为空");
-			$("#technologyId").focus();
-			return false;
-		}
-		var factoryCode=$("#factoryCode").val();
-		if(factoryCode==""){
-			alert("工厂编号不能为空");
-			$("#factoryCode").focus();
-			return false;
-		}
-		var factoryColor=$("#factoryColor").val();
-		if(factoryColor==""){
-			alert("工厂颜色不能为空");
-			$("#factoryColor").focus();
-			return false;
-		}
 		$("#form").submit();
 	}
 	function changeNum(obj){
@@ -198,120 +172,68 @@ $(function() {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/ordersummary/update.html" method="post">
-		<!--input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }"-->
-		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
-		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
-		<input type="hidden" id="num1" name="num1" value="${inputsummary.num }">
-		<input type="hidden" id="orgNum" name="orgNum" value="${orgNum}">
-		<input type="hidden" id="summId" name="summId" value="${inputsummary.id }">
-		<input type="hidden" id="id" name="id" value="${inputsummary.id }">
-		<table style=" height: 200px;" border="1">
+	<form name="form" id="form" action="${ctx}/background/orderAudit/audit.html" method="post">
+		<input type="hidden" id="id" name="id" value="${id }">
+		<table border="1" class="dataintable" style="width: 710px;">
 			<tbody>
-				<tr style="text-align: center;height: 30px;"><td colspan="6">下单录入汇总修改页面</td></tr>
 				<tr style="height: 30px;text-align: center;">
-					<td class="l_right">单号：</td>
-					<td class="l_left" colspan="2">
-						<div class="lanyuan_input">
-							<input type="text" id="orderCode" name="orderCode" value="${inputsummary.orderCode }" readonly="readonly">
-						</div>
+					<td class="l_right" style="width: 110px;">单号：</td>
+					<td style="text-align: left;" colspan="2">
+						${inputsummary.orderCode }
 					</td>
-					<td class="l_right">下单日期:</td>
-					<td class="l_left" colspan="2">
+					<td class="l_right">下单日期：</td>
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							<fmt:formatDate value="${inputsummary.orderDate }" pattern="YYYY-MM-dd"/>
 						</div>
 					</td>
 				</tr><tr>
-					<td class="l_right">工厂:</td>
-					<td class="l_left" colspan="2">
-						<div class="lanyuan_input">
-							<select id="factoryId" name="factoryId">
-								<option value="">请选择</option>
-								<c:forEach var="item" items="${factoryInfos }" varStatus="status">
-								<option value="${item.id }" <c:if test="${item.id eq inputsummary.factoryId }">selected="selected"</c:if>>${item.name }</option>
-								</c:forEach>
-							</select>
-						</div>
+					<td class="l_right">工厂：</td>
+					<td style="text-align: left;" colspan="2">
+						${inputsummary.factoryName }
 					</td>
-					<td class="l_right">布种:</td>
-					<td class="l_left" colspan="2">
-						<div class="lanyuan_input">
-							<select id="clothId" name="clothId">
-							<c:forEach var="cloth" items="${clothInfos }">
-								<option value="${cloth.id }" <c:if test="${cloth.id eq summary.clothId }">selected="selected"</c:if>>${cloth.clothName }</option>
-							</c:forEach>
-							</select>
-						</div>
+					<td class="l_right">布种：</td>
+					<td style="text-align: left;" colspan="2">
+						${inputsummary.clothName }
 					</td>
 				</tr><tr>
-					<td class="l_right">我司编号:</td>
-					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if> >
-						<div class="lanyuan_input" 
-							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyCode }');" style="color: ${codeRed};cursor:pointer;" </c:if> 
-						>
-							${inputsummary.myCompanyCode }
-						</div>
+					<td class="l_right">我司编号：</td>
+					<td style="text-align: left;" colspan="2"  >
+						${inputsummary.myCompanyCode }
 					</td>
-					<td class="l_right">工艺:</td>
-					<td class="l_left" colspan="2">
-						<div class="lanyuan_input">
-							<select id='technologyId' name="technologyId">
-								<option value="">请选择</option>
-								<c:forEach var="item" items="${technologyInfos }">
-								<option value="${item.id }" <c:if test="${item.id eq inputsummary.technologyId }">selected="selected" </c:if>>${item.name }</option>
-								</c:forEach>
-							</select>
-						</div>
+					<td class="l_right">工艺：</td>
+					<td style="text-align: left;" colspan="2">
+						${inputsummary.technologyName }
 					</td>
 				</tr><tr>
-					<td class="l_right">工厂编号:</td>
-					<td class="l_left" colspan="2">
-						<div class="lanyuan_input">
-							<select id="factoryCode" name="factoryCode">
-								<option value="">请选择</option>
-								<c:forEach var="code" items="${factoryCodes }">
-									<option value="${code}" <c:if test="${code eq inputsummary.factoryCode}">selected="selected"</c:if>  >${code }</option>
-								</c:forEach>
-							</select>
-						</div>
+					<td class="l_right">工厂编号：</td>
+					<td style="text-align: left;" colspan="2">
+						${inputsummary.factoryCode }
 					</td>
-					<td class="l_right">我司颜色:</td>
-					<td class="l_left" colspan="2" <c:if test="${codeRed !=null }">title="点击添加到花号基本资料"</c:if>>
-						<div class="lanyuan_input" 
-							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyColor }');" style="color: ${codeRed};cursor:pointer;" </c:if>
-						> 
-							${inputsummary.myCompanyColor }
-						</div>
+					<td class="l_right">我司颜色：</td>
+					<td style="text-align: left;" colspan="2" >
+						${inputsummary.myCompanyColor }
 					</td>
 				</tr><tr>
-					<td class="l_right">工厂坯布数量:</td>
+					<td class="l_right">工厂坯布数量：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							${clothAllowance }
 						</div>
 					</td>
-					<td class="l_right">工厂颜色:</td>
-					<td class="l_left" colspan="2">
-						<div class="lanyuan_input">
-							<select id="factoryColor" name="factoryColor">
-								<option value="">请选择</option>
-								<c:forEach var="color" items="${factoryColors }">
-									<option value="${color}"  <c:if test="${color eq inputsummary.factoryColor }">selected="selected"</c:if>  >${color }</option>
-								</c:forEach>
-							</select>
-						</div>
+					<td class="l_right">工厂颜色：</td>
+					<td style="text-align: left;" colspan="2">
+						${inputsummary.factoryColor }
 					</td>
 				</tr><tr>
-					<td class="l_right">数量:</td>
-					<td class="l_left" colspan="2">
+					<td class="l_right">数量：</td>
+					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
-							<input id='num' name="num" class="checkdesc" type="text" value="${inputsummary.num }" style="width: 100px;" onchange="changeNum(this)">
+							${inputsummary.num }
 							<c:if test="${inputsummary.balance != null}">
 							<span id="balancetext" >差额
-							<input type="text" id="balance" name="balance" value="${inputsummary.balance}" style="width: 50px;"></span>
-							</c:if>条
+							<input type="text" id="balance" name="balance" value="${inputsummary.balance}" style="width: 50px;"></span>条
+							</c:if>
 						</div>
 					</td>
 					<td class="l_right">
@@ -332,7 +254,7 @@ $(function() {
 						</c:if>
 					</td>
 				</tr>
-				<c:if test="${inputsummary.balancemark!=null && inputsummary.balancemark!=''}">
+				<c:if test="${inputsummary.balancemark!=null &&inputsummary.balancemark!=''}">
 				<tr>
 					<td>差额业务员备注：</td>
 					<td colspan="5">
@@ -340,28 +262,22 @@ $(function() {
 					</td>
 				</tr>
 				</c:if>
-				<tr style="height: 30px;text-align: center;">
-					<td colspan="6">规格</td>
+				<tr style="height: 30px;">
+					<td colspan="6" style="text-align: center;">规格</td>
 				</tr><tr>
-					<td class="l_right">幅宽:</td>
-					<td colspan="2">
-						<input id='kuanfu' name="kuanfu" class="checkdesc" type="text" value="${inputsummary.kuanfu }" style="width: 80px;">&nbsp;CM&nbsp;
-						<select id="kuanfufs" name="kuanfufs" style="width: 60px;">
-							<option value="0" <c:if test="${inputsummary.kuanfufs eq 0 }">selected="selected"</c:if> >包边</option>
-							<option value="1" <c:if test="${inputsummary.kuanfufs eq 1 }">selected="selected"</c:if>>实用</option>
-						</select>
-					</td><td  class="l_right">克重:</td>
-					<td colspan="2">
-						<input id='kezhong' name="kezhong" class="checkdesc" type="text" value="${inputsummary.kezhong }" style="width: 70px;">
-						<select id="kezhongUnit" name="kezhongUnit" style="width: 60px;">
-							<option value="0" <c:if test="${inputsummary.kezhongUnit eq 0 }">selected="selected"</c:if>>G/M2</option>
-							<option value="1" <c:if test="${inputsummary.kezhongUnit eq 1 }">selected="selected"</c:if>>G/Y</option>
-							<option value="2" <c:if test="${inputsummary.kezhongUnit eq 2 }">selected="selected"</c:if>>G/M</option>
-						</select>
-						<select id="kezhongfs" name="kezhongfs" style="width: 60px;">
-							<option value="0" <c:if test="${inputsummary.kezhongfs eq 0 }">selected="selected"</c:if>>回后</option>
-							<option value="1" <c:if test="${inputsummary.kezhongfs eq 1 }">selected="selected"</c:if>>出机</option>
-						</select>
+					<td class="l_right">幅宽：</td>
+					<td colspan="2" style="text-align: left;">
+						${inputsummary.kuanfu }&nbsp;CM&nbsp;
+						<c:if test="${inputsummary.kuanfufs eq 0 }">包边</c:if>
+						<c:if test="${inputsummary.kuanfufs eq 1 }">实用</c:if>
+					</td><td  class="l_right">克重：</td>
+					<td colspan="2" style="text-align: left;">
+						${inputsummary.kezhong }
+						<c:if test="${inputsummary.kezhongUnit eq 0 }">G/M2</c:if>
+						<c:if test="${inputsummary.kezhongUnit eq 1 }">G/Y</c:if>
+						<c:if test="${inputsummary.kezhongUnit eq 2 }">G/M</c:if>
+						<c:if test="${inputsummary.kezhongfs eq 0 }">回后</c:if>
+						<c:if test="${inputsummary.kezhongfs eq 1 }">出机</c:if>
 					</td>
 				</tr><tr>
 					<td  colspan="6" style="height: 30px;text-align: center;">
@@ -369,20 +285,20 @@ $(function() {
 					</td>
 				</tr><tr>
 					<td style="width: 100px;text-align: right;">纸管：</td>
-					<td style="width: 110px;"><input type="text" id="zhiguan" name="zhiguan" value="${inputsummary.zhiguan }" style="width: 110px;"></td>
+					<td style="width: 110px;text-align: left;">${inputsummary.zhiguan }</td>
 					<td style="width: 100px;text-align: right;">空差：</td>
-					<td ><input type="text" id="kongcha" name="kongcha" value="${inputsummary.kongcha }" style="width: 110px;"></td>
+					<td style="text-align: left;">${inputsummary.kongcha }</td>
 					<td style="width: 100px;text-align: right;">胶袋：</td>
-					<td ><input type="text" id="jiaodai" name="jiaodai" value="${inputsummary.jiaodai }" style="width: 110px;"> </td>
+					<td style="text-align: left;">${inputsummary.jiaodai } </td>
 				</tr>
 				
 				<c:forEach	var="order" items="${orderInputList }">
 				<tr style="height: 30px;text-align: center;">
-					<td class="l_right" >业务员:</td>
+					<td class="l_right" >业务员：</td>
 					<td class="l_left" colspan="2">
 						${order.saleManName }
 					</td>
-					<td class="l_right">业务员备注:</td>
+					<td class="l_right">业务员备注：</td>
 					<td class="l_left" colspan="2">
 						<div class="lanyuan_input">
 							${order.mark }
@@ -391,15 +307,22 @@ $(function() {
 				</tr>
 				</c:forEach>
 				<tr>
-					<td class="l_right">备注:</td>
-					<td class="l_left" colspan="5">
-						<div class="lanyuan_input">
-							<input id='mark' name="mark" class="checkdesc" type="text" value="${inputsummary.mark }" style="width: 553px">
-						</div>
+					<td class="l_right">备注：</td>
+					<td style="text-align: left;" colspan="5">
+						${inputsummary.mark }
 					</td>
-				</tr>
-				
-				<tr>
+				</tr><tr>
+					<td>审核是否通过：</td>
+					<td colspan="2" style="text-align: left;">
+						<input type="radio" name="status" value="1" <c:if test="${audit.status eq 1 }">checked="checked"</c:if> >通过
+						<input type="radio" name="status" value="2" <c:if test="${audit.status eq 2 }">checked="checked"</c:if> >不通过
+					</td><td colspan="3"></td>
+				</tr><tr>
+					<td>审核意见：</td>
+					<td colspan="5" style="text-align: left;">
+						<textarea id="reason" name="reason" style="width: 98%;height: 70px;">${audit.reason }</textarea>
+					</td>
+				</tr><tr>
 					<td colspan="6">
 						<div class="l_btn_centent">
 							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();">

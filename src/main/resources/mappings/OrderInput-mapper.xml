@@ -3,7 +3,9 @@
 <mapper namespace="com.github.hzw.security.mapper.OrderInputMapper" >
   
   <sql id="selectId1" >
-    id, cloth_id clothId, my_company_code myCompanyCode, salesman_id salesmanId, 
+    id, cloth_id clothId, my_company_code myCompanyCode, salesman_id salesmanId,
+    (select cloth_name from cloth_info where id=cloth_id) clothName,
+    (select name from salesman_info where id=salesman_id) saleManName,
     my_company_color myCompanyColor,status, create_time createTime,num,unit,mark
   </sql>
   
@@ -63,7 +65,8 @@
 	<select id="queryByIds" resultType="com.github.hzw.security.VO.OrderInputVO">
 		select
 			oi.id, 
-  			oi.cloth_id clothId, 
+  			oi.cloth_id clothId,
+  			oi.create_time createTime,
   			oi.my_company_code myCompanyCode, salesman_id salesmanId,
   			(select name from salesman_info where id=oi.salesman_id) saleManName,
   			my_company_color myCompanyColor,

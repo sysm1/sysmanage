@@ -33,6 +33,15 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 		return pageView;
 	}
 	
+	/**
+	  * 查询指定ID的OrderSummary
+	  * @param ids OrderSummary id
+	  * @return
+	  */
+	 public List<OrderSummary> queryByIds(String[] ids){
+		 return orderSummaryMapper.queryByIds(ids);
+	 }
+	
 	@Override
 	public PageView queryVO(PageView pageView, OrderSummary t) {
 		Map<String, Object> map = new HashMap<String, Object>();

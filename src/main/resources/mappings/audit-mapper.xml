@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.hzw.security.mapper.AuditMapper">
+
+	<!--mybatis ehcache缓存配置 -->
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 <cache type="org.mybatis.caches.ehcache.LoggingEhcache" 
+		/> -->
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		type,
+		orderId,
+		status,
+		reason,
+		createTime,
+		auditorId,
+		(select accountName from account where auditorId=id) auditName,
+		orderTime,clothName,
+		myCompanyCode,myCompanyColor
+	</sql>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="queryAll" resultType="AuditBean" parameterType="AuditBean">
+		select
+		<include refid="selectId" />
+		from audit
+		<where> 1=1
+		<if test="type != null and type != ''">
+			and type = #{type}
+		</if>
+		<if test="status != null and status != ''">
+			and status = #{status}
+		</if>
+		<if test="orderId != null and orderId  != ''">
+			and orderId  = #{orderId }
+		</if>
+		</where>
+	</select>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="query" resultType="AuditBean" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from audit
+		<where> 1=1
+		<if test="t.type != null and t.type != ''">
+			and type = #{t.type}
+		</if>
+		<if test="t.status != null and t.status != ''">
+			and status = #{t.status}
+		</if>
+		<if test="t.orderId != null and t.orderId  != ''">
+			and orderId  = #{t.orderId }
+		</if>
+		</where>
+		order by status,orderTime
+	</select>
+
+	<select id="queryNoMatch" resultType="Account" parameterType="java.util.HashMap">
+		select
+		a.id,
+		a.accountName,
+		a.password,
+		a.accountType,
+		a.description,
+		a.state,
+		a.createTime,
+		(SELECT dp.name from department dp where dp.id =
+		d.subdep_id) depName
+		from account a LEFT JOIN dep_account d on
+		a.id=d.account_id
+		<where>
+			<if test="t.accountName != null and t.accountName != ''">
+				accountName like '%${t.accountName}%'
+			</if>
+		</where>
+	</select>
+
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="AuditBean" useGeneratedKeys="true" keyProperty="id">
+		insert into audit (
+		type,
+		orderId,
+		status,
+		reason,
+		createTime,
+		auditorId,
+		orderTime,clothName,
+		myCompanyCode,myCompanyColor )
+		values (
+		#{type},
+		#{orderId}, #{status},
+		#{reason},#{createTime},#{auditorId},
+		#{orderTime},#{clothName},
+		#{myCompanyCode},#{myCompanyColor})
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from account where
+		id=#{id}
+	</delete>
+
+	<select id="getById" parameterType="String" resultType="AuditBean">
+		select
+		<include refid="selectId" />
+		from audit where id=#{id}
+	</select>
+
+	<update id="update" parameterType="AuditBean">
+		update audit
+		<set>
+			<if test="reason != null and reason != ''">
+				reason=#{reason},
+			</if>
+			<if test="createTime != null and createTime != ''">
+				createTime=#{createTime},
+			</if>
+			<if test="status != null and status != ''">
+				status=#{status}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 验证用户登陆 -->
+	<select id="countAccount" parameterType="Account" resultType="Account">
+		select
+		<include refid="selectId" />
+		from account where
+		accountName=#{accountName} and password=#{password}
+	</select>
+
+	<!-- 根据用户名查出id -->
+	<select id="querySingleAccount" parameterType="String"
+		resultType="Account">
+		select
+		<include refid="selectId" />
+		from account where accountName=#{accountName}
+	</select>
+</mapper>

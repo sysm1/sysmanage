@@ -40,7 +40,6 @@
 			}
 		});
 		
-		
 		$('#checkAllId').click(function(){
 	         //判断apple是否被选中
 	         var bischecked=$('#checkAllId').is(':checked');
@@ -68,7 +67,29 @@
 		});
 		
 	});
-	
+	/***审核**/
+	function toAudit(ids){
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/orderAudit/toAudit.html?type=1', //要访问的后台地址
+		    data: {ids:ids}, //要发送的数据
+		    success: function(data){
+		    	if (data.flag == "true") {
+		    		parent.$.ligerDialog.success('操作成功!', '提示', function() {
+		    			for(var i=0;i<delarr.length;i++){
+		    				//alert(document.getElementById(delarr[i]).parentNode.parentNode.style.display);
+		    				document.getElementById(delarr[i]).parentNode.parentNode.style.display="none";
+		    			}
+		    			loadGird();//重新加载表格数据
+					});
+				}else{
+					parent.$.ligerDialog.warn("操作失败！！");
+				}
+			}
+		});
+	}
 	
 	function pwd_valid_fun(){
 		var v = $("#pwd").val();

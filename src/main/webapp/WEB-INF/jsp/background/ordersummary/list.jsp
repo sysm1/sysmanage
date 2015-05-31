@@ -174,7 +174,35 @@ ul { list-style:none;}
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
 			}
-			window.location.href=rootPath +'/background/ordersummary/editUI.html?id='+cbox;
+			//window.location.href=rootPath +'/background/ordersummary/editUI.html?id='+cbox;
+			
+			
+			$.ajax({
+			    type: "post", //使用get方法访问后台
+			    dataType: "json", //json格式的数据
+			    async: false, //同步   不写的情况下 默认为true
+			    url: rootPath + '/background/orderAudit/checkTime.html?type=2', //要访问的后台地址
+			    data: {ids:cbox.join(",")}, //要发送的数据
+			    success: function(data){
+			    	if (data.flag == "false") {
+			    		if(confirm("过期单据，修改需要审核，点击确定进行审核处理")){
+			    			toAudit(cbox.join(","));
+			    			/**
+			    			dialog = parent.$.ligerDialog.open({
+			    				width : 1150,
+			    				height : 550,
+			    				url : rootPath + '/background/inputsummary/editUI.html?addId='+data.newIds,
+			    				title : "修改下单预录入",
+			    				isHidden : false
+			    			});**/
+			    		}
+					}else if(data.flag=="false2"){
+						alert("单据审核不通过不能修改，审核原因："+data.reason);
+					}else{
+						window.location.href=rootPath +'/background/ordersummary/editUI.html?id='+cbox;
+					}
+				}
+			});
 		});
 		
 		$("#deleteView").click("click", function() {//绑定查询按扭
@@ -257,6 +285,30 @@ ul { list-style:none;}
 	    });
 		
 	});
+	
+	/***审核**/
+	function toAudit(ids){
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/orderAudit/toAudit.html?type=2', //要访问的后台地址
+		    data: {ids:ids}, //要发送的数据
+		    success: function(data){
+		    	if (data.flag == "true") {
+		    		parent.$.ligerDialog.success('操作成功!', '提示', function() {
+		    			for(var i=0;i<delarr.length;i++){
+		    				//alert(document.getElementById(delarr[i]).parentNode.parentNode.style.display);
+		    				document.getElementById(delarr[i]).parentNode.parentNode.style.display="none";
+		    			}
+		    			loadGird();//重新加载表格数据
+					});
+				}else{
+					parent.$.ligerDialog.warn("操作失败！！");
+				}
+			}
+		});
+	}
 	/**
 	 * 获取选中的值
 	 */
