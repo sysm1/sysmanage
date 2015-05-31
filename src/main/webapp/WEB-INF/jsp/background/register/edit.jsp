@@ -141,9 +141,9 @@
 						${unsub.num }条
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #E0EEE0;">客户反映质量问题</td>
+					<td colspan="4" style="background-color: #E0EEE0;text-align: center;">客户反映质量问题</td>
 				</tr><tr>
-					<td colspan="4" style="text-align: left;">
+					<td colspan="4" style="text-align: left;min-height: 40px;">
 						${unsub.qualityProblem }
 					</td>
 				</tr><tr style="height: 30px;">
@@ -165,14 +165,14 @@
 						<fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #D1EEEE;">我司验收报告</td>
+					<td colspan="4" style="background-color: #D1EEEE;text-align: center;">我司验收报告</td>
 				</tr><tr>
-					<td colspan="4" style="text-align: left;">
+					<td colspan="4" style="text-align: left;min-height: 40px;">
 						<c:if test="${unsub.myCompanyReport == null ||unsub.myCompanyReport == '' }">&nbsp;<br></c:if>
 						<c:if test="${unsub.myCompanyReport != null }">${unsub.myCompanyReport }</c:if>
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #DEDEDE;">工厂交涉情况</td>
+					<td colspan="4" style="background-color: #DEDEDE;text-align: center;">工厂交涉情况</td>
 				</tr><tr>
 					<td colspan="4">
 						<textarea rows="4" style="width: 98%" id="negotiate" name="negotiate">${unsub.negotiate }</textarea>

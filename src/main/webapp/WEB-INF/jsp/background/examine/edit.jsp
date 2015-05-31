@@ -141,9 +141,9 @@
 						${unsub.num }条
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户反映质量问题</td>
+					<td colspan="4" style="text-align: center;">客户反映质量问题</td>
 				</tr><tr>
-					<td colspan="4" style="text-align: left;">
+					<td colspan="4" style="text-align: left;min-height: 40px;">
 						${unsub.qualityProblem }
 					</td>
 				</tr><tr style="height: 30px;">
@@ -183,7 +183,7 @@
 					<input type="hidden" id="returnDate" name="returnDate" value='<fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/>'>
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4">我司验收报告</td>
+					<td colspan="4" style="text-align: center;">我司验收报告</td>
 				</tr><tr>
 					<td colspan="4">
 						<textarea rows="4" style="width: 98%" id="myCompanyReport" name="myCompanyReport">${unsub.myCompanyReport }</textarea>
