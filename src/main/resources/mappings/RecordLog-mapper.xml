@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.hzw.security.mapper.RecordLogMapper" >
+  <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.RecordLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="op_type" property="opType" jdbcType="VARCHAR" />
+    <result column="op_date" property="opDate" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, username, model, op_type, op_date, create_time
+  </sql>
+  
+  
+   <select id="query" resultType="RecordLog" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+			from record_log log
+		<where> 
+		 	<if test="username != null and username != ''">
+				and username = #{username}
+			</if>
+			<if test="model != null and model != ''">
+				and model = #{model}
+			</if>
+			<if test="opType != null and opType != ''">
+				and op_type = #{opType}
+			</if>
+			<if test="opDate != null and opDate != ''">
+				and op_date = #{opDate}
+			</if>
+		</where>
+		order by log.id desc
+  </select>
+  
+  <select id="queryAll" resultType="RecordLog" parameterType="RecordLog">
+		select
+		<include refid="Base_Column_List" />
+		from record_log log
+		<where>
+			<if test="username != null and username != ''">
+				and username = #{username}
+			</if>
+			<if test="model != null and model != ''">
+				and model = #{model}
+			</if>
+			<if test="opType != null and opType != ''">
+				and op_type = #{opType}
+			</if>
+			<if test="opDate != null and opDate != ''">
+				and op_date = #{opDate}
+			</if>
+		</where>
+		order by log.id desc
+	</select>
+  
+  <select id="sum" resultType="Integer" parameterType="map">
+		select count(id) from record_log log
+		<where> 
+		 	<if test="username != null and username != ''">
+				and username = #{username}
+			</if>
+			<if test="model != null and model != ''">
+				and model = #{model}
+			</if>
+			<if test="opType != null and opType != ''">
+				and op_type = #{opType}
+			</if>
+			<if test="opDate != null and opDate != ''">
+				and op_date = #{opDate}
+			</if>
+		</where>
+		order by log.id desc
+  </select>
+  
+  
+  <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from record_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from record_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="add" parameterType="com.github.hzw.security.entity.RecordLog" useGeneratedKeys="true" keyProperty="id">
+    insert into record_log (username, model, 
+      op_type, op_date, create_time
+      )
+    values (#{username,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
+      #{opType,jdbcType=VARCHAR}, #{opDate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.github.hzw.security.entity.RecordLog" >
+    
+    insert into record_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="opType != null" >
+        op_type,
+      </if>
+      <if test="opDate != null" >
+        op_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="opType != null" >
+        #{opType,jdbcType=VARCHAR},
+      </if>
+      <if test="opDate != null" >
+        #{opDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="update" parameterType="com.github.hzw.security.entity.RecordLog" >
+    
+    update record_log
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="opType != null" >
+        op_type = #{opType,jdbcType=VARCHAR},
+      </if>
+      <if test="opDate != null" >
+        op_date = #{opDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+ 
+</mapper>

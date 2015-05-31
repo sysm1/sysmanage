@@ -56,12 +56,16 @@ ul { list-style:none;}
 				isHidden : false
 			});
 		});
+		
+		
 		$("#delete").click("click", function() {//绑定删除按扭
 			var cbox=getSelectedCheckbox();
 			if (cbox=="") {
 				parent.$.ligerDialog.alert("请选择删除项！！");
 				return;
 			}
+			
+			
 			parent.$.ligerDialog.confirm('删除后不能恢复，确定删除吗？', function(confirm) {
 				if (confirm) {
 					$.ajax({
@@ -86,8 +90,14 @@ ul { list-style:none;}
 					});
 				}
 			});
+			
+			
+			
 		});
+		
+		
 	});
+	
 	function loadGird(){
 		grid.loadData();
 	}

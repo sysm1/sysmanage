@@ -305,6 +305,7 @@
 			<version>3.10-FINAL</version>
 		</dependency>
 		
+		
 		<dependency>
 			<groupId>pinyin4j.sourceforge.net</groupId>
 			<artifactId>pinyin4j</artifactId>

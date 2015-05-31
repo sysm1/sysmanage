@@ -6,7 +6,7 @@
     <context id="context1" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
             connectionURL="jdbc:mysql://127.0.0.1/system-manage?useUnicode=true&amp;characterEncoding=UTF-8"
-            userId="admin" password="hujihong" />
+            userId="admin" password="admin" />
             
         <javaModelGenerator targetPackage="com.github.hzw.security.entity"
             targetProject="/Users/hujh/git/sysmanage/src/main/java" />
@@ -115,11 +115,23 @@
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table> 
-         --> 
+        
         <table schema="system-manage" tableName="cloth_price" enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
         </table>
+        
+         <table schema="system-manage" tableName="password" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+         --> 
+         
+        <table schema="system-manage" tableName="record_log" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
+        
         
         <!--  
         	<property name="modelOnly" value="true"/>
