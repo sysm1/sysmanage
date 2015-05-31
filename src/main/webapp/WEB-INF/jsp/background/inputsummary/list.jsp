@@ -74,7 +74,7 @@ ul { list-style:none;}
 						alert("单据审核不通过不能修改，审核原因："+data.reason);
 					}else{
 						dialog = parent.$.ligerDialog.open({
-		    				width : 1150,
+		    				width : 1140,
 		    				height : 550,
 		    				url : rootPath + '/background/inputsummary/editUI.html?addId='+data.newIds,
 		    				title : "修改下单预录入",

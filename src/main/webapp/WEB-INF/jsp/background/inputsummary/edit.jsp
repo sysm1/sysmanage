@@ -5,6 +5,7 @@
 <head>
 <title>下单预录入</title>
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
@@ -272,7 +273,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div style="width: 1150px;">
+	<div style="width: 1145px;">
 		<table width="450px">
 			<tr>
 				<td style="width: 80px;">
@@ -290,13 +291,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	</div>
 	<form name="form" id="form" action="${ctx}/background/input/add.html" method="post">
 	<table><tr><td valign="top">
-		<table id="table1" border="1" name="table1">
+		<table id="table1" border="1" name="table1" class="dataintable">
 			<tbody>
 				<tr>
-					<th style="height: 30px;">
+					<th style="height: 30px;width: 40px;text-align: center;">
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</th>
-					<th align="right">布种</th>
+					<th align="right" style="width: 100px;">布种</th>
 					<th align="right" style="width: 150px;">我司编号</th>
 					<th align="right">我司颜色</th>
 					<th >数量</th>
@@ -307,10 +308,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr>
 				<c:forEach items="${list }" var="input">
 				<tr>
-					<td>
+					<td style="width: 40px;text-align: center;">
 						<input type="checkbox" id="checkId" name="checkId" value="1">
 					</td>
-					<td class="l_left">
+					<td class="l_left" style="width: 100px;">
 						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:110px;">
 							<option value="">请选择</option>
 							<c:forEach items="${ cloths }" var = "cloth">
@@ -329,7 +330,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</c:if><c:if test="${fn:length(input.myCompanyCodes)==0 }">
 							<input type="text" id="myCompanyCode" name="myCompanyCode" value="${input.myCompanyCode}" style="width:92%;">
 						</c:if>
-					</td><td class="l_left">
+					</td><td class="l_left" style="width: 150px;">
 						<input type="text" name="myCompanyColor" style="width:150px;" value="${input.myCompanyColor }" onchange="queryNoReturnNum(this)">
 					</td>
 					<td >

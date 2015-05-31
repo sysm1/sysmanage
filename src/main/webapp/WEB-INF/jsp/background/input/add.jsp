@@ -5,6 +5,7 @@
 <head>
 <title>下单预录入</title>
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
@@ -293,7 +294,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	</div>
 	<form name="form" id="form" action="${ctx}/background/input/add.html" method="post">
 	<table><tr><td valign="top">
-		<table id="table1" border="1" name="table1">
+		<table id="table1" border="1" name="table1" class="dataintable">
 			<tbody>
 				<tr>
 					<th style="height: 30px;width: 35px;text-align: center;">
@@ -311,7 +312,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td style="text-align: center;">
 						<input type="checkbox" id="checkId" name="checkId" value="1">
 					</td>
-					<td class="l_left">
+					<td class="l_left" style="width: 100px;">
 						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:110px;">
 							<option value="">请选择</option>
 							<c:forEach items="${ cloths }" var = "cloth">
@@ -326,7 +327,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</select>
 						
 						
-					</td><td class="l_left">
+					</td><td class="l_left" style="width: 150px;">
 						<input type="text" name="myCompanyColor" style="width:150px;" value="" onchange="queryNoReturnNum(this)">
 					</td>
 					<td >
