@@ -88,4 +88,19 @@ public class PasswordController extends BaseController{
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping("validpwd")
+	public Map<String, Object> validpwd(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		String pwd = request.getParameter("pwd");
+		Password p = passwordService.getById("1");
+		if(p.getPasswd().equals(pwd)) {
+			map.put("code", 0);
+			return map;
+		}else {
+			map.put("code", 1);
+			return map;
+		}
+	}
+	
 }

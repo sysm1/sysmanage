@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,16 +19,23 @@ import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputSummary;
+import com.github.hzw.security.entity.RecordLog;
 import com.github.hzw.security.mapper.OrderInputMapper;
 import com.github.hzw.security.mapper.OrderInputSummaryMapper;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.OrderInputAdditionalService;
 import com.github.hzw.security.service.OrderInputService;
+import com.github.hzw.security.service.RecordLogService;
+import com.github.hzw.util.Common;
+import com.github.hzw.util.DateUtil;
 
 @Transactional
 @Service("orderInputService")
 public class OrderInputServiceImpl implements OrderInputService {
 
+	private static Logger logger = LoggerFactory.getLogger(OrderInputServiceImpl.class);
+	
+	
 	@Autowired
 	private OrderInputMapper orderInputMapper;
 	
@@ -38,6 +47,9 @@ public class OrderInputServiceImpl implements OrderInputService {
 	
 	@Inject 
 	private OrderInputAdditionalService orderInputAdditionalService;
+	
+	@Inject
+	private RecordLogService recordLogService;
 	
 	@Override
 	public PageView queryVO(PageView pageView, OrderInputVO t) {
@@ -112,9 +124,31 @@ public class OrderInputServiceImpl implements OrderInputService {
 		return orderInputMapper.queryAll(t);
 	}
 
+	
 	@Override
 	public void delete(String id) throws Exception {
+
 		orderInputMapper.delete(id);
+		
+		// 记录删除记录
+		try{
+			String username = Common.findAuthenticatedUsername();
+			String model = "inputsummary";
+			String opType = "delete";
+			String opDate = DateUtil.date2Str(new Date(), "yyyy-MM-dd");
+			
+			RecordLog log = new RecordLog();
+			log.setCreateTime(new Date());
+			log.setModel(model);
+			log.setOpDate(opDate);
+			log.setOpType(opType);
+			log.setUsername(username);
+			
+			recordLogService.add(log);
+			
+		}catch(Exception e) {
+			logger.error("", e);
+		}
 		
 	}
 
@@ -140,4 +174,6 @@ public class OrderInputServiceImpl implements OrderInputService {
 		return null;
 	}
 
+	
+	
 }

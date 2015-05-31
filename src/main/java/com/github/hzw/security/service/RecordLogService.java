@@ -9,4 +9,6 @@ public interface RecordLogService extends BaseService<RecordLog>{
 
 	public int sum(Map<String, Object> map);
 	
+	public int sum(String model, String opType);
+	
 }

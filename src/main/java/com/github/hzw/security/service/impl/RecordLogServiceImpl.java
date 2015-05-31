@@ -1,5 +1,6 @@
 package com.github.hzw.security.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,8 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.RecordLog;
 import com.github.hzw.security.mapper.RecordLogMapper;
 import com.github.hzw.security.service.RecordLogService;
+import com.github.hzw.util.Common;
+import com.github.hzw.util.DateUtil;
 
 @Transactional
 @Service("recordLogService")
@@ -62,6 +65,17 @@ public class RecordLogServiceImpl implements RecordLogService {
 	
 	public int sum(Map<String, Object> map){
 		return recordLogMapper.sum(map);
+	}
+	
+	public int sum(String model, String opType){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String username = Common.findAuthenticatedUsername();
+		map.put("username", username);
+		map.put("model", model);
+		map.put("opType", opType);
+		map.put("opDate", DateUtil.date2Str(new Date(), "yyyy-MM-dd"));
+		return recordLogMapper.sum(map);
+
 	}
 	
 }

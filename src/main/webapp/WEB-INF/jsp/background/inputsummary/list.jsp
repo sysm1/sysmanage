@@ -20,6 +20,8 @@ ul { list-style:none;}
 .current { background:#CCCC00; display:block; padding:0px 6px; font-weight:bold;}
 </style>
 <script type="text/javascript">
+	var recordCount = "${recordCount}";
+	
 	var dialog;
 	var grid;
 	var delarr = [];
@@ -58,45 +60,91 @@ ul { list-style:none;}
 		});
 		
 		
-		$("#delete").click("click", function() {//绑定删除按扭
+		$("#delete").click("click", function() { //绑定删除按扭
+			/**
 			var cbox=getSelectedCheckbox();
 			if (cbox=="") {
 				parent.$.ligerDialog.alert("请选择删除项！！");
 				return;
 			}
+			**/
+			// 检查册除次数
+			if(recordCount > 5) {
+				// 提示输入密码
+				dialog = $.ligerDialog.open({
+					 target:$("#pwd_div"),
+					 buttons: [  { text: '提交', onclick: function (i, d) { pwd_valid_fun(); }}]                                  
+				});
+				// dialog.hidden();
+			} else {
+				dele1();
+			}
 			
-			
-			parent.$.ligerDialog.confirm('删除后不能恢复，确定删除吗？', function(confirm) {
-				if (confirm) {
-					$.ajax({
-					    type: "post", //使用get方法访问后台
-					    dataType: "json", //json格式的数据
-					    async: false, //同步   不写的情况下 默认为true
-					    url: rootPath + '/background/inputsummary/deleteById.html', //要访问的后台地址
-					    data: {ids:cbox.join(",")}, //要发送的数据
-					    success: function(data){
-					    	if (data.flag == "true") {
-					    		parent.$.ligerDialog.success('删除成功!', '提示', function() {
-					    			for(var i=0;i<delarr.length;i++){
-					    				//alert(document.getElementById(delarr[i]).parentNode.parentNode.style.display);
-					    				document.getElementById(delarr[i]).parentNode.parentNode.style.display="none";
-					    			}
-					    			loadGird();//重新加载表格数据
-								});
-							}else{
-								parent.$.ligerDialog.warn("删除失败！！");
-							}
-						}
-					});
-				}
-			});
-			
-			
-			
+		
 		});
 		
 		
 	});
+	
+	function pwd_valid_fun(){
+		var v = $("#pwd").val();
+		// alert(v);
+		$.ajax({
+			 type: "post", //使用get方法访问后台
+			 dataType: "json", //json格式的数据
+			 async: false, //同步   不写的情况下 默认为true
+			 url: rootPath + '/background/password/validpwd.html', //要访问的后台地址
+			 data: {"pwd":v}, //要发送的数据
+			 success: function(data){
+				 if(data.code == 0) {
+						dialog.hidden();
+						dele1();
+					} else {
+						parent.$.ligerDialog.alert("密码不对！！");
+					}
+			 }
+		});
+
+	}
+	
+	
+	function dele1() {
+		var cbox=getSelectedCheckbox();
+		if (cbox=="") {
+			parent.$.ligerDialog.alert("请选择删除项！！");
+			return;
+		}
+		data1 = cbox.join(",");
+		parent.$.ligerDialog.confirm('删除后不能恢复，确定删除吗？', function(confirm) {
+			if (confirm) {
+				deleajax(data1);
+			}
+		});
+	}
+	
+	
+	function deleajax(data1) {
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/inputsummary/deleteById.html', //要访问的后台地址
+		    data: {ids:data1}, //要发送的数据
+		    success: function(data){
+		    	if (data.flag == "true") {
+		    		parent.$.ligerDialog.success('删除成功!', '提示', function() {
+		    			for(var i=0;i<delarr.length;i++){
+		    				//alert(document.getElementById(delarr[i]).parentNode.parentNode.style.display);
+		    				document.getElementById(delarr[i]).parentNode.parentNode.style.display="none";
+		    			}
+		    			loadGird();//重新加载表格数据
+					});
+				}else{
+					parent.$.ligerDialog.warn("删除失败！！");
+				}
+			}
+		});
+	}
 	
 	function loadGird(){
 		grid.loadData();
@@ -290,5 +338,13 @@ ul { list-style:none;}
 			</table>
 		</div>
 	</div>
+	
+	<div id="pwd_div">
+		<table>
+			<tr><td>请输入密码</td></tr>
+			<tr><td><input type="text" name="pwd" id="pwd"></input></td></tr>
+		</table>
+	</div>
+	
 </body>
 </html>
