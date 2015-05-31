@@ -23,6 +23,7 @@ import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.OrderNotifyInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
+import com.github.hzw.security.service.PasswordService;
 import com.github.hzw.security.service.RecordLogService;
 import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
@@ -46,6 +47,10 @@ public class OrderNotifyInfoController extends BaseController {
 	
 	@Inject
 	private RecordLogService recordLogService;
+	
+	@Inject
+	private PasswordService passwordService;
+	
 	
 	/**
 	@RequestMapping("list")
@@ -123,6 +128,8 @@ public class OrderNotifyInfoController extends BaseController {
 		int recordCount = recordLogService.sum("notify", "cancel");
 		model.addAttribute("recordCount", recordCount);
 		// model.addAttribute("recordCount", 6);
+		int num = passwordService.getNum();
+		model.addAttribute("num", num);
 		
 		return Common.BACKGROUND_PATH+"/notify/list";
 	}

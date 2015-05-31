@@ -21,6 +21,7 @@ ul { list-style:none;}
 </style>
 <script type="text/javascript">
 	var recordCount = "${recordCount}";
+	var num = ${num};
 	
 	var dialog;
 	var grid;
@@ -96,7 +97,7 @@ ul { list-style:none;}
 			var count = parseInt(recordCount) + cbox.length;
 			
 			// 检查册除次数
-			if(count > 5) {
+			if(count > num) {
 				// 提示输入密码
 				dialog = $.ligerDialog.open({
 					 target:$("#pwd_div"),

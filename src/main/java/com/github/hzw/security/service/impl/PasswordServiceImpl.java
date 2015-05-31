@@ -61,7 +61,11 @@ public class PasswordServiceImpl implements PasswordService {
 
 	@Override
 	public int getNum() {
-		return this.getById("2").getNum();
+		try{
+			return this.getById("2").getNum();
+		}catch(Exception ex){
+			return 5;
+		}
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 	var dialog;
 	var grid;
 	var recordCount = "${recordCount}";
+	var num = ${num};
 	
 	$(function() {
 		
@@ -29,7 +30,7 @@
 			
 			var count = parseInt(recordCount) + cbox.length;
 			// 检查册除次数
-			if(count > 5) {
+			if(count > num) {
 				// 提示输入密码
 				dialog = $.ligerDialog.open({
 					 target:$("#pwd_div"),
