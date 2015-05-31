@@ -30,6 +30,7 @@ public class RecordLogServiceTest {
 		log.setOpDate(DateUtil.date2Str(new Date(), "yyyy-MM-dd"));
 		log.setOpType("delete");
 		log.setUsername("root");
+		log.setNum(2);
 		recordLogService.add(log);
 	}
  	
@@ -37,7 +38,7 @@ public class RecordLogServiceTest {
 	public void queryTest() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("username", "root");
-		map.put("opType", "delete");
+		map.put("opType", "delete1");
 		map.put("model", "model");
 		map.put("opDate", "2015-05-31");
 		int count = recordLogService.sum(map);

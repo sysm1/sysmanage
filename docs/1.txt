@@ -394,6 +394,7 @@ create table record_log(
 	op_type	varchar(255) not null,  -- 操作类型
 	op_date	varchar(255) not null,  -- 操作日期
 	create_time datetime,
+	num		int,  -- 更新的记录数
 	PRIMARY KEY (id)
 );
 

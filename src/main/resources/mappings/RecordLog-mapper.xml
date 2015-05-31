@@ -8,12 +8,12 @@
     <result column="op_type" property="opType" jdbcType="VARCHAR" />
     <result column="op_date" property="opDate" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="INTEGER" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    id, username, model, op_type, op_date, create_time
+    id, username, model, op_type, op_date, create_time, num
   </sql>
-  
   
    <select id="query" resultType="RecordLog" parameterType="map">
 		select
@@ -58,7 +58,7 @@
 	</select>
   
   <select id="sum" resultType="Integer" parameterType="map">
-		select count(id) from record_log log
+		select sum(num) from record_log log
 		<where> 
 		 	<if test="username != null and username != ''">
 				and username = #{username}
@@ -91,10 +91,15 @@
   
   <insert id="add" parameterType="com.github.hzw.security.entity.RecordLog" useGeneratedKeys="true" keyProperty="id">
     insert into record_log (username, model, 
-      op_type, op_date, create_time
+      op_type, op_date, create_time, num
       )
-    values (#{username,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
-      #{opType,jdbcType=VARCHAR}, #{opDate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+    values (
+    	#{username,jdbcType=VARCHAR}, 
+    	#{model,jdbcType=VARCHAR}, 
+      	#{opType,jdbcType=VARCHAR}, 
+      	#{opDate,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=TIMESTAMP},
+      	#{num,jdbcType=INTEGER}
       )
   </insert>
   
@@ -120,6 +125,9 @@
       <if test="createTime != null" >
         create_time,
       </if>
+      <if test="num != null" >
+        num,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -139,6 +147,9 @@
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -162,6 +173,9 @@
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

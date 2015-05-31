@@ -143,6 +143,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 			log.setOpDate(opDate);
 			log.setOpType(opType);
 			log.setUsername(username);
+			log.setNum(1);  // 删除一条记录
 			
 			recordLogService.add(log);
 			

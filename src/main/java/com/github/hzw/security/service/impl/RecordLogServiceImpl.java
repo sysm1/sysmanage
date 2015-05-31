@@ -64,17 +64,27 @@ public class RecordLogServiceImpl implements RecordLogService {
 
 	
 	public int sum(Map<String, Object> map){
-		return recordLogMapper.sum(map);
+		try{
+			return recordLogMapper.sum(map);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			return 0;
+		}
 	}
 	
 	public int sum(String model, String opType){
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		String username = Common.findAuthenticatedUsername();
-		map.put("username", username);
-		map.put("model", model);
-		map.put("opType", opType);
-		map.put("opDate", DateUtil.date2Str(new Date(), "yyyy-MM-dd"));
-		return recordLogMapper.sum(map);
+		try{
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			String username = Common.findAuthenticatedUsername();
+			map.put("username", username);
+			map.put("model", model);
+			map.put("opType", opType);
+			map.put("opDate", DateUtil.date2Str(new Date(), "yyyy-MM-dd"));
+			return recordLogMapper.sum(map);
+		}catch(Exception e){
+			e.printStackTrace();
+			return 0;
+		}
 
 	}
 	

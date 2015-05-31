@@ -61,13 +61,15 @@ ul { list-style:none;}
 		
 		
 		$("#delete").click("click", function() { //绑定删除按扭
-			/**
+			
 			var cbox=getSelectedCheckbox();
 			if (cbox=="") {
 				parent.$.ligerDialog.alert("请选择删除项！！");
 				return;
 			}
-			**/
+			
+			recordCount = recordCount + cbox.length;
+			
 			// 检查册除次数
 			if(recordCount > 5) {
 				// 提示输入密码

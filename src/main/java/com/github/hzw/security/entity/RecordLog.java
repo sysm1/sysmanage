@@ -15,7 +15,8 @@ public class RecordLog {
     private String opDate;
 
     private Date createTime;
-
+    private int num; // 更新的记录数
+    
     public Integer getId() {
         return id;
     }
@@ -64,12 +65,22 @@ public class RecordLog {
         this.createTime = createTime;
     }
 
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	@Override
 	public String toString() {
 		return "RecordLog [id=" + id + ", username=" + username + ", model="
 				+ model + ", opType=" + opType + ", opDate=" + opDate
-				+ ", createTime=" + createTime + "]";
+				+ ", createTime=" + createTime + ", num=" + num + "]";
 	}
+
+	
     
     
 }
