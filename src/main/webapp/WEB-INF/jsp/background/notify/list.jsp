@@ -13,37 +13,34 @@
 
 	var dialog;
 	var grid;
+	var recordCount = "${recordCount}";
+	
 	$(function() {
 		
 		$("#cancelView").click("click", function() {//绑定查询按扭
+			
+			// String model = "notify";
+			// String opType = "cancel";
 			var cbox = getSelectedCheckbox();
 			if (cbox=="") {
 				parent.$.ligerDialog.alert("请选择撤销打印项！！");
 				return;
 			}
-			parent.$.ligerDialog.confirm('确定择撤销打印吗？', function(confirm) {
-				if (confirm) {
-					$.ajax({
-					    type: "post", //使用get方法访问后台
-					    dataType: "json", //json格式的数据
-					    async: false, //同步   不写的情况下 默认为true
-					    url: rootPath + '/background/notify/cancel.html', //要访问的后台地址
-					    data: {ids:cbox.join(",")}, //要发送的数据
-					    success: function(data){
-					    	if (data.flag == "true") {
-					    		parent.$.ligerDialog.success('撤销成功!', '提示', function() {
-					    			// loadGird();//重新加载表格数据
-					    			// window.location.reload();
-					    			window.location.href = "${pageContext.request.contextPath}/background/printsummary/list.html"
-								});
-							}else{
-								parent.$.ligerDialog.warn("撤销失败！！");
-							}
-						}
-					});
-				}
-			});
+			
+			var count = parseInt(recordCount) + cbox.length;
+			// 检查册除次数
+			if(count > 5) {
+				// 提示输入密码
+				dialog = $.ligerDialog.open({
+					 target:$("#pwd_div"),
+					 buttons: [  { text: '提交', onclick: function (i, d) { pwd_valid_fun(); }}]                                  
+				});
+			} else {
+				ajaxCancel();
+			}
 		});
+		
+		
 		$('#checkAllId').click(function(){
 	         //判断apple是否被选中
 	         var bischecked=$('#checkAllId').is(':checked');
@@ -71,6 +68,57 @@
 		});
 		
 	});
+	
+	
+	function pwd_valid_fun(){
+		var v = $("#pwd").val();
+		// alert(v);
+		$.ajax({
+			 type: "post", //使用get方法访问后台
+			 dataType: "json", //json格式的数据
+			 async: false, //同步   不写的情况下 默认为true
+			 url: rootPath + '/background/password/validpwd.html', //要访问的后台地址
+			 data: {"pwd":v}, //要发送的数据
+			 success: function(data){
+				 if(data.code == 0) {
+						dialog.hidden();
+						ajaxCancel();
+					} else {
+						parent.$.ligerDialog.alert("密码不对！！");
+					}
+			 }
+		});
+	}
+	
+	function ajaxCancel() {
+		var cbox = getSelectedCheckbox();
+		if (cbox=="") {
+			parent.$.ligerDialog.alert("请选择撤销打印项！！");
+			return;
+		}
+		parent.$.ligerDialog.confirm('确定择撤销打印吗？', function(confirm) {
+			if (confirm) {
+				$.ajax({
+				    type: "post", //使用get方法访问后台
+				    dataType: "json", //json格式的数据
+				    async: false, //同步   不写的情况下 默认为true
+				    url: rootPath + '/background/notify/cancel.html', //要访问的后台地址
+				    data: {ids:cbox.join(",")}, //要发送的数据
+				    success: function(data){
+				    	if (data.flag == "true") {
+				    		parent.$.ligerDialog.success('撤销成功!', '提示', function() {
+				    			// loadGird();//重新加载表格数据
+				    			// window.location.reload();
+				    			window.location.href = "${pageContext.request.contextPath}/background/printsummary/list.html"
+							});
+						}else{
+							parent.$.ligerDialog.warn("撤销失败！！");
+						}
+					}
+				});
+			}
+		});
+	}
 	
 	/**
 	 * 获取选中的值
@@ -101,9 +149,9 @@
 				<tr>
 					<td style="text-align: right;">下单日期：</td>
 					<td>
-						<input type="text" name="returnDate" style="width:90px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
+						<input type="text" name="beginTime" style="width:90px" value="<fmt:formatDate value="${model.beginTime }" pattern="yyyy-MM-dd"/>"
 								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">至
-						<input type="text" name="returnDate" style="width:92px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
+						<input type="text" name="endTime" style="width:92px" value="<fmt:formatDate value="${model.endTime }" pattern="yyyy-MM-dd"/>"
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 					</td><td style="text-align: right;">工&nbsp;厂：</td>
 					<td>
@@ -133,9 +181,9 @@
 						</select>
 					</td>
 					<td style="text-align: right;">工厂编号：</td>
-					<td><input type="text" name="factoryCode" value="${param.factoryCode}" style="width:140px;" /></td>
+					<td><input type="text" name="factoryCode" value="${model.factoryCode}" style="width:140px;" /></td>
 					<td style="text-align: right;">工厂颜色：</td>
-					<td><input type="text" name="factoryColor" value="${param.factoryColor}" style="width:140px;" /></td>
+					<td><input type="text" name="factoryColor" value="${model.factoryColor}" style="width:140px;" /></td>
 					<td>
 						&nbsp;<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查&nbsp;询</a>
 					</td>
@@ -249,5 +297,13 @@
 		
 		
 	</div>
+	
+	<div id="pwd_div" style="display:none">
+		<table>
+			<tr><td>请输入密码</td></tr>
+			<tr><td><input type="text" name="pwd" id="pwd"></input></td></tr>
+		</table>
+	</div>
+	
 </body>
 </html>

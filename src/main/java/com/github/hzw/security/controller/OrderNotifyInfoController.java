@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.stat.TableStat.Mode;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.OrderNotifyInfo;
@@ -24,6 +23,7 @@ import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.OrderNotifyInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
+import com.github.hzw.security.service.RecordLogService;
 import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.DateUtil;
@@ -43,6 +43,9 @@ public class OrderNotifyInfoController extends BaseController {
 	private ClothInfoService clothInfoService;
 	@Inject
 	private TechnologyInfoService technologyInfoService;
+	
+	@Inject
+	private RecordLogService recordLogService;
 	
 	/**
 	@RequestMapping("list")
@@ -113,7 +116,13 @@ public class OrderNotifyInfoController extends BaseController {
 		model.addAttribute("factorys",factoryInfoService.queryAll(null));
 		model.addAttribute("technologys",technologyInfoService.queryAll(null));
 		
-		// 
+		model.addAttribute("model", map);
+		
+		
+		// 今天的
+		int recordCount = recordLogService.sum("notify", "cancel");
+		model.addAttribute("recordCount", recordCount);
+		// model.addAttribute("recordCount", 6);
 		
 		return Common.BACKGROUND_PATH+"/notify/list";
 	}

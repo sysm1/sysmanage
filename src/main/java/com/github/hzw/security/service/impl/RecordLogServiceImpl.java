@@ -85,7 +85,7 @@ public class RecordLogServiceImpl implements RecordLogService {
 			e.printStackTrace();
 			return 0;
 		}
-
 	}
+	
 	
 }

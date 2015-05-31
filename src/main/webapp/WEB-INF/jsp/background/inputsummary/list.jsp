@@ -68,10 +68,10 @@ ul { list-style:none;}
 				return;
 			}
 			
-			recordCount = recordCount + cbox.length;
+			var count = parseInt(recordCount) + cbox.length;
 			
 			// 检查册除次数
-			if(recordCount > 5) {
+			if(count > 5) {
 				// 提示输入密码
 				dialog = $.ligerDialog.open({
 					 target:$("#pwd_div"),
@@ -341,7 +341,7 @@ ul { list-style:none;}
 		</div>
 	</div>
 	
-	<div id="pwd_div">
+	<div id="pwd_div" style="display:none">
 		<table>
 			<tr><td>请输入密码</td></tr>
 			<tr><td><input type="text" name="pwd" id="pwd"></input></td></tr>
