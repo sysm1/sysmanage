@@ -397,5 +397,25 @@ create table record_log(
 	num		int,  -- 更新的记录数
 	PRIMARY KEY (id)
 );
+---审核表---
+CREATE TABLE `audit` (
+`id`  int(10) ZEROFILL NOT NULL AUTO_INCREMENT ,
+`type`  int(6) NULL DEFAULT NULL COMMENT '类型 1为下单预录入  2下单汇总  3为打印下单' ,
+`orderId`  int(11) NULL DEFAULT NULL COMMENT '单据ID' ,
+`status`  int(6) NULL DEFAULT NULL COMMENT '0未审核 1审核通过  2审核未通过' ,
+`reason`  varchar(512) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '审核原因' ,
+`createTime`  timestamp NULL DEFAULT NULL COMMENT '审核时间' ,
+`auditorId`  int(13) NULL DEFAULT NULL COMMENT '审核人ID' ,
+`orderTime`  timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP ,
+`clothName`  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '布种名称' ,
+`myCompanyCode`  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`myCompanyColor`  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_bin
+AUTO_INCREMENT=113
+ROW_FORMAT=COMPACT
+;
 
 
