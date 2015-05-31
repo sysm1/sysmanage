@@ -392,7 +392,7 @@ create table record_log(
 	username varchar(255) not null,
 	model	varchar(255) not null,  -- 模块
 	op_type	varchar(255) not null,  -- 操作类型
-	op_date	date not null,  -- 操作日期
+	op_date	varchar(255) not null,  -- 操作日期
 	create_time datetime,
 	PRIMARY KEY (id)
 );
