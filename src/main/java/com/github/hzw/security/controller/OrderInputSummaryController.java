@@ -33,6 +33,7 @@ import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.security.service.OrderSummaryService;
+import com.github.hzw.security.service.PasswordService;
 import com.github.hzw.security.service.RecordLogService;
 import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.security.service.TechnologyInfoService;
@@ -77,6 +78,10 @@ public class OrderInputSummaryController extends BaseController {
 	@Inject
 	private RecordLogService recordLogService;
 	
+	@Inject
+	private PasswordService passwordService;
+	
+	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu,HttpServletRequest request, String pagesize,OrderInputSummary info) {
 		String pageNow=request.getParameter("pageNow");
@@ -85,6 +90,8 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("recordCount", recordCount);
 		// model.addAttribute("recordCount", 6);
+		int num = passwordService.getNum();
+		model.addAttribute("num", num);
 		return Common.BACKGROUND_PATH+"/inputsummary/list";
 	}
 	

@@ -22,6 +22,7 @@ ul { list-style:none;}
 <script type="text/javascript">
 	var recordCount = "${recordCount}";
 	var num = ${num};
+	
 	var dialog;
 	var grid;
 	var delarr = [];
@@ -139,7 +140,7 @@ ul { list-style:none;}
 		    data: {ids:ids}, //要发送的数据
 		    success: function(data){
 		    	if (data.flag == "true") {
-		    		parent.$.ligerDialog.success('单据已经发送至审核!', '提示', function() {
+		    		parent.$.ligerDialog.success('操作成功!', '提示', function() {
 		    			for(var i=0;i<delarr.length;i++){
 		    				//alert(document.getElementById(delarr[i]).parentNode.parentNode.style.display);
 		    				document.getElementById(delarr[i]).parentNode.parentNode.style.display="none";
