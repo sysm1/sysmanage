@@ -65,7 +65,7 @@ public class SampleProcessListController extends BaseController{
 		
 		FactoryInfo fac=new FactoryInfo();
 		fac.setId(sampleInput.getFactoryId());
-		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,pagesize), fac).getRecords();
+		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView("1","10000"), fac).getRecords();
 		//查询条件结束
 		
 		pageView = sampleInputService.queryReplay(getPageView(pageNow,pagesize), sampleInput);

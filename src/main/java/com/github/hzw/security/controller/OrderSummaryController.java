@@ -163,9 +163,9 @@ public class OrderSummaryController extends BaseController {
 				int unit=info.getUnit();
 				if(unit==0){
 					clothAllowance.setAllowance(-info.getNum().intValue());
-					clothAllowance.setAllowancekg(0D);
+					clothAllowance.setAllowancekg(-info.getNum().intValue()*tiaoKg);
 				}else{
-					clothAllowance.setAllowancekg(-info.getNum());
+					clothAllowance.setAllowancekg(-info.getNum()*tiaoKg);
 				}
 				clothAllowanceService.addAllowance(clothAllowance);
 			}else{
@@ -178,7 +178,7 @@ public class OrderSummaryController extends BaseController {
 					clothAllowance.setAllowancekg(allowanceKg);
 					clothAllowance.setAllowance(allowance);
 				}else{
-					allowanceKg=allowanceKg-info.getNum();
+					allowanceKg=allowanceKg-info.getNum().intValue()*tiaoKg;
 					clothAllowance.setAllowancekg(allowanceKg);
 				}
 				clothAllowanceService.addAllowance(clothAllowance);

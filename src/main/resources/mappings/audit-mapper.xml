@@ -51,6 +51,9 @@
 		<if test="t.status != null and t.status != ''">
 			and status = #{t.status}
 		</if>
+		<if test="t.status == 10">
+			and status = 0
+		</if>
 		<if test="t.orderId != null and t.orderId  != ''">
 			and orderId  = #{t.orderId }
 		</if>

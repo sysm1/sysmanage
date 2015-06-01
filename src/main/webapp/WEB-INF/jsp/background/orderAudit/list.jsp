@@ -231,7 +231,7 @@ ul { list-style:none;}
 						<td>
 							<select id="status" name="status">
 								<option value="">请选择</option>
-								<option value="0" <c:if test="${info.status eq 0 }">selected="selected"</c:if> >待审核</option>
+								<option value="10" <c:if test="${info.status eq 0 }">selected="selected"</c:if> >待审核</option>
 								<option value="1" <c:if test="${info.status eq 1 }">selected="selected"</c:if> >审核通过</option>
 								<option value="2" <c:if test="${info.status eq 2 }">selected="selected"</c:if> >审核不通过</option>
 							</select>
@@ -260,9 +260,9 @@ ul { list-style:none;}
 					<th style="width:50px;">选择</th>
 					<th style="width:50px;">序号</th>
 					<th style="widht:50px;">下单时间</th>
-					<td>布种</td>
+					<td>布种/工厂</td>
 					<th>类型</th>
-					<th>我司编号</th>
+					<th>我司编号/单号</th>
 					<th>我司颜色</th>
 					<th>审核人</th>
 					<th>审核时间</th>

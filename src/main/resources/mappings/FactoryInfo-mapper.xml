@@ -39,7 +39,7 @@
 		order by id desc
 	</select>
 
-	<select id="queryAll" resultType="FactoryInfo">
+	<select id="queryAll" resultType="FactoryInfo" parameterType="FactoryInfo">
 		select
 		<include refid="selectId" />
 		from factory_info

@@ -170,6 +170,34 @@ public class OrderAuditController extends BaseController{
 				String ff=newIds;
 				map.put("ff",ff.replace(",","") );
 				map.put("newIds",newIds);
+			}else if("3".equals(type)){
+				OrderNotifyInfo vo=orderNotifyInfoService.getById(ids);
+				if(DateUtil.DatePattern(vo.getCreateTime(),"yyyy-MM-dd").before(DateUtil.DatePattern(new Date(),"yyyy-MM-dd"))){//过期单
+					AuditBean t=new AuditBean();
+					t.setType(Integer.parseInt(type));
+					t.setOrderId(vo.getId());
+					List<AuditBean> auditList=auditService.queryAll(t);
+					if(null!=auditList&&auditList.size()>0){
+						if(auditList.get(0).getStatus()==0){
+							map.put("flag","false" );
+							newIds=newIds.replace(newIds, vo.getId()+"");
+						}else if(auditList.get(0).getStatus()==2){
+							map.put("flag","false2" );
+							map.put("reason", auditList.get(0).getReason());
+						}
+					}else{
+						map.put("flag","false" );
+						for(String id:newIds.split(",")){
+							if(id.split("_")[0].equals(vo.getId()+"")){
+								newIds=newIds.replace(id,"");
+							}
+						}
+					}
+				}
+				newIds=newIds.replace(",,", ",");
+				String ff=newIds;
+				map.put("ff",ff.replace(",","") );
+				map.put("newIds",newIds);
 			}
 		} catch (Exception e) {
 			map.put("flag", "false");

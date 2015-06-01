@@ -128,13 +128,14 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		if(tm == null) {
 			// 按布种单位计算
 			t.setOldSum(0.0);
-			t.setAllowance(null==t.getChangeSum()?0:t.getChangeSum().intValue());
+			//t.setAllowance(null==t.getChangeSum()?0:t.getChangeSum().intValue());
+			//t.setAllowancekg(t.getAllowancekg());
 			t.setUnit(cloth.getUnit());
 			t.setCreateTime(new Date());
 			
 			// 公斤
 			t.setOldSumkg(0.0);
-			t.setAllowancekg(t.getChangeSumkg());
+			//t.setAllowancekg(t.getChangeSumkg());
 			
 			this.clothAllowanceMapper.add(t);
 		} else {

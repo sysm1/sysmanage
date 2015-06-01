@@ -16,11 +16,13 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.AuditBean;
+import com.github.hzw.security.entity.OrderNotifyInfo;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.mapper.AuditMapper;
 import com.github.hzw.security.service.AuditService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.OrderInputService;
+import com.github.hzw.security.service.OrderNotifyInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 
 @Transactional
@@ -38,6 +40,9 @@ public class AuditServiceImpl implements AuditService {
 	
 	@Autowired
 	private OrderSummaryService orderSummaryService;
+	
+	@Inject
+	private OrderNotifyInfoService orderNotifyInfoService;
 
 	@Override
 	public PageView query(PageView pageView, AuditBean t) {
@@ -119,6 +124,27 @@ public class AuditServiceImpl implements AuditService {
 						ab.setOrderId(vo.getId());
 						ab.setClothName(vo.getClothName());
 						ab.setOrderTime(vo.getOrderDate());
+					}
+				}
+			}else if("3".equals(type)){//下单打印
+				OrderNotifyInfo vo=orderNotifyInfoService.getById(ids);
+				if(vo.getCreateTime().before(new Date())){//过期单
+					AuditBean t=new AuditBean();
+					t.setType(Integer.parseInt(type));
+					t.setOrderId(vo.getId());
+					List<AuditBean> auditList=queryAll(t);
+					if(null==auditList||auditList.size()==0){//添加到审核表
+						ab=new AuditBean();
+						//ab.setAuditorId(user.getId());
+						//b.setCreateTime(new Date());
+						ab.setMyCompanyCode(vo.getNo());
+						//ab.setMyCompanyColor(vo.getMyCompanyColor());
+						ab.setType(Integer.parseInt(type));
+						ab.setStatus(0);
+						ab.setOrderId(vo.getId());
+						ab.setClothName(vo.getFactoryName());
+						ab.setOrderTime(vo.getCreateTime());
+						
 					}
 				}
 			}
