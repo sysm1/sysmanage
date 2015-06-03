@@ -160,6 +160,7 @@ create table sample_input(
 	factory_id	int not null,
 	cloth_id	int not null,
 	code_type	int not null, -- 0 文件分色号，1 工厂编号, 2 我司编号
+	code_value  varchar(255), 
 	file_code varchar(255), -- 文件分色号
 	factory_code varchar(255),  -- -- 编号如果选择“工厂编号” 在后边会跟随一个加号  可以添加回版编号，最多两个
 	my_company_code varchar(255),	-- 我司编号
