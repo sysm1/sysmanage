@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <!-- 开办录入查询 -->
@@ -327,7 +328,7 @@ ul { list-style:none;}
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
-<table>
+<table class='dataintable'>
 <tr>
 	<td style="width:70px;text-align: right;">
 		开版日期：
@@ -400,7 +401,7 @@ ul { list-style:none;}
 			</a>
 		</div>
 		<div id="paging" class="pagclass">
-			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
+			<table id="mytable" cellspacing="0" border="1" class='dataintable'>
 				<tr >
 					<th class="specalt" style="width:15px">
 						<input type="checkbox" id="checkIds" name="checkIds" onclick="checkAll(this);">
@@ -440,7 +441,7 @@ ul { list-style:none;}
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td>
 						<td  id="pic" >
-							<img alt="" src="${item.smallPicture }" onmousemove="show('DivMain','${item.picture }')" onmouseout="hiddenDiv('DivMain');"/>
+							<img style="height: 35px;" alt="" src="${item.smallPicture }" onmousemove="show('DivMain','${item.picture }')" onmouseout="hiddenDiv('DivMain');"/>
 						</td>
 					<tr>
 				</c:forEach>
