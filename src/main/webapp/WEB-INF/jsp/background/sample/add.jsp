@@ -5,6 +5,7 @@
 <head>
 <%@ include file="/common/header.jsp"%>
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
@@ -331,9 +332,9 @@ $(function() {
 </head>
 <body style="width: 1100px;">
 <div class="divdialog">
-<div style="padding-left: 350px;height: 30px;font-size: 14px;"><b>开版录入</b></div>
+<div style="padding-left: 350px;height: 30px;font-size: 16px;"><b>开版录入</b></div>
 	<div >
-<table width="400px;" border="0">
+<table width="400px;" border="0" >
 	<tr>
 		<td style="width: 80px;">
 			<a class="btn btn-primary" href="javascript:void(0)" id="copyone" ><span>复制新增</span></a>
@@ -352,7 +353,7 @@ $(function() {
 </table>
 	</div>
 	<form name="form" id="form" action="${ctx}/background/sample/add.html" method="post"  enctype="multipart/form-data">
-		<table style="height: 100%;" id="table1" border="2" name="table1">
+		<table style="height: 100%;" id="table1" border="2" name="table1" class='dataintable'>
 			<tbody>
 				<tr>
 					<td style="height: 30px;width: 30px;text-align: center;">
