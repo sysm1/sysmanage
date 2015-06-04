@@ -9,7 +9,7 @@
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <!-- 开办进度查询 -->
-
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <style type="text/css">
 .ordersearchDivCss { 
 	position: absolute; 
@@ -465,7 +465,7 @@ html>body td{ font-size:13px;}
 				<input type="hidden" id="pageNow" name="pageNow" value="">
 				<input type="hidden" id="status" name="status" value="0">
 				<input type="hidden" id="delay" name="delay" value="">
-				<table>
+				<table class='dataintable'>
 				<tr>
 				<td>工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厂：</td>
 				      <!--select  id="factoryId" name="factoryId">
@@ -509,7 +509,7 @@ html>body td{ font-size:13px;}
 			</a>
 		</div>
 		<div id="paging" class="pagclass">
-			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
+			<table id="mytable" cellspacing="0" border="1" class='dataintable'>
 				<tr >
 					<th class="specalt" style="width:15px">
 						<input type="checkbox" id="checkIds" name="checkIds" onclick="checkAllIds(this);">
