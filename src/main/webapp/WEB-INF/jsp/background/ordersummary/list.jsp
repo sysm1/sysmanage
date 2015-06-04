@@ -175,8 +175,6 @@ ul { list-style:none;}
 				return;
 			}
 			//window.location.href=rootPath +'/background/ordersummary/editUI.html?id='+cbox;
-			
-			
 			$.ajax({
 			    type: "post", //使用get方法访问后台
 			    dataType: "json", //json格式的数据
