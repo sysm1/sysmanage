@@ -407,7 +407,7 @@ th.specalt {
 					</th>
 					<th>&nbsp;状态&nbsp;</th>
 					<th>序号</th>
-					<th style="width: 60px;">下单日期</th>
+					<th style="width: 65px;">下单日期</th>
 					<th style="min-width: 60px;">工&nbsp;厂</th>
 					<th>工厂编号</th>
 					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
