@@ -278,7 +278,7 @@ th.specalt {
 			<table border="1" id="mytable">
 				<tr>
 					<th>序号</th>
-					<th width="60px;">下单日期</th>
+					<th width="65px;">下单日期</th>
 					<th style="min-width:60px;">&nbsp;布种&nbsp;</th>
 					<th>我司编号</th>
 					<th width="80px;">回货日期</th>
