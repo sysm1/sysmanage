@@ -407,7 +407,7 @@ ul { list-style:none;}
 						<input type="checkbox" id="checkIds" name="checkIds" onclick="checkAll(this);">
 					</th>
 					<th class="specalt" style="width:50px">id</th>
-					<th class="specalt" style="width:60px">开版日期</th>
+					<th class="specalt" style="width:65px">开版日期</th>
 					<th class="specalt" style="width:160px">工厂</th>
 					<th class="specalt">布种</th>
 					<th class="specalt">编号</th>
