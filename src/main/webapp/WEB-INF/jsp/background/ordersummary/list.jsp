@@ -359,7 +359,7 @@ ul { list-style:none;}
 						<td style="width:70px;text-align: right;">单号：</td>
 						<td>
 							<input type="text" id="orderCode" name="orderCode" value="${bean.orderCode }" 
-								style="height: 99%;border:1px solid green;margin-top: 1px">
+								style="height: 99%;margin-top: 1px">
 						</td>
 						<td style="width:70px;text-align: right;">工厂：</td>
 						<td>
@@ -370,7 +370,7 @@ ul { list-style:none;}
 									</c:forEach>
 							</select-->
 							<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
-							<input type="text" id="factory_text" style="width: 200px;height: 99%;border:1px solid green;margin-top: -3px" value="${factoryInfo.name }" 
+							<input type="text" id="factory_text" style="width: 200px;height: 99%;margin-top: -3px" value="${factoryInfo.name }" 
 								onchange="changeTextValue('factoryId',this);"/> 
 						</td>
 					</tr><tr>
@@ -384,15 +384,15 @@ ul { list-style:none;}
 							</select-->
 							
 							<input type="hidden" id="clothId" name="clothId" value="${ bean.clothId }">
-						  	<input type="text" id="cloth_text" style="width: 200px;height: 99%;border:1px solid green;margin-top: -3px" value="${cloth.clothName }" 
+						  	<input type="text" id="cloth_text" style="width: 200px;height: 99%;margin-top: -3px" value="${cloth.clothName }" 
 						  		onchange="changeTextValue('clothId',this);"/>
 						</td><td style="width:70px;text-align: right;">
 							工厂编号：
 						</td><td>
-							<input type="text" id="factoryCode" name="factoryCode" value="${bean.factoryCode}" style="height: 99%;border:1px solid green;margin-top: 1px">
+							<input type="text" id="factoryCode" name="factoryCode" value="${bean.factoryCode}" >
 						</td><td style="width:70px;text-align: right;">我司编号：</td>
 						<td>
-							<select id="myCompanyCode" name="myCompanyCode" style="height: 95%;border:1px solid green;margin-top: 1px">
+							<select id="myCompanyCode" name="myCompanyCode" >
 								<option value="">请选择</option>
 								<c:forEach var="code" items="${myCompanyCodes }">
 									<option value="${code }">${code }</option>
@@ -402,7 +402,7 @@ ul { list-style:none;}
 					</tr><tr>
 						<td style="width:70px;text-align: right;">我司颜色：</td>
 						<td>
-							<input type="text" id="myCompanyColor" name="myCompanyColor" value="${bean.myCompanyColor}" style="height: 99%;border:1px solid green;margin-top: 1px">
+							<input type="text" id="myCompanyColor" name="myCompanyColor" value="${bean.myCompanyColor}" >
 						</td>
 						<td style="width:70px;text-align: right;">业务员：</td>
 						<td>
@@ -414,12 +414,12 @@ ul { list-style:none;}
 							</select>
 						</td><td style="width:70px;text-align: right;">备注：</td>
 						<td>
-							<input type="text" id="mark" name="mark" value="${bean.mark }" style="height: 99%;border:1px solid green;margin-top: 1px">
+							<input type="text" id="mark" name="mark" value="${bean.mark }">
 						</td>
 					</tr><tr>
 						<td style="width:70px;text-align: right;">工艺：</td>
 						<td>
-						    <select id="technologyId" name="technologyId" style="height: 95%;border:1px solid green;margin-top: 1px">
+						    <select id="technologyId" name="technologyId" >
 								<option value="">请选择工艺</option>
 								<c:forEach items="${ technologyInfos }" var = "technologyInfo">
 								<option <c:if test="${technologyInfo.id eq bean.technologyId }">selected="selected"</c:if> value="${technologyInfo.id }">${technologyInfo.name}</option>
@@ -427,12 +427,12 @@ ul { list-style:none;}
 							</select>
 						</td><td style="width:70px;text-align: right;">下单次数：</td>
 						<td colspan="3" style="text-align: left;">
-							<select id="oprator" name="oprator" style="width: 100px;height: 95%;border:1px solid green;margin-top: 1px">
+							<select id="oprator" name="oprator" style="width: 100px;">
 								<option value="">请选择</option>
 								<option value="1" <c:if test="${bean.oprator ==1 }">selected="selected"</c:if>>大于等于</option>
 								<option value="2" <c:if test="${bean.oprator ==2 }">selected="selected"</c:if>>小于等于</option>
 							</select>
-							下单数量：<input type="text" id="num" name="num" value="${bean.num }" style="height: 99%;border:1px solid green;margin-top: 1px">							
+							下单数量：<input type="text" id="num" name="num" value="${bean.num }" >							
 						</td>
 					</tr>
 				</table>
@@ -464,7 +464,7 @@ ul { list-style:none;}
 			
 		</div>
 		<div id="paging" class="pagclass" >
-		<table id="mytable" cellspacing="0" border="1" style="datalist">
+		<table id="mytable" cellspacing="0" border="1" style="datalist" class='dataintable'>
 				<tr >
 					<th class="specalt" style="width:15px" rowspan="2">
 						<input type="checkbox" id="checkIds" name="checkIds">
