@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <link rel="stylesheet" href="${ctx}/themes/blue/style.css"
 	type="text/css" id="" media="print, projection, screen" />
 <script type="text/javascript" src="${ctx}/js/jquery.tablesorter.js"></script>
@@ -185,7 +186,7 @@
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-			<table>
+			<table class='dataintable'>
 				<tr>
 					<td style="text-align: right;">下单日期：</td>
 					<td>
@@ -212,8 +213,8 @@
 					</td>
 				</tr><tr>
 					<td style="text-align: right;">布&nbsp;种：</td>
-					<td>
-						<select id="clothId" name="clothId" style="width:150px;">
+					<td style="text-align: left;">
+						<select id="clothId" name="clothId" style="width:170px;">
 							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option value="${cloth.id }">${cloth.clothName}</option>
