@@ -1,10 +1,10 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 body{
 	background:url(../images/img03.jpg);
 	background-position:top center;
-    font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:14px;
+        font-family:SimSun;
+	font-size:11px;
 }
 
 .l_flow-btn {
@@ -60,3 +60,10 @@ background-position: bottom;
  filter: alpha(opacity=90); /* IE 8 以下 */
 	-ms-filter: "alpha(opacity=90)"; /* IE 8 */
 }
+acity=90)"; /* IE 8 */
+}
+city=90)"; /* IE 8 */
+}
+acity=90)"; /* IE 8 */
+}
+
