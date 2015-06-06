@@ -285,9 +285,10 @@ th.specalt {
 		f.submit();
 	}
 	/***点击**/
+	var allsize=26;
 	function onclickTr(id){
 		//obj.style.backgroundColor ="#EEDC82";
-		for(var i=0;i<=16;i++){
+		for(var i=0;i<=allsize;i++){
 			document.getElementById(i+"_"+id).style.backgroundColor ="#EEDC82";
 		}
 		document.getElementById(id+"checkId").checked=true;
@@ -296,11 +297,11 @@ th.specalt {
 	function clickCheckId(id){
 		var checkFlag=document.getElementById(id+"checkId").checked;
 		if(checkFlag){
-			for(var i=0;i<=16;i++){
+			for(var i=0;i<=allsize;i++){
 				document.getElementById(i+"_"+id).style.backgroundColor ="#EEDC82";
 			}
 		}else{
-			for(var i=0;i<=16;i++){
+			for(var i=0;i<=allsize;i++){
 				document.getElementById(i+"_"+id).style.backgroundColor ="";
 			}
 		}
@@ -316,7 +317,7 @@ th.specalt {
 	}
 	/**去除颜色**/
 	function clearColor(id){
-		for(var i=0;i<=16;i++){
+		for(var i=0;i<=allsize;i++){
 			document.getElementById(i+"_"+id).style.backgroundColor ="";
 		}
 		document.getElementById(id+"checkId").checked=false;
@@ -423,26 +424,26 @@ th.specalt {
 					</td>
 					<td id="3_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
 					<td id="5_${item.id }">${item.clothName }</td>
-					<td id="4_${item.id }">${item.factoryCode }</td>
-					<td id="4_${item.id }">${item.factoryColor }</td>
-					
-					<td id="6_${item.id }">${item.technologyName }</td>
-					<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
-					<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
-					
-					
-					<td id="7_${item.id }">${item.zhiguan }</td>
-					<td id="7_${item.id }">${item.kongcha }</td>
-					<td id="7_${item.id }">${item.jiaodai }</td>
-					<td id="7_${item.id }">${item.num }</td>
-					<td id="7_${item.id }">${item.numKg }</td>
-					
-					
-					<td id="7_${item.id }">${item.clothName }</td>
-					<td id="7_${item.id }">${item.factoryCode }</td>
+					<td id="6_${item.id }">${item.factoryCode }</td>
 					<td id="7_${item.id }">${item.factoryColor }</td>
-					<td id="7_${item.id }">${item.technologyName }</td>
-					<td id="7_${item.id }">${item.myCompanyCode }</td>
+					
+					<td id="8_${item.id }">${item.technologyName }</td>
+					<td id="9_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
+					<td id="10_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
+					
+					
+					<td id="11_${item.id }">${item.zhiguan }</td>
+					<td id="12_${item.id }">${item.kongcha }</td>
+					<td id="13_${item.id }">${item.jiaodai }</td>
+					<td id="14_${item.id }">${item.num }</td>
+					<td id="15_${item.id }">${item.numKg }</td>
+					
+					
+					<td id="26_${item.id }">${item.clothName }</td>
+					<td id="17_${item.id }">${item.factoryCode }</td>
+					<td id="18_${item.id }">${item.factoryColor }</td>
+					<td id="19_${item.id }">${item.technologyName }</td>
+					<td id="20_${item.id }">${item.myCompanyCode }</td>
 					
 					
 					<!--td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
@@ -459,9 +460,9 @@ th.specalt {
 							<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
 						</span>
 					</td-->
-					<td id="9_${item.id }">${item.num }${item.myCompanyColor }</td>
+					<td id="21_${item.id }">${item.num }${item.myCompanyColor }</td>
 					
-					<td id="11_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+					<td id="22_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }zhiguan" value="${item.zhiguan }" style="width: 45px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -470,7 +471,7 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}zhiguan" ></span>
-					</td><td id="12_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+					</td><td id="23_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }kongcha" value="${item.kongcha }" style="width: 45px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -479,7 +480,7 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}kongcha" ></span>
-					</td><td id="13_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+					</td><td id="24_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }jiaodai" value="${item.jiaodai }" style="width: 45px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -490,7 +491,7 @@ th.specalt {
 						<span id="${item.id}jiaodai" ></span>
 					</td>
 					
-					<td id="10_${item.id }" onclick="onclickTr(${item.id })">
+					<td id="25_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text"  name="${item.id }returnNum" value="${item.num }" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -499,7 +500,7 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }returnNum" ></span>
-					</td><td id="16_${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="4_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text"  name="${item.id }returnNumKg" value="${item.numKg }" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -532,7 +533,7 @@ th.specalt {
 					</td-->
 					<td>
 					<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" 
-						style="cursor:pointer;vertical-align:bottom;font-size: 20px;font-weight: bold;">
+						style="cursor:pointer;vertical-align:bottom;font-size: 24px;font-weight: bold;">
 					+
 					</span></td>
 				</tr>
