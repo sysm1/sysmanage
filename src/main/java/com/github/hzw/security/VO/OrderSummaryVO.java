@@ -46,6 +46,8 @@ public class OrderSummaryVO {
 
     private Integer num;
     
+    private Double numKg;
+    
     /**下单单位**/
     private Integer unit;
     
@@ -425,6 +427,14 @@ public class OrderSummaryVO {
 				+ printNum + ", status=" + status + ", returnStatus="
 				+ returnStatus + ", createTime=" + createTime + ", salesmans="
 				+ salesmans + ", mark=" + mark + "]";
+	}
+
+	public Double getNumKg() {
+		return numKg;
+	}
+
+	public void setNumKg(Double numKg) {
+		this.numKg = numKg;
 	}
     
     
