@@ -49,6 +49,7 @@
     id, order_code orderCode, order_date orderDate, 
     cloth_id clothId, color,
     (select cloth_name from cloth_info where id=cloth_id) as clothName,
+     CAST((select tiao_kg from cloth_info where id=cloth_id)*num  AS CHAR) numKg,
     factory_id factoryId,
     (select name from factory_info where id=factory_id) factoryName,
     technology_id technologyId,
