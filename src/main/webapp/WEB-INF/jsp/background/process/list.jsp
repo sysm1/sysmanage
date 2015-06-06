@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <style type="text/css">
 .ordersearchDivCss { 
@@ -18,10 +19,7 @@
 
 /* CSS Document */
 
-body {
- font: normal 13px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-}
-
+text{height:3px}
 a {
  color: #c75f3e;
 }
@@ -255,8 +253,8 @@ th.specalt {
 	var index=1;
 	var newId=2;
 	function addOneRow(itemId){
-		$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value=""'+
-				'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
+		//$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value=""'+
+		//		'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
 		$('#'+itemId+'returnNum').after('<input type="text"  name="'+itemId+'returnNum" value="" style="width: 60px"><br>');
 		$('#'+itemId+'returnNumKg').before('<input type="text"  name="'+itemId+'returnNumKg" value="" style="width: 60px"><br>');
 		$('#'+itemId+'returnColor').before('<input type="text"  name="'+itemId+'returnColor" value="" style="width: 60px"><br>');
@@ -331,12 +329,12 @@ th.specalt {
 </script>
 </head>
 <body>
-	<div class="divBody" style="width:1600px;">
+	<div class="divBody" style="width:2000px;">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
 				<input type="hidden" id="delay" name="delay" value="">
-				<table>
+				<table class="dataintable">
 					<tr>
 						<td>工厂：</td>
 						<td>
@@ -361,39 +359,55 @@ th.specalt {
 		</div>
 		<div class="topBtn">
 			<a class="btn btn-primary" href="javascript:void(0)" id="saveTemp"> 
-				<i class="icon-zoom-add icon-white"></i> <span>暂存数据</span>
+				暂存数据
 			</a>
 			<a class="btn btn-info" href="javascript:void(0)" id="save"> 
-				<i class="icon-edit icon-white"></i> 已回
+				已回
 			</a>
 			<a class="btn btn-info" href="javascript:void(0)" id="delaybtn"> 
-				<i class="icon-edit icon-white"></i> 拖延${delayDates }单
+				拖延${delayDates }单
 			</a>
 		</div>
 		<div id="paging" class="pagclass" >
-			<table border="1" id="mytable">
+			<table border="1" id="mytable" class="dataintable">
 				<tr>
-					<th class="specalt">
+					<th class="specalt" rowspan="2">
 						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
 					</th>
-					<th>&nbsp;状态&nbsp;</th>
-					<th>序号</th>
-					<th>下单日期</th>
-					<th style="min-width: 60px;">工&nbsp;厂</th>
-					<th>工厂编号</th>
+					<th rowspan="2">序号</th>
+					<th rowspan="2">&nbsp;状态&nbsp;</th>
+					<th rowspan="2" style="width: 60px;">下单日期</th>
+					<th style="min-width: 60px;" rowspan="2">工&nbsp;厂</th>
+					<th colspan="11">下单</th>
+					<th colspan="16">实到</th>
+				</tr><tr>
 					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
+					<th>工厂编号</th>
+					<th>工厂颜色</th>
 					<th>&nbsp;工&nbsp;艺&nbsp;</th>
 					<th>我司编号</th>
-					<th >回货日期</th>
-					<th>下单数量</th>
-					<th>实到数量（条）</th>
-					<th>实到数量（KG）</th>
+					<th>我司颜色</th>
 					<th>纸管</th>
 					<th>空差</th>
 					<th>胶袋</th>
+					<th>条数</th>
+					<th>数量(KG)</th>
+					
+					<th>布种</th>
+					<th>工厂编号</th>
+					<th>工厂颜色</th>
+					<th>工艺</th>
+					<th>我司编号</th>
 					<th>我司颜色</th>
-					<th>实到颜色</th>
-					<th>备注</th>
+					
+					<th style="width: 50px;">纸管</th>
+					<th style="width: 50px;">空差</th>
+					<th style="width: 50px;">胶袋</th>
+					<!--th >回货日期</th-->
+					<th style="width: 68px;">条数</th>
+					<th style="width: 68px;">数量(KG)</th>
+					
+					<th></th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
@@ -402,17 +416,36 @@ th.specalt {
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
-					<td id="1_${item.id }">${item.returnStatusName }</td>
 					<td id="2_${item.id }">${item.id }</td>
-					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>" onclick="clearColor(${item.id});">
-						<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
+					<td id="1_${item.id }">${item.returnStatusName }</td>
+					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
+						<fmt:formatDate value='${item.orderDate }' pattern='yyyy/MM/dd'/>
 					</td>
 					<td id="3_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
-					<td id="4_${item.id }">${item.factoryCode }</td>
 					<td id="5_${item.id }">${item.clothName }</td>
+					<td id="4_${item.id }">${item.factoryCode }</td>
+					<td id="4_${item.id }">${item.factoryColor }</td>
+					
 					<td id="6_${item.id }">${item.technologyName }</td>
 					<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
-					<td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
+					<td id="7_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
+					
+					
+					<td id="7_${item.id }">${item.zhiguan }</td>
+					<td id="7_${item.id }">${item.kongcha }</td>
+					<td id="7_${item.id }">${item.jiaodai }</td>
+					<td id="7_${item.id }">${item.num }</td>
+					<td id="7_${item.id }">${item.numKg }</td>
+					
+					
+					<td id="7_${item.id }">${item.clothName }</td>
+					<td id="7_${item.id }">${item.factoryCode }</td>
+					<td id="7_${item.id }">${item.factoryColor }</td>
+					<td id="7_${item.id }">${item.technologyName }</td>
+					<td id="7_${item.id }">${item.myCompanyCode }</td>
+					
+					
+					<!--td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
 					<c:if test="${fn:length(map[item.id]) ==0}">
 						<input type="text" name="${item.id }returnDate" style="width:70px" value=""
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
@@ -425,11 +458,41 @@ th.specalt {
 						<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" style="cursor:pointer;vertical-align:bottom;">
 							<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
 						</span>
+					</td-->
+					<td id="9_${item.id }">${item.num }${item.myCompanyColor }</td>
+					
+					<td id="11_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }zhiguan" value="${item.zhiguan }" style="width: 45px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }zhiguan" value="${item1.zhiguan }" style="width: 45px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}zhiguan" ></span>
+					</td><td id="12_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }kongcha" value="${item.kongcha }" style="width: 45px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }kongcha" value="${item1.kongcha }" style="width: 45px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}kongcha" ></span>
+					</td><td id="13_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }jiaodai" value="${item.jiaodai }" style="width: 45px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }jiaodai" value="${item1.jiaodai }" style="width: 45px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}jiaodai" ></span>
 					</td>
-					<td id="9_${item.id }">${item.num }${item.unitName }</td>
+					
 					<td id="10_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text"  name="${item.id }returnNum" value="" style="width: 60px"><br>
+							<input type="text"  name="${item.id }returnNum" value="${item.num }" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								<input type="text"  name="${item.id }returnNum" value="${item1.returnNum }" style="width: 60px"><br>
@@ -438,43 +501,16 @@ th.specalt {
 						<span id="${item.id }returnNum" ></span>
 					</td><td id="16_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text"  name="${item.id }returnNumKg" value="" style="width: 60px"><br>
+							<input type="text"  name="${item.id }returnNumKg" value="${item.numKg }" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								<input type="text"  name="${item.id }returnNumKg" value="${item1.returnNumKg }" style="width: 60px"><br>
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }returnNumKg" ></span>
-					</td><td id="11_${item.id }" onclick="onclickTr(${item.id })">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }zhiguan" value="" style="width: 45px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }zhiguan" value="${item1.zhiguan }" style="width: 45px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}zhiguan" ></span>
-					</td><td id="12_${item.id }" onclick="onclickTr(${item.id })">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }kongcha" value="" style="width: 45px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }kongcha" value="${item1.kongcha }" style="width: 45px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}kongcha" ></span>
-					</td><td id="13_${item.id }" onclick="onclickTr(${item.id })">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }jiaodai" value="" style="width: 45px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }jiaodai" value="${item1.jiaodai }" style="width: 45px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}jiaodai" ></span>
 					</td>
-					<td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
-					<td onclick="onclickTr(${item.id })">
+					<!--td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td-->
+					<!--td onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }returnColor" value="${item1.returnColor }" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -483,8 +519,8 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }returnColor" ></span>
-					</td>
-					<td id="15_${item.id }" onclick="onclickTr(${item.id })">
+					</td-->
+					<!--td id="15_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }mark" value="" ><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -493,7 +529,12 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }mark" ></span>
-					</td>
+					</td-->
+					<td>
+					<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" 
+						style="cursor:pointer;vertical-align:bottom;font-size: 20px;font-weight: bold;">
+					+
+					</span></td>
 				</tr>
 				</form>
 				</c:forEach>
