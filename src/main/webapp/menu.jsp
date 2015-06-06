@@ -252,6 +252,18 @@ ul, ol {
 	}
 	//一级菜单点击事件
 	function clickme(o, links, divs, style2, style3, state) {
+		// 合并菜单先
+		/**
+		$("#menu li").find("ul").each(function(index,element){ 
+			// alert($(element).text()); 
+			$(element).hide("slow");
+		});
+		**/
+		$(links).find("ul").each(function(index,element){ 
+			// alert($(element).text()); 
+			$(element).hide("slow");
+		});
+		
 		//要判断是否有子菜单项
 		var objUl = links[o.index].getElementsByTagName('UL');
 		$(objUl).slideToggle("slow");
