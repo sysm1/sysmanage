@@ -440,9 +440,9 @@ ul { list-style:none;}
 		</div>
 		<div class="topBtn">
 			<c:if test="${flag eq null }">
-			<a class="btn btn-primary" href="javascript:void(0)" id="add"> 
+			<!--a class="btn btn-primary" href="javascript:void(0)" id="add"> 
 				<span>下单预录入修改</span>
-			</a> 
+			</a--> 
 			
 			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
 				class="icon-zoom-in icon-white" id="View"></i> View
