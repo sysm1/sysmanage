@@ -162,10 +162,11 @@ public class OrderSummaryController extends BaseController {
 				clothAllowance.setInputDate(new Date());
 				int unit=info.getUnit();
 				if(unit==0){
-					clothAllowance.setAllowance(-info.getNum().intValue());
-					clothAllowance.setAllowancekg(-info.getNum().intValue()*tiaoKg);
+					clothAllowance.setAllowance(info.getNum().intValue());
+					clothAllowance.setAllowancekg(info.getNum().intValue()*tiaoKg);
 				}else{
-					clothAllowance.setAllowancekg(-info.getNum()*tiaoKg);
+					clothAllowance.setAllowance(0);
+					clothAllowance.setAllowancekg(info.getNum());
 				}
 				clothAllowanceService.addAllowance(clothAllowance);
 			}else{

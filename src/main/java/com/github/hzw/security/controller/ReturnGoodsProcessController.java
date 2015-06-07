@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderSummaryVO;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.ReturnGoodsProcess;
+import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
@@ -43,6 +45,9 @@ public class ReturnGoodsProcessController extends BaseController {
 	
 	@Inject
 	private FactoryInfoService factoryInfoService;
+	
+	@Inject
+	private ClothInfoService clothInfoService;
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("list")
@@ -79,8 +84,10 @@ public class ReturnGoodsProcessController extends BaseController {
 			model.addAttribute("factoryInfo", factoryInfos.get(0));
 		}
 		String delayDates=returnGoodsProcessService.queryDelayDates(PropertiesUtils.findPropertiesKey("process_delay_dates"));
+		final List<ClothInfo> cloths=clothInfoService.queryAll(null);
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("map", map);
+		model.addAttribute("cloths",cloths);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("delayDates",delayDates);
 		model.addAttribute("bean", orderSummary);
