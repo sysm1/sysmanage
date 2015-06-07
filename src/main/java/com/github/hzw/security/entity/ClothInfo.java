@@ -32,6 +32,8 @@ public class ClothInfo {
     
     private Double tiaoKg;
     
+    private String tiaoKgStr;
+    
     /**这损率**/
     private int lossRate;
 
@@ -148,5 +150,18 @@ public class ClothInfo {
 
 	public void setColors(String colors) {
 		this.colors = colors;
+	}
+
+	public String getTiaoKgStr() {
+		if(null==tiaoKg){
+			tiaoKgStr="-";
+		}else{
+			tiaoKgStr=tiaoKg+"";
+		}
+		return tiaoKgStr;
+	}
+
+	public void setTiaoKgStr(String tiaoKgStr) {
+		this.tiaoKgStr = tiaoKgStr;
 	}
 }
