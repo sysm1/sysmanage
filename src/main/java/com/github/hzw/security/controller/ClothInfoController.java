@@ -36,6 +36,13 @@ public class ClothInfoController extends BaseController {
 		return Common.BACKGROUND_PATH+"/cloth/list";
 	}
 	
+	@RequestMapping("addlist")
+	public String addlist(Model model, Resources menu, ClothInfo clothInfo,String pageNow,String pagesize) {
+		pageView = clothInfoService.query(getPageView(pageNow,pagesize), clothInfo);
+		model.addAttribute("pageView",pageView);
+		return Common.BACKGROUND_PATH+"/cloth/addlist";
+	}
+	
 	/**
 	 * @param model
 	 * 存放返回界面的model
