@@ -104,6 +104,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 		$('#clothId').change(function(){
 			//alert($("#unit").val());
 			var unit = ($(this).find("option:selected").attr("runit"));
+			alert(unit);
 			if(unit == '' || unit == null || unit == undefined) return;
 			if(unit == '0') {
 				$("#clothUnit").html("条");

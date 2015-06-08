@@ -190,29 +190,10 @@ th.specalt {
 			for(var j=0;j<returnNums.length;j++){
 				url+="&returnNum="+returnNums[j].value;
 			}
-			var returnDates=document.getElementsByName(cbox[i]+"returnDate");
-			for(var j=0;j<returnDates.length;j++){
-				url+="&returnDate="+returnDates[j].value;
-			}
 			
 			var returnNumKgs=document.getElementsByName(cbox[i]+"returnNumKg");
 			for(var j=0;j<returnNumKgs.length;j++){
 				url+="&returnNumKg="+returnNumKgs[j].value;
-			}
-			
-			var returnColors=document.getElementsByName(cbox[i]+"returnColor");
-			for(var j=0;j<returnColors.length;j++){
-				url+="&returnColor="+returnColors[j].value;
-			}
-			
-			var marks=document.getElementsByName(cbox[i]+"mark");
-			for(var j=0;j<marks.length;j++){
-				url+="&mark="+marks[j].value;
-			}
-			
-			var zhiguans=document.getElementsByName(cbox[i]+"zhiguan");
-			for(var j=0;j<zhiguans.length;j++){
-				url+="&zhiguan="+zhiguans[j].value;
 			}
 			
 			var kongchas=document.getElementsByName(cbox[i]+"kongcha");
@@ -224,6 +205,7 @@ th.specalt {
 			for(var j=0;j<jiaodais.length;j++){
 				url+="&jiaodai="+jiaodais[j].value;
 			}
+			//alert(url);
 			//alert(f.serialize());
 			f.attr('target','');
 			//f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
@@ -232,7 +214,7 @@ th.specalt {
 			    type: "post", //使用get方法访问后台
 			    dataType: "json", //json格式的数据
 			    async: false, //同步   不写的情况下 默认为true
-			    url: url, //要访问的后台地址
+			    url: url+"&id="+cbox[i], //要访问的后台地址
 			    data: f.serialize(), //要发送的数据
 			    success: function(data){
 			    	//alert(data);
@@ -255,13 +237,21 @@ th.specalt {
 	function addOneRow(itemId){
 		//$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value=""'+
 		//		'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
-		$('#'+itemId+'returnNum').after('<input type="text"  name="'+itemId+'returnNum" value="" style="width: 60px"><br>');
-		$('#'+itemId+'returnNumKg').before('<input type="text"  name="'+itemId+'returnNumKg" value="" style="width: 60px"><br>');
-		$('#'+itemId+'returnColor').before('<input type="text"  name="'+itemId+'returnColor" value="" style="width: 60px"><br>');
-		$('#'+itemId+'mark').before('<input type="text"  name="'+itemId+'mark" value="" ><br>');
-		$('#'+itemId+'zhiguan').before('<input type="text"  name="'+itemId+'zhiguan" value="" style="width: 45px"><br>');
-		$('#'+itemId+'kongcha').before('<input type="text"  name="'+itemId+'kongcha" value="" style="width: 45px"><br>');
-		$('#'+itemId+'jiaodai').before('<input type="text"  name="'+itemId+'jiaodai" value="" style="width: 45px"><br>');
+		$('#'+itemId+'returnNum1').after('<input type="text"  name="'+itemId+'returnNum" value="" style="width: 60px"><br>');
+		$('#'+itemId+'returnNumKg1').before('<input type="text"  name="'+itemId+'returnNumKg" value="" style="width: 60px"><br>');
+		$('#'+itemId+'returnColor1').before('<input type="text"  name="'+itemId+'returnColor" value="" style="width: 60px"><br>');
+		//$('#'+itemId+'mark').before('<input type="text"  name="'+itemId+'mark" value="" ><br>');
+		$('#'+itemId+'zhiguan1').before('<input type="text"  name="'+itemId+'zhiguan" value="" style="width: 45px"><br>');
+		$('#'+itemId+'kongcha1').before('<input type="text"  name="'+itemId+'kongcha" value="" style="width: 45px"><br>');
+		$('#'+itemId+'jiaodai1').before('<input type="text"  name="'+itemId+'jiaodai" value="" style="width: 45px"><br>');
+		$('#'+itemId+'returnCode1').before('<input type="text"  name="'+itemId+'returnCode" value="" style="width: 90px"><br>');
+		$('#'+itemId+'clothName1').before('<input type="text" ondblclick="selectCloth(this);" name="'+itemId+'clothName" value="" style="width: 90px"><br>');
+		$('#'+itemId+'factoryColor1').before('<input type="text" name="'+itemId+'factoryColor" value="" style="width: 90px"><br>');
+		$('#'+itemId+'myCompanyCode1').before('<input type="text" name="'+itemId+'myCompanyCode" value="" style="width: 90px"><br>');
+		$('#'+itemId+'myCompanyColor1').before('<input type="text" name="'+itemId+'myCompanyColor" value="" style="width: 90px"><br>');
+		$('#'+itemId+'technologyName1').before('<input type="text" name="'+itemId+'technologyName" value="" style="width: 90px"><br>');
+		
+		//document.getElementById(itemId+"returnCode1").innerHTML=document.getElementById(itemId+"returnCode1").innerHTML+'<input type="text"  name="'+itemId+'returnCode" value="" style="width: 70px"><br>';
 		index++;
 		newId++;
 	}
@@ -326,6 +316,21 @@ th.specalt {
 		if(obj.value==''){
 			$('#'+id).attr('value','');
 		}
+	}
+	var cobject=null;
+	function selectCloth(obj){
+		cobject=obj;
+		dialog = parent.$.ligerDialog.open({
+			width : 350,
+			height : 410,
+			url : rootPath + '/background/cloth/addlist.html',
+			title : "增加角色",
+			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+		});
+	}
+	function addCloth(id){
+		//alert(id);
+		cobject.value=id;
 	}
 </script>
 </head>
@@ -431,19 +436,67 @@ th.specalt {
 					<td id="9_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
 					<td id="10_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
 					
-					
 					<td id="11_${item.id }">${item.zhiguan }</td>
 					<td id="12_${item.id }">${item.kongcha }</td>
 					<td id="13_${item.id }">${item.jiaodai }</td>
 					<td id="14_${item.id }">${item.num }</td>
 					<td id="15_${item.id }">${item.numKg }</td>
 					
+					<td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }clothName" value="${item.clothName }" 
+								ondblclick="selectCloth(this);" style="width: 90px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }clothName" value="${item1.clothName }" ondblclick="selectCloth(this);" style="width: 90px;">
+								<input type="hidden" name="${item.id }clothId" value="${item1.clothId }" style="width: 90px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}clothName1" ></span>
 					
-					<td id="26_${item.id }">${item.clothName }</td>
-					<td id="17_${item.id }">${item.factoryCode }</td>
-					<td id="18_${item.id }">${item.factoryColor }</td>
-					<td id="19_${item.id }">${item.technologyName }</td>
-					<td id="20_${item.id }">${item.myCompanyCode }</td>
+					</td>
+					
+					<td id="17_${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }returnCode" value="${item.factoryCode }" style="width: 90px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }returnCode" value="${item1.returnCode }" style="width: 90px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}returnCode1" ></span>
+					</td>
+					
+					<td id="18_${item.id }" style="width: 90px;">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }factoryColor" value="${item.factoryColor }" style="width: 90px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }factoryColor" value="${item1.returnColor }" style="width: 90px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}factoryColor1" ></span>
+					</td>
+					<td id="19_${item.id }" style="width: 90px;">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }technologyName" value="${item.technologyName }" style="width: 90px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }technologyName" value="${item1.technologyName }" style="width: 90px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}technologyName1" ></span>
+					</td>
+					<td id="20_${item.id }" style="width: 90px;">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }myCompanyCode" value="${item.myCompanyCode }" style="width: 90px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }myCompanyCode" value="${item1.myCompanyCode }" style="width: 90px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}myCompanyCode1" ></span>
+					</td>
 					
 					
 					<!--td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
@@ -460,7 +513,16 @@ th.specalt {
 							<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
 						</span>
 					</td-->
-					<td id="21_${item.id }">${item.num }${item.myCompanyColor }</td>
+					<td id="21_${item.id }" style="width: 90px;">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }myCompanyColor" value="${item.myCompanyColor }" style="width: 90px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }myCompanyColor" value="${item1.myCompanyColor }" style="width: 90px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}myCompanyColor1" ></span>
+					</td>
 					
 					<td id="22_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
 						<c:if test="${fn:length(map[item.id]) ==0}">
@@ -470,7 +532,7 @@ th.specalt {
 								<input type="text" name="${item.id }zhiguan" value="${item1.zhiguan }" style="width: 45px;"><br>
 							</c:forEach>
 						</c:if>
-						<span id="${item.id}zhiguan" ></span>
+						<span id="${item.id}zhiguan1" ></span>
 					</td><td id="23_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }kongcha" value="${item.kongcha }" style="width: 45px;"><br>
@@ -479,7 +541,7 @@ th.specalt {
 								<input type="text" name="${item.id }kongcha" value="${item1.kongcha }" style="width: 45px;"><br>
 							</c:forEach>
 						</c:if>
-						<span id="${item.id}kongcha" ></span>
+						<span id="${item.id}kongcha1" ></span>
 					</td><td id="24_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }jiaodai" value="${item.jiaodai }" style="width: 45px;"><br>
@@ -488,7 +550,7 @@ th.specalt {
 								<input type="text" name="${item.id }jiaodai" value="${item1.jiaodai }" style="width: 45px;"><br>
 							</c:forEach>
 						</c:if>
-						<span id="${item.id}jiaodai" ></span>
+						<span id="${item.id}jiaodai1" ></span>
 					</td>
 					
 					<td id="25_${item.id }" onclick="onclickTr(${item.id })">
@@ -499,7 +561,7 @@ th.specalt {
 								<input type="text"  name="${item.id }returnNum" value="${item1.returnNum }" style="width: 60px"><br>
 							</c:forEach>
 						</c:if>
-						<span id="${item.id }returnNum" ></span>
+						<span id="${item.id }returnNum1" ></span>
 					</td><td id="4_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text"  name="${item.id }returnNumKg" value="${item.numKg }" style="width: 60px"><br>
@@ -508,7 +570,7 @@ th.specalt {
 								<input type="text"  name="${item.id }returnNumKg" value="${item1.returnNumKg }" style="width: 60px"><br>
 							</c:forEach>
 						</c:if>
-						<span id="${item.id }returnNumKg" ></span>
+						<span id="${item.id }returnNumKg1" ></span>
 					</td>
 					<!--td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td-->
 					<!--td onclick="onclickTr(${item.id })">

@@ -18,10 +18,22 @@ public class ReturnGoodsProcess {
     private Double returnNumKg;
 
     private String returnUnit;
+    
+    private String clothName;
+    
+    private String clothId;
 
     private Integer statisticsNum;
 
+    private String technologyName;
+    
     private String returnColor;
+    
+    private String returnCode;
+    
+    private String myCompanyColor;
+    
+    private String myCompanyCode;
 
     private Date createTime;
 
@@ -140,5 +152,53 @@ public class ReturnGoodsProcess {
 	/***回货数量KG**/
 	public void setReturnNumKg(Double returnNumKg) {
 		this.returnNumKg = returnNumKg;
+	}
+
+	public String getReturnCode() {
+		return returnCode;
+	}
+
+	public void setReturnCode(String returnCode) {
+		this.returnCode = returnCode;
+	}
+
+	public String getClothName() {
+		return clothName;
+	}
+
+	public void setClothName(String clothName) {
+		this.clothName = clothName;
+	}
+
+	public String getClothId() {
+		return clothId;
+	}
+
+	public void setClothId(String clothId) {
+		this.clothId = clothId;
+	}
+
+	public String getMyCompanyColor() {
+		return myCompanyColor;
+	}
+
+	public void setMyCompanyColor(String myCompanyColor) {
+		this.myCompanyColor = myCompanyColor;
+	}
+
+	public String getMyCompanyCode() {
+		return myCompanyCode;
+	}
+
+	public void setMyCompanyCode(String myCompanyCode) {
+		this.myCompanyCode = myCompanyCode;
+	}
+
+	public String getTechnologyName() {
+		return technologyName;
+	}
+
+	public void setTechnologyName(String technologyName) {
+		this.technologyName = technologyName;
 	}
 }

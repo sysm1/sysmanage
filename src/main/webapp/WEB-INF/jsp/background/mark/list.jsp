@@ -145,7 +145,6 @@
 				名称：<input type="text" name="accountName" value="${param.name}"
 					style="height: 20px" /> 
 					<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询
-					<a class="btn btn-primary" href="javascript:void(0)" id="ok"> 确定
 				</a>
 			</form>
 		</div>

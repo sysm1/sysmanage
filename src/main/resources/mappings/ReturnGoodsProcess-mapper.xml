@@ -65,11 +65,11 @@
 			os.order_date orderDate,
 			(select name from factory_info where id=os.factory_id) factoryName,
 			os.factory_code factoryCode,
-			(select cloth_name from cloth_info where id=cloth_id) clothName,
+			cloth_name clothName,pro.myCompanyCode,pro.myCompanyColor,
 			(select name from technology_info where id=os.technology_id) technologyName,
 			os.my_company_code myCompanyCode,
 			pro.return_date returnDate,
-			os.num,
+			os.num,pro.technologyName,
 			os.unit,
 			pro.return_num returnNum,
 			os.my_company_color myCompanyColor,
@@ -88,10 +88,12 @@
 	<select id="queryBySummaryId" resultType="ReturnGoodsProcess"  parameterType="String">
 		select
 		 	return_date returnDate,
+		 	return_code returnCode,
 		 	return_num returnNum,
 		 	return_num_kg returnNumKg,
+		 	cloth_name clothName,myCompanyCode,myCompanyColor,
 		 	return_color returnColor,
-		 	mark,zhiguan,
+		 	mark,zhiguan,technologyName,
 		 	kongcha,jiaodai
 		from return_goods_process where summary_id=#{summaryId}
 		order by id
@@ -166,6 +168,16 @@
         kongcha,
       </if><if test="jiaodai != null" >
         jiaodai,
+      </if><if test="returnCode != null" >
+        return_code,
+      </if><if test="clothName != null" >
+        cloth_name,
+      </if><if test="myCompanyColor != null" >
+        myCompanyColor,
+      </if><if test="myCompanyCode != null" >
+        myCompanyCode,
+      </if><if test="technologyName != null" >
+        technologyName,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -200,10 +212,19 @@
         #{kongcha,jdbcType=INTEGER},
       </if><if test="jiaodai != null" >
         #{jiaodai,jdbcType=INTEGER},
+      </if><if test="returnCode != null" >
+        #{returnCode,jdbcType=VARCHAR},
+      </if><if test="clothName != null" >
+        #{clothName,jdbcType=VARCHAR},
+      </if><if test="myCompanyColor != null" >
+        #{myCompanyColor,jdbcType=VARCHAR},
+      </if><if test="myCompanyCode != null" >
+        #{myCompanyCode,jdbcType=VARCHAR},
+      </if><if test="technologyName != null" >
+        #{technologyName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  
   
   <update id="update" parameterType="ReturnGoodsProcess" >
     update return_goods_process

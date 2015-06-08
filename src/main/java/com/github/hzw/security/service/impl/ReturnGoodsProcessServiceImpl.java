@@ -27,7 +27,6 @@ import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
-import com.github.hzw.util.DateUtil;
 
 @Transactional
 @Service("returnGoodsProcessService")
@@ -112,14 +111,18 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 	 */
 	@Override
 	public void save(HttpServletRequest request,OrderSummary orderSummary){
-		String[] returnDates=request.getParameterValues("returnDate");
-		String[] returnNums=request.getParameterValues("returnNum");
-		String[] returnNumKgs=request.getParameterValues("returnNumKg");
-		String[] returnColors=request.getParameterValues("returnColor");
-		String[] marks=request.getParameterValues("mark");
-		String[] zhiguans=request.getParameterValues("zhiguan");
-		String[] kongchas=request.getParameterValues("kongcha");
-		String[] jiaodais=request.getParameterValues("jiaodai");
+		String id=request.getParameter("id");
+		String[] returnCodes=request.getParameterValues(id+"returnCode");
+		String[] returnNums=request.getParameterValues(id+"returnNum");
+		String[] returnNumKgs=request.getParameterValues(id+"returnNumKg");
+		String[] returnColors=request.getParameterValues(id+"factoryColor");
+		String[] zhiguans=request.getParameterValues(id+"zhiguan");
+		String[] kongchas=request.getParameterValues(id+"kongcha");
+		String[] jiaodais=request.getParameterValues(id+"jiaodai");
+		String[] clothNames=request.getParameterValues(id+"clothName");
+		String[] myCompanyCodes=request.getParameterValues(id+"myCompanyCode");
+		String[] myCompanyColors=request.getParameterValues(id+"myCompanyColor");
+		String[] technologyNames=request.getParameterValues(id+"technologyName");
 		String returnStatus=request.getParameter("returnStatus");
 		
 		ClothInfo clothInfo=clothInfoService.getById(orderSummary.getClothId()+"");
@@ -129,20 +132,25 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 			int returnNum=0;
 			/**回货净重量*/
 			Double returnNumKg=0D;
-			int size=returnDates.length;
+			int size=zhiguans.length;
 			ReturnGoodsProcess bean=null;
 			returnGoodsProcessMapper.deleteBySummaryId(orderSummary.getId()+"");
 			for(int i=0;i<size;i++){
 				bean=new ReturnGoodsProcess();
 				bean.setCreateTime(new Date());
-				bean.setMark(marks[i]);
-				bean.setReturnColor(returnColors[i]);
-				bean.setReturnDate(DateUtil.str2Date(returnDates[i],"yyyy-MM-dd"));
+				//bean.setMark(marks[i]);
+				if(null!=returnColors&&!"".equals(returnColors)){
+					bean.setReturnColor(returnColors[i]);
+				}
+				bean.setReturnDate(new Date());
 				if(null!=returnNums[i]&&!"".equals(returnNums[i])){
 					bean.setReturnNum(Integer.parseInt(returnNums[i]));
 				}if(null!=returnNumKgs[i]&&!"".equals(returnNumKgs[i])){
 					bean.setReturnNumKg(Double.parseDouble(returnNumKgs[i]));
-				}				
+				}if(null!=returnCodes[i]&&!"".equals(returnCodes[i])){
+					bean.setReturnCode(returnCodes[i]);
+				}
+				
 				bean.setReturnUnit("");
 				bean.setStatisticsNum(null);
 				bean.setSummaryId(orderSummary.getId());
@@ -154,8 +162,12 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				}if(null!=jiaodais[i]&&!"".equals(jiaodais[i])){
 					bean.setJiaodai(Double.parseDouble(jiaodais[i]));
 				}
-				
+				bean.setClothName(clothNames[i]);
+				bean.setMyCompanyCode(myCompanyCodes[i]);
+				bean.setMyCompanyColor(myCompanyColors[i]);
+				bean.setTechnologyName(technologyNames[i]);
 				add(bean);
+				
 				if(null!=bean.getReturnNum()){
 					returnNum+=bean.getReturnNum();
 				}

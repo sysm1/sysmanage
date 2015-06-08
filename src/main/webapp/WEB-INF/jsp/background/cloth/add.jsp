@@ -72,17 +72,25 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			newtr.insertAfter($("#table1 tr:last"));
 			newtr.find("input").eq(0).attr("value",'');
 		});
+		$("#unit").change(function(){
+			if(this.value==1){
+				document.getElementById("defaultKg").style.display="none";
+			}else{
+				document.getElementById("defaultKg").style.display="";
+			}
+		});
 	});
 	function saveWin() {
 		$("#form").submit();
 	}
+	
 </script>
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 485px;"></div>
+	<div class="l_err" style="width: 390px;"></div>
 	<form name="form" id="form" action="${ctx}/background/cloth/add.html" method="post">
-		<table style="width: 485px; height: 200px;" id="table1" class="dataintable">
+		<table style="width: 390px; height: 200px;" id="table1" class="dataintable">
 			<tbody>
 				<tr>
 					<td style="text-align: right;">布种名称：</td>
@@ -101,11 +109,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<tr>
 					<td style="text-align: right;">布种单位：</td>
 					<td style="text-align: left;">
-						<select id="unit" name="unit">
+						<select id="unit" name="unit" >
+							<option value="">请选择</option>
 							<option value="0">条</option>
+							<option value="1">KG</option>
 						</select>
 					</td>
-				</tr><tr>
+				</tr><tr id="defaultKg" name="defaultKg">
 					<td style="text-align: right;">默认公斤数：</td>
 					<td style="text-align: left;">
 						<input type="text" id="tiaoKg" name="tiaoKg" value="">KG/条
@@ -120,12 +130,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</div>
 						</td>
 				</tr><tr height="30px;" style="background: #EEE9E9;">
-					<td colspan="2" align="center" style="color: FFF68F;background-color:#EEE9E9;font-weight: bold; ">
+					<td colspan="2" style="color: FFF68F;background-color:#EEE9E9;font-weight: bold;text-align: center; ">
 					布&nbsp;种&nbsp;颜&nbsp;色
 					</td>
 				</tr>
 				<tr >
-					<td class="l_left" colspan="2" align="center" style="background-color: #FFF5EE;">
+					<td  colspan="2" style="background-color: #FFF5EE;text-align: center;">
 						<input id='color' name="color" class="checkdesc" type="text" value="">
 					</td>
 				</tr>

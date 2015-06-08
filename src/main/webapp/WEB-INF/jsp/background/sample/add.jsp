@@ -298,7 +298,7 @@ $(function() {
 		}else if($('#codeType').val()==1){
 			factoryCode=$('#codeValue').val();
 		}
-		alert(obj.id);
+		//alert(obj.id);
         $.ajaxFileUpload({
              url: rootPath+'/background/upload.html?myCompanyCode='+mycompanyCode+"&factoryCode1="+factoryCode, //用于文件上传的服务器端请求地址
              secureuri: false, //是否需要安全协议，一般设置为false

@@ -32,7 +32,7 @@
 						name : "布种单位",
 						width : "80px"
 					},{
-						colkey : "tiaoKg",
+						colkey : "tiaoKgStr",
 						name : "KG/条",
 						width : "100px"
 					},
@@ -65,7 +65,7 @@
 		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 450,
+				width : 400,
 				height : 520,
 				url : rootPath + '/background/cloth/addUI.html',
 				title : "增加布种信息",
@@ -132,20 +132,16 @@
 			</form>
 		</div>
 		<div class="topBtn">
-			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>新增</span>
+			<a class="btn btn-primary" href="javascript:void(0)" id="add">  <span>新增</span>
 			</a> 
 			
-			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
-				class="icon-zoom-in icon-white" id="View"></i> View
+			<!-- <a class="btn btn-success" href="javascript:void(0)"> </i> View
 			</a> --> 
 			
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> 修改
+			<a class="btn btn-info" href="javascript:void(0)" id="editView">  修改
 			</a> 
 			&nbsp;&nbsp;&nbsp;
-			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> 删除
+			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView">  删除
 			</a>
 			<!-- 
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
