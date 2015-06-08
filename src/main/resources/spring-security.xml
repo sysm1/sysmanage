@@ -21,6 +21,8 @@
     <http pattern="/loginCheck.html" security="none"/>
      <http pattern="/submitlogin.html" security="none"/>
      <http pattern="/install.html" security="none"/>
+     <http pattern="/ip.jsp" security="none"/>
+     <http pattern="/test*.jsp" security="none"/>
      
      <http pattern="/**/*.css" security="none"/>
      <http pattern="/**/*.js" security="none"/>
