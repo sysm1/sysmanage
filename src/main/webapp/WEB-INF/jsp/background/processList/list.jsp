@@ -586,7 +586,7 @@ th.specalt {
 				</c:forEach>
 				<!-- 分页 -->
 				<tr style="height: 35px">
-					<td colspan="15" style="text-align: center;font-size: 14px;">
+					<td colspan="19" style="text-align: center;font-size: 14px;">
 <div id="pagelist">
   <ul style="font-size: 14px;">
   	<c:if test="${pageView.pageNow==1}">
