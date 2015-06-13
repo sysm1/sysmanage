@@ -118,6 +118,10 @@ public class OrderSummary {
     private String salesmans;
 
     private String mark;
+    
+    /***回货备注***/
+    private String returnMark;
+    
     /***差额业务员备注信息**/
     private String balancemark;
     
@@ -587,5 +591,13 @@ public class OrderSummary {
 	/***布种颜色**/
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public String getReturnMark() {
+		return returnMark;
+	}
+
+	public void setReturnMark(String returnMark) {
+		this.returnMark = returnMark;
 	}
 }

@@ -389,7 +389,7 @@ th.specalt {
 							</select>
 						</td><td>备注:</td>
 						<td>
-							<input type="text" id="mark" name="mark">
+							<input type="text" id="returnMark" name="returnMark" value="${bean.returnMark }">
 						</td>		
 					</tr><tr>	
 						<td colspan="6" style="text-align: center;">
@@ -438,6 +438,7 @@ th.specalt {
 					<!--th >回货日期</th-->
 					<th style="width: 68px;">条数</th>
 					<th style="width: 68px;">数量(KG)</th>
+					<th style="width: 68px;">备注</th>
 					
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
@@ -557,6 +558,12 @@ th.specalt {
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								${item1.returnNumKg }<br>
+							</c:forEach>
+						</c:if>
+					</td><td id="4_${item.id }" onclick="onclickTr(${item.id })">
+						<c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								${item1.mark }<br>
 							</c:forEach>
 						</c:if>
 					</td>

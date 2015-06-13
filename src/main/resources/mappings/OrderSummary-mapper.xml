@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.hzw.security.mapper.OrderSummaryMapper" >
-
-
-<!-- 
-  <resultMap id="BaseResultMap" type="com.github.hzw.security.entity.OrderSummary" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
-    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
-    <result column="cloth_id" property="clothId" jdbcType="INTEGER" />
-    <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
-    <result column="technology_id" property="technologyId" jdbcType="INTEGER" />
-    <result column="my_company_code" property="myCompanyCode" jdbcType="VARCHAR" />
-    <result column="my_company_color" property="myCompanyColor" jdbcType="VARCHAR" />
-    <result column="factory_code" property="factoryCode" jdbcType="VARCHAR" />
-    <result column="factory_color" property="factoryColor" jdbcType="VARCHAR" />
-    <result column="cloth_num" property="clothNum" jdbcType="INTEGER" />
-    <result column="num" property="num" jdbcType="INTEGER" />
-    <result column="standard" property="standard" jdbcType="VARCHAR" />
-    <result column="packing_style" property="packingStyle" jdbcType="VARCHAR" />
-    <result column="print_status" property="printStatus" jdbcType="INTEGER" />
-    <result column="print_num" property="printNum" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="return_status" property="returnStatus" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="salesmans" property="salesmans" jdbcType="LONGVARCHAR" />
-    <result column="mark" property="mark" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  -->
   
   <sql id="Base_Column_List" >
     id, order_code, order_date, cloth_id, factory_id, technology_id, my_company_code, 
@@ -293,6 +266,8 @@
 		</if>
 		<if test="t.mark != null and t.mark != ''">
 			and mark like '%${t.mark}%'
+		</if><if test="t.returnMark != null and t.returnMark != ''">
+			and return_mark like '%${t.returnMark}%'
 		</if>
 		<if test="t.oprator != null and t.oprator != '' and t.oprator == 1">
 				and num  &gt;=#{t.num}
@@ -645,6 +620,8 @@
       </if>
       <if test="color != null" >
         color = #{color,jdbcType=VARCHAR},
+      </if><if test="returnMark != null" >
+        return_mark = #{returnMark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

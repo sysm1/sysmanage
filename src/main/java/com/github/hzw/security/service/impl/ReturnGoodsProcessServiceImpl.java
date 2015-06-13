@@ -123,8 +123,9 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		String[] myCompanyCodes=request.getParameterValues(id+"myCompanyCode");
 		String[] myCompanyColors=request.getParameterValues(id+"myCompanyColor");
 		String[] technologyNames=request.getParameterValues(id+"technologyName");
+		String[] marks=request.getParameterValues(id+"mark");
 		String returnStatus=request.getParameter("returnStatus");
-		
+		String returnMark="";
 		ClothInfo clothInfo=clothInfoService.getById(orderSummary.getClothId()+"");
 		Double tiaoKg=clothInfo.getTiaoKg();
 		int unit=orderSummary.getUnit();
@@ -138,7 +139,8 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 			for(int i=0;i<size;i++){
 				bean=new ReturnGoodsProcess();
 				bean.setCreateTime(new Date());
-				//bean.setMark(marks[i]);
+				bean.setMark(marks[i]);
+				returnMark+=marks[i];
 				if(null!=returnColors&&!"".equals(returnColors)){
 					bean.setReturnColor(returnColors[i]);
 				}
@@ -188,7 +190,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 						returnNumKg-=xz*bean.getReturnNum();
 					}
 				}else{
-					if(null!=returnNumKgs[i]){
+					if(null!=returnNumKgs[i]&&!"".equals(returnNumKgs[i])){
 						returnNumKg+=Double.parseDouble(returnNumKgs[i])-xz*bean.getReturnNum();
 					}
 				}
@@ -216,6 +218,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 			}
 			
 			//状态 判断
+			orderSummary.setReturnMark(returnMark);
 			orderSummary.setStatus(getReturnStatusName(orderSummary));
 			orderSummary.setReturnStatus(Integer.parseInt(returnStatus));
 			orderSummaryService.update(orderSummary);

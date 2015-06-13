@@ -179,7 +179,7 @@ public class OrderSummaryController extends BaseController {
 					clothAllowance.setAllowancekg(allowanceKg);
 					clothAllowance.setAllowance(allowance);
 				}else{
-					allowanceKg=allowanceKg-info.getNum().intValue()*tiaoKg;
+					//allowanceKg=allowanceKg-info.getNum().intValue()*tiaoKg;
 					clothAllowance.setAllowancekg(allowanceKg);
 				}
 				clothAllowanceService.addAllowance(clothAllowance);

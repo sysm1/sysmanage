@@ -250,7 +250,7 @@ th.specalt {
 		$('#'+itemId+'myCompanyCode1').before('<input type="text" name="'+itemId+'myCompanyCode" value="" style="width: 90px"><br>');
 		$('#'+itemId+'myCompanyColor1').before('<input type="text" name="'+itemId+'myCompanyColor" value="" style="width: 90px"><br>');
 		$('#'+itemId+'technologyName1').before('<input type="text" name="'+itemId+'technologyName" value="" style="width: 90px"><br>');
-		
+		$('#'+itemId+'mark1').before('<input type="text" name="'+itemId+'mark" value="" style="width: 60px"><br>');
 		//document.getElementById(itemId+"returnCode1").innerHTML=document.getElementById(itemId+"returnCode1").innerHTML+'<input type="text"  name="'+itemId+'returnCode" value="" style="width: 70px"><br>';
 		index++;
 		newId++;
@@ -381,7 +381,7 @@ th.specalt {
 						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
 					</th>
 					<th rowspan="2">序号</th>
-					<th rowspan="2">&nbsp;状态&nbsp;</th>
+					<!--th rowspan="2">&nbsp;状态&nbsp;</th-->
 					<th rowspan="2" style="width: 60px;">下单日期</th>
 					<th style="min-width: 60px;" rowspan="2">工&nbsp;厂</th>
 					<th colspan="11">下单</th>
@@ -412,7 +412,7 @@ th.specalt {
 					<!--th >回货日期</th-->
 					<th style="width: 68px;">条数</th>
 					<th style="width: 68px;">数量(KG)</th>
-					
+					<th style="width: 68px;">备注</th>
 					<th></th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
@@ -423,7 +423,7 @@ th.specalt {
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
 					<td id="2_${item.id }">${item.id }</td>
-					<td id="1_${item.id }">${item.returnStatusName }</td>
+					<!--td id="1_${item.id }">${item.returnStatusName }</td-->
 					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='yyyy/MM/dd'/>
 					</td>
@@ -593,6 +593,16 @@ th.specalt {
 						</c:if>
 						<span id="${item.id }mark" ></span>
 					</td-->
+					<td>
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text"  name="${item.id }mark" value="${item.mark }" style="width: 60px"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text"  name="${item.id }mark" value="${item1.mark }" style="width: 60px"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id }mark1" ></span>
+					</td>
 					<td>
 					<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" 
 						style="cursor:pointer;vertical-align:bottom;font-size: 24px;font-weight: bold;">
