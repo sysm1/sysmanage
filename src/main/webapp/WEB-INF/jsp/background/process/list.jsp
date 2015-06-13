@@ -335,7 +335,7 @@ th.specalt {
 </script>
 </head>
 <body>
-	<div class="divBody" style="width:2000px;">
+	<div class="divBody" style="width:2200px;">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
