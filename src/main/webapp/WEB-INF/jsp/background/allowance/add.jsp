@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <style type="text/css">
 	.l_right{
 		text-align: right;
@@ -13,22 +14,6 @@
 
 //单独验证某一个input  class="checkpass"
 
-jQuery.validator.addMethod("isNum", function(value, element) {
-	 var num = /^([0-9]+)$/;
-	 return this.optional(element) || (num.test(value));
-}, "只能输入数字");
-
-
-jQuery.validator.addMethod("isDay", function(value, element) {
-	 var num = /^(\d{4})-(\d{2})-(\d{2})$/;
-	 return this.optional(element) || (num.test(value));
-}, "只能输入日期(yyyy-MM-dd)");
-
-
-jQuery.validator.addMethod("chrnum", function(value, element) {
-	var chrnum = /^([a-zA-Z0-9]+)$/;
-	return this.optional(element) || (chrnum.test(value));
-}, "只能输入数字和字母(字符A-Z, a-z, 0-9)");
 
 	$(function() {
 		$("form").validate({
@@ -51,40 +36,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					}
 				});
 			},
-			rules : {
-				inputDate : {
-					required : true
-				},
-				clothId : {
-					required : true
-				},
-				factoryId : {
-					required : true
-				},
-				changeSum : {
-					required : true
-				},
-				changeSumkg: {
-					required : true
-				}
-			},
-			messages : {
-				inputDate : {
-					required : "日期不能为空",
-				},
-				clothId : {
-					required : "布种不能为空",
-				},
-				factoryId : {
-					required : "工厂不能为空",
-				},
-				changeSum : {
-					required : "改变量不能为空",
-				},
-				changeSumkg : {
-					required : "kg改变量不能为空",
-				}
-			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
 				$(".l_err").css('display','block');
 				//element.css('border','3px solid #FFCCCC');
@@ -94,24 +45,18 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				$(".l_err").css('display','none');
 			}
 		});
-	});
-	function saveWin() {
-		$("#form").submit();
-	}
-	
-	// clothId  0条 1 kg 2cm 3码 4包
-	$(function() {
+		
 		$('#clothId').change(function(){
-			//alert($("#unit").val());
+			//alert(1);
 			var unit = ($(this).find("option:selected").attr("runit"));
-			alert(unit);
+			//alert(unit);
 			if(unit == '' || unit == null || unit == undefined) return;
 			if(unit == '0') {
 				$("#clothUnit").html("条");
-				$("#clothUnit2").html("条");
+				//$("#clothUnit2").html("条");
 				$("#unit").attr("value",0);
 			} else if(unit == '1') {
-				$("#clothUnit").html("公斤");
+				//$("#clothUnit").html("公斤");
 				$("#clothUnit2").html("公斤");
 				$("#unit").attr("value",1);
 			} else if(unit == '2') {
@@ -130,7 +75,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			}
 			//alert($("#unit").val());
 			//alert($(this).val());
-			$.ajax({
+			/**$.ajax({
 			    type: "post", //使用get方法访问后台
 			    dataType: "json", //json格式的数据
 			    async: false, //同步   不写的情况下 默认为true
@@ -149,22 +94,26 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			    		//alert('没有相关联的我司编号');
 			    	}
 				}
-			});
+			});**/
 		});
 	});
+	function saveWin() {
+		$("#form").submit();
+	}
+	
 </script>
 </head>
-<body>
+<body style="text-align: center;">
 <div class="divdialog">
-	<div class="l_err" style="width: 370px;"></div>
+	<div class="l_err" style="width: 400px;"></div>
 	<form name="form" id="form" action="${ctx}/background/allowance/add.html" method="post">
 		<input type="hidden" id="unit" name="unit" value="">
-		<table style="width: 385px; height: 300px;">
+		<table style="width: 400px; height: 300px;" border="1" class="dataintable">
 			<tbody>
 			
 			<tr>
-				<td class="l_right">日期：</td>
-				<td class="l_left">
+				<td style="text-align: right;">日期：</td>
+				<td style="text-align: left;">
 					<div class="lanyuan_input">
 						<input type="text" id="inputDate" name="inputDate" value="${today}" 
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
@@ -172,8 +121,8 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				</td>
 			</tr>
 			<tr>
-				<td class="l_right">坯布供应商：</td>
-				<td>
+				<td style="text-align: right;">坯布供应商：</td>
+				<td style="text-align: left;">
 					<select id="supplierId" name="supplierId">
 						<option value="">请选择供应商</option>
 						<c:forEach items="${suppliers }" var="supplier">
@@ -183,8 +132,8 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				</td>
 			</tr>
 			<tr>
-				<td class="l_right">布种：</td>
-				<td class="l_left">
+				<td style="text-align: right;">布种：</td>
+				<td style="text-align: left;">
 					<div class="lanyuan_input">
 						<select id="clothId" name="clothId">
 							<option value="">请选择布种</option>
@@ -196,7 +145,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					</div>
 				</td>
 			 </tr>
-			 <tr>
+			 <!--tr>
 				<td class="l_right">颜色：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
@@ -205,10 +154,10 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 						</select>
 					</div>
 				</td>
-			</tr>
+			</tr-->
 			<tr>
-				<td class="l_right">工厂：</td>
-				<td class="l_left">
+				<td style="text-align: right;">工厂：</td>
+				<td style="text-align: left;">
 					<div class="lanyuan_input">
 						
 						<select id="factoryId" name="factoryId">
@@ -221,25 +170,25 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td class="l_right">坯布条数：</td>
-				<td class="l_left">
+			<tr >
+				<td style="text-align: right;">坯布条数：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
 					<div class="lanyuan_input">
 						<input id='allowance' name="allowance" type="text" class="isNum" value="" >
-						<span class="lanyuan_input" id="clothUnit"></span>
+						<span class="lanyuan_input" id="clothUnit">条</span>
 					</div>
 				</td>
 			</tr><tr>
-				<td class="l_right">坯布公斤数：</td>
-				<td class="l_left">
+				<td style="text-align: right;">坯布公斤数：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
 					<div class="lanyuan_input">
 						<input id='allowancekg' name="allowancekg" type="text" class="isNum" value="" >
 						<span class="lanyuan_input" id="clothUnit">公斤</span>
 					</div>
 				</td>
 			</tr><tr>
-				<td class="l_right">备注：</td>
-				<td class="l_left">
+				<td style="text-align: right;">备注：</td>
+				<td style="text-align: left;">
 					<div class="lanyuan_input">
 					<input id='mark' name="mark" type="text" value="">
 					</div>
@@ -248,8 +197,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td colspan="2">
 					<div class="l_btn_centent">
 						<!-- saveWin_form   from是表单Ｉd-->
-						<a class="btn btn-primary" href="javascript:void(0)"
-							id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
+						<a class="btn btn-primary" id="saveWin_form" onclick="javascript:saveWin();"><span>保存</span> </a> 
 					</div>
 				</td>
 			</tr>

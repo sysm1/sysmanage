@@ -55,7 +55,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 		Map map = new HashMap();
 		map.put("clothId", clothId);
 		map.put("factoryId", factoryId);
-		map.put("color", color);
+		//map.put("color", color);
 		return clothAllowanceMapper.queryByClothAndFactory(map);
 	}
 	
@@ -85,7 +85,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 	 */
 	@Override
 	public void add(ClothAllowance t) throws Exception {
-		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId(),t.getColor());
+		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId(),null);
 		ClothInfo cloth = clothInfoService.getById(t.getClothId() + "");
 		if(tm == null) {
 			
@@ -123,7 +123,7 @@ public class ClothAllowanceServiceImpl implements ClothAllowanceService {
 	 */
 	@Override
 	public void addAllowance(ClothAllowance t) throws Exception {
-		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId(),t.getColor());
+		ClothAllowance tm = this.queryByClothAndFactory(t.getClothId(), t.getFactoryId(),null);
 		ClothInfo cloth = clothInfoService.getById(t.getClothId() + "");
 		if(tm == null) {
 			// 按布种单位计算

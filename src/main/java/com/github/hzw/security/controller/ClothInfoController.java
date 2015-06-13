@@ -93,14 +93,14 @@ public class ClothInfoController extends BaseController {
 			List<ClothColor> list=new ArrayList<ClothColor>();
 			String[] colors=request.getParameterValues("color");
 			ClothColor clothColor=new ClothColor();
-			for(String color:colors){
-				if(color.equals("")){
-					continue;
-				}
-				clothColor=new ClothColor();
-				clothColor.setColor(color);
-				list.add(clothColor);
-			}
+//			for(String color:colors){
+//				if(color.equals("")){
+//					continue;
+//				}
+//				clothColor=new ClothColor();
+//				clothColor.setColor(color);
+//				list.add(clothColor);
+//			}
 			clothInfoService.addClothInfo(info,list);
 			map.put("flag", "true");
 		} catch (Exception e) {
@@ -158,14 +158,14 @@ public class ClothInfoController extends BaseController {
 			List<ClothColor> list=new ArrayList<ClothColor>();
 			String[] colors=request.getParameterValues("color");
 			ClothColor clothColor=new ClothColor();
-			for(String color:colors){
-				if(color.equals("")){
-					continue;
-				}
-				clothColor=new ClothColor();
-				clothColor.setColor(color);
-				list.add(clothColor);
-			}
+//			for(String color:colors){
+//				if(color.equals("")){
+//					continue;
+//				}
+//				clothColor=new ClothColor();
+//				clothColor.setColor(color);
+//				list.add(clothColor);
+//			}
 			clothInfoService.addClothInfo(info,list);
 			map.put("flag", "true");
 		} catch (Exception e) {

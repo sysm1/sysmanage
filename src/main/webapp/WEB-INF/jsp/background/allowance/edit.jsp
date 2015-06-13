@@ -5,23 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 
-/**
-jQuery.validator.addMethod("checkpass", function(value, element) {
-	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
-}, "编号由6至16位字符组合构成");
-**/
-
-jQuery.validator.addMethod("isNum", function(value, element) {
-	 var num = /^([-0-9]+)$/;
-	 return this.optional(element) || (num.test(value));
-}, "只能输入数字");
-
-jQuery.validator.addMethod("isDay", function(value, element) {
-	 var num = /^(\d{4})-(\d{2})-(\d{2})$/;
-	 return this.optional(element) || (num.test(value));
-}, "只能输入日期(yyyy-MM-dd)");
 
 	$(function() {
 		
@@ -45,40 +31,6 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 					}
 				});
 			},
-			rules : {
-				inputDate : {
-					required : true
-				},
-				clothId : {
-					required : true
-				},
-				factoryId : {
-					required : true
-				},
-				changeSum : {
-					required : true
-				},
-				changeSumkg : {
-					required : true
-				}
-			},
-			messages : {
-				inputDate : {
-					required : "日期不能为空",
-				},
-				clothId : {
-					required : "布种不能为空",
-				},
-				factoryId : {
-					required : "工厂不能为空",
-				},
-				changeSum : {
-					required : "改变量不能为空",
-				},
-				changeSumkg : {
-					required : "kg改变量不能为空",
-				}
-			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
 				$(".l_err").css('display','block');
 				//element.css('border','3px solid #FFCCCC');
@@ -100,53 +52,53 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 	
 </script>
 </head>
-<body>
+<body style="text-align: center;">
 <div class="divdialog">
-	<div class="l_err" style="width: 370px;"></div>
+	<div class="l_err" style="width: 400px;"></div>
 	<form name="form" id="form" action="${ctx}/background/allowance/update.html" method="post">
 		<input id='id' name="id" type="hidden" value="${allowance.id}">
-		<table style="width: 385px; height: 300px;" border="1">
+		<table style="width: 400px; height: 300px;" border="1" class="dataintable">
 			<tbody>
 			
 			<tr>
-				<td style="text-align: right;background-color: #54FF9F;">日期：</td>
+				<td style="text-align: right;">日期：</td>
 				<td class="l_left">
 					<input type="text" id="inputDate" name="inputDate" 
 						value="<fmt:formatDate value='${allowance.inputDate}' pattern='yyyy-MM-dd'/>" 
 						onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 				</td>
 			</tr><tr>
-				<td style="text-align: right;background-color: #54FF9F;height: 35px;">坯布供应商：</td>
-				<td>
+				<td style="text-align: right;height: 35px;">坯布供应商：</td>
+				<td style="text-align: left;">
 					&nbsp;${allowance.supplierName }
 					<input type="hidden" id="supplierId" name="supplierId" value="${allowance.supplierId }">
 				</td>
 			</tr><tr>
-				<td style="text-align: right;background-color: #54FF9F;height: 35px;">布种：</td>
-				<td class="l_left">
+				<td style="text-align: right;height: 35px;">布种：</td>
+				<td style="text-align: left;">
 					<div class="lanyuan_input">
 						<input id='clothId' name="clothId" type="hidden" value="${allowance.clothId}">
 						&nbsp;${allowance.clothName}
 					</div>
 				</td>
-			</tr><tr>
-				<td style="text-align: right;background-color: #54FF9F;height: 35px;">颜色：</td>
+			</tr><!--tr>
+				<td style="text-align: right;height: 35px;">颜色：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 						<input id='color' name="color" type="hidden" value="${allowance.color}">
 						&nbsp;${allowance.color}
 					</div>
 				</td>
-			</tr><tr>
-				<td style="text-align: right;background-color: #54FF9F;height: 35px;">工厂：</td>
-				<td class="l_left">
+			</tr--><tr>
+				<td style="text-align: right;height: 35px;">工厂：</td>
+				<td style="text-align: left;">
 					<div class="lanyuan_input">
 						<input id='factoryId' name="factoryId" type="hidden" value="${allowance.factoryId}">
 						&nbsp;${allowance.factoryName}
 					</div>
 				</td>
 			</tr><tr>
-				<td style="text-align: right;background-color: #54FF9F;">坯布条数：</td>
+				<td style="text-align: right;">坯布条数：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='allowance' name="allowance" type="text" class="isNum" value="${allowance.changeSum}">
@@ -155,14 +107,14 @@ jQuery.validator.addMethod("isDay", function(value, element) {
 					</div>
 				</td>
 			</tr><tr>
-				<td style="text-align: right;background-color: #54FF9F;">坯布公斤数：</td>
-				<td class="l_left">
+				<td style="text-align: right;">坯布公斤数：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
 					<div class="lanyuan_input">
 						<input id='allowancekg' name="allowancekg" type="text" value="${allowance.allowancekg}">公斤
 					</div>
 				</td>
 			</tr><tr>
-				<td style="text-align: right;background-color: #54FF9F;">备注：</td>
+				<td style="text-align: right;">备注：</td>
 				<td class="l_left">
 					<div class="lanyuan_input">
 					<input id='mark' name="mark" type="text" value="${allowance.mark}">

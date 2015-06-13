@@ -102,9 +102,8 @@
         	create_time=#{createTime},
       	</if><if test="unit != null" >
         	unit=#{unit},
-      	</if><if test="tiaoKg != null" >
-        	tiao_kg=#{tiaoKg},
       	</if>
+        tiao_kg=#{tiaoKg}
 		</set>
 		where id=#{id}
 	</update>

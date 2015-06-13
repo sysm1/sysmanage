@@ -198,13 +198,25 @@ function changeFactory(obj){
 							${inputsummary.myCompanyCode }
 						</div>
 					</td>
-					<td class="l_right">布种颜色：</td>
+					<!--td class="l_right">布种颜色：</td>
 					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							<select id='color' name="color" class="frameborder">
 								<option value="">请选择</option>
 								<c:forEach var="item" items="${colors }">
 								<option value="${item.color }" >${item.color }</option>
+								</c:forEach>
+							</select>
+						</div>
+					</td-->
+					
+					<td class="l_right">工艺：</td>
+					<td style="text-align: left;" colspan="5">
+						<div class="lanyuan_input">
+							<select id='technologyId' name="technologyId" class="frameborder">
+								<option value="">请选择</option>
+								<c:forEach var="item" items="${technologyInfos }">
+								<option value="${item.id }" >${item.name }</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -272,7 +284,7 @@ function changeFactory(obj){
 					<td colspan="5" style="height: 30px;text-align: left;">
 						<input id='balancemark' name="balancemark" type="text" value="" style="width: 553px;height: 17px;border:1px solid ;">
 					</td>
-				</tr><tr>
+				</tr><!--tr>
 					<td class="l_right">工艺：</td>
 					<td style="text-align: left;" colspan="5">
 						<div class="lanyuan_input">
@@ -284,7 +296,7 @@ function changeFactory(obj){
 							</select>
 						</div>
 					</td>
-				</tr><tr >
+				</tr--><tr >
 					<td colspan="6" style="height: 30px;text-align: center;">规格</td>
 				</tr><tr>
 					<td class="l_right" style="height: 30px;">幅宽：</td>

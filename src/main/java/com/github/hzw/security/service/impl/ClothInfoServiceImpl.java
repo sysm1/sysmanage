@@ -69,6 +69,9 @@ public class ClothInfoServiceImpl implements ClothInfoService {
 		if(null==t.getId()){
 			this.clothInfoMapper.add(t);
 		}else{
+			if(t.getUnit()!=0){
+				t.setTiaoKg(null);
+			}
 			this.clothInfoMapper.update(t);
 			clothInfoMapper.deleteColorsByClothId(t.getId()+"");
 		}

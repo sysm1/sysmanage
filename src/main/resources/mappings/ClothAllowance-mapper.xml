@@ -52,7 +52,7 @@
 		<include refid="selectId" />
 		from cloth_allowance
 		<where> 
-		 cloth_id = #{clothId} and factory_id = #{factoryId} and color = #{color}
+		 cloth_id = #{clothId} and factory_id = #{factoryId} 
 		</where>
 		order by id desc
 	</select>

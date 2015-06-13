@@ -36,10 +36,10 @@
 						name : "KG/条",
 						width : "100px"
 					},
-					{
+					/*{
 						colkey: "colors",
 						name  :"颜色"
-					},
+					},*/
 					{
 						colkey : "mark",
 						name : "备注",
@@ -65,8 +65,8 @@
 		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 400,
-				height : 520,
+				width : 403,
+				height : 320,
 				url : rootPath + '/background/cloth/addUI.html',
 				title : "增加布种信息",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -80,8 +80,8 @@
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 400,
-				height : 520,
+				width : 403,
+				height : 320,
 				url : rootPath + '/background/cloth/editUI.html?id='+cbox,
 				title : "修改布种信息",
 				isHidden : false

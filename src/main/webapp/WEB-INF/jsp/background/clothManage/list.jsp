@@ -16,40 +16,43 @@
 					l_column : [ {
 						colkey : "createTime",
 						name : "日期",
-						width : "80px;"
+						width : "80px"
 					}, {
 						colkey : "clothName",
 						name : "布种",
 						width : "80px"
 					},
-					{
+					/**{
 						colkey : "color",
 						name : "布种颜色",
 						width : "70px"
-					},{
+					},*/{
 						colkey : "factoryName",
 						name : "工厂",
 						width: "100px"
 					}, {
 						colkey : "paperNum",
-						name : "账面条数"
+						name : "账面条数",
+						width : "180px"
 					}, {
 						colkey : "paperNumKg",
-						name : "账目公斤数"
+						name : "账目公斤数",
+						width : "180px"
 					}, {
 						colkey : "factNum",
 						name : "实际条数",
-						width : "80px"
+						width : "120px"
 					}, {
 						colkey : "factNumKg",
 						name : "实际公斤数",
-						width : "80px"
+						width : "120px"
 					} , {
 						colkey : "adjustNum",
 						name : "调整条数"
 					}, {
 						colkey : "adjustNumKg",
-						name : "调整公斤数"
+						name : "调整公斤数",
+						width : "100px"
 					}, {
 						colkey : "mark",
 						name : "调整原因",

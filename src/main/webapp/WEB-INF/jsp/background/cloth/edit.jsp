@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 
 /**
@@ -65,6 +66,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			}
 		});
 		
+		$("#unit").change(function(){
+			if(this.value==1){
+				document.getElementById("defaultKg").style.display="none";
+			}else{
+				document.getElementById("defaultKg").style.display="";
+			}
+		});
+		
 		$("#addone").click("click", function() {
 			var newtr=$("#table1 tr:last").clone();
 			newtr.insertAfter($("#table1 tr:last"));
@@ -83,9 +92,8 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 485px;"></div>
 	<form name="form" id="form" action="${ctx}/background/cloth/update.html" method="post">
-		<table style="width: 485px; height: 200px;" id="table1">
+		<table style="width: 390px; height: 200px;" id="table1" class="dataintable">
 			<tbody>
 				<tr>
 					<td class="l_right">名称：</td>
@@ -102,16 +110,21 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr--><tr>
 					<td class="l_right">布种单位：</td>
 					<td class="l_left">
-						<select id="unit" name="unit">
+						<select id="unit" name="unit" onchange="selectUnit(this);">
 							<option value="0" <c:if test="${cloth.unit eq 0 }">selected</c:if>>条</option>
+							<option value="1" <c:if test="${cloth.unit eq 1 }">selected</c:if>>KG</option>
 						</select>
 					</td>
-				</tr><tr>
-					<td>默认公斤数：</td>
-					<td>
-						<input type="text" id="tiaoKg" name="tiaoKg" value="${cloth.tiaoKg }">KG/条
+				</tr>
+				
+				<tr id="defaultKg" <c:if test="${cloth.tiaoKg ==null }">style="display: none;"</c:if>  >
+					<td class="l_right">默认公斤数：</td>
+					<td style="text-align: left;">
+						<input type="text" id="tiaoKg" name="tiaoKg" style="width: 180px;" value="${cloth.tiaoKg }">KG/条
 					</td>
-				</tr><tr>
+				</tr>
+				
+				<tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
@@ -120,7 +133,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</div>
 						</td>
 				</tr>
-				<tr height="30px;" style="background: #EEE9E9;">
+				<!--tr height="30px;" style="background: #EEE9E9;">
 					<td colspan="2" align="center" style="color: FFF68F;background-color:#EEE9E9;font-weight: bold; ">
 					布&nbsp;种&nbsp;颜&nbsp;色
 					</td>
@@ -131,13 +144,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input id='color' name="color" class="checkdesc" type="text" value="${color.color }">
 					</td>
 				</tr>
-				</c:forEach>
+				</c:forEach>-->
 			</tbody>
 		</table>
 		<div class="l_btn_centent">
-			<!-- saveWin_form   from是表单Ｉd-->
-			<a class="btn btn-primary" id="addone" ><span>新增一行</span> </a>
-			&nbsp;&nbsp;&nbsp;
+			<!-- saveWin_form   from是表单Ｉd>
+			<a class="btn btn-primary" id="addone" ><span>新增一行</span> </a>-->
+			&nbsp;&nbsp;&nbsp;  
 			<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
 			
 		</div>

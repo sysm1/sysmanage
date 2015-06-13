@@ -40,11 +40,11 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 						name : "坯布供应商",
 						width : "130px"
 					},
-					{
+					/*{
 						colkey : "color",
 						name : "坯布颜色",
 						width : "130px"
-					}, {
+					},*/ {
 						colkey : "allowance",
 						name : "坯布条数",
 						width : "75px"
@@ -83,7 +83,7 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 400,
+				width : 450,
 				height : 400,
 				url : rootPath + '/background/allowance/addUI.html',
 				title : "增加坯布采购单",
@@ -98,7 +98,7 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 400,
+				width : 450,
 				height : 400,
 				url : rootPath + '/background/allowance/editUI.html?id='+cbox,
 				title : "坯布采购单修改",
@@ -159,10 +159,6 @@ jQuery.validator.addMethod("isNum", function(value, element) {
                  // alert($("#factoryId").val());
             }
        });
-	
-		
-	
-		
 	});
 	function loadGird(){
 		grid.loadData();

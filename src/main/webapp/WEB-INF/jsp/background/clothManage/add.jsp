@@ -145,14 +145,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</select>
 					</td>
 				</tr>
-				<tr>
+				<!--tr>
 					<td class="l_right">布种颜色：</td>
 					<td class="l_left">
 						<select id="color" name="color">
 							<option value="">请选择布种</option>
 						</select>
 					</td>
-				</tr>
+				</tr-->
 				<tr>
 					<td class="l_right">工厂：</td>
 					<td class="l_left">
