@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.hzw.security.mapper.CityMapper">
+
+	<!--mybatis ehcache缓存配置 -->
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 <cache type="org.mybatis.caches.ehcache.LoggingEhcache" 
+		/> -->
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		name,
+		status
+	</sql>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="queryAll" resultType="City" parameterType="City">
+		select
+		<include refid="selectId" />
+		from city where status=1
+	</select>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="query" resultType="City" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from city
+		<where>
+			<if test="t.name != null and t.name != ''">
+				name like '%${t.name}%'
+			</if>
+			<if test="t.status != null and t.status != ''">
+				status = #{t.status}
+			</if>
+		</where>
+	</select>
+
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="City">
+		insert into city (
+		name,
+		status )
+		values (#{name},
+		#{status})
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from city where
+		id=#{id}
+	</delete>
+
+	<select id="getById" parameterType="String" resultType="City">
+		select
+		<include refid="selectId" />
+		from city where id=#{id}
+	</select>
+
+	<update id="update" parameterType="City">
+		update city
+		<set>
+			<if test="name != null and name != ''">
+				name=#{name},
+			</if>
+			<if test="status != null and status != ''">
+				status=#{status},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>
