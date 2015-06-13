@@ -120,6 +120,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		String[] kongchas=request.getParameterValues(id+"kongcha");
 		String[] jiaodais=request.getParameterValues(id+"jiaodai");
 		String[] clothNames=request.getParameterValues(id+"clothName");
+		String[] factoryNames=request.getParameterValues(id+"factoryName");
 		String[] myCompanyCodes=request.getParameterValues(id+"myCompanyCode");
 		String[] myCompanyColors=request.getParameterValues(id+"myCompanyColor");
 		String[] technologyNames=request.getParameterValues(id+"technologyName");
@@ -165,6 +166,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 					bean.setJiaodai(Double.parseDouble(jiaodais[i]));
 				}
 				bean.setClothName(clothNames[i]);
+				bean.setFactoryName(factoryNames[i]);
 				bean.setMyCompanyCode(myCompanyCodes[i]);
 				bean.setMyCompanyColor(myCompanyColors[i]);
 				bean.setTechnologyName(technologyNames[i]);

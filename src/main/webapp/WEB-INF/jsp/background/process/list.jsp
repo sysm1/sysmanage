@@ -251,6 +251,9 @@ th.specalt {
 		$('#'+itemId+'myCompanyColor1').before('<input type="text" name="'+itemId+'myCompanyColor" value="" style="width: 90px"><br>');
 		$('#'+itemId+'technologyName1').before('<input type="text" name="'+itemId+'technologyName" value="" style="width: 90px"><br>');
 		$('#'+itemId+'mark1').before('<input type="text" name="'+itemId+'mark" value="" style="width: 60px"><br>');
+		$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="'+itemId+'factoryName" value="" style="width: 90px"><br>');
+		
+		
 		//document.getElementById(itemId+"returnCode1").innerHTML=document.getElementById(itemId+"returnCode1").innerHTML+'<input type="text"  name="'+itemId+'returnCode" value="" style="width: 70px"><br>';
 		index++;
 		newId++;
@@ -324,13 +327,28 @@ th.specalt {
 			width : 350,
 			height : 410,
 			url : rootPath + '/background/cloth/addlist.html',
-			title : "增加角色",
+			title : "添加布种",
 			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 		});
 	}
 	function addCloth(id){
 		//alert(id);
 		cobject.value=id;
+	}
+	
+	function selectFactory(obj){
+		cobject=obj;
+		dialog = parent.$.ligerDialog.open({
+			width : 400,
+			height : 500,
+			url : rootPath + '/background/factory/addlist.html',
+			title : "添加工厂",
+			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+		});
+	}
+	function addFactory(name,id){
+		//alert(cobject.id);
+		cobject.value=name;
 	}
 </script>
 </head>
@@ -380,7 +398,7 @@ th.specalt {
 					<th class="specalt" rowspan="2">
 						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
 					</th>
-					<th rowspan="2">序号</th>
+					<!-- th rowspan="2">序号</th-->
 					<!--th rowspan="2">&nbsp;状态&nbsp;</th-->
 					<th rowspan="2" style="width: 60px;">下单日期</th>
 					<th style="min-width: 60px;" rowspan="2">工&nbsp;厂</th>
@@ -399,6 +417,7 @@ th.specalt {
 					<th>条数</th>
 					<th>数量(KG)</th>
 					
+					<th>收货单位</th>
 					<th>布种</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
@@ -422,7 +441,7 @@ th.specalt {
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
-					<td id="2_${item.id }">${item.id }</td>
+					<!--td id="2_${item.id }">${item.id }</td-->
 					<!--td id="1_${item.id }">${item.returnStatusName }</td-->
 					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='yyyy/MM/dd'/>
@@ -442,6 +461,18 @@ th.specalt {
 					<td id="14_${item.id }">${item.num }</td>
 					<td id="15_${item.id }">${item.numKg }</td>
 					
+					<td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }factoryName" value="${item.factoryName }" 
+								ondblclick="selectFactory(this);" style="width: 90px;"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }factoryName" value="${item1.factoryName }" ondblclick="selectFactory(this);" style="width: 90px;">
+								<input type="hidden" name="${item.id }factoryId" value="${item1.factoryId }" style="width: 90px;"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}factoryName1" ></span>
+					</td>
 					<td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }clothName" value="${item.clothName }" 

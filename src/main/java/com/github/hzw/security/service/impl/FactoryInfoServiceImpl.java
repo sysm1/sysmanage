@@ -32,18 +32,22 @@ public class FactoryInfoServiceImpl implements FactoryInfoService {
 		pageView.setRecords(list);
 		return pageView;
 	}
-
 	
 	public List<FactoryInfo> queryPinyin(String name){
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(StringUtils.isNotEmpty(name)){
 			name = name.toUpperCase();
 		}
-		// System.out.println(cn);
 		map.put("t", name);
 		return factoryInfoMapper.queryPinyin(map);
 	}
 	
+	@Override
+	public List<FactoryInfo> queryPinyinByBean(FactoryInfo info){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("t", info);
+		return factoryInfoMapper.queryPinyinByBean(map);
+	}
 	
 	@Override
 	public List<FactoryInfo> queryAll(FactoryInfo t) {

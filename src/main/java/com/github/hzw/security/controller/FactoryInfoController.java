@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.Account;
+import com.github.hzw.security.entity.City;
+import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.Resources;
+import com.github.hzw.security.service.CityService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
@@ -28,9 +33,21 @@ public class FactoryInfoController extends BaseController {
 	@Inject
 	private FactoryInfoService factoryInfoService;
 	
+	@Inject
+	private CityService cityService;
+	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, String pageNow,HttpServletRequest request) {
+		List<City> citys=cityService.getCitys(request);
+		request.setAttribute("citys", citys);
 		return Common.BACKGROUND_PATH+"/factory/list";
+	}
+	
+	@RequestMapping("addlist")
+	public String addlist(Model model, Resources menu, FactoryInfo info,String pageNow,String pagesize) {
+		pageView = factoryInfoService.query(getPageView(pageNow,pagesize), info);
+		model.addAttribute("pageView",pageView);
+		return Common.BACKGROUND_PATH+"/factory/addlist";
 	}
 	
 	/**
@@ -69,7 +86,6 @@ public class FactoryInfoController extends BaseController {
 		return map;
 	}
 
-	
 	/**
 	 * 跑到新增界面
 	 * 
@@ -77,7 +93,9 @@ public class FactoryInfoController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("addUI")
-	public String addUI() {
+	public String addUI(HttpServletRequest request) {
+		List<City> citys=cityService.getCitys(request);
+		request.setAttribute("citys", citys);
 		return Common.BACKGROUND_PATH+"/factory/add";
 	}
 	
@@ -104,7 +122,14 @@ public class FactoryInfoController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("editUI")
-	public String editUI(Model model,String id) {
+	public String editUI(HttpServletRequest request,Model model,String id) {
+		Account user=(Account) request.getSession().getAttribute("userSession");
+		City t=new City();
+		t.setId(user.getCityId());
+		t.setStatus(1);
+		List<City> citys=cityService.queryAll(t);
+		request.setAttribute("citys", citys);
+		
 		FactoryInfo info = factoryInfoService.getById(id);
 		model.addAttribute("factory", info);
 		return Common.BACKGROUND_PATH+"/factory/edit";

@@ -25,6 +25,10 @@ public class Account implements java.io.Serializable {
 	private String description;//说明
 
 	private String state;//账号状态  0 表示停用  1表示启用
+	
+	private int cityId;
+	
+	private String cityName;
 
 	private Date createTime; //创建时间
 	@ExcelDataMapper(title="id",order=1)
@@ -92,6 +96,22 @@ public class Account implements java.io.Serializable {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 
 }

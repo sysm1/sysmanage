@@ -8,5 +8,8 @@ import com.github.hzw.security.entity.FactoryInfo;
 public interface FactoryInfoService extends BaseService<FactoryInfo> {
 
 	public FactoryInfo isExist(String name);
+	
 	public List<FactoryInfo> queryPinyin(String name);
+	
+	public List<FactoryInfo> queryPinyinByBean(FactoryInfo info);
 }

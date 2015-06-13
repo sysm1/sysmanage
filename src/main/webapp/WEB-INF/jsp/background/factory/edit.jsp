@@ -33,16 +33,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					}
 				});
 			},
-			rules : {
-				name : {
-					required : true,
-				}
-			},
-			messages : {
-				name : {
-					required : "请输入业务员名称"
-				}
-			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
 				$(".l_err").css('display','block');
 				//element.css('border','3px solid #FFCCCC');
@@ -75,8 +65,23 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<input id='id' name="id" type="hidden" value="${factory.id}">
 					<input id='name' name="name" class="isNum" type="text" value="${factory.name}">
 					</td>
-				</tr>
-				<tr>
+				</tr><tr>
+					<td>分点：</td>
+					<td>
+						<select id="cityId" name="cityId">
+							<option value="">请选择</option>
+							<c:forEach items="${citys }" var="city">
+							<option value="${city.id }" <c:if test="${city.id==factory.cityId }">selected="selected</c:if> ">${city.name }</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr><tr>
+					<td>状态</td>
+					<td>
+						<input type="radio" id="status1" name="status" value="1" <c:if test="${factory.status eq 1 }">checked="checked" </c:if> >正常
+						<input type="radio" id="status2" name="status" value="2" <c:if test="${factory.status eq 2 }">checked="checked" </c:if>>停用
+					</td>
+				</tr><tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 					<textarea rows="10" cols="8" id='mark' name="mark" >${factory.mark}</textarea>

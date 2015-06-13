@@ -21,6 +21,14 @@
 						colkey : "name",
 						name : "名称",
 						width:"300px"
+					}, {
+						colkey : "cityName",
+						name : "分点",
+						width:"300px"
+					}, {
+						colkey : "statusName",
+						name : "状态",
+						width:"300px"
 					}
 					/**, {
 						colkey : "mark",
@@ -48,7 +56,7 @@
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
 				width : 300,
-				height : 310,
+				height : 410,
 				url : rootPath + '/background/factory/addUI.html',
 				title : "增加工厂信息",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -63,7 +71,7 @@
 			}
 			dialog = parent.$.ligerDialog.open({
 				width : 300,
-				height : 310,
+				height : 410,
 				url : rootPath + '/background/factory/editUI.html?id='+cbox,
 				title : "修改工厂信息",
 				isHidden : false
@@ -123,35 +131,35 @@
 		<div class="search">
 			<form name="fenye" id="fenye">
 				名称：<input type="text" name="name" value="${param.name}"
-					style="height: 20px" /> <a class="btn btn-primary"
-					href="javascript:void(0)" id="seach"> 查询
+					style="height: 20px" />
+				分点：
+				<select id="cityId" name="cityId">
+					<option value="">请选择</option>
+					<c:forEach items="${citys }" var="city">
+					<option value="${city.id }">${city.name }</option>
+					</c:forEach>
+				</select>
+				状态：
+				<input type="radio" id="status0" name="status" value=""  >全部
+				<input type="radio" id="status1" name="status" value="1" <c:if test="${factory.status eq 1 }">checked="checked" </c:if> >正常
+				<input type="radio" id="status2" name="status" value="2" <c:if test="${factory.status eq 2 }">checked="checked" </c:if>>停用
+				<a class="btn btn-primary" href="javascript:void(0)" id="seach"> <span>查询</span>
 				</a>
 			</form>
 		</div>
 		<div class="topBtn">
-			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>add</span>
+			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <span>添加</span>
 			</a> 
 			
-			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
-				class="icon-zoom-in icon-white" id="View"></i> View
-			</a> --> 
-			
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> 修改
+			<a class="btn btn-info" href="javascript:void(0)" id="editView">  <span>修改</span>
 			</a> 
 			
-			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> 删除
+			<a class="btn btn-primary" href="javascript:void(0)" id="view">  <span>查看</span>
+			</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <span>删除</span>
 			</a>
 			
-			<a class="btn btn-primary" href="javascript:void(0)" id="view"> <i
-				class="icon-zoom-add icon-white"></i> 查看
-			</a>
-			
-			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
-				导出excel
-			</a>
 		</div>
 		<div id="paging" class="pagclass"></div>
 	</div>

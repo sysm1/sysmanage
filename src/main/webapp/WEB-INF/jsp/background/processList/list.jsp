@@ -316,7 +316,7 @@ th.specalt {
 </script>
 </head>
 <body>
-	<div class="divBody" style="width:2000px;">
+	<div class="divBody" style="width:2200px;">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
@@ -406,7 +406,7 @@ th.specalt {
 					<th class="specalt" rowspan="2">
 						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
 					</th>
-					<th rowspan="2">序号</th>
+					<!--th rowspan="2">序号</th-->
 					<th rowspan="2">&nbsp;状态&nbsp;</th>
 					<th rowspan="2" style="width: 60px;">下单日期</th>
 					<th style="min-width: 60px;" rowspan="2">工&nbsp;厂</th>
@@ -425,6 +425,7 @@ th.specalt {
 					<th>条数</th>
 					<th>数量(KG)</th>
 					
+					<th>收货单位</th>
 					<th>布种</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
@@ -448,7 +449,7 @@ th.specalt {
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
-					<td id="2_${item.id }">${item.id }</td>
+					<!--td id="2_${item.id }">${item.id }</td-->
 					<td id="1_${item.id }">${item.status }</td>
 					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='yyyy/MM/dd'/>
@@ -468,6 +469,11 @@ th.specalt {
 					<td id="14_${item.id }">${item.num }</td>
 					<td id="15_${item.id }">${item.numKg }</td>
 					
+					<td>
+						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+							${item1.factoryName }<br>
+						</c:forEach>
+					</td>
 					<td id="26_${item.id }" style="width: 90px;" >
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">

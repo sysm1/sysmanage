@@ -75,9 +75,23 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td class="l_left">
 					<input id='name' name="name" type="text" value="">
 					</td>
-				</tr>
-
-				<tr>
+				</tr><tr>
+					<td>分点：</td>
+					<td>
+						<select id="cityId" name="cityId">
+							<option value="">请选择</option>
+							<c:forEach items="${citys }" var="city">
+							<option value="${city.id }">${city.name }</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr><tr>
+					<td>状态</td>
+					<td>
+						<input type="radio" id="status1" name="status" value="1">正常
+						<input type="radio" id="status2" name="status" value="2">停用
+					</td>
+				</tr><tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 						<textarea rows="10" cols="8" id='mark' name="mark" ></textarea>

@@ -48,6 +48,10 @@ public class ReturnGoodsProcess {
     
     /***包装方式 胶袋**/
     private Double jiaodai;
+    
+    private String factoryName;
+    
+    private int factoryId;
 
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -200,5 +204,21 @@ public class ReturnGoodsProcess {
 
 	public void setTechnologyName(String technologyName) {
 		this.technologyName = technologyName;
+	}
+
+	public String getFactoryName() {
+		return factoryName;
+	}
+
+	public void setFactoryName(String factoryName) {
+		this.factoryName = factoryName;
+	}
+
+	public int getFactoryId() {
+		return factoryId;
+	}
+
+	public void setFactoryId(int factoryId) {
+		this.factoryId = factoryId;
 	}
 }
