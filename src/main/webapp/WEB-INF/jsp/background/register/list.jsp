@@ -178,7 +178,16 @@ ul { list-style:none;}
 			}
 		});
 	}
-	
+	/**单选***/
+	function checkId(obj){
+		var flag=obj.checked;
+		 $(":checkbox").attr("checked", false);
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
+	}
 	/**
 	 * 获取选中的值
 	 */
@@ -298,7 +307,7 @@ ul { list-style:none;}
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 					<tr style="background-color:#1FFF" id="${status.index }" >
 						<td style="width:50px;">
-					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll('${status.index +1}',this);">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
 					 	</td>
 						<!--td >${item.id }</td-->
 						<td ><fmt:formatDate value="${item.unsubdate }" pattern="yyyy-MM-dd"/></td>
@@ -306,7 +315,7 @@ ul { list-style:none;}
 						<td >${item.technologyName }</td>
 						<td >${item.myCompanyCode }</td>
 						<td >${item.myCompanyColor }</td>
-						<td >${item.num }</td>
+						<td >${item.ysnum }</td>
 						<td  title="${item.qualityProblem }">
 							${fn:substring(item.qualityProblem,0,10) }
 							<c:if test="${fn:length(item.qualityProblem)>10 }">...</c:if>

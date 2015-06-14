@@ -51,23 +51,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					}
 				});
 			},
-			rules : {
-				clothId : {
-					required : true
-				},
-				factoryId : {
-					required : true
-				}
-			},
-			messages : {
-				
-				clothId : {
-					required : "布种不能为空",
-				},
-				factoryId : {
-					required : "工厂不能为空",
-				}
-			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
 				$(".l_err").css('display','block');
 				//element.css('border','3px solid #FFCCCC');
@@ -116,14 +99,11 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			// alert("dd");
 			ajaxFileUpload();
         });
-		
-
 	});
 	
 	function saveWin() {
 		$("#form").submit();
 	}
-	
 	
 	function ajaxFileUpload() {
 		var myCompanyCode=$('#myCompanyCode').val();

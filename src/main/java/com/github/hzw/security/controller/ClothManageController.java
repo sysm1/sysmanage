@@ -41,7 +41,10 @@ public class ClothManageController extends BaseController{
 	private FactoryInfoService factoryInfoService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, ClothManage clothManage,String pageNow,String pagesize) {
+		pageView = clothManageService.query(getPageView(pageNow,pagesize), clothManage);
+		model.addAttribute("clothManage", clothManage);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/clothManage/list";
 	}
 	

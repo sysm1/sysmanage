@@ -138,11 +138,12 @@
 					</td>
 				</tr><tr>
 					<td style="text-align: right;height: 30px;">数量：</td>
-					<td colspan="3" style="text-align: left;">
+					<td style="text-align: left;">
 						${unsub.num }条
-					</td>
+					</td><td>工艺：</td>
+					<td style="text-align: left;">${unsub.technologyName }</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #E0EEE0;">客户反映质量问题</td>
+					<td colspan="4" style="background-color: #E0EEE0;text-align: center;">客户反映质量问题</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: left;">
 						${unsub.qualityProblem }

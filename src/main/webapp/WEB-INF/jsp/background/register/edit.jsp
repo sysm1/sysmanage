@@ -138,7 +138,7 @@
 				</tr><tr>
 					<td style="text-align: right;height: 30px;">数量：</td>
 					<td colspan="3" style="text-align: left;">
-						${unsub.num }条
+						${unsub.ysnum }条
 					</td>
 				</tr><tr style="height: 30px;">
 					<td colspan="4" style="background-color: #E0EEE0;text-align: center;">客户反映质量问题</td>

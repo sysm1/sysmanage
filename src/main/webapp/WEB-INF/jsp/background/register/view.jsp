@@ -137,11 +137,12 @@
 					</td>
 				</tr><tr>
 					<td style="text-align: right;height: 30px;">数量：</td>
-					<td colspan="3" style="text-align: left;">
-						${unsub.num }条
-					</td>
+					<td style="text-align: left;">
+						${unsub.ysnum }条
+					</td><td>工艺：</td>
+					<td style="text-align: left;">${unsub.technologyName }</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #E0EEE0;">客户反映质量问题</td>
+					<td colspan="4" style="background-color: #E0EEE0;text-align: center;">客户反映质量问题</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: left;">
 						${unsub.qualityProblem }
@@ -165,16 +166,16 @@
 						<fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #D1EEEE;">我司验收报告</td>
+					<td colspan="4" style="background-color: #D1EEEE;text-align: center;">我司验收报告</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: left;">
 						<c:if test="${unsub.myCompanyReport == null ||unsub.myCompanyReport == '' }">&nbsp;<br></c:if>
 						<c:if test="${unsub.myCompanyReport != null }">${unsub.myCompanyReport }</c:if>
 					</td>
 				</tr><tr style="height: 30px;">
-					<td colspan="4" style="background-color: #DEDEDE;">工厂交涉情况</td>
+					<td colspan="4" style="background-color: #DEDEDE;text-align: center;">工厂交涉情况</td>
 				</tr><tr>
-					<td colspan="4">
+					<td colspan="4" style="text-align: left;">
 						${unsub.negotiate }
 					</td>
 				</tr>

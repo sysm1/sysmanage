@@ -158,8 +158,13 @@
 	}
 	/**单选***/
 	function checkId(obj){
+		var flag=obj.checked;
 		 $(":checkbox").attr("checked", false);
-		 obj.checked="true";
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
 	}
 	/**
 	 * 获取选中的值

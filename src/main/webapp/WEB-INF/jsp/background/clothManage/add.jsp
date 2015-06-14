@@ -115,7 +115,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			    data: {clothId:clothId,color:color,factoryId:factoryId}, //要发送的数据
 			    success: function(data){
 			    	$('#itemNum')[0].innerHTML=data[0];
-			    	$("#paperNum").attr("value",data[0]);
+			    	if(null==data[0]){
+			    		$("#paperNum").attr("value",0);
+			    	}else{
+			    		$("#paperNum").attr("value",data[0]);
+			    	}
 			    	$('#kgNum')[0].innerHTML=data[1];
 			    	$("#paperNumKg").attr("value",data[1]);
 				}

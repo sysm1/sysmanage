@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
-
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
@@ -133,8 +133,13 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 	}
 	/**单选***/
 	function checkId(obj){
+		var flag=obj.checked;
 		 $(":checkbox").attr("checked", false);
-		 obj.checked="true";
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
 	}
 	/**
 	 * 获取选中的值

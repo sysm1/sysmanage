@@ -11,61 +11,11 @@
 	var dialog;
 	var grid;
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid({
-					id : 'paging',
-					l_column : [ {
-						colkey : "createTime",
-						name : "日期",
-						width : "80px"
-					}, {
-						colkey : "clothName",
-						name : "布种",
-						width : "80px"
-					},
-					/**{
-						colkey : "color",
-						name : "布种颜色",
-						width : "70px"
-					},*/{
-						colkey : "factoryName",
-						name : "工厂",
-						width: "100px"
-					}, {
-						colkey : "paperNum",
-						name : "账面条数",
-						width : "180px"
-					}, {
-						colkey : "paperNumKg",
-						name : "账目公斤数",
-						width : "180px"
-					}, {
-						colkey : "factNum",
-						name : "实际条数",
-						width : "120px"
-					}, {
-						colkey : "factNumKg",
-						name : "实际公斤数",
-						width : "120px"
-					} , {
-						colkey : "adjustNum",
-						name : "调整条数"
-					}, {
-						colkey : "adjustNumKg",
-						name : "调整公斤数",
-						width : "100px"
-					}, {
-						colkey : "mark",
-						name : "调整原因",
-						width : "100px"
-					}],
-					jsonUrl : '${pageContext.request.contextPath}/background/clothManage/query.html',
-					checkbox : true
-				});
 		$("#seach").click("click", function() {//绑定查询按扭
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			}); 
+			var f = $('#fenye');
+			//f.attr('target','_blank');
+			f.attr('action','${pageContext.request.contextPath}/background/clothManage/list.html');
+			f.submit(); 
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
@@ -83,7 +33,7 @@
 			});
 		});
 		$("#editView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
@@ -110,8 +60,24 @@
 				isHidden : false
 			});
 		});
+		/***过滤查询**/
+		$("#cloth_text").ligerComboBox({
+	        url: '/background/pinyin/cloth.html',
+	        valueField: 'id',
+	        textField: 'clothName', 
+	        selectBoxWidth: 215,
+	        selectBoxHeight: 215,
+	        autocomplete: true,
+	        width: 215,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#clothId").val(e);
+	            //alert($("#clothId").val());
+	            var clothId=$("#clothId").val();
+	        }
+	    });
 		$("#deleteView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox=="") {
 				parent.$.ligerDialog.alert("请选择删除项！！");
 				return;
@@ -139,18 +105,55 @@
 		});
 	});
 	function loadGird(){
-		grid.loadData();
+		location.reload();
+	}
+	/**单选***/
+	function checkId(obj){
+		var flag=obj.checked;
+		 $(":checkbox").attr("checked", false);
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
+	}
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+		});
+		return arr;
+	};
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
 	}
 </script>
 </head>
 <body>
 	<div class="divBody">
-		<div class="search">
+		<div class="search" >
 			<form name="fenye" id="fenye">
-				名称：<input type="text" name="accountName" value="${param.name}"
-					style="height: 20px" /> <a class="btn btn-primary"
-					href="javascript:void(0)" id="seach"> 查询
-				</a>
+				<table  class="dataintable">
+					<tr>
+						<td>
+							布种名称：
+						</td><td>
+							<input type="hidden" id="clothId" name="clothId" value="${ clothManage.clothId }">
+						  	<input type="text" id="cloth_text" name="clothName" style="width: 200px;" value="${clothManage.clothName }" 
+						  		onchange="changeTextValue('clothId',this);"/> 
+						</td><td style="width: 100px;">
+							<a class="btn btn-primary"
+								href="javascript:void(0)" id="seach"> 查询
+							</a>
+						</td>
+					</tr>
+				</table>
+				
 			</form>
 		</div>
 		<div class="topBtn">
@@ -164,7 +167,63 @@
 				class="icon-trash icon-white"></i> 删除
 			</a>
 		</div>
-		<div id="paging" class="pagclass"></div>
+		<div id="paging" class="pagclass">
+		<table class="dataintable" style="width: 100%;">
+				<tr>
+					<th class="specalt" style="width:35px;">选择</th>
+					<th>日期</th>
+					<th style="width:80px;">工厂</th>
+					<th style="width:70px;">布种</th>
+					<th style="widht:100px;">账面条数</th>
+					<th>账面公斤数</th>
+					<th>实际条数</th>
+					<th>实际公斤数</th>
+					<th>调整条数</th>
+					<th>调整公斤数</th>
+					<th>调整原因</th>
+					<!--th>工厂颜色</th>
+					<th style="width:80px;">到货日期</th>
+					<th>我司验货报告</th>
+					<th>工厂交涉情况</th-->
+				</tr>
+				
+				<c:forEach var="item" items="${pageView.records }" varStatus="status">
+					<tr  id="${status.index }" >
+						<td style="width:50px;text-align: center;">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
+					 	</td><td style="width: 70px;">
+					 		<fmt:formatDate value="${item.createTime }" pattern="yyyy-MM-dd"/>
+					 	</td><td>
+					 		${item.factoryName }
+					 	</td><td>
+					 		${item.clothName }
+					 	</td><td>
+					 		${item.paperNum }
+					 	</td><td>
+					 		${item.paperNumKg }
+					 	</td><td>
+					 		${item.factNum }
+					 	</td><td>
+					 		${item.factNumKg }
+					 	</td><td>
+					 		${item.adjustNum }
+					 	</td><td>
+					 		${item.adjustNumKg }
+					 	</td><td style="width: 200px;" title="${item.mark }">
+					 		${fn:substring(item.mark,0,20) }
+							<c:if test="${fn:length(item.mark)>20 }">...</c:if>
+					 	</td>
+					<tr>
+				</c:forEach>
+				
+				<!-- 分页 -->
+				<tr style="height: 30px">
+					<td colspan="11" style="text-align: center;font-size: 14px;">
+						<%@ include file="../page.jsp"%>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

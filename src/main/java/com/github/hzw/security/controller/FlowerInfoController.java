@@ -91,11 +91,11 @@ public class FlowerInfoController extends BaseController{
 
 			String[] myCompanyColors = request.getParameterValues("myCompanyColors"); // 第1工厂编号对应的着色
 			String[] factoryColors = request.getParameterValues("factoryColors");
-			String[] marks = request.getParameterValues("mark");
+			String[] marks = request.getParameterValues("marks");
 			
 			String[] myCompanyColors2 = request.getParameterValues("myCompanyColors2"); // 第2工厂编号对应的着色
 			String[] factoryColors2 = request.getParameterValues("factoryColors2");
-			String[] mark2 = request.getParameterValues("mark2");
+			String[] mark2 = request.getParameterValues("marks2");
 			
 			List<FlowerAdditional> fas = new ArrayList<FlowerAdditional>();
 			FlowerAdditional fa = null;
