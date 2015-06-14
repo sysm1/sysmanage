@@ -52,13 +52,15 @@
 			//alert(unit);
 			if(unit == '' || unit == null || unit == undefined) return;
 			if(unit == '0') {
-				$("#clothUnit").html("条");
-				//$("#clothUnit2").html("条");
+				//$("#clothUnit").html("条");
+				$("#clothUnit2").html("条");
 				$("#unit").attr("value",0);
+				$("#textAllowance").show();
 			} else if(unit == '1') {
 				//$("#clothUnit").html("公斤");
 				$("#clothUnit2").html("公斤");
 				$("#unit").attr("value",1);
+				$("#textAllowance").hide();
 			} else if(unit == '2') {
 				$("#clothUnit").html("米");
 				$("#clothUnit2").html("米");
@@ -108,7 +110,7 @@
 	<div class="l_err" style="width: 400px;"></div>
 	<form name="form" id="form" action="${ctx}/background/allowance/add.html" method="post">
 		<input type="hidden" id="unit" name="unit" value="">
-		<table style="width: 400px; height: 300px;" border="1" class="dataintable">
+		<table style="width: 400px; height: 100%;" border="1" class="dataintable">
 			<tbody>
 			
 			<tr>
@@ -121,12 +123,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="text-align: right;">坯布供应商：</td>
+				<td style="text-align: right;">出胚单位：</td>
 				<td style="text-align: left;">
 					<select id="supplierId" name="supplierId">
 						<option value="">请选择供应商</option>
-						<c:forEach items="${suppliers }" var="supplier">
-						<option value="${supplier.id }">${supplier.name }</option>
+						<c:forEach items = "${ factorys }" var="factory">
+							<option value="${factory.id }">${factory.name}</option>
 						</c:forEach>
 					</select>
 				</td>
@@ -155,8 +157,38 @@
 					</div>
 				</td>
 			</tr-->
-			<tr>
-				<td style="text-align: right;">工厂：</td>
+			<tr id="textAllowance">
+				<td style="text-align: right;">条数：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
+					<div class="lanyuan_input">
+						<input id='allowance' name="allowance" type="text" class="isNum" value="" >
+						<span class="lanyuan_input" id="clothUnit"></span>
+					</div>
+				</td>
+			</tr><tr>
+				<td style="text-align: right;">重量(KG)：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
+					<div class="lanyuan_input">
+						<input id='allowancekg' name="allowancekg" type="text" class="isNum" value="" >
+						<span class="lanyuan_input" id="clothUnit"></span>
+					</div>
+				</td>
+			</tr><tr>
+				<td style="text-align: right;">单价(元/KG)：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
+					<div class="lanyuan_input">
+						<input id='price' name="price" type="text" value="" >
+					</div>
+				</td>
+			</tr><tr>
+				<td style="text-align: right;">金额(元)：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
+					<div class="lanyuan_input">
+						<input id='money' name="money" type="text" value="" >
+					</div>
+				</td>
+			</tr><tr>
+				<td style="text-align: right;">收胚单位：</td>
 				<td style="text-align: left;">
 					<div class="lanyuan_input">
 						
@@ -167,23 +199,6 @@
 							</c:forEach>
 						</select>
 						
-					</div>
-				</td>
-			</tr>
-			<tr >
-				<td style="text-align: right;">坯布条数：</td>
-				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
-					<div class="lanyuan_input">
-						<input id='allowance' name="allowance" type="text" class="isNum" value="" >
-						<span class="lanyuan_input" id="clothUnit">条</span>
-					</div>
-				</td>
-			</tr><tr>
-				<td style="text-align: right;">坯布公斤数：</td>
-				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
-					<div class="lanyuan_input">
-						<input id='allowancekg' name="allowancekg" type="text" class="isNum" value="" >
-						<span class="lanyuan_input" id="clothUnit">公斤</span>
 					</div>
 				</td>
 			</tr><tr>

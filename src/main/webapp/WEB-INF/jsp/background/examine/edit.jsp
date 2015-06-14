@@ -104,6 +104,21 @@
 			}
 		});
 	}
+	var index=3;
+	function addOne(){
+		//$("#table1 tr:last").clone().insertAfter($("#table1 tr:last"));
+		var tr=$("#table1 tr:last").clone();
+		//alert(tr);
+		var radio='<select id="ysresult" name="ysresult">'+
+			'<option value="">请选择</option>'+
+			'<option value="1">可再销售</option>'+
+			'<option value="2">不可再销售</option>'+
+			'</select>';
+		tr.insertAfter($("#table1 tr:last"));
+		tr.children('td').eq(1).html(radio);
+		
+		//alert(tr.children('td').eq(1).html());
+	}
 </script>
 </head>
 <body>
@@ -111,7 +126,7 @@
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/examine/update.html" method="post">
 		<input type="hidden" id="id" name="id" value="${unsub.id }">
-		<table style="width: 98%; height: 100%;margin-left: 4px;"padding-left: 4px; border="1" class="dataintable">
+		<table style="width: 98%; height: 100%;margin-left: 4px;"padding-left: 4px; border="1" id="table1" class="dataintable">
 			<tbody>
 				<tr>
 					<td style="text-align: right;height: 30px;width: 15%;">退货日期：</td>
@@ -146,7 +161,7 @@
 					<td colspan="4" style="text-align: left;min-height: 40px;">
 						${unsub.qualityProblem }
 					</td>
-				</tr><tr style="height: 30px;">
+				</tr><!--tr style="height: 30px;">
 					<td>工厂</td>
 					<td>
 						<select id="factoryId" name="factoryId" onchange="selectFactory(this);">
@@ -182,24 +197,31 @@
 					<span id="returnDatespan"><fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/></span>
 					<input type="hidden" id="returnDate" name="returnDate" value='<fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/>'>
 					</td>
-				</tr><tr style="height: 30px;">
-					<td colspan="4" style="text-align: center;">我司验收报告</td>
-				</tr><tr>
-					<td colspan="4">
-						<textarea rows="4" style="width: 98%" id="myCompanyReport" name="myCompanyReport">${unsub.myCompanyReport }</textarea>
-					</td>
-				</tr>
+				</tr-->
 				<tr>
-					<td colspan="4">
-						<div class="l_btn_centent">
-								<!-- saveWin_form   from是表单Ｉd-->
-								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
-							</div>
-						</td>
+					<td>验货数量：</td>
+					<td>验货结果：</td>
+					<td colspan="2">我司验收报告：</td>
+				</tr><tr style="height: 30px;">
+					<td>
+						<input type="text" id="ysnum" name="ysnum" value="${unsub.ysnum }" style="width: 100px;"></input>
+					</td><td style="text-align: left;width: 200px;">
+						<select id="ysresult" name="ysresult">
+							<option value="">请选择</option>
+							<option value="1" <c:if test="${unsub.ysresult ==1 }">selected="selected"</c:if> >可再销售</option>
+							<option value="2" <c:if test="${unsub.ysresult ==2 }">selected="selected"</c:if>>不可再销售</option>
+						</select>
+					</td>
+					<td style="text-align: center;" colspan="2">
+						<textarea rows="2" style="width: 98%" id="myCompanyReport" name="myCompanyReport">${unsub.myCompanyReport }</textarea>
+					</td>
 				</tr>
 			</tbody>
 		</table>
+		<div class="l_btn_centent">
+			<a class="btn btn-primary" href="#" id="addOne" onclick="addOne();"><span>新增一行</span> </a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
+		</div>
 	</form>
 	</div>
 </body>

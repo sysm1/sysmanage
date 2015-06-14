@@ -23,21 +23,25 @@ public class ClothAllowance {
     
     private Integer factoryId;
     
-    /**供应商ID**/
+    /**出胚单位**/
     private Integer supplierId;
     
     // 工厂名称
     private String factoryName; // 冗余
-    /**坯布供应商*/
+    /**出胚单位名称*/
     private String supplierName;
     private Integer allowance;
-    private int unit; // 布种单位   0条 1 kg 2cm 3码 4包
+    private Integer unit; // 布种单位   0条 1 kg 2cm 3码 4包
     private Double oldSum;
     private Integer changeSum;
     private Double allowancekg;
     private int unitkg; // 布种单位   
     private Double oldSumkg;
     private Double changeSumkg;
+    /**单价***/
+    private Double price;
+    /**金额***/
+    private Double money;
     /***未回数量**/
     private Integer noReturn;
     private Date createTime;
@@ -49,6 +53,10 @@ public class ClothAllowance {
     private String mark;
 
     private Date inputDate;
+    
+    private String beginTime;
+    
+    private String endTime;
     
     private String strInputDate;
     
@@ -271,6 +279,38 @@ public class ClothAllowance {
 	/**供应商ID**/
 	public void setSupplierId(Integer supplierId) {
 		this.supplierId = supplierId;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public Double getMoney() {
+		return money;
+	}
+
+	public void setMoney(Double money) {
+		this.money = money;
+	}
+
+	public String getBeginTime() {
+		return beginTime;
+	}
+
+	public void setBeginTime(String beginTime) {
+		this.beginTime = beginTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
 }

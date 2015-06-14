@@ -25,7 +25,16 @@ public class Unsub implements java.io.Serializable{
 	/**退货日期 结束时间**/
 	private Date unsubdatee;
 	
+	/**工艺ID**/
+	private Integer technologyId;
+	
+	private String technologyName;
+	
 	private Integer clothId;
+	
+	private Integer ysnum;
+	
+	private String ysresult;
 	
 	private String clothName;
 	
@@ -53,6 +62,8 @@ public class Unsub implements java.io.Serializable{
     private Date returnDatee;
     
     private String rdate;
+    
+    private Date updatetime;
     
     /****我司验货报告**/
     private String myCompanyReport;
@@ -242,6 +253,49 @@ public class Unsub implements java.io.Serializable{
 
 	public void setFactoryName(String factoryName) {
 		this.factoryName = factoryName;
+	}
+
+	public Integer getTechnologyId() {
+		return technologyId;
+	}
+
+	public void setTechnologyId(Integer technologyId) {
+		this.technologyId = technologyId;
+	}
+
+	public String getTechnologyName() {
+		return technologyName;
+	}
+
+	public void setTechnologyName(String technologyName) {
+		this.technologyName = technologyName;
+	}
+
+	public Integer getYsnum() {
+		return ysnum;
+	}
+
+	public void setYsnum(Integer ysnum) {
+		this.ysnum = ysnum;
+	}
+
+	public String getYsresult() {
+		return ysresult;
+	}
+
+	public void setYsresult(String ysresult) {
+		this.ysresult = ysresult;
+	}
+
+	public Date getUpdatetime() {
+		return updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		if(null==updatetime){
+			updatetime=new Date();
+		}
+		this.updatetime = updatetime;
 	}
 
 }

@@ -156,7 +156,11 @@
 			}
 		});
 	}
-	
+	/**单选***/
+	function checkId(obj){
+		 $(":checkbox").attr("checked", false);
+		 obj.checked="true";
+	}
 	/**
 	 * 获取选中的值
 	 */
@@ -214,6 +218,15 @@
 					</td>
 					<td align="right">客户质量反应问题：</td>
 					<td><input type="text" id="qualityProblem" name="qualityProblem" value="${unsub.qualityProblem }"></td>
+					<td>工艺：</td>
+					<td>
+						<select id="technologyId" name="technologyId">
+							<option value="">请选择</option>
+							<c:forEach items="${technologyInfos }" var="tech">
+							<option value="${tech.id }" <c:if test="${tech.id ==param.technologyId }">selected="selected"</c:if> >${tech.name }</option>
+							</c:forEach>
+						</select>
+					</td>
 				</tr>
 			</table>
 				 
@@ -230,9 +243,10 @@
 			<table id="mytable" cellspacing="0" border="1"  class="dataintable">
 				<tr>
 					<th class="specalt" style="width:35px;">选择</th>
-					<th>序号</th>
+					<!--th>序号</th-->
 					<th style="width:80px;">退货日期</th>
 					<th style="width:70px;">布种</th>
+					<th style="width:70px;">工艺</th>
 					<th style="widht:100px;">我司编号</th>
 					<th>我司颜色</th>
 					<th>数量(条)</th>
@@ -248,11 +262,12 @@
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 					<tr style="background-color:#1FFF" id="${status.index }" >
 						<td style="width:50px;">
-					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll('${status.index +1}',this);">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
 					 	</td>
-						<td >${item.id }</td>
+						<!--td >${item.id }</td-->
 						<td ><fmt:formatDate value="${item.unsubdate }" pattern="yyyy-MM-dd"/></td>
 						<td >${item.clothName }</td>
+						<td >${item.technologyName }</td>
 						<td >${item.myCompanyCode }</td>
 						<td >${item.myCompanyColor }</td>
 						<td >${item.num }</td>

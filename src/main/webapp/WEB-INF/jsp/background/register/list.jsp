@@ -279,9 +279,10 @@ ul { list-style:none;}
 			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
 				<tr>
 					<th class="specalt" style="width:35px;">选择</th>
-					<th>序号</th>
+					<!--th>序号</th-->
 					<th style="width:80px;">退货日期</th>
 					<th style="width:70px;">布种</th>
+					<th style="width:70px;">工艺</th>
 					<th style="widht:100px;">我司编号</th>
 					<th>我司颜色</th>
 					<th>数量(条)</th>
@@ -299,9 +300,10 @@ ul { list-style:none;}
 						<td style="width:50px;">
 					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll('${status.index +1}',this);">
 					 	</td>
-						<td >${item.id }</td>
+						<!--td >${item.id }</td-->
 						<td ><fmt:formatDate value="${item.unsubdate }" pattern="yyyy-MM-dd"/></td>
 						<td >${item.clothName }</td>
+						<td >${item.technologyName }</td>
 						<td >${item.myCompanyCode }</td>
 						<td >${item.myCompanyColor }</td>
 						<td >${item.num }</td>

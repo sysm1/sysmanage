@@ -132,8 +132,17 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 				</tr><tr>
 					<td style="text-align: right;height: 33px;">数量：</td>
-					<td colspan="3" style="text-align: left;">
+					<td style="text-align: left;">
 						<input type="text" id="num" name="num" value="">条
+					</td>
+					<td>工艺：</td>
+					<td style="text-align: left;">
+						<select id="technologyId" name="technologyId">
+							<option>请选择</option>
+							<c:forEach items="${technologyInfos }" var="tech">
+							<option value="${tech.id }">${tech.name }</option>
+							</c:forEach>
+						</select>
 					</td>
 				</tr><tr style="height: 30px;">
 					<td colspan="4" style="background-color: #E0EEE0;text-align: center;">客户反映质量问题</td>

@@ -6,7 +6,7 @@
     id, cloth_id as clothId, factory_id as factoryId, supplier_id supplierId,
     allowance, unit, old_sum as oldSum, change_sum as changeSum, 
     allowancekg, unitkg, old_sumkg as oldSumkg, change_sumkg as changeSumkg,
-    create_time as createTime, mark, input_date as inputDate
+    create_time as createTime, mark, input_date as inputDate,price,money
   </sql>
   
   <sql id="selectIdExt" >
@@ -16,7 +16,7 @@
     factory_id as factoryId, 
     (select factory.name from factory_info factory where factory.id = cloth_allowance.factory_id ) as factoryName,
     allowance, supplier_id supplierId,
-    (select supplier.name from supplier supplier where supplier.id = cloth_allowance.supplier_id ) as supplierName,
+    (select supplier.name from factory_info supplier where supplier.id = cloth_allowance.factory_id ) as supplierName,
     unit,
     old_sum as oldSum, 
     change_sum as changeSum, 
@@ -27,7 +27,7 @@
     change_sumkg as changeSumkg,
     create_time as createTime, 
     mark,
-    input_date as inputDate
+    input_date as inputDate,price,money
   </sql>
   
   <select id="query" resultType="ClothAllowance" parameterType="ClothAllowance">
@@ -42,6 +42,16 @@
 			and	factory_id = #{t.factoryId}
 		</if><if test="t.color != null and t.color != ''">
 			and	color = #{t.color}
+		</if><if test="t.unit != null and t.unit != ''">
+			and unit = #{t.unit}
+		</if><if test="t.mark != null and t.mark != ''">
+			and mark like '%${t.mark}%'
+		</if>
+      	<if test="t.beginTime != null and t.beginTime != ''">
+			and input_date &gt; #{t.beginTime}
+		</if>
+      	<if test="t.endTime != null and t.endTime != ''">
+			and input_date &lt; #{t.endTime}
 		</if>
 		</where>
 		order by id desc
@@ -132,7 +142,7 @@
 	<insert id="add" parameterType="ClothAllowance" useGeneratedKeys="true" keyProperty="id">
 		insert into cloth_allowance (
 			cloth_id, factory_id, allowance, unit, old_sum, change_sum, allowancekg, unitkg, 
-			old_sumkg, change_sumkg, create_time, mark, input_date,color,supplier_Id
+			old_sumkg, change_sumkg, create_time, mark, input_date,color,supplier_Id,price,money
 		)
 		values(
 			#{clothId},#{factoryId},
@@ -141,7 +151,8 @@
 			#{allowancekg},#{unitkg},
 			#{oldSumkg},#{changeSumkg},
 			#{createTime},#{mark},
-			#{inputDate},#{color},#{supplierId}
+			#{inputDate},#{color},#{supplierId},
+			#{price},#{money}
 		)
 	</insert>
 	
@@ -202,6 +213,10 @@
         	input_date=#{inputDate},
       	</if><if test="supplierId != null" >
         	supplier_id=#{supplierId},
+      	</if><if test="price != null" >
+        	price=#{price},
+      	</if><if test="money != null" >
+        	money=#{money},
       	</if>
 		</set>
 		where id=#{id}

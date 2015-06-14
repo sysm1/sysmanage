@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothInfo;
+import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.entity.Unsub;
 import com.github.hzw.security.service.ClothInfoService;
+import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.security.service.UnsubInputService;
 import com.github.hzw.util.Common;
 
@@ -35,10 +36,15 @@ public class UnsubInputController extends BaseController{
 	@Inject
 	private ClothInfoService clothInfoService;
 	
+	@Inject
+	private TechnologyInfoService technologyInfoService;
+	
 	@RequestMapping("list")
 	public String list(Model model, Unsub unsub,String pageNow,String pagesize){
+		List<TechnologyInfo> technologyInfos=technologyInfoService.queryAll(null);
 		pageView = unsubInputService.query(getPageView(pageNow,pagesize), unsub);
 		model.addAttribute("pageView", pageView);
+		model.addAttribute("technologyInfos", technologyInfos);
 		return Common.BACKGROUND_PATH+"/unsubInput/list";
 	}
 	
@@ -63,8 +69,10 @@ public class UnsubInputController extends BaseController{
 	@RequestMapping("addUI")
 	public String addUI(Model model) {
 		List<ClothInfo> clothInfos=clothInfoService.queryAll(null);
+		List<TechnologyInfo> technologyInfos=technologyInfoService.queryAll(null);
 		model.addAttribute("now",new Date());
 		model.addAttribute("clothInfos",clothInfos);
+		model.addAttribute("technologyInfos",technologyInfos);
 		return Common.BACKGROUND_PATH+"/unsubInput/add";
 	}
 	
@@ -81,6 +89,7 @@ public class UnsubInputController extends BaseController{
 	public Map<String, Object> add(Unsub unsub) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			unsub.setYsresult("0");
 			unsubInputService.add(unsub);
 			map.put("flag", "true");
 		} catch (Exception e) {
@@ -98,11 +107,13 @@ public class UnsubInputController extends BaseController{
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id,String type) {
+		List<TechnologyInfo> technologyInfos=technologyInfoService.queryAll(null);
 		Unsub unsub = unsubInputService.getById(id);
 		model.addAttribute("unsub", unsub);
 		if("view".equals(type)){
 			return Common.BACKGROUND_PATH+"/unsubInput/view";
 		}
+		model.addAttribute("technologyInfos",technologyInfos);
 		return Common.BACKGROUND_PATH+"/unsubInput/edit";
 	}
 	/**
@@ -117,6 +128,7 @@ public class UnsubInputController extends BaseController{
 	public Map<String, Object> update(Model model, Unsub unsub) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			unsub.setYsresult("0");
 			unsubInputService.update(unsub);
 			map.put("flag", "true");
 		} catch (Exception e) {

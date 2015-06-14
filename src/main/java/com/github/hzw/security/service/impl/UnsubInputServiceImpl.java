@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,33 @@ public class UnsubInputServiceImpl implements UnsubInputService {
 		return pageView;
 	}
 
+	public void addUnsub(HttpServletRequest request){
+		String[] ysnums=request.getParameterValues("ysnum");
+		String[] ysresults=request.getParameterValues("ysresult");
+		String[] myCompanyReports=request.getParameterValues("myCompanyReport");
+		
+		String id=request.getParameter("id");
+		Unsub ubsub=new Unsub();
+		ubsub=this.getById(id);
+		int length=ysnums.length;
+		for(int i=0;i<length;i++){
+			Unsub sub=ubsub;
+			sub.setYsnum(Integer.parseInt(ysnums[i]));
+			sub.setYsresult(ysresults[i]);
+			sub.setMyCompanyReport(myCompanyReports[i]);
+			try{
+				if(i==0){
+					this.update(sub);
+				}else{
+					sub.setId(null);
+					this.add(sub);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	@Override
 	public List<Unsub> queryAll(Unsub t) {
 		return null;

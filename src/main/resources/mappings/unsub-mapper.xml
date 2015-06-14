@@ -14,9 +14,10 @@
 		cloth_id clothId,
 		(select cloth_name from cloth_info where id=cloth_id) clothName,
 		(select name from factory_info where id=factory_id) factoryName,
-		myCompanyCode ,
+		(select name from technology_info where id=technologyId) technologyName,
+		myCompanyCode ,technologyId,
 		myCompanyColor ,
-		num,
+		num,ysnum,ysresult,
 		qualityProblem ,
 		factory_id factoryId,
 		factoryCode ,
@@ -90,8 +91,18 @@
 				and myCompanyReport like '%${t.myCompanyReport}%' 
 			</if><if test="t.negotiate != null and t.negotiate != ''">
 				and negotiate like '%${t.negotiate}%' 
+			</if><if test="t.technologyId != null and t.technologyId != ''">
+				and technologyId = #{t.technologyId}
+			</if>
+			<if test="t.ysresult != null and t.ysresult != ''">
+				and ysresult = #{t.ysresult}
 			</if>
 		</where>
+		<if test="t.ysresult==2">
+			order by updatetime 
+		</if><if test="t.ysresult!=2">
+			order by id desc
+		</if>
 	</select>
 
 	<insert id="add" parameterType="Unsub" useGeneratedKeys="true" keyProperty="id" >
@@ -131,7 +142,14 @@
         myCompanyReport,
       </if><if test="negotiate != null" >
         negotiate,
+      </if><if test="technologyId!=null">
+      	technologyId,
+      </if><if test="ysnum!=null">
+      	ysnum,
+      </if><if test="ysresult!=null">
+      	ysresult,
       </if>
+      updatetime,
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="unsubdate != null" >
@@ -169,7 +187,14 @@
       </if>
       <if test="negotiate != null" >
         #{negotiate,jdbcType=VARCHAR},
+      </if><if test="technologyId != null" >
+        #{technologyId,jdbcType=VARCHAR},
+      </if><if test="ysnum != null" >
+        #{ysnum,jdbcType=INTEGER},
+      </if><if test="ysresult != null" >
+        #{ysresult,jdbcType=INTEGER},
       </if>
+      NOW(),
     </trim>
   </insert>
 
@@ -221,24 +246,16 @@
 		        myCompanyReport=#{myCompanyReport},
 		      </if><if test="negotiate != null and negotiate !=''" >
 		        negotiate=#{negotiate},
+		      </if><if test="technologyId != null and technologyId !=''" >
+		        technologyId=#{technologyId},
+		      </if><if test="ysnum != null and ysnum !=''" >
+		        ysnum=#{ysnum},
+		      </if><if test="ysresult != null and ysresult !=''" >
+		        ysresult=#{ysresult},
 		      </if>
+		      updatetime=NOW(),
 		</set>
 		where id=#{id}
 	</update>
 
-	<!-- 验证用户登陆 -->
-	<select id="countAccount" parameterType="Account" resultType="Account">
-		select
-		<include refid="selectId" />
-		from account where
-		accountName=#{accountName} and password=#{password}
-	</select>
-
-	<!-- 根据用户名查出id -->
-	<select id="querySingleAccount" parameterType="String"
-		resultType="Account">
-		select
-		<include refid="selectId" />
-		from account where accountName=#{accountName}
-	</select>
 </mapper>

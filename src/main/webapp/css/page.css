@@ -1,7 +1,7 @@
 a { color:#333; text-decoration:none;}
 ul { list-style:none;}
 #pagelist {width:600px; margin:5px auto; padding:6px 0px; height:20px;}
-#pagelist ul li { float:left; border:2px solid #5d9cdf; height:23px; line-height:20px; margin:1px 3px;}
+#pagelist ul li { float:left; border:2px solid #5d9cdf; height:20px; line-height:20px; margin:1px 3px;}
 #pagelist ul li a, .pageinfo { display:block; padding:0px 6px; background:#e6f2fe;}
 .pageinfo  { color:#555;}
 .current { background:#CCCC00; display:block; padding:0px 6px; font-weight:bold;}

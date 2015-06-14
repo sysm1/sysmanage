@@ -16,6 +16,8 @@ CREATE TABLE  factory_info(
 	`name` varchar(255) NOT NULL,
 	 pinyin varchar(255),
 	`mark` text,
+	`city_id`  int(11) NULL DEFAULT NULL ,
+	`status`  int(255) NULL DEFAULT NULL COMMENT '1 正常  2停用' ,
 	PRIMARY KEY (`id`),
 	UNIQUE `uniqe_2` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -310,6 +312,7 @@ create table return_goods_process(
 	kongcha  double(12,2) NULL DEFAULT NULL COMMENT '空差' ,
 	jiaodai  double(12,2) NULL DEFAULT NULL COMMENT '胶袋' ,
 	create_time datetime,
+	factory_name varchar(255),
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -429,5 +432,17 @@ ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_bin
 ROW_FORMAT=COMPACT
 ;
+CREATE TABLE `city` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL ,
+`status`  int(255) NULL DEFAULT NULL COMMENT '1 正常  2停用' ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_bin
+AUTO_INCREMENT=3
+ROW_FORMAT=COMPACT
+;
+
 
 

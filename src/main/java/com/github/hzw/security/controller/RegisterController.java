@@ -37,6 +37,7 @@ public class RegisterController extends BaseController{
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request,String pagesize,Unsub unsub){
 		String pageNow=request.getParameter("pageNow");
+		unsub.setYsresult("2");
 		pageView = unsubInputService.query(getPageView(pageNow,pagesize), unsub);
 		List<CodePicture> codes=codePictureService.queryAllCode(request);
 		FactoryInfo factoryInfo=factoryInfoService.getById(unsub.getFactoryId()+"");

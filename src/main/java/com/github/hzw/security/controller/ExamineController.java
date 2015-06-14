@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.CodePicture;
 import com.github.hzw.security.entity.FactoryInfo;
+import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.entity.Unsub;
 import com.github.hzw.security.service.CodePictureService;
 import com.github.hzw.security.service.FactoryInfoService;
+import com.github.hzw.security.service.TechnologyInfoService;
 import com.github.hzw.security.service.UnsubInputService;
 import com.github.hzw.util.Common;
 
@@ -39,10 +41,18 @@ public class ExamineController extends BaseController{
 	
 	@Resource
 	private CodePictureService codePictureService;
+	
+	@Inject
+	private TechnologyInfoService technologyInfoService;
 
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request,String pagesize,Unsub unsub){
+		List<TechnologyInfo> technologyInfos=technologyInfoService.queryAll(null);
 		String pageNow=request.getParameter("pageNow");
+		if(unsub.getYsresult()==null){
+			unsub.setYsresult("0");
+		}
+		
 		pageView = unsubInputService.query(getPageView(pageNow,pagesize), unsub);
 		List<CodePicture> codes=codePictureService.queryAllCode(request);
 		FactoryInfo factoryInfo=factoryInfoService.getById(unsub.getFactoryId()+"");
@@ -50,6 +60,7 @@ public class ExamineController extends BaseController{
 		model.addAttribute("factoryInfo",factoryInfo);
 		request.setAttribute("pageView", pageView);
 		request.setAttribute("bean", unsub);
+		model.addAttribute("technologyInfos", technologyInfos);
 		return Common.BACKGROUND_PATH+"/examine/list";
 	}
 	
@@ -87,10 +98,10 @@ public class ExamineController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public Map<String, Object> update(Model model, Unsub unsub) {
+	public Map<String, Object> update(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			unsubInputService.update(unsub);
+			unsubInputService.addUnsub(request);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");

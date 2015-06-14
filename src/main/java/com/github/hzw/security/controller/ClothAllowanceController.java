@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.ClothInfo;
+import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.ClothAllowanceService;
 import com.github.hzw.security.service.ClothInfoService;
@@ -41,9 +42,12 @@ public class ClothAllowanceController extends BaseController {
 	private SupplierService supplierService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, String pageNow,String pagesize,ClothAllowance info) {
+		pageView = clothAllowanceService.query(getPageView(pageNow,pagesize), info);
+		model.addAttribute("pageView", pageView);
 		model.addAttribute("cloths",clothInfoService.queryAll(null));
 		model.addAttribute("factorys",factoryInfoService.queryAll(null));
+		
 		return Common.BACKGROUND_PATH+"/allowance/list";
 	}
 	

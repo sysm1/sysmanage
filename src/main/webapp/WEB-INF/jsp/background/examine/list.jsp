@@ -179,7 +179,11 @@ ul { list-style:none;}
 			}
 		});
 	}
-	
+	/**单选***/
+	function checkId(obj){
+		 $(":checkbox").attr("checked", false);
+		 obj.checked="true";
+	}
 	/**
 	 * 获取选中的值
 	 */
@@ -193,7 +197,7 @@ ul { list-style:none;}
 	};
 </script>
 </head>
-<body style="width: 1500px;">
+<body style="width: 100%;">
 	<div class="divBody" >
 		<div class="search" >
 			<form name="fenye" id="fenye" method="post" action="${ctx}/background/examine/list.html">
@@ -217,7 +221,7 @@ ul { list-style:none;}
 						<select id="myCompanyCode" name="myCompanyCode" onchange="selectMyCompanyCode(this)">
 							<option value="">请选择</option>
 							<c:forEach var="code" items="${codes }">
-								<option value="${code.code }">${code.code }</option>
+								<option value="${code.code }" <c:if test="${param.myCompanyCode ==code.code }">selected="selected"</c:if> >${code.code }</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -234,13 +238,22 @@ ul { list-style:none;}
 					</td>
 					<td align="right">客户质量反应问题：</td>
 					<td><input type="text" id="qualityProblem" name="qualityProblem" value="${bean.qualityProblem }"></td>
-					<td style="text-align:right ">工厂：</td>
+					<td>工艺：</td>
+					<td>
+						<select id="technologyId" name="technologyId">
+							<option value="">请选择</option>
+							<c:forEach items="${technologyInfos }" var="tech">
+							<option value="${tech.id }" <c:if test="${tech.id ==param.technologyId }">selected="selected"</c:if> >${tech.name }</option>
+							</c:forEach>
+						</select>
+					</td>
+					<!--td style="text-align:right ">工厂：</td>
 					<td>
 						<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
 						<input type="text" id="factory_text" style="width: 200px;height: 99%;border:1px solid green;margin-top: -3px" value="${factoryInfo.name }" 
 							onchange="changeTextValue('factoryId',this);"/> 
-					</td>
-				</tr><tr>
+					</td-->
+				</tr><!--tr>
 					<td>到货日期：</td>
 					<td>
 						<input type="text" id="returnDates" name="returnDates" value="<fmt:formatDate value='${bean.returnDates}' pattern='yyyy-MM-dd'/>" style="width:91px;" 
@@ -252,9 +265,18 @@ ul { list-style:none;}
 					<td><input type="text" id="factoryCode" name="factoryCode" value="${bean.factoryCode }"></td>
 					<td>工厂颜色：</td>
 					<td><input type="text" id="factoryColor" name="factoryColor" value="${bean.factoryColor }"></td>
-				</tr><tr>
+				</tr--><tr>
 					<td>我司验证报告：</td>
 					<td><input type="text" id="myCompanyReport" name="myCompanyReport" value="${bean.myCompanyReport }"></td>
+					<TD>验收结果：</TD>
+					<td>
+						<select id="ysresult" name="ysresult">
+							<option value="0" <c:if test="${param.ysresult==0 }">selected="selected"</c:if>>未处理</option>
+							<option value="1" <c:if test="${param.ysresult==1 }">selected="selected"</c:if> >可再销售</option>
+							<option value="2" <c:if test="${param.ysresult==2 }">selected="selected"</c:if> >不可再销售</option>
+							<option value="" <c:if test="${param.ysresult=='' }">selected="selected"</c:if> >全部</option>
+						</select>
+					</td>
 				</tr>
 			</table>
 				 
@@ -277,31 +299,34 @@ ul { list-style:none;}
 			<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询</a>
 		</div>
 		<div id="paging" class="pagclass">
-			<table id="mytable" cellspacing="0" border="1" summary="The technical specifications of the Apple PowerMac G5 series">
+			<table id="mytable" cellspacing="0" border="1" >
 				<tr>
 					<th class="specalt" style="width:35px;">选择</th>
-					<th>序号</th>
+					<!--th>序号</th-->
 					<th style="width:80px;">退货日期</th>
 					<th style="width:70px;">布种</th>
+					<th style="width:70px;">工艺</th>
 					<th style="widht:100px;">我司编号</th>
 					<th>我司颜色</th>
 					<th>数量(条)</th>
 					<th style="width:150px;">客户反映质量问题</th>
-					<th>工厂</th>
+					<!--th>工厂</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
-					<th>到货日期</th>
+					<th>到货日期</th-->
+					<th>验货结果</th>
 					<th>我司验货报告</th>
 				</tr>
 				
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 					<tr style="background-color:#1FFF" id="${status.index }" >
 						<td style="width:50px;">
-					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll('${status.index +1}',this);">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
 					 	</td>
-						<td >${item.id }</td>
+						<!--td >${item.id }</td-->
 						<td ><fmt:formatDate value="${item.unsubdate }" pattern="yyyy-MM-dd"/></td>
 						<td >${item.clothName }</td>
+						<td >${item.technologyName }</td>
 						<td >${item.myCompanyCode }</td>
 						<td >${item.myCompanyColor }</td>
 						<td >${item.num }</td>
@@ -309,12 +334,14 @@ ul { list-style:none;}
 							${fn:substring(item.qualityProblem,0,10) }
 							<c:if test="${fn:length(item.qualityProblem)>10 }">...</c:if>
 						</td>
-						<td >${item.factoryName }</td>
+						<!--td >${item.factoryName }</td>
 						<td >${item.factoryCode }</td>
 						<td >${item.factoryColor }</td>
 						<td >
 							<fmt:formatDate value="${item.returnDate }" pattern="yyyy-MM-dd"/>
-						</td>
+						</td-->
+						<td><c:if test="${item.ysresult==1 }">可再销售</c:if>
+							<c:if test="${item.ysresult==2 }">不可再销售</c:if></td>
 						<td >${item.myCompanyReport }</td>
 					<tr>
 				</c:forEach>

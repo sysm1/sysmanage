@@ -68,7 +68,7 @@
 						onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:'%y-%M-%d'})">
 				</td>
 			</tr><tr>
-				<td style="text-align: right;height: 35px;">坯布供应商：</td>
+				<td style="text-align: right;height: 35px;">出胚单位：</td>
 				<td style="text-align: left;">
 					&nbsp;${allowance.supplierName }
 					<input type="hidden" id="supplierId" name="supplierId" value="${allowance.supplierId }">
@@ -89,28 +89,40 @@
 						&nbsp;${allowance.color}
 					</div>
 				</td>
-			</tr--><tr>
+			</tr--><tr <c:if test="${ allowance.unit==1}"> style="display: none;"</c:if> >
+				<td style="text-align: right;">条数：</td>
+				<td class="l_left">
+					<div class="lanyuan_input">
+					<input id='allowance' name="allowance" type="text" class="isNum" value="${allowance.allowance}">
+					</div>
+				</td>
+			</tr><tr>
+				<td style="text-align: right;">重量(KG)：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
+					<div class="lanyuan_input">
+						<input id='allowancekg' name="allowancekg" type="text" value="${allowance.allowancekg}">
+					</div>
+				</td>
+			</tr><tr>
+				<td style="text-align: right;">单价(元/KG)：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
+					<div class="lanyuan_input">
+						<input id='price' name="price" type="text" value="${allowance.allowancekg}">
+					</div>
+				</td>
+			</tr><tr>
+				<td style="text-align: right;">金额(元)：</td>
+				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
+					<div class="lanyuan_input">
+						<input id='money' name="money" type="text" value="${allowance.allowancekg}">
+					</div>
+				</td>
+			</tr><tr>
 				<td style="text-align: right;height: 35px;">工厂：</td>
 				<td style="text-align: left;">
 					<div class="lanyuan_input">
 						<input id='factoryId' name="factoryId" type="hidden" value="${allowance.factoryId}">
 						&nbsp;${allowance.factoryName}
-					</div>
-				</td>
-			</tr><tr>
-				<td style="text-align: right;">坯布条数：</td>
-				<td class="l_left">
-					<div class="lanyuan_input">
-					<input id='allowance' name="allowance" type="text" class="isNum" value="${allowance.changeSum}">
-					<c:if test="${allowance.unit==0 }">条</c:if>
-					<c:if test="${allowance.unit==4 }">包</c:if>
-					</div>
-				</td>
-			</tr><tr>
-				<td style="text-align: right;">坯布公斤数：</td>
-				<td style="text-align: left;" nowrap="nowrap" style="width: 290px;">
-					<div class="lanyuan_input">
-						<input id='allowancekg' name="allowancekg" type="text" value="${allowance.allowancekg}">公斤
 					</div>
 				</td>
 			</tr><tr>

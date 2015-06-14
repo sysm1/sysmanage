@@ -109,7 +109,7 @@
 <body >
 <div class="divdialog" style="text-align: center;">
 	<div class="l_err" style="width: 270px;"></div>
-	<form name="form" id="form" action="${ctx}/background/examine/update.html" method="post">
+	<form name="form" id="form" action="${ctx}/background/register/update.html" method="post">
 		<input type="hidden" id="id" name="id" value="${unsub.id }">
 		<table style="width: 98%; height: 100%;background-color: #9AFF9A;margin-left: 6px;" border="1" class="dataintable">
 			<tbody>
@@ -164,7 +164,51 @@
 					<td style="text-align: left;">
 						<fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/>
 					</td>
+				</tr>
+				
+				
+				
+				<tr style="height: 30px;">
+					<td>工厂</td>
+					<td>
+						<select id="factoryId" name="factoryId" onchange="selectFactory(this);">
+							<option>--请选择工厂--</option>
+							<c:forEach items="${factoryInfos }" var="factoryInfo">
+							<option value="${factoryInfo.id }" <c:if test="${unsub.factoryId eq factoryInfo.id }">selected="selected"</c:if>  >${factoryInfo.name }</option>
+							</c:forEach>
+						</select>
+					</td>
+					<td>工厂编号</td>
+					<td>
+						<select id="factoryCode" name="factoryCode" onchange="selectFactoryCode(this.value);">
+							<c:if test="${unsub.factoryCode ==null }">
+								<option>--请选择--</option>
+							</c:if><c:if test="${unsub.factoryCode !=null }">
+								<option>${unsub.factoryCode}</option>
+							</c:if>
+						</select>
+					</td>
 				</tr><tr style="height: 30px;">
+					<td>工厂颜色</td>
+					<td>
+						<select id="factoryColor" name="factoryColor" onchange="selectFactoryColor(this.value);">
+							<c:if test="${unsub.factoryColor ==null}">
+								<option>--请选择--</option>
+							</c:if><c:if test="${unsub.factoryColor !=null}">
+								<option>${unsub.factoryColor}</option>
+							</c:if>
+						</select>
+					</td>
+					<td>到货日期</td>
+					<td style="text-align: left;">
+					<span id="returnDatespan"><fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/></span>
+					<input type="hidden" id="returnDate" name="returnDate" value='<fmt:formatDate value="${unsub.returnDate }" pattern="yyyy-MM-dd"/>'>
+					</td>
+				</tr>
+				
+				
+				
+				<tr style="height: 30px;">
 					<td colspan="4" style="background-color: #D1EEEE;text-align: center;">我司验收报告</td>
 				</tr><tr>
 					<td colspan="4" style="text-align: left;min-height: 40px;">

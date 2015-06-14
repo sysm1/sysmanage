@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
 
-<link rel="stylesheet" href="${ctx}/themes/blue/style.css" type="text/css" id="" media="print, projection, screen" />
 
 <script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
@@ -21,56 +20,13 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 	var dialog;
 	var grid;
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid({
-					id : 'paging',
-					l_column : [ {
-						colkey : "id",
-						name : "id",
-						width : "50px"
-					},{
-						colkey : "strInputDate",
-						name : "日期",
-						width : "75px"
-					},{
-						colkey : "clothName",
-						name : "坯布名称",
-						width : "130px"
-					},{
-						colkey : "supplierName",
-						name : "坯布供应商",
-						width : "130px"
-					},
-					/*{
-						colkey : "color",
-						name : "坯布颜色",
-						width : "130px"
-					},*/ {
-						colkey : "allowance",
-						name : "坯布条数",
-						width : "75px"
-					},{
-						colkey : "allowancekg",
-						name : "坯布公斤数",
-						width : "80px"
-					},{
-						colkey : "factoryName",
-						name : "收坯单位",
-						width : "130px"
-					}, {
-						colkey : "mark",
-						name : "备注"
-					}],
-					jsonUrl : '${pageContext.request.contextPath}/background/allowance/queryByFind.html',
-					checkbox : true
-				});
 		
 		$("#seach").click("click", function() {//绑定查询按扭
-			var num = $("#num").val();
-			alert(num);
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			}); 
+			$('#pageNow').attr('value',1);
+			$("#delay").attr('value','');
+			var f = $('#fenye');
+			f.attr('action','${pageContext.request.contextPath}/background/allowance/list.html');
+			f.submit();
 		});
 		
 		$("#exportExcel").click("click", function() {//绑定查询按扭
@@ -83,8 +39,8 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 		
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 450,
-				height : 400,
+				width : 420,
+				height : 450,
 				url : rootPath + '/background/allowance/addUI.html',
 				title : "增加坯布采购单",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -92,14 +48,14 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 		});
 		
 		$("#editView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 450,
-				height : 400,
+				width : 420,
+				height : 450,
 				url : rootPath + '/background/allowance/editUI.html?id='+cbox,
 				title : "坯布采购单修改",
 				isHidden : false
@@ -107,7 +63,7 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 		});
 		
 		$("#deleteView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox=="") {
 				parent.$.ligerDialog.alert("请选择删除项！！");
 				return;
@@ -161,19 +117,46 @@ jQuery.validator.addMethod("isNum", function(value, element) {
        });
 	});
 	function loadGird(){
-		grid.loadData();
+		 location.reload();
 	}
+	function page(pageNO){
+		$('#pageNow').attr('value',pageNO);
+		var f = $('#fenye');
+		//f.attr('target','_blank');
+		f.attr('action','${pageContext.request.contextPath}/background/allowance/list.html');
+		f.submit();
+	}
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
+	}
+	/**单选***/
+	function checkId(obj){
+		 $(":checkbox").attr("checked", false);
+		 obj.checked="true";
+	}
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+		});
+		return arr;
+	};
 </script>
 </head>
 <body>
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-				<table style="margin: 2px">
+				<input type="hidden" id="pageNow" name="pageNow" value="">
+				<table style="margin: 2px"  class="dataintable" >
 				<tr>
 				<td width="10%">布种：</td>
-				<td width="20%">
-				<input type="hidden" value="" id="clothId" name="clothId">
+				<td width="20%" style="text-align: left;">
 				<!-- 
 				<select id="clothId" name="clothId" style="width:110px;">
 					<option value="">请选择布种</option>
@@ -182,11 +165,13 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 					</c:forEach>
 				</select> 
 				 -->
-				 <input type="text" id="cloth_text" style="width: 110px;"/>
+				<input type="hidden" id="clothId" name="clothId" value="${ param.clothId }">
+			  	<input type="text" id="cloth_text" name="cloth_text" style="width: 110px;" value="${param.cloth_text }" 
+			  		onchange="changeTextValue('clothId',this);"/>
+				 
 				</td>
-				<td width="10%">工厂:</td>
-				<td width="20%">
-				<input type="hidden" value="" id="factoryId" name="factoryId">
+				<td width="10%">出胚单位：</td>
+				<td width="20%" style="text-align: left;">
 				<!-- 
 				<select id="factoryId" name="factoryId" style="width:110px;">
 					<option value="">请选择工厂</option>
@@ -195,83 +180,93 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 					</c:forEach>
 				</select>
 				 -->
-				 <input type="text" id="factory_text" style="width: 110px;"/>
+				<input type="hidden" id="factoryId" name="factoryId" value="${ param.factoryId }">
+			  	<input type="text" id="factory_text" name="factory_text" style="width: 110px;" value="${param.factory_text }" 
+			  		onchange="changeTextValue('factoryId',this);"/>
 				</td>
-				<td width="10%">备注:</td>
-				<td >
-				<input type="text" name="mark" value="${param.mark}" style="width:100px;" />
+				<td width="10%">备注：</td>
+				<td style="text-align: left;">
+				<input type="text" name="mark" id="mark" value="${param.mark}" style="width:100px;" />
 				</td>
 				</tr>
 				
 				<tr>
-				<td>开始日期:</td>
-				<td>
+				<td>开始日期：</td>
+				<td style="text-align: left;">
 					<input type="text" name="beginTime" value="${param.beginTime}" style="width:100px;" onfocus="WdatePicker({isShowClear:true,readOnly:true})"/>
 				</td>
-				<td>结束日期:</td>
-				<td>
+				<td style="width: 100px;">结束日期：</td>
+				<td style="text-align: left;">
 					<input type="text" name="endTime" value="${param.endTime}" style="width:100px;" onfocus="WdatePicker({isShowClear:true,readOnly:true})"/>
 				</td>
-				<td>新增量:</td>
-				<td>
+				<!--td>新增量:</td>
+				<td style="text-align: left;">
 				<select id="change" name="change" style="width:110px;">
 					<option value="all">全部</option>
 					<option value="positive">正数</option>
 					<option value="negative">负数</option>
 					<option value="zero">0</option>
 				</select>
+				</td-->
+				<td>单位：</td>
+				<td style="text-align: left;">
+				<select id="unit" name="unit" style="width:110px;">
+					<option value="">请选择</option>
+					<option value="0" <c:if test="${param.unit==0 }">selected="selected"</c:if>  >条</option>
+					<option value="1" <c:if test="${param.unit==1 }">selected="selected"</c:if> >公斤</option>
+					<!-- <option value="2">米</option>
+					<option value="3">码</option>   
+					
+					<option value="4">包</option>-->
+				</select>
 				</td>
 				</tr>
 				
-				<tr>
+				<!-- tr>
 				<td>单位:</td>
-				<td>
+				<td style="text-align: left;">
 				<select id="unit" name="unit" style="width:110px;">
 					<option value="0">条</option>
-					<!-- 
 					<option value="1">公斤</option>
-					<option value="2">米</option>
+					<!-- <option value="2">米</option>
 					<option value="3">码</option>   
-					-->
-					<option value="4">包</option>
+					
+					<option value="4">包</option>-->
 				</select>
 				</td>
-				<td>余量:</td>
-				<td>
+				<!--td>余量:</td>
+				<td style="text-align: left;">
 				<input type="text" id="num" name="num" value="${param.num}" style="width:100px;" />
 				</td>
 				<td>条件:</td>
-				<td>
+				<td style="text-align: left;">
 				<select id="condition" name="condition" style="width:110px;">
 					<option value="gt">大于</option>
 					<option value="gte">大于等于</option>
 					<option value="it">小于</option>
 					<option value="ite">小于等于</option>
 				</select>
-				<a class="btn btn-primary"
-					href="javascript:void(0)" id="seach"> 查询
-				</a>
-				
 				</td>
-				</tr>
+				</tr-->
 				</table>
 			</form>
 		</div>
 		<div class="topBtn">
-			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>新增</span>
+			<a class="btn btn-primary" href="javascript:void(0)" id="add"> 新增
 			</a> 
 			
 			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
 				class="icon-zoom-in icon-white" id="View"></i> View
 			</a> --> 
 			
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> 修改
+			<a class="btn btn-info" href="javascript:void(0)" id="editView">  修改
 			</a> 
 			
-			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> 删除
+			<a class="btn btn-primary"
+					href="javascript:void(0)" id="seach"> 查询
+			</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView">  删除
 			</a>
 			 
 			<!--a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
@@ -279,7 +274,61 @@ jQuery.validator.addMethod("isNum", function(value, element) {
 			</a-->
 			
 		</div>
-		<div id="paging" class="pagclass"></div>
+		<div id="paging" class="pagclass">
+		<table class="dataintable" style="width: 100%;">
+				<tr>
+					<th class="specalt" style="width:35px;">选择</th>
+					<th>日期</th>
+					<th style="width:80px;">出胚单位</th>
+					<th style="width:70px;">布种</th>
+					<th style="widht:100px;">条数</th>
+					<th>重量(KG)</th>
+					<th>单价(元)</th>
+					<th>金额(元)</th>
+					<th>收胚单位</th>
+					<th>备注</th>
+					<!--th>工厂颜色</th>
+					<th style="width:80px;">到货日期</th>
+					<th>我司验货报告</th>
+					<th>工厂交涉情况</th-->
+				</tr>
+				
+				<c:forEach var="item" items="${pageView.records }" varStatus="status">
+					<tr  id="${status.index }" >
+						<td style="width:50px;text-align: center;">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
+					 	</td><td style="width: 70px;">
+					 		${item.strInputDate }
+					 	</td><td>
+					 		${item.supplierName }
+					 	</td><td>
+					 		${item.clothName }
+					 	</td><td>
+					 		${item.allowance }
+					 	</td><td>
+					 		${item.allowancekg }
+					 	</td><td>
+					 		${item.price }
+					 	</td><td>
+					 		${item.money }
+					 	</td><td>
+					 		${item.factoryName }
+					 	</td><td style="width: 200px;" title="${item.mark }">
+					 		${fn:substring(item.mark,0,20) }
+							<c:if test="${fn:length(item.mark)>20 }">...</c:if>
+					 	</td>
+					<tr>
+				</c:forEach>
+				
+				<!-- 分页 -->
+				<tr style="height: 35px">
+					<td colspan="10" style="text-align: center;font-size: 14px;">
+						<%@ include file="../page.jsp"%>
+					</td>
+				</tr>
+				
+			</table>
+		</div>
 	</div>
 </body>
 </html>
