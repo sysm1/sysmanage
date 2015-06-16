@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.City;
-import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.CityService;

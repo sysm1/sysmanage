@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.hzw.security.mapper.DiaoBoMapper">
+
+	<!--mybatis ehcache缓存配置 -->
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 <cache type="org.mybatis.caches.ehcache.LoggingEhcache" 
+		/> -->
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		riqi,dcdanwei,
+		(select name from factory_info where id=dcdanwei) dcdanweiName,
+		cloth_id clothId,
+		(select cloth_Name from cloth_info where id=cloth_id) clothName,num,numkg,
+		drdanwei,
+		(select name from factory_info where id=drdanwei) drdanweiName,mark 
+	</sql>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="queryAll" resultType="DiaoBo" parameterType="DiaoBo">
+		select
+		<include refid="selectId" />
+		from diaobo
+	</select>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="query" resultType="DiaoBo" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from diaobo
+	</select>
+
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="DiaoBo">
+		insert into diaobo (
+		riqi,dcdanwei,cloth_id,num,numkg,drdanwei,mark )
+		values (#{riqi},#{dcdanwei},#{clothId},#{num},#{numKg},#{drdanwei},#{mark})
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from diaobo where
+		id=#{id}
+	</delete>
+
+	<select id="getById" parameterType="String" resultType="DiaoBo">
+		select
+		<include refid="selectId" />
+		from diaobo where id=#{id}
+	</select>
+
+	<update id="update" parameterType="DiaoBo">
+		update diaobo
+		<set>
+			<if test="riqi != null and riqi != ''">
+				riqi=#{riqi},
+			</if>
+			<if test="dcdanwei != null and dcdanwei != ''">
+				dcdanwei=#{dcdanwei},
+			</if><if test="clothId != null and clothId != ''">
+				cloth_id=#{clothId},
+			</if><if test="num != null and num != ''">
+				num=#{num},
+			</if><if test="numKg != null and numKg != ''">
+				numkg=#{numKg},
+			</if><if test="drdanwei != null and drdanwei != ''">
+				drdanwei=#{drdanwei},
+			</if><if test="mark != null and mark != ''">
+				mark=#{mark},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>
