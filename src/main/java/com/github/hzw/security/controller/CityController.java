@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.City;
-import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.service.CityService;
 import com.github.hzw.util.Common;
 
@@ -24,7 +23,9 @@ public class CityController extends BaseController{
 	private CityService cityService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, City info,String pageNow,String pagesize) {
+		pageView = cityService.query(getPageView(pageNow,pagesize), info);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/city/list";
 	}
 	

@@ -7,32 +7,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 	var dialog;
 	var grid;
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid({
-				id : 'paging',
-				l_column : [ {
-					colkey : "id",
-					name : "id",
-					width : "50px"
-				}, {
-					colkey : "name",
-					name : "用户名"
-				}, {
-					colkey : "statusName",
-					name : "状态",
-					width:"70px"
-				}],
-				jsonUrl : '${pageContext.request.contextPath}/background/city/query.html',
-				checkbox : true
-			});
 		$("#seach").click("click", function() {//绑定查询按扭
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			}); 
+			var f = $('#fenye');
+			//f.attr('target','_blank');
+			f.attr('action','${pageContext.request.contextPath}/background/city/list.html');
+			f.submit(); 
 		});
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
@@ -44,7 +28,7 @@
 			});
 		});
 		$("#editView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
@@ -58,7 +42,7 @@
 			});
 		});
 		$("#deleteView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox=="") {
 				parent.$.ligerDialog.alert("请选择删除项！！");
 				return;
@@ -86,8 +70,25 @@
 		});
 	});
 	function loadGird(){
-		grid.loadData();
+		location.reload();
 	}
+	function page(pageNO){
+		$('#pageNow').attr('value',pageNO);
+		var f = $('#fenye');
+		//f.attr('target','_blank');
+		f.attr('action','${pageContext.request.contextPath}/background/city/list.html');
+		f.submit();
+	}
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+		});
+		return arr;
+	};
 </script>
 </head>
 <body>
@@ -109,11 +110,42 @@
 				class="icon-zoom-in icon-white" id="View"></i> View
 			</a> --> <a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
 				class="icon-edit icon-white"></i> 修改
-			</a> <a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> 删除
 			</a>
+			<!--a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
+				class="icon-trash icon-white"></i> 删除
+			</a-->
 		</div>
-		<div id="paging" class="pagclass"></div>
+		<div id="paging" class="pagclass">
+		<table class="dataintable" style="width: 100%;">
+				<tr>
+					<th >选择</th>
+					<th >分点名称</th>
+					<th >状态</th>
+					<th></th>
+				</tr>
+				
+				<c:forEach var="item" items="${pageView.records }" varStatus="status">
+					<tr  id="${status.index }" >
+						<td style="width:10%;text-align: center;">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
+					 	</td><td style="width: 15%;text-align: center;">
+					 		${item.name }
+					 	</td><td style="width: 15%;text-align: center;">
+					 		${item.statusName }
+					 	</td><td></td>
+					<tr>
+				</c:forEach>
+				
+				<!-- 分页 -->
+				<tr style="height: 30px">
+					<td colspan="10" style="text-align: center;font-size: 12px;">
+						<%@ include file="../page.jsp"%>
+					</td>
+				</tr>
+				
+			</table>
+		
+		</div>
 	</div>
 </body>
 </html>
