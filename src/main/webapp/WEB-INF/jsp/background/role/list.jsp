@@ -22,7 +22,7 @@
 						colkey : "name",
 						name : "角色名"
 					}, {
-						colkey : "enable",
+						colkey : "enableName",
 						name : "是否禁用"
 					},{
 						colkey : "roleKey",
@@ -102,6 +102,16 @@
 	function loadGird(){
 		grid.loadData();
 	}
+	/**单选***/
+	function checkId(obj){
+		var flag=obj.checked;
+		 $(":checkbox").attr("checked", false);
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
+	}
 </script>
 </head>
 <body>
@@ -121,9 +131,7 @@
 				class="icon-zoom-in icon-white" id="View"></i> View
 			</a> --> <a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
 				class="icon-edit icon-white"></i> Edit
-			</a> <a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> Delete
-			</a>
+			</a> 
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="permissions">
 				权限分配
 			</a>

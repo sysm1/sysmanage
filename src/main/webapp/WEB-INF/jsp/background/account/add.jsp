@@ -92,6 +92,16 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						name="password" type="password" class="checkpass" value="">
 						</div>
 						</td>
+				</tr><tr>
+					<td>分点：</td>
+					<td>
+						<select id="cityId" name="cityId">
+							<option value="">请选择</option>
+							<c:forEach items="${citys }" var="city">
+							<option value="${city.id }">${city.name }</option>
+							</c:forEach>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td class="l_right">账号说明：</td>

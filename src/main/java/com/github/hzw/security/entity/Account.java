@@ -26,7 +26,9 @@ public class Account implements java.io.Serializable {
 
 	private String state;//账号状态  0 表示停用  1表示启用
 	
-	private int cityId;
+	private String stateName;//账号状态  0 表示停用  1表示启用
+	
+	private Integer cityId;
 	
 	private String cityName;
 
@@ -98,11 +100,11 @@ public class Account implements java.io.Serializable {
 		this.roleName = roleName;
 	}
 
-	public int getCityId() {
+	public Integer getCityId() {
 		return cityId;
 	}
 
-	public void setCityId(int cityId) {
+	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
 
@@ -112,6 +114,19 @@ public class Account implements java.io.Serializable {
 
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+
+	public String getStateName() {
+		if("0".equals(state)){
+			stateName="停用";
+		}else{
+			stateName="正常";
+		}
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
 	}
 
 }

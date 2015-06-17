@@ -11,6 +11,7 @@
 	<sql id="selectId">
 		id,
 		enable,
+		CASE enable WHEN 1 THEN '正常' ELSE '停用' END enableName,
 		name,
 		roleKey,
 		description

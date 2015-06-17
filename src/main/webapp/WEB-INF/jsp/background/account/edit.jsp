@@ -79,12 +79,21 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td class="l_right">账号密码：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
-					<input id='password'
-						name="password" type="password" class="checkpass" value="">
-						</div>
-						</td>
-				</tr>
-				<tr>
+						<input id='password' name="password" type="password"  value="">
+						不填写密码就不会修改密码
+					</div>
+					</td>
+				</tr><tr>
+					<td>分点：</td>
+					<td>
+						<select id="cityId" name="cityId">
+							<option value="">请选择</option>
+							<c:forEach items="${citys }" var="city">
+							<option value="${city.id }" <c:if test="${account.cityId ==city.id }">selected="selected"</c:if> >${city.name }</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr><tr>
 					<td class="l_right">说明：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">

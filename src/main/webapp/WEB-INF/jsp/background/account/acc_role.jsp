@@ -21,7 +21,7 @@
 						colkey : "name",
 						name : "角色名"
 					}, {
-						colkey : "enable",
+						colkey : "enableName",
 						name : "是否禁用",
 						width:"70px"
 					},{

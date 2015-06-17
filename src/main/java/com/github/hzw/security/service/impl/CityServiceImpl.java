@@ -36,8 +36,10 @@ public class CityServiceImpl implements CityService{
 	public List<City> getCitys(HttpServletRequest request){
 		Account user=(Account) request.getSession().getAttribute("userSession");
 		City t=new City();
-		t.setId(user.getCityId());
-		t.setStatus(1);
+		if(null!=user.getCityId()){
+			t.setId(user.getCityId());
+			t.setStatus(1);
+		}
 		return queryAll(t);
 	}
 

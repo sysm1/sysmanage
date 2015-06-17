@@ -8,6 +8,7 @@ public class Roles implements java.io.Serializable {
 
 	private Integer id;
 	private String enable;//是否禁用角色　1　表示禁用　2　表示不禁用
+	private String enableName;
 	private String name;
 	private String roleKey;//唯一,新境时,需要判断
 	private String description;
@@ -62,6 +63,14 @@ public class Roles implements java.io.Serializable {
 
 	public void setRoleKey(String roleKey) {
 		this.roleKey = roleKey;
+	}
+
+	public String getEnableName() {
+		return enableName;
+	}
+
+	public void setEnableName(String enableName) {
+		this.enableName = enableName;
 	}
 
 }

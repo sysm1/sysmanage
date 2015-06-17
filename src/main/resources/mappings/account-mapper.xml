@@ -11,12 +11,12 @@
 	<sql id="selectId">
 		id,
 		accountName,
-		(select group_concat(name) from ly_role
-		where ly_role.id
+		(select group_concat(name) from ly_role where ly_role.id
 		in (SELECT role_id FROM acc_role WHERE
 		acc_id=account.id) ) roleName,
 		password,
-		description,
+		description,cityId,
+		(select name from city where id=cityId) cityName,
 		state,
 		createTime
 	</sql>
@@ -45,11 +45,14 @@
 		select
 		<include refid="selectId" />
 		from account
-		<where>
+		<where> 
 			<if test="t.accountName != null and t.accountName != ''">
 				accountName like '%${t.accountName}%'
+			</if><if test="t.state != null and t.state != ''">
+				state like '%${t.state}%'
 			</if>
 		</where>
+		order by state desc
 	</select>
 
 	<select id="queryNoMatch" resultType="Account" parameterType="java.util.HashMap">
@@ -78,10 +81,10 @@
 		accountName,
 		password,
 		description,
-		state )
+		state,cityId )
 		values (#{accountName},
 		#{password}, #{description},
-		#{state})
+		#{state},#{cityId})
 	</insert>
 
 	<delete id="delete" parameterType="String">
@@ -112,6 +115,8 @@
 			</if>
 			<if test="createTime != null and createTime != ''">
 				createTime=#{createTime}
+			</if><if test="cityId != null and cityId != ''">
+				cityId=#{cityId}
 			</if>
 		</set>
 		where id=#{id}
@@ -122,7 +127,7 @@
 		select
 		<include refid="selectId" />
 		from account where
-		accountName=#{accountName} and password=#{password}
+		accountName=#{accountName} and password=#{password} and state=1
 	</select>
 
 	<!-- 根据用户名查出id -->

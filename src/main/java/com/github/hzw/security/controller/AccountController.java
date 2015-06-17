@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.entity.Account;
-import com.github.hzw.security.entity.Resources;
+import com.github.hzw.security.entity.City;
 import com.github.hzw.security.service.AccountService;
+import com.github.hzw.security.service.CityService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.Md5Tool;
 import com.github.hzw.util.POIUtils;
@@ -28,8 +30,13 @@ public class AccountController extends BaseController{
 	@Inject
 	private AccountService accountService;
 	
+	@Inject
+	private CityService cityService;
+	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Account account,String pageNow,String pagesize) {
+		pageView = accountService.query(getPageView(pageNow,pagesize), account);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/account/list";
 	}
 	/**
@@ -78,7 +85,9 @@ public class AccountController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("addUI")
-	public String addUI() {
+	public String addUI(HttpServletRequest request) {
+		List<City> citys=cityService.getCitys(request);
+		request.setAttribute("citys", citys);
 		return Common.BACKGROUND_PATH+"/account/add";
 	}
 	
@@ -89,17 +98,10 @@ public class AccountController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("accRole")
-	public String accRole(Model model,String accountName,String roleName) {
-
-		try {
-			accountName=java.net.URLDecoder.decode(accountName,"UTF-8");  
-			roleName= java.net.URLDecoder.decode(roleName,"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			
-		} 
-		model.addAttribute("accountName", accountName);
-		model.addAttribute("roleName", roleName);
-		
+	public String accRole(Model model,String accountName,String roleName,String id) {
+		Account account=accountService.getById(id);
+		model.addAttribute("accountName", account.getAccountName());
+		model.addAttribute("roleName", account.getRoleName());
 		return Common.BACKGROUND_PATH+"/account/acc_role";
 	}
 	
@@ -110,9 +112,11 @@ public class AccountController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("editUI")
-	public String editUI(Model model,String accountId) {
+	public String editUI(Model model,String accountId,HttpServletRequest request) {
+		List<City> citys=cityService.getCitys(request);
 		Account account = accountService.getById(accountId);
 		model.addAttribute("account", account);
+		model.addAttribute("citys", citys);
 		return Common.BACKGROUND_PATH+"/account/edit";
 	}
 	

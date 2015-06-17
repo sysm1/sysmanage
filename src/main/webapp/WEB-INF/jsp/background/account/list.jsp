@@ -11,38 +11,10 @@
 	var dialog;
 	var grid;
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid({
-					id : 'paging',
-					l_column : [ {
-						colkey : "id",
-						name : "id",
-						width : "50px"
-					}, {
-						colkey : "accountName",
-						name : "用户名"
-					}, {
-						colkey : "roleName",
-						name : "所属角色",
-						width:"70px"
-					}, {
-						colkey : "state",
-						name : "账号状态",
-						width : "150px"
-					}, {
-						colkey : "description",
-						name : "描述"
-					}, {
-						colkey : "createTime",
-						name : "时间"
-					} ],
-					jsonUrl : '${pageContext.request.contextPath}/background/account/query.html',
-					checkbox : true
-				});
 		$("#seach").click("click", function() {//绑定查询按扭
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			}); 
+			var f = $('#fenye');
+			f.attr('action','${pageContext.request.contextPath}/background/account/list.html');
+			f.submit();
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
@@ -60,7 +32,7 @@
 			});
 		});
 		$("#editView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
@@ -74,15 +46,15 @@
 			});
 		});
 		$("#perrole").click("click", function() {//绑定查询按扭
-			var cbox=grid.selectRow();
-			if (cbox.id == undefined || cbox.id=="") {
-				parent.$.ligerDialog.alert("请选择一条数据!");
+			var cbox=getSelectedCheckbox();
+			if (cbox.length > 1||cbox=="") {
+				parent.$.ligerDialog.alert("只能选中一个");
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
 				width : 500,
 				height : 410,
-				url : rootPath + '/background/account/accRole.html?id='+cbox.id+'&accountName='+encodeURI(encodeURI(cbox.accountName))+'&roleName='+encodeURI(encodeURI(cbox.roleName)),
+				url : rootPath + '/background/account/accRole.html?id='+cbox,
 				title : "分配角色",
 				isHidden : false
 			});
@@ -116,15 +88,35 @@
 		});
 	});
 	function loadGird(){
-		grid.loadData();
+		location.reload();
 	}
+	/**单选***/
+	function checkId(obj){
+		var flag=obj.checked;
+		 $(":checkbox").attr("checked", false);
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
+	}
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+		});
+		return arr;
+	};
 </script>
 </head>
 <body>
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye">
-				名称：<input type="text" name="accountName" value="${param.name}"
+				名称：<input type="text" name="accountName" value="${param.accountName}"
 					style="height: 20px" /> <a class="btn btn-primary"
 					href="javascript:void(0)" id="seach"> 查询
 				</a>
@@ -137,17 +129,53 @@
 				class="icon-zoom-in icon-white" id="View"></i> View
 			</a> --> <a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
 				class="icon-edit icon-white"></i> Edit
-			</a> <a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
+			</a> <!--a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete
-			</a>
-			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
-				导出excel
-			</a>
+			</a-->
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="perrole">
 				分配角色
 			</a>
 		</div>
-		<div id="paging" class="pagclass"></div>
+		<div id="paging" class="pagclass">
+		<table class="dataintable" style="width: 100%;">
+				<tr>
+					<th >选择</th>
+					<th >用户名</th>
+					<th >分点</th>
+					<th >所属角色</th>
+					<th >账号状态</th>
+					<th >描述</th>
+					<th>创建时间</th>
+				</tr>
+				
+				<c:forEach var="item" items="${pageView.records }" varStatus="status">
+					<tr  id="${status.index }" >
+						<td style="width:10%;text-align: center;">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
+					 	</td><td style="width: 15%;text-align: center;">
+					 		${item.accountName }
+					 	</td><td style="text-align: center;">
+					 		<c:if test="${item.cityId == null }">-</c:if>
+					 		${item.cityName }
+					 	</td><td style="width: 25%;text-align: center;">
+					 		${item.roleName }
+					 	</td><td style="text-align: center;">
+					 		${item.stateName }
+					 	</td><td>
+					 		${item.description }
+					 	</td><td>
+					 		<fmt:formatDate value="${item.createTime  }" pattern="yyyy-MM-dd"/>
+					 	</td>
+					<tr>
+				</c:forEach>
+				<!-- 分页 -->
+				<tr style="height: 30px">
+					<td colspan="10" style="text-align: center;font-size: 12px;">
+						<%@ include file="../page.jsp"%>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </body>
 </html>
