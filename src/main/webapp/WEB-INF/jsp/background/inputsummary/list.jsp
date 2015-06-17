@@ -192,7 +192,7 @@ ul { list-style:none;}
 	}
 	
 	function loadGird(){
-		grid.loadData();
+		location.reload();
 	}
 	/**
 	 * 获取选中的值

@@ -16,5 +16,7 @@ public interface OrderInputService extends BaseService<OrderInput> {
 	public List<OrderInputVO> queryByIds(String[] ids);
 	
 	public void addOrderInput(HttpServletRequest request);
+	
+	public void updateOrderInput(HttpServletRequest request);
 
 }

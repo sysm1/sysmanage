@@ -193,6 +193,27 @@ public class OrderInputController extends BaseController {
 	}
 	
 	/**
+	 * 更新类型
+	 * 
+	 * @param model
+	 * @return
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping("update2")
+	public Map<String, Object> update2(HttpServletRequest request,Model model, OrderInput info) {
+		orderInputService.updateOrderInput(request);
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			map.put("flag", "true");
+		} catch (Exception e) {
+			map.put("flag", "false");
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	/**
 	 * 删除
 	 * 
 	 * @param model

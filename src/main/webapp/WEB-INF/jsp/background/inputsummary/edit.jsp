@@ -23,7 +23,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.input.loadGird();
+								parent.inputsummary.loadGird();
 								closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
@@ -289,7 +289,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			</tr>
 		</table>
 	</div>
-	<form name="form" id="form" action="${ctx}/background/input/add.html" method="post">
+	<form name="form" id="form" action="${ctx}/background/input/update2.html" method="post">
 	<table><tr><td valign="top">
 		<table id="table1" border="1" name="table1" class="dataintable">
 			<tbody>
@@ -310,6 +310,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<tr>
 					<td style="width: 40px;text-align: center;">
 						<input type="checkbox" id="checkId" name="checkId" value="1">
+						<input type="hidden" id="id" name="id" value="${input.id }">
 					</td>
 					<td class="l_left" style="width: 100px;">
 						<select id="clothId" name="clothId" onchange="changeClothSelect(this);" style="width:110px;">
