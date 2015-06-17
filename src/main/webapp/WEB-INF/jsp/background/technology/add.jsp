@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 //单独验证某一个input  class="checkpass"
 jQuery.validator.addMethod("checkpass", function(value, element) {
@@ -71,11 +72,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	}
 </script>
 </head>
-<body>
+<body style="text-align: center;">
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/technology/add.html" method="post">
-		<table style="width: 285px; height: 200px;">
+		<table style="width: 285px; height: 200px;"  class="dataintable">
 			<tbody>
 				<tr>
 					<td class="l_right">名称：</td>
@@ -83,9 +84,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<div class="lanyuan_input">
 					<input id='name' name="name" type="text" value="">
 						</div></td>
-				</tr>
-				
-				<tr>
+				</tr><tr>
+					<td style="text-align: right;">状态：</td>
+					<td style="text-align: left;">
+						<input type="radio" id="status1" name="status" value="1" checked="checked">正常
+						<input type="radio" id="status2" name="status" value="2" >停用
+					</td>
+				</tr><tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
@@ -100,9 +105,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<div class="l_btn_centent">
 								<!-- saveWin_form   from是表单Ｉd-->
 								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-									onclick="closeWin()"><span>关闭</span> </a>
+									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
 							</div>
 						</td>
 				</tr>

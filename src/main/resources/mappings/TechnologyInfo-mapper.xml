@@ -3,7 +3,7 @@
 <mapper namespace="com.github.hzw.security.mapper.TechnologyInfoMapper" >
  
   <sql id="selectId" >
-    id, pinyin, name, mark
+    id, pinyin, name, mark,status
   </sql>
   
   <select id="query" resultType="TechnologyInfo" parameterType="TechnologyInfo">
@@ -16,39 +16,41 @@
 		</if>
 		<if test="t.mark != null and t.mark != ''">
 			and mark like '%${t.mark}%'
+		</if><if test="t.status!=null and t.status!=''">
+			and status =#{t.status}
 		</if>
 		</where>
-		order by id desc
+		order by status,id 
 	</select>
 
 	<select id="queryPinyin" resultType="TechnologyInfo" parameterType="map">
 		select
 		<include refid="selectId" />
 		from technology_info
-		<where>
+		<where> status=1 
 		<if test="t != null and t != ''">
-			name like '%${t}%' or pinyin like '%${t}%'
+			and name like '%${t}%' or pinyin like '%${t}%'
 		</if>
 		</where>
-		order by id desc
+		order by id 
 	</select>
 
 	<select id="queryAll" resultType="TechnologyInfo">
 		select
 		<include refid="selectId" />
-		from technology_info
-		order by id desc
+		from technology_info where status=1 
+		order by id 
 	</select>
 
 
 	<insert id="add" parameterType="TechnologyInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into technology_info (
-			pinyin, name, mark
+			pinyin, name, mark,status
 		)
 		values(
 			#{pinyin},
 			#{name},
-			#{mark}
+			#{mark},#{status}
 		)
 	</insert>
 	
@@ -74,6 +76,8 @@
       	</if>
 		<if test="mark != null" >
         	mark=#{mark},
+      	</if><if test="status!=null">
+      		status=#{status}
       	</if>
 		</set>
 		where id=#{id}

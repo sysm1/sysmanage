@@ -29,7 +29,9 @@ public class TechnologyInfoController extends BaseController {
 	private TechnologyInfoService technologyInfoService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, TechnologyInfo info,String pageNow,String pagesize) {
+		pageView = technologyInfoService.query(getPageView(pageNow,pagesize), info);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/technology/list";
 	}
 	

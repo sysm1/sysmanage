@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 
 jQuery.validator.addMethod("checkpass", function(value, element) {
@@ -76,7 +77,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/technology/update.html" method="post">
-		<table style="width: 285px; height: 200px;">
+		<table style="width: 285px; height: 200px;"  class="dataintable">
 			<tbody>
 				<tr>
 					<td class="l_right">名称：</td>
@@ -84,9 +85,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<input id='id' name="id" type="hidden" value="${technology.id}">
 					<input id='name' name="name" class="isNum" type="text" value="${technology.name}">
 					</td>
-				</tr>
-				
-				<tr>
+				</tr><tr>
+					<td style="text-align: right;">状态：</td>
+					<td style="text-align: left;">
+						<input type="radio" id="status1" name="status" value="1" <c:if test="${technology.status ==1 }">checked="checked"</c:if> >正常
+						<input type="radio" id="status2" name="status" value="2" <c:if test="${technology.status ==2 }">checked="checked"</c:if>>停用
+					</td>
+				</tr><tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 					<div class="lanyuan_input">
@@ -101,9 +106,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<div class="l_btn_centent">
 								<!-- saveWin_form   from是表单Ｉd-->
 								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-									onclick="closeWin()"><span>关闭</span> </a>
+									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> 
 							</div>
 					</td>
 				</tr>

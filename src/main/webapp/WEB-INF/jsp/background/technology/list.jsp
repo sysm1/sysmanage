@@ -7,34 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
+<link href="${ctx}/css/unsub.css" rel="stylesheet">
 <script type="text/javascript">
 	var dialog;
 	var grid;
+	var delarr = [];
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid({
-					id : 'paging',
-					l_column : [ {
-						colkey : "id",
-						name : "id",
-						width : "50px"
-					},
-					{
-						colkey : "name",
-						name : "名称",
-						width:"300px"
-					}, {
-						colkey : "mark",
-						name : "备注"
-					}],
-					jsonUrl : '${pageContext.request.contextPath}/background/technology/query.html',
-					checkbox : true
-				});
 		
 		$("#seach").click("click", function() {//绑定查询按扭
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			}); 
+			var f = $('#fenye');
+			f.attr('action','${pageContext.request.contextPath}/background/technology/list.html');
+			f.submit();
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
@@ -55,7 +38,7 @@
 		});
 		
 		$("#editView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
@@ -98,8 +81,19 @@
 		});
 	});
 	function loadGird(){
-		grid.loadData();
+		window.location.reload();
 	}
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+			delarr.push($(this).val());
+		});
+		return arr;
+	};
 </script>
 </head>
 <body>
@@ -114,7 +108,7 @@
 		</div>
 		<div class="topBtn">
 			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>add</span>
+				class="icon-zoom-add icon-white"></i> <span>新增</span>
 			</a> 
 			
 			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
@@ -122,18 +116,55 @@
 			</a> --> 
 			
 			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> Edit
+				class="icon-edit icon-white"></i> 修改
 			</a> 
 			
-			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
+			<!-- a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete
-			</a>
+			</a-->
 			
-			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
+			<!--a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
 				导出excel
-			</a>
+			</a-->
 		</div>
-		<div id="paging" class="pagclass"></div>
+		<div id="paging" class="pagclass">
+		<table class="dataintable" style="width: 100%;">
+				<tr>
+					<th class="specalt" style="width:35px;">选择</th>
+					<th>名称</th>
+					<th>状态</th>
+					<th>备注</th>
+					<!--th>工厂颜色</th>
+					<th style="width:80px;">到货日期</th>
+					<th>我司验货报告</th>
+					<th>工厂交涉情况</th-->
+				</tr>
+				
+				<c:forEach var="item" items="${pageView.records }" varStatus="status">
+					<tr  id="${status.index }" >
+						<td style="width:10%;text-align: center;">
+					 		<input type="checkbox"  id="checkId" name="checkId" value="${item.id }" >
+					 	</td><td style="width: 15%;">
+					 		${item.name }
+					 	</td><td style="width: 10%;text-align: center;">
+					 		<c:if test="${item.status ==1 }">
+					 			正常
+					 		</c:if><c:if test="${item.status ==2 }">
+					 			停用
+					 		</c:if>
+					 	</td><td>
+					 		${item.mark }
+					 	</td>
+					<tr>
+				</c:forEach>
+				<!-- 分页 -->
+				<tr style="height: 35px">
+					<td colspan="10" style="text-align: center;font-size: 14px;">
+						<%@ include file="../page.jsp"%>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </body>
 </html>
