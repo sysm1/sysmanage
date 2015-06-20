@@ -200,7 +200,7 @@ public class OrderInputController extends BaseController {
 	}
 	
 	/**
-	 * 更新类型
+	 * 更新
 	 * 
 	 * @param model
 	 * @return

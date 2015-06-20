@@ -105,7 +105,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				return false;
 			}
 			//alert(row.cells[2].childNodes[0].value);
-			if(row.cells[2].childNodes[0].value==''){
+			/*if(row.cells[2].childNodes[0].value==''){
 				alert("请选择我司编号");
 				row.cells[2].childNodes[0].focus();
 				return false;
@@ -113,13 +113,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				alert("请选择我司颜色");
 				row.cells[3].childNodes[0].focus();
 				return false;
-			}if(row.cells[4].childNodes[0].value==''){
+			}
+			*/if(row.cells[5].childNodes[0].value==''){
 				alert("请添加下单数量");
-				row.cells[4].childNodes[0].focus();
+				row.cells[5].childNodes[0].focus();
 				return false;
-			}if(row.cells[7].childNodes[0].value==''){
+			}if(row.cells[8].childNodes[0].value==''){
 				alert("请选择业务员");
-				row.cells[7].childNodes[0].focus();
+				row.cells[8].childNodes[0].focus();
 				return false;
 			}
 		}
@@ -140,7 +141,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	　  		newtr.find("input").eq(2).attr("value",'');
 	　  		newtr.find("input").eq(3).attr("value",'');
 	　  		newtr.find("input").eq(4).attr("value",'');
-	　  		newtr.children('td').eq(2).html(select);
+	　  		//newtr.children('td').eq(2).html(select);
 	　  		$("input[name='checkId']").attr("checked",false);
 	    });
 	    $('#copyone').click(function(){
@@ -298,6 +299,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</th>
 					<th align="right" style="width: 100px;">布种</th>
+					<th align="right" style="width: 100px;">工艺</th>
 					<th align="right" style="width: 150px;">我司编号</th>
 					<th align="right">我司颜色</th>
 					<th >数量</th>
@@ -317,6 +319,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							<option value="">请选择</option>
 							<c:forEach items="${ cloths }" var = "cloth">
 								<option <c:if test="${cloth.id eq input.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
+							</c:forEach>
+						</select>
+					</td><td class="l_left" style="width: 100px;">
+						<select id="technologyId" name="technologyId" style="width:110px;">
+							<c:forEach items="${ technologys }" var = "technology">
+								<option <c:if test="${technology.id eq input.technologyId }">selected="selected"</c:if> value="${technology.id }">${technology.name}</option>
 							</c:forEach>
 						</select>
 					</td>

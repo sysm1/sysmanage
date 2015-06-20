@@ -276,6 +276,7 @@
 		<table class="dataintable" style="width: 100%;">
 				<tr>
 					<th >选择</th>
+					<th>序号</th>
 					<th >下单日期</th>
 					<th >布种</th>
 					<th >工艺</th>
@@ -290,7 +291,9 @@
 					<tr  id="${status.index }" >
 						<td style="width:5%;text-align: center;">
 					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
-					 	</td><td style="text-align: center;">
+					 	</td><td>
+					 		${item.id }
+					 	</td><td style="text-align: center;width: 80px;">
 					 		<fmt:formatDate value="${item.createTime  }" pattern="yyyy-MM-dd"/>
 					 	</td><td style="text-align: center;">
 					 		${item.clothName }

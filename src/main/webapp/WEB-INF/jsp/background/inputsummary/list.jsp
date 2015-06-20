@@ -169,7 +169,7 @@ ul { list-style:none;}
 	
 	
 	function deleajax(data1) {
-		alert(data1);
+		//alert(data1);
 		$.ajax({
 		    type: "post", //使用get方法访问后台
 		    dataType: "json", //json格式的数据

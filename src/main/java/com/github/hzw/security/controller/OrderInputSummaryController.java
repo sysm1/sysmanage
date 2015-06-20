@@ -161,7 +161,9 @@ public class OrderInputSummaryController extends BaseController {
 		}
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		List<TechnologyInfo> technologys=technologyInfoService.queryAll(null);
 		model.addAttribute("cloths", cloths);
+		model.addAttribute("technologys", technologys);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("list", list);
 		return Common.BACKGROUND_PATH+"/inputsummary/edit";

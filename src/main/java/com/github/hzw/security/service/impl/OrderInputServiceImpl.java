@@ -130,6 +130,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 		String[] myCompanyColor=request.getParameterValues("myCompanyColor");
 		String[] num=request.getParameterValues("num");
 		//String[] unit=request.getParameterValues("unit");
+		String[] technologyIds=request.getParameterValues("technologyId");
 		String[] mark=request.getParameterValues("mark");
 		String[] salesmanId=request.getParameterValues("salesmanId");
 		OrderInputSummary inputSummary=new OrderInputSummary();
@@ -144,6 +145,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 			bean.setMyCompanyColor(myCompanyColor[i]);
 			bean.setNum(Integer.parseInt(num[i]));
 			bean.setSalesmanId(Integer.parseInt(salesmanId[i]));
+			bean.setTechnologyId(Integer.parseInt(technologyIds[i]));
 			bean.setStatus(0);
 			ClothInfo clothInfo=new ClothInfo();
 			clothInfo=clothInfoService.getById(bean.getClothId()+"");
@@ -155,6 +157,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 				inputSummary.setMyCompanyCode(bean.getMyCompanyCode());
 				inputSummary.setClothId(bean.getClothId());
 				inputSummary.setMyCompanyColor(bean.getMyCompanyColor());
+				inputSummary.setTechnologyId(bean.getTechnologyId());
 				olist=orderInputSummaryMapper.queryAll(inputSummary);
 				if(olist.size()>0){
 					inputSummary=olist.get(0);

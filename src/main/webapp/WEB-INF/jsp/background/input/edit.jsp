@@ -263,6 +263,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</th>
 					<th align="right">布种</th>
+					<th>工艺</th>
 					<th align="right" style="width: 150px;">我司编号</th>
 					<th align="right">我司颜色</th>
 					<th >数量</th>
@@ -280,6 +281,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 								<option <c:if test="${cloth.id eq input.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
+					</td><td>
+						<td class="l_left" style="width: 100px;">
+						<select id="technologyId" name="technologyId" style="width:110px;">
+							<c:forEach items="${ technologys }" var = "technology">
+								<option <c:if test="${technology.id eq input.technologyId }">selected="selected"</c:if> value="${technology.id }">${technology.name}</option>
+							</c:forEach>
+						</select>
+					</td>
 					</td>
 					<td>
 						<select id="myCompanyCode" name="myCompanyCode" style="width:150px;">
