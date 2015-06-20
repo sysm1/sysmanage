@@ -20,6 +20,10 @@ public class OrderInputSummary {
 
     private Integer num;
     
+    private Integer technologyId;
+    
+    private String technologyName;
+    
     /***数量单位**/
     private Integer unit;
 
@@ -208,5 +212,21 @@ public class OrderInputSummary {
 	/***数量单位**/
 	public void setUnit(Integer unit) {
 		this.unit = unit;
+	}
+
+	public Integer getTechnologyId() {
+		return technologyId;
+	}
+
+	public void setTechnologyId(Integer technologyId) {
+		this.technologyId = technologyId;
+	}
+
+	public String getTechnologyName() {
+		return technologyName;
+	}
+
+	public void setTechnologyName(String technologyName) {
+		this.technologyName = technologyName;
 	}
 }

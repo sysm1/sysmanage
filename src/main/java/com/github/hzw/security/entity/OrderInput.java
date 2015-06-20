@@ -18,6 +18,10 @@ public class OrderInput {
     
     private String saleManName;
 
+    private Integer technologyId;
+    
+    private String technologyName;
+    
     private Integer status;
 
     private Date createTime;
@@ -135,5 +139,21 @@ public class OrderInput {
 
 	public void setSaleManName(String saleManName) {
 		this.saleManName = saleManName;
+	}
+
+	public Integer getTechnologyId() {
+		return technologyId;
+	}
+
+	public void setTechnologyId(Integer technologyId) {
+		this.technologyId = technologyId;
+	}
+
+	public String getTechnologyName() {
+		return technologyName;
+	}
+
+	public void setTechnologyName(String technologyName) {
+		this.technologyName = technologyName;
 	}
 }

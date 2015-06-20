@@ -12,7 +12,8 @@
     factory_code factoryCode, 
     factory_color factoryColor, 
     my_company_code myCompanyCode, 
-    my_company_color myCompanyColor
+    my_company_color myCompanyColor,
+    mark
   </sql>
   
   <select id="query" resultType="FlowerAdditional" parameterType="FlowerAdditional">
@@ -105,14 +106,14 @@
 
 	<insert id="add" parameterType="FlowerAdditional" useGeneratedKeys="true" keyProperty="id">
 		insert into flower_additional (
-			flower_id, factory_code, factory_color, my_company_code, my_company_color
+			flower_id, factory_code, factory_color, my_company_code, my_company_color,mark
 		)
 		values(
 			#{flowerId},
 			#{factoryCode},
 			#{factoryColor},
 			#{myCompanyCode},
-			#{myCompanyColor}
+			#{myCompanyColor},#{mark}
 		)
 	</insert>
 	
@@ -149,6 +150,8 @@
       	</if>
       	<if test="myCompanyColor != null and myCompanyColor != ''">
         	my_company_color=#{myCompanyColor},
+      	</if><if test="mark != null and mark != ''">
+        	mark=#{mark},
       	</if>
 		</set>
 		where id=#{id}

@@ -40,6 +40,10 @@ public class OrderInputSummaryVO {
     private Integer unit;
 
     private String orderIds;
+    
+    private Integer technologyId;
+    
+    private String technologyName;
 
     private String mark;
     
@@ -156,5 +160,21 @@ public class OrderInputSummaryVO {
 
 	public void setNumText(String numText) {
 		this.numText = numText;
+	}
+
+	public Integer getTechnologyId() {
+		return technologyId;
+	}
+
+	public void setTechnologyId(Integer technologyId) {
+		this.technologyId = technologyId;
+	}
+
+	public String getTechnologyName() {
+		return technologyName;
+	}
+
+	public void setTechnologyName(String technologyName) {
+		this.technologyName = technologyName;
 	}
 }

@@ -39,7 +39,7 @@
 		select
 		<include refid="selectId" />
 		from technology_info where status=1 
-		order by id 
+		order by status, id 
 	</select>
 
 

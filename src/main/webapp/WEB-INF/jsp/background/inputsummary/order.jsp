@@ -137,7 +137,71 @@ function changeFactory(obj){
 	     }
 	});
 }
-	
+
+function selectFacctoryColor(obj){
+	var factoryCode=$("#factoryCode").val();
+	var myCompanyCode=$('#myCompanyCode').val();
+	var myCompanyColor=$('#myCompanyColor').val();
+	var factoryColor=$('#factoryColor').val();
+	$.ajax({
+	    type: "post", //使用get方法访问后台
+	    dataType: "json", //json格式的数据
+	    async: false, //同步   不写的情况下 默认为true
+	    url: rootPath + '/background/flower/queryColorMark.html?factoryCode='+factoryCode+
+	    		'&myCompanyCode='+myCompanyCode, //要访问的后台地址
+	    data: {myCompanyColor:myCompanyColor,factoryColor:factoryColor}, //要发送的数据
+	    success: function(data){
+	    	if(null!=data&&data!=''){
+	    		$('#tip').show();
+	    		$('#tip').attr('title',data);
+	    	}else{
+	    		$('#tip').hide();
+	    	}
+		},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+			alert(XMLHttpRequest.status);
+			alert(XMLHttpRequest.readyState);
+			alert(data);  
+	     }
+	});
+}
+
+
+if(1==2){
+	//alert(1);
+	$.ajax({
+	    type: "post", //使用get方法访问后台
+	    dataType: "json", //json格式的数据
+	    async: false, //同步   不写的情况下 默认为true
+	    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
+	    data: {clothId:'${inputsummary.clothId }'}, //要发送的数据
+	    success: function(data){
+	    	//alert(data);
+	    	var td2 = obj.parentNode.parentNode.children[3];
+	    	if(data!=null&&data!=''){
+		    	var selectb=null;
+		    	var selecte=null;
+		    	var options='<option value="">请选择</option>';
+		    	selectb='<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">';
+		    	for(var i=0;i<data.length;i++){
+		    		if(null!=data[i]){
+		    			options+='<option value="'+data[i]+'">'+data[i]+'</option>';
+		    		}
+		    	}
+		    	selecte='</select>';
+		    	td2.innerHTML=selectb+options+selecte;
+	    	}else{
+	    		td2.innerHTML='<input type="text" id="myCompanyCode" name="myCompanyCode" value="" style="width:92%;">';
+	    	}
+		},error : function() {    
+	          // view("异常！");
+	          alert("异常！");    
+	     } 
+	});
+}
+
+function setValue(id,obj){
+	$('#'+id).attr('value',obj.value);
+}
 </script>
 </head>
 <body>
@@ -196,6 +260,9 @@ function changeFactory(obj){
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyCode }');" style="color: ${codeRed};cursor:pointer;" </c:if> 
 						>
 							${inputsummary.myCompanyCode }
+							<c:if test="${inputsummary.myCompanyCode ==null ||inputsummary.myCompanyCode=='' }">
+							<input type="text" id="myCompanyCode1" name="myCompanyCode1" value="" onchange="setValue('myCompanyCode',this);" style="width:92%;">
+							</c:if>
 						</div>
 					</td>
 					<!--td class="l_right">布种颜色：</td>
@@ -214,7 +281,6 @@ function changeFactory(obj){
 					<td style="text-align: left;" colspan="5">
 						<div class="lanyuan_input">
 							<select id='technologyId' name="technologyId" class="frameborder">
-								<option value="">请选择</option>
 								<c:forEach var="item" items="${technologyInfos }">
 								<option value="${item.id }" >${item.name }</option>
 								</c:forEach>
@@ -239,6 +305,9 @@ function changeFactory(obj){
 							<c:if test="${codeRed !=null }">onclick="addtoflower('${inputsummary.myCompanyColor }');" style="color: ${codeRed};cursor:pointer;" </c:if>
 						> 
 							${inputsummary.myCompanyColor }
+							<c:if test="${inputsummary.myCompanyColor ==null||inputsummary.myCompanyColor =='' }">
+							<input type="text" id="myCompanyColor1" name="myCompanyColor1" value="" style="width:92%;" onchange="setValue('myCompanyColor',this);">
+							</c:if>
 						</div>
 					</td>
 				</tr><tr>
@@ -251,12 +320,12 @@ function changeFactory(obj){
 					<td class="l_right">工厂颜色：</td>
 					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryColor" name="factoryColor" class="frameborder">
+							<select id="factoryColor" name="factoryColor" class="frameborder" style="width: 90%;" onchange="selectFacctoryColor(this);">
 								<option value="">请选择</option>
 								<c:forEach var="color" items="${factoryColors }">
 									<option value="${color}">${color }</option>
 								</c:forEach>
-							</select>
+							</select><span id="tip" style="font-size: 20px;font-weight: bold;display: none;">&nbsp;?</span>
 						</div>
 					</td>
 				</tr><tr>

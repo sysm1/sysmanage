@@ -72,6 +72,21 @@ public class FlowerInfoController extends BaseController{
 		return pageView;
 	}
 	
+	/**
+	 * @param model
+	 * 存放返回界面的model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryColorMark")
+	public String queryColorMark(FlowerAdditional flowerAdditional,String factoryCode) {
+		List<FlowerAdditional> list=flowerAdditionalService.queryFind(flowerAdditional);
+		if(null!=list&&list.size()>0){
+			return list.get(0).getMark();
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * 保存数据

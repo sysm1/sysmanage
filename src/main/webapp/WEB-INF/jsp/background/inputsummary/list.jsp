@@ -169,6 +169,7 @@ ul { list-style:none;}
 	
 	
 	function deleajax(data1) {
+		alert(data1);
 		$.ajax({
 		    type: "post", //使用get方法访问后台
 		    dataType: "json", //json格式的数据
@@ -245,16 +246,22 @@ ul { list-style:none;}
 			var td7=tr.insertCell(7);
 			var td8=tr.insertCell(8);
 			var td9=tr.insertCell(9);
+			var td10=tr.insertCell(10);
 			td0.innerHTML='<input type="hidden" name="chtd'+pos+'" >';
 			td1.innerHTML='&nbsp;&nbsp;&nbsp;&nbsp;<input onclick="checkAllChild(this);" type="checkbox" ismap="'+data[i].summId+'" id="'+data[i].id+'_'+data[i].summId+'" name="childcheckId" value="'+data[i].id+'_'+data[i].summId+'">';
 			td2.innerHTML=data[i].id;
 			td3.innerHTML=data[i].createTime;
 			td4.innerHTML=data[i].clothName;
-			td5.innerHTML=data[i].myCompanyCode;
-			td6.innerHTML=data[i].myCompanyColor;
-			td7.innerHTML=data[i].numText;
-			td8.innerHTML=data[i].mark;
-			td9.innerHTML=data[i].saleManName;
+			if(null==data[i].technologyName){
+				td5.innerHTML='-';
+			}else{
+				td5.innerHTML=data[i].technologyName;
+			}
+			td6.innerHTML=data[i].myCompanyCode;
+			td7.innerHTML=data[i].myCompanyColor;
+			td8.innerHTML=data[i].numText;
+			td9.innerHTML=data[i].mark;
+			td10.innerHTML=data[i].saleManName;
 		}
 	} 
 	
@@ -312,6 +319,7 @@ ul { list-style:none;}
 					<th style="width:50px;">序号</th>
 					<th style="widht:100px;">下单时间</th>
 					<th>布种</th>
+					<th>工艺</th>
 					<th>我司编号</th>
 					<th>我司颜色</th>
 					<th>数量</th>
@@ -329,6 +337,9 @@ ul { list-style:none;}
 						<td style="background:#FFE4B5;">${item.id }</td>
 						<td style="background:#FFE4B5;"></td>
 						<td style="background:#FFE4B5;">${item.clothName }</td>
+						<td style="background:#FFE4B5;">${item.technologyName }
+							<c:if test="${item.technologyName ==null}">-</c:if>
+						</td>
 						<td style="background:#FFE4B5;">${item.myCompanyCode }</td>
 						<td style="background:#FFE4B5;">${item.myCompanyColor }</td>
 						<td style="background:#FFE4B5;">${item.numText }</td>

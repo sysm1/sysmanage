@@ -97,7 +97,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				return false;
 			}
 		}
-		
+		var colindex=1;
 		for(var i=1;i<rows;i++){
 			row=table.rows[i];
 			//alert(row.cells[2].innerHTML);
@@ -108,21 +108,22 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				return false;
 			}
 			//alert(row.cells[2].childNodes[0].value);
-			if(row.cells[2].childNodes[0].value==''){
+			/*if(row.cells[3].childNodes[0].value==''){
 				alert("请选择我司编号");
-				row.cells[2].childNodes[0].focus();
-				return false;
-			}if(row.cells[3].childNodes[0].value==''){
-				alert("请选择我司颜色");
 				row.cells[3].childNodes[0].focus();
 				return false;
 			}if(row.cells[4].childNodes[0].value==''){
-				alert("请添加下单数量");
+				alert("请选择我司颜色");
 				row.cells[4].childNodes[0].focus();
 				return false;
-			}if(row.cells[7].childNodes[0].value==''){
+			}*/
+			if(row.cells[5].childNodes[0].value==''){
+				alert("请添加下单数量");
+				row.cells[5].childNodes[0].focus();
+				return false;
+			}if(row.cells[8].childNodes[0].value==''){
 				alert("请选择业务员");
-				row.cells[7].childNodes[0].focus();
+				row.cells[8].childNodes[0].focus();
 				return false;
 			}
 		}
@@ -211,11 +212,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
 		    data: {clothId:obj.value}, //要发送的数据
 		    success: function(data){
-		    	var td2 = obj.parentNode.parentNode.children[2];
+		    	var td2 = obj.parentNode.parentNode.children[3];
 		    	if(data!=null&&data!=''){
 			    	var selectb=null;
 			    	var selecte=null;
-			    	var options='';
+			    	var options='<option value="">请选择</option>';
 			    	selectb='<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">';
 			    	for(var i=0;i<data.length;i++){
 			    		if(null!=data[i]){
@@ -238,7 +239,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		if(name=='包'){
 			name="KG";
 		}
-		obj.parentNode.parentNode.children[5].innerHTML=name;
+		obj.parentNode.parentNode.children[6].innerHTML=name;
 	}
 	
 	/**查询未回数量**/
@@ -257,7 +258,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			    	if(null==data){
 			    		data='未下单';
 			    	}
-			    	obj.parentNode.parentNode.children[8].innerHTML=data;
+			    	obj.parentNode.parentNode.children[9].innerHTML=data;
 				},error : function() {    
 			          alert("异常！");    
 			     } 
@@ -301,6 +302,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input type="checkbox" id="checkAll" name="checkAll">
 					</th>
 					<th align="right">布种</th>
+					<th align="right">工艺</th>
 					<th align="right" style="width: 150px;">我司编号</th>
 					<th align="right">我司颜色</th>
 					<th >数量</th>
@@ -319,14 +321,16 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 								<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
 							</c:forEach>
 						</select>
-					</td>
-					<td>
-						
+					</td><td class="l_left" style="width: 100px;">
+						<select id="technologyId" name="technologyId" style="width:110px;">
+							<c:forEach items="${ technologys }" var = "technology">
+								<option <c:if test="${technology.id eq bean.technologyId }">selected="selected"</c:if> value="${technology.id }">${technology.name}</option>
+							</c:forEach>
+						</select>
+					</td><td>
 						<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">
 							<option value="">请选择</option>
 						</select>
-						
-						
 					</td><td class="l_left" style="width: 150px;">
 						<input type="text" name="myCompanyColor" style="width:150px;" value="" onchange="queryNoReturnNum(this)">
 					</td>

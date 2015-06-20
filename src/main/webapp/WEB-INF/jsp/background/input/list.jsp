@@ -11,50 +11,12 @@
 	var dialog;
 	var grid;
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid({
-					id : 'paging',
-					l_column : [ {
-						colkey : "id",
-						name : "序号",
-						width : "50px"
-					},  {
-						colkey : "createTime",
-						name : "下单日期",
-						width:"80px"
-					}, {
-						colkey : "clothName",
-						name : "布种",
-						width:"100px"
-					}, {
-						colkey : "myCompanyCode",
-						name : "我司编号",
-						width:"110px"
-					}, {
-						colkey : "myCompanyColor",
-						name : "我司颜色",
-						width:"110px"
-					}, {
-						colkey : "unit",
-						name : "数量",
-						align : 'right',
-						width:"100px"
-					}, {
-						colkey : "mark",
-						name : "备注"
-					}, {
-						colkey : "saleManName",
-						name : "业务员",
-						width:"100px"
-					}],
-					jsonUrl : '${pageContext.request.contextPath}/background/input/query.html',
-					checkbox : true
-				});
 		
 		$("#seach").click("click", function() {//绑定查询按扭
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			});
+			$('#pageNow').attr('value',1);
+			var f = $('#fenye');
+			f.attr('action','${pageContext.request.contextPath}/background/input/list.html');
+			f.submit();
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
@@ -185,12 +147,40 @@
 		});
 	});
 	function loadGird(){
-		grid.loadData();
+		window.location.reload();
 	}
 	function changeTextValue(id,obj){
 		if(obj.value==''){
 			$('#'+id).attr('value','');
 		}
+	}
+	/**单选***/
+	function checkId(obj){
+		var flag=obj.checked;
+		 $(":checkbox").attr("checked", false);
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
+	}
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+			delarr.push($(this).val());
+		});
+		return arr;
+	};
+	function page(pageNO){
+		$('#pageNow').attr('value',pageNO);
+		var f = $('#fenye');
+		//f.attr('target','_blank');
+		f.attr('action','${pageContext.request.contextPath}/background/input/list.html');
+		f.submit();
 	}
 </script>
 </head>
@@ -198,6 +188,7 @@
 	<div class="divBody" >
 		<div class="search" >
 			<form name="fenye" id="fenye">
+			<input type="hidden" id="pageNow" name="pageNow" value="">
 			<table>
 				<tr>
 					<td align="right">下单日期：</td>
@@ -244,6 +235,16 @@
 					</td>
 					<td align="right">备注：</td>
 					<td><input type="text" id="mark" name="mark" value=""></td>
+				</tr><tr>
+					<td>工艺：</td>
+					<td>
+						<select id="technologyId" name="technologyId">
+							<option value="">请选择</option>
+							<c:forEach items="${technologys }" var="tech">
+							<option value="${tech.id }" <c:if test="${tech.id == param.technologyId }">selected="selected"</c:if> >${tech.name }</option>
+							</c:forEach>
+						</select>
+					</td>
 				</tr>
 			</table>
 				 
@@ -271,7 +272,53 @@
 			</a-->
 			<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询</a>
 		</div>
-		<div id="paging" class="pagclass"  ></div>
+		<div id="paging" class="pagclass"  >
+		<table class="dataintable" style="width: 100%;">
+				<tr>
+					<th >选择</th>
+					<th >下单日期</th>
+					<th >布种</th>
+					<th >工艺</th>
+					<th >我司编号</th>
+					<th >我司颜色</th>
+					<th>数量</th>
+					<th>备注</th>
+					<th>业务员</th>
+				</tr>
+				
+				<c:forEach var="item" items="${pageView.records }" varStatus="status">
+					<tr  id="${status.index }" >
+						<td style="width:5%;text-align: center;">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
+					 	</td><td style="text-align: center;">
+					 		<fmt:formatDate value="${item.createTime  }" pattern="yyyy-MM-dd"/>
+					 	</td><td style="text-align: center;">
+					 		${item.clothName }
+					 	</td><td style="text-align: center;">
+					 		${item.technologyName }
+					 		<c:if test="${item.technologyName ==null }">-</c:if>
+					 	</td><td style="text-align: center;">
+					 		${item.myCompanyCode }
+					 	</td><td>
+					 		${item.myCompanyColor }
+					 	</td><td>
+					 		${item.unit }
+					 	</td><td style="text-align: left;width: 15%;" title="${item.mark }">
+					 		${fn:substring(item.mark,0,15) }
+							<c:if test="${fn:length(item.mark)>15 }">...</c:if>
+					 	</td><td>
+					 		${item.saleManName }
+					 	</td>
+					<tr>
+				</c:forEach>
+				<!-- 分页 -->
+				<tr style="height: 30px">
+					<td colspan="10" style="text-align: center;font-size: 12px;">
+						<%@ include file="../page.jsp"%>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

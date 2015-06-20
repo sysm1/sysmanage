@@ -12,7 +12,10 @@
   </sql>
   
   <sql id="selectIdVO" >
-    ois.id,ci.cloth_name clothName,ois.my_company_code myCompanyCode,ois.my_company_color myCompanyColor,ois.num,ois.unit
+    ois.id,ci.cloth_name clothName,ois.my_company_code myCompanyCode,
+    ois.my_company_color myCompanyColor,ois.num,ois.unit,
+    technologyId,
+    (select name from technology_info where id=technologyId) technologyName
   </sql>
   
   <select id="query" resultType="OrderInputSummary" parameterType="OrderInputSummary">

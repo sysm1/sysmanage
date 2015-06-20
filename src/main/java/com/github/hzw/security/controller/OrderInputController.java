@@ -21,6 +21,7 @@ import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputAdditional;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
+import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerInfoService;
@@ -61,13 +62,17 @@ public class OrderInputController extends BaseController {
 	private FlowerInfoService flowerInfoService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model, Resources menu, OrderInputVO info,String pageNow,String pagesize) {
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		System.out.println("下单预录入查询 布种："+cloths.size());
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		System.out.println("下单预录入查询 业务员："+salesmanInfos.size());
 		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(null);
+		List<TechnologyInfo> technologys=technologyInfoService.queryAll(null);
+		pageView = orderInputService.queryVO(getPageView(pageNow,pagesize), info);
+		model.addAttribute("pageView", pageView);
 		model.addAttribute("cloths", cloths);
+		model.addAttribute("technologys", technologys);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("myCompanyCodes", myCompanyCodes);
 		return Common.BACKGROUND_PATH+"/input/list";
@@ -129,7 +134,9 @@ public class OrderInputController extends BaseController {
 	public String addUI(Model model) {
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		List<TechnologyInfo> technologys=technologyInfoService.queryAll(null);
 		model.addAttribute("cloths", cloths);
+		model.addAttribute("technologys", technologys);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		return Common.BACKGROUND_PATH+"/input/add";
 	}

@@ -44,6 +44,10 @@ public class OrderInputVO {
     private Integer status;
 
     private Date createTime;
+    
+    private Integer technologyId;
+    
+    private String technologyName;
 
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -179,5 +183,21 @@ public class OrderInputVO {
 
 	public void setMyCompanyCodes(List<String> myCompanyCodes) {
 		this.myCompanyCodes = myCompanyCodes;
+	}
+
+	public Integer getTechnologyId() {
+		return technologyId;
+	}
+
+	public void setTechnologyId(Integer technologyId) {
+		this.technologyId = technologyId;
+	}
+
+	public String getTechnologyName() {
+		return technologyName;
+	}
+
+	public void setTechnologyName(String technologyName) {
+		this.technologyName = technologyName;
 	}
 }
