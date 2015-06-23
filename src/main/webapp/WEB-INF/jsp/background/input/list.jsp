@@ -227,9 +227,9 @@
 					<td align="right">业务员：</td>
 					<td>
 						<select id="salesmanId" name="salesmanId">
-							<option value="">请选择布种</option>
-							<c:forEach items="${ cloths }" var = "cloth">
-							<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
+							<option value="">请选择业务员</option>
+							<c:forEach items="${ salesmanInfos }" var = "item">
+							<option <c:if test="${item.id eq param.salesmanId }">selected="selected"</c:if> value="${item.id }">${item.name}</option>
 							</c:forEach>
 						</select>
 					</td>
