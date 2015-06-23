@@ -65,9 +65,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 </head>
 <body>
 <div class="divdialog">
-	<div class="l_err" style="width: 270px;"></div>
+	<div class="l_err" style="width: 300px;"></div>
 	<form name="form" id="form" action="${ctx}/background/account/update.html" method="post">
-		<table style="width: 285px; height: 200px;">
+		<table style="width: 300px; height: 200px;">
 			<tbody>
 				<tr>
 					<td class="l_right">账号名：</td>
@@ -84,7 +84,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</div>
 					</td>
 				</tr><tr>
-					<td>分点：</td>
+					<td class="l_right">分点：</td>
 					<td>
 						<select id="cityId" name="cityId">
 							<option value="">请选择</option>

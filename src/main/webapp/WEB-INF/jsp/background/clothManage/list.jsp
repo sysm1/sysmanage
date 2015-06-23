@@ -26,7 +26,7 @@
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
 				width : 330,
-				height : 400,
+				height : 346,
 				url : rootPath + '/background/clothManage/addUI.html',
 				title : "增加",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -40,7 +40,7 @@
 			}
 			dialog = parent.$.ligerDialog.open({
 				width : 330,
-				height : 400,
+				height : 346,
 				url : rootPath + '/background/clothManage/editUI.html?id='+cbox,
 				title : "修改",
 				isHidden : false
