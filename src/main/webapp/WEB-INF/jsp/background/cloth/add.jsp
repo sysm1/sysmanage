@@ -120,6 +120,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td style="text-align: left;">
 						<input type="text" id="tiaoKg" name="tiaoKg" value="">KG/条
 					</td>
+				</tr>
+				<tr>
+					<td class="l_right">状态：</td>
+					<td style="text-align: left;">
+						<input type="radio" id="status1" name="status" value="1" checked="checked">正常
+						<input type="radio" id="status2" name="status" value="2">停用
+					</td>
 				</tr>		
 				<tr>
 					<td style="text-align: right;">备注：</td>

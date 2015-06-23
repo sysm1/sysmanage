@@ -49,6 +49,7 @@ create table cloth_info (
 	unit int,   			-- /**布种单位 0条 1 kg 2cm 3码 4 包***/
 	loss_rate int,			-- 折扣率
 	tiao_kg double(10,2),   -- 条和公斤换算单位
+	status int,  -- 2 停用  1正常
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -113,6 +114,7 @@ create table salesman_info(
 	id	int not null auto_increment,
 	name varchar(255) not null unique,
 	mark text,
+	status int,  -- 2 停用  1正常
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

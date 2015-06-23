@@ -37,6 +37,10 @@ public class ClothInfo {
     /**这损率**/
     private int lossRate;
 
+    /**2 停用  1正常**/
+    private Integer status;
+    
+    private String statusName;
     
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -121,11 +125,17 @@ public class ClothInfo {
 		this.unitName = unitName;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "ClothInfo [id=" + id + ", pinyin=" + pinyin + ", clothName="
 				+ clothName + ", orderName=" + orderName + ", createTime="
-				+ createTime + ", mark=" + mark + "]";
+				+ createTime + ", colors=" + colors + ", mark=" + mark
+				+ ", unit=" + unit + ", unitName=" + unitName + ", tiaoKg="
+				+ tiaoKg + ", tiaoKgStr=" + tiaoKgStr + ", lossRate="
+				+ lossRate + ", status=" + status + ", statusName="
+				+ statusName + "]";
 	}
 
 	public String getPinyin() {
@@ -164,4 +174,22 @@ public class ClothInfo {
 	public void setTiaoKgStr(String tiaoKgStr) {
 		this.tiaoKgStr = tiaoKgStr;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+	
+	
 }

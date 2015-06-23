@@ -5,7 +5,8 @@
   <sql id="selectId" >
     id,  cloth_name  clothName,unit, order_name as orderName, mark,
     (select GROUP_CONCAT(color) from cloth_color where cloth_id=id ) colors,
-    create_time as createTime,pinyin,tiao_kg tiaoKg
+    create_time as createTime,pinyin,tiao_kg tiaoKg,status,
+    CASE status WHEN 1 THEN '正常' WHEN 2 THEN '停用' ELSE '正常' END statusName
   </sql>
   
   <select id="query" resultType="ClothInfo" parameterType="ClothInfo">
@@ -24,6 +25,9 @@
 		</if><if test="t.id != null and t.id != ''">
 			and id=#{t.id}
 		</if>
+		<if test="t.status != null and t.status != ''">
+			and status=#{t.status}
+		</if>
 		</where>
 		order by id desc
 	</select>
@@ -36,6 +40,7 @@
 		<if test="t != null and t != ''">
 				cloth_name like '%${t}%' or pinyin like '%${t}%'
 		</if>
+		and status = 1
 		</where>
 		order by id desc
 	</select>
@@ -54,7 +59,7 @@
 
 	<insert id="add" parameterType="ClothInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into cloth_info (
-			pinyin, cloth_name, order_name,mark, create_time,unit,tiao_kg
+			pinyin, cloth_name, order_name,mark, create_time,unit,tiao_kg, status
 		)
 		values(
 			#{pinyin},
@@ -63,7 +68,8 @@
 			#{mark},
 			#{createTime},
 			#{unit},
-			#{tiaoKg}
+			#{tiaoKg},
+			#{status}
 		)
 	</insert>
 	
@@ -100,8 +106,12 @@
       	</if>
 		<if test="createTime != null" >
         	create_time=#{createTime},
-      	</if><if test="unit != null" >
+      	</if>
+      	<if test="unit != null" >
         	unit=#{unit},
+      	</if>
+      	<if test="status != null" >
+        	status=#{status},
       	</if>
         tiao_kg=#{tiaoKg}
 		</set>
