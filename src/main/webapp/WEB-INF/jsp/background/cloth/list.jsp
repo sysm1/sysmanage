@@ -22,11 +22,11 @@
 						name : "布种名称",
 						width : "150px"
 					},
-					/**{
-						colkey : "orderName",
-						name : "下单名称",
+					{
+						colkey : "statusName",
+						name : "状态",
 						width : "150px"
-					}, */
+					},
 					{
 						colkey : "unitName",
 						name : "布种单位",
@@ -66,7 +66,7 @@
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
 				width : 403,
-				height : 320,
+				height : 305,
 				url : rootPath + '/background/cloth/addUI.html',
 				title : "增加布种信息",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -81,7 +81,7 @@
 			}
 			dialog = parent.$.ligerDialog.open({
 				width : 403,
-				height : 320,
+				height : 305,
 				url : rootPath + '/background/cloth/editUI.html?id='+cbox,
 				title : "修改布种信息",
 				isHidden : false
@@ -140,9 +140,11 @@
 			
 			<a class="btn btn-info" href="javascript:void(0)" id="editView">  修改
 			</a> 
+			<!--  
 			&nbsp;&nbsp;&nbsp;
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView">  删除
 			</a>
+			-->
 			<!-- 
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
 				导出excel

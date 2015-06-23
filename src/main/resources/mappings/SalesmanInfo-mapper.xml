@@ -35,7 +35,9 @@
 		select
 		<include refid="selectId" />
 		from salesman_info
+		<!--  
 		where status=1
+		-->
 		order by id desc
 	</select>
 

@@ -24,8 +24,8 @@
 		});
 		$("#add").click("click", function() {//绑定查询按扭
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
-				height : 310,
+				width : 320,
+				height : 274,
 				url : rootPath + '/background/account/addUI.html',
 				title : "增加账号",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -38,8 +38,8 @@
 				return;
 			}
 			dialog = parent.$.ligerDialog.open({
-				width : 300,
-				height : 310,
+				width : 320,
+				height : 274,
 				url : rootPath + '/background/account/editUI.html?accountId='+cbox,
 				title : "修改账号",
 				isHidden : false

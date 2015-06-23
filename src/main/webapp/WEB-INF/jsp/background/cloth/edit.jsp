@@ -43,6 +43,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				},
 				unit : {
 					required : true
+				},
+				status : {
+					required : true
 				}
 			},
 			messages : {
@@ -54,6 +57,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				},
 				unit : {
 					required : "请选择布种单位"
+				},
+				status : {
+					required : "请选择状态"
 				}
 			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
@@ -97,7 +103,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			<tbody>
 				<tr>
 					<td class="l_right">名称：</td>
-					<td class="l_left">
+					<td style="text-align: left;">
 					<input id='id' name="id" type="hidden" value="${cloth.id}">
 					<input id='clothName' name="clothName" type="text" value="${cloth.clothName}">
 					</td>
@@ -109,7 +115,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 				</tr--><tr>
 					<td class="l_right">布种单位：</td>
-					<td class="l_left">
+					<td style="text-align: left;">
 						<select id="unit" name="unit" onchange="selectUnit(this);">
 							<option value="0" <c:if test="${cloth.unit eq 0 }">selected</c:if>>条</option>
 							<option value="1" <c:if test="${cloth.unit eq 1 }">selected</c:if>>KG</option>
@@ -123,10 +129,16 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input type="text" id="tiaoKg" name="tiaoKg" style="width: 180px;" value="${cloth.tiaoKg }">KG/条
 					</td>
 				</tr>
-				
+				<tr>
+					<td class="l_right">状态：</td>
+					<td style="text-align: left;">
+						<input type="radio" id="status1" name="status" value="1" <c:if test="${cloth.status==1 }">checked="checked"</c:if>>正常
+						<input type="radio" id="status2" name="status" value="2" <c:if test="${cloth.status==2 }">checked="checked"</c:if> >停用
+					</td>
+				</tr>
 				<tr>
 					<td class="l_right">备注：</td>
-					<td class="l_left">
+					<td style="text-align: left;">
 					<div class="lanyuan_input">
 					<input id='mark'
 						name="mark" type="text" class="checkdesc" value="${cloth.mark}">
