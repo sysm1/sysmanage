@@ -52,7 +52,7 @@
 				state like '%${t.state}%'
 			</if>
 		</where>
-		order by state desc
+		order by state desc,id desc
 	</select>
 
 	<select id="queryNoMatch" resultType="Account" parameterType="java.util.HashMap">

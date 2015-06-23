@@ -185,6 +185,26 @@ function closeWin() {
 	 parent.$.ligerDialog.close(); //关闭弹出窗; //关闭弹出窗
 	parent.$(".l-dialog,.l-window-mask").css("display","none"); 
 }
+/**
+ * 获取选中的值
+ */
+function getSelectedCheckbox() {
+	var arr = [];
+	$('input[name="checkId"]:checked').each(function() {
+		arr.push($(this).val());
+	});
+	return arr;
+};
+/**单选***/
+function checkId(obj){
+	var flag=obj.checked;
+	 $(":checkbox").attr("checked", false);
+	 if(flag){
+		 obj.checked=flag;
+	 }else{
+		 obj.checked=flag;
+	 }
+}
 </script>
 <style type="text/css">
 .l_err{

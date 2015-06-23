@@ -28,7 +28,9 @@ public class SalesmanInfoController extends BaseController {
 	private SalesmanInfoService salesmanInfoService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow) {
+	public String list(Model model,SalesmanInfo salesmanInfo,String pageNow,String pagesize) {
+		pageView = salesmanInfoService.query(getPageView(pageNow,pagesize), salesmanInfo);
+		model.addAttribute("pageView", pageView);
 		return Common.BACKGROUND_PATH+"/salesman/list";
 	}
 	

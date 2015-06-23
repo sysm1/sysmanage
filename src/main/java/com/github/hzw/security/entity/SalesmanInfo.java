@@ -26,6 +26,11 @@ public class SalesmanInfo {
      * @mbggenerated Thu Feb 19 18:47:07 CST 2015
      */
     private String name;
+    
+    /**2 停用  1正常**/
+    private Integer status;
+    
+    private String statusName;
 
     private String mark;
 
@@ -76,6 +81,22 @@ public class SalesmanInfo {
 	public String toString() {
 		return "SalesmanInfo [id=" + id + ", name=" + name
 				+ ", mark=" + mark + "]";
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
 	}
     
     

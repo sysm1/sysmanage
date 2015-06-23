@@ -77,6 +77,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<div class="lanyuan_input">
 					<input id='name' name="name" class="isNum" type="text" value="">
 						</div></td>
+				</tr><tr>
+					<td class="l_right">状态：</td>
+					<td class="l_left">
+						<input type="radio" id="status1" name="status" value="1" checked="checked">正常
+						<input type="radio" id="status2" name="status" value="2">停用
+					</td>
 				</tr>
 				
 				<tr>

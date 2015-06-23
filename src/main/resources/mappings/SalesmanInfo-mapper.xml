@@ -3,7 +3,8 @@
 <mapper namespace="com.github.hzw.security.mapper.SalesmanInfoMapper" >
 
   <sql id="selectId" >
-    id, name, mark
+    id, name, mark,status,
+    CASE status WHEN 1 THEN '正常' WHEN 2 THEN '停用' ELSE '正常' END statusName
   </sql>
 
   <select id="query" resultType="SalesmanInfo" parameterType="SalesmanInfo">
@@ -16,9 +17,11 @@
 		</if>
 		<if test="t.mark != null and t.mark != ''">
 			and mark like '%${t.mark}%'
+		</if><if test="t.status != null and t.status != ''">
+			and status =#{t.status}
 		</if>
 		</where>
-		order by id desc
+		order by status,id desc
 	</select>
 	
 	<select id="getSalmansName" resultType="String">
@@ -32,17 +35,18 @@
 		select
 		<include refid="selectId" />
 		from salesman_info
+		where status=1
 		order by id desc
 	</select>
 
 
 	<insert id="add" parameterType="SalesmanInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into salesman_info (
-			name, mark
+			name, mark,status
 		)
 		values(
 			#{name},
-			#{mark}
+			#{mark},#{status}
 		)
 	</insert>
 	
@@ -63,6 +67,7 @@
 		<set>
 		name=#{name},
 		mark=#{mark},
+		status=#{status},
 		</set>
 		where id=#{id}
 	</update>

@@ -33,24 +33,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					}
 				});
 			},
-			rules : {
-				name : {
-					required : true,
-					remote:{ //异步验证是否存在
-						type:"POST",
-						url: rootPath + '/background/salesman/isExist.html',
-						data:{
-							name:function(){return $("#name").val();}
-						 }
-						}
-				}
-			},
-			messages : {
-				name : {
-					required : "请输入业务员名称",
-				    remote:"该名称已经存在"
-				}
-			},
 			errorPlacement : function(error, element) {//自定义提示错误位置
 				$(".l_err").css('display','block');
 				//element.css('border','3px solid #FFCCCC');
@@ -82,6 +64,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td class="l_left">
 					<input id='id' name="id" type="hidden" value="${salesman.id}">
 					<input id='name' name="name" class="isNum" type="text" value="${salesman.name}">
+					</td>
+				</tr><tr>
+					<td class="l_right">状态：</td>
+					<td class="l_left">
+						<input type="radio" id="status1" name="status" value="1" <c:if test="${salesman.status==1 }">checked="checked"</c:if>>正常
+						<input type="radio" id="status2" name="status" value="2" <c:if test="${salesman.status==2 }">checked="checked"</c:if> >停用
 					</td>
 				</tr>
 				
