@@ -79,10 +79,16 @@ public class Account implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
+	
+	
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", accountName=" + accountName + ", password=" + password + ",description=" + description + ", state=" + state + ", createTime=" + createTime + "]";
+		return "Account [id=" + id + ", accountName=" + accountName
+				+ ", roleName=" + roleName + ", password=" + password
+				+ ", description=" + description + ", state=" + state
+				+ ", cityId=" + cityId + ", createTime=" + createTime + "]";
 	}
+
 	@ExcelDataMapper(title="描述",order=5)
 	public String getDescription() {
 		return description;

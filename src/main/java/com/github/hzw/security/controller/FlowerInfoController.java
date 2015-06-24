@@ -327,5 +327,40 @@ public class FlowerInfoController extends BaseController{
 		POIUtils.exportToExcel(response, "花号报表", acs, FlowerInfo.class, "花号", acs.size());
 	}
 	
+	
+	/**
+	 * 删除
+	 * 
+	 * @param model
+	 * @param videoTypeId
+	 * @return
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping("updateStatus")
+	public Map<String, Object> updateStatus(String ids) {
+		System.out.println("ids:" + ids);
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			String id[] = ids.split(",");
+			for (String string : id) {
+				if(!Common.isEmpty(string)){
+					FlowerInfo info = flowerInfoService.getById(string);
+					int status = 1;
+					if(info != null && info.getStatus() != null) {
+						if(info.getStatus() == 1) {
+							status = 0;
+						}
+					}
+					flowerInfoService.updateByStatus(new Integer(string), status);
+				}
+			}
+			
+			map.put("flag", "true");
+		} catch (Exception e) {
+			map.put("flag", "false");
+		}
+		return map;
+	}
 
 }

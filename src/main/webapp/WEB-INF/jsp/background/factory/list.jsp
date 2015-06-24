@@ -45,6 +45,7 @@
 				data : searchParams
 			}); 
 		});
+		
 		$("#exportExcel").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
 			f.attr('target','_blank');
@@ -156,10 +157,11 @@
 			
 			<a class="btn btn-primary" href="javascript:void(0)" id="view">  <span>查看</span>
 			</a>
+			<!-- 
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <span>删除</span>
 			</a>
-			
+			 -->
 		</div>
 		<div id="paging" class="pagclass"></div>
 	</div>

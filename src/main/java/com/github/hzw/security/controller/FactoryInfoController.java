@@ -122,11 +122,16 @@ public class FactoryInfoController extends BaseController {
 	 */
 	@RequestMapping("editUI")
 	public String editUI(HttpServletRequest request,Model model,String id) {
-		Account user=(Account) request.getSession().getAttribute("userSession");
+		Account account = (Account) request.getSession().getAttribute("userSession");
+		
+		/**
+		Integer cityId = account.getCityId();
 		City t=new City();
-		t.setId(user.getCityId());
+		t.setId(cityId);
 		t.setStatus(1);
-		List<City> citys=cityService.queryAll(t);
+		**/
+		
+		List<City> citys=cityService.queryAll(null);
 		request.setAttribute("citys", citys);
 		
 		FactoryInfo info = factoryInfoService.getById(id);
@@ -201,6 +206,8 @@ public class FactoryInfoController extends BaseController {
 		 List<FactoryInfo> acs =factoryInfoService.queryAll(info);
 		POIUtils.exportToExcel(response, "工厂报表", acs, FactoryInfo.class, "工厂", acs.size());
 	}
+	
+	
 	
 	
 }

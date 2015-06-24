@@ -18,4 +18,7 @@ public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
 	
 	public List<String> queryMycompanyCodeByCloth(Integer clothId);
 	
+	
+	public void updateByStatus(Map<String, Object> map);
+	
 }

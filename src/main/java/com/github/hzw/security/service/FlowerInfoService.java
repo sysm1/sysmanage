@@ -21,4 +21,7 @@ public interface FlowerInfoService extends BaseService<FlowerInfo> {
 	 * @return
 	 */
 	public List<String> queryMycompanyCodeByCloth(Integer clothId);
+	
+	public void updateByStatus(Integer id, int status);
+	
 }

@@ -226,4 +226,13 @@
 		where id=#{id}
 	</update>
   
+  
+  <update id="updateByStatus" parameterType="map">
+		update flower_info 
+		<set>
+			status=#{status}
+		</set>
+		where id=#{id}
+  </update>
+  
 </mapper>

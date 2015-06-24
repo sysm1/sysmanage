@@ -120,4 +120,12 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 		return flowerInfoMapper.queryReport(map);
 	}
 	
+	
+	public void updateByStatus(Integer id, int status){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("status", status);
+		flowerInfoMapper.updateByStatus(map);
+	}
+	
 }

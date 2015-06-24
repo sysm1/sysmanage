@@ -117,4 +117,9 @@ public class FlowerInfoServiceTest {
 		System.out.println(list);
 		
 	}
+	
+	@Test
+	public void testUpdateByStatus() {
+		flowerInfoService.updateByStatus(9, 0);
+	}
 }

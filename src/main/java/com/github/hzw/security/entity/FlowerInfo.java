@@ -33,6 +33,8 @@ public class FlowerInfo {
 
     private Integer status;
 
+    private String statusName;
+    
     private Date createTime;
     
     @ExcelDataMapper(title="id",order=1)
@@ -108,6 +110,11 @@ public class FlowerInfo {
 
     public void setStatus(Integer status) {
         this.status = status;
+        if(status == 0) {
+        	statusName = "停用";
+        } else {
+        	statusName = "正常";
+        }
     }
 
     @ExcelDataMapper(title="工厂",order=5)
@@ -165,4 +172,13 @@ public class FlowerInfo {
 				+ ", status=" + status + "]";
 	}
 
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	
 }

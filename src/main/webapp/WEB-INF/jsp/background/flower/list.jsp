@@ -84,6 +84,43 @@ $(function() {
 			}
 		});
 	});
+	
+	
+	
+	
+	$("#updateView").click("click", function() {//绑定删除按扭
+		var cbox=getSelectedCheckbox();
+		if(cbox==""){
+			parent.$.ligerDialog.alert("请选择一条记录");
+			return;
+		}
+		if (cbox.length > 1) {
+			parent.$.ligerDialog.alert("一次只能修改一条记录");
+			return;
+		}
+		parent.$.ligerDialog.confirm('确定变更状态吗？', function(confirm) {
+			if (confirm) {
+				$.ajax({
+				    type: "post", //使用get方法访问后台
+				    dataType: "json", //json格式的数据
+				    async: false, //同步   不写的情况下 默认为true
+				    url: rootPath + '/background/flower/updateStatus.html', //要访问的后台地址
+				    data: {ids:cbox.join(",")}, //要发送的数据
+				    // data:{id:cbox},
+				    success: function(data){
+				    	if (data.flag == "true") {
+				    		parent.$.ligerDialog.success('变更成功!', '提示', function() {
+				    			loadGird();//重新加载表格数据
+							});
+						}else{
+							parent.$.ligerDialog.warn("变更失败！！");
+						}
+					}
+				});
+			}
+		});
+	});
+	
 });
 
 function loadGird(){
@@ -190,6 +227,9 @@ function mycolor_detail(flowerId) {
 			<!--a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete
 			</a-->
+			<a class="btn btn-danger" href="javascript:void(0)" id="updateView"> <i
+				class="icon-trash icon-white"></i>停用/正常
+			</a>
 			
 			  
 			<!--a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
@@ -218,6 +258,7 @@ function mycolor_detail(flowerId) {
 						<td style="text-align:center;">我司颜色</td>
 						<td style="text-align:center;">工厂颜色</td>
 						<td style="text-align:center;">分色文件号</td>
+						<td style="text-align:center;">状态</td>
 					</tr>
 				</thead>
 			
@@ -234,6 +275,7 @@ function mycolor_detail(flowerId) {
 					<td style="text-align:center;"><a href="javascript:mycolor_detail('${flower.id}');">点击见详情</a></td>
 					<td style="text-align:center;"><a href="javascript:mycolor_detail('${flower.id}');">点击见详情</a></td>
 					<td style="text-align:center;">${flower.fileColor }</td>
+					<td style="text-align:center;">${flower.statusName }</td>
 				</tr>
 				</c:forEach>
 				</tbody>

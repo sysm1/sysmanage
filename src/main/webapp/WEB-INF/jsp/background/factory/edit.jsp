@@ -66,7 +66,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<input id='name' name="name" class="isNum" type="text" value="${factory.name}">
 					</td>
 				</tr><tr>
-					<td>分点：</td>
+					<td class="l_right">分点：</td>
 					<td>
 						<select id="cityId" name="cityId">
 							<option value="">请选择</option>
@@ -76,7 +76,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</select>
 					</td>
 				</tr><tr>
-					<td>状态</td>
+					<td class="l_right">状态：</td>
 					<td>
 						<input type="radio" id="status1" name="status" value="1" <c:if test="${factory.status eq 1 }">checked="checked" </c:if> >正常
 						<input type="radio" id="status2" name="status" value="2" <c:if test="${factory.status eq 2 }">checked="checked" </c:if>>停用
