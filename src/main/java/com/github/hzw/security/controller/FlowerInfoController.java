@@ -296,10 +296,15 @@ public class FlowerInfoController extends BaseController{
 			String id[] = ids.split(",");
 			for (String string : id) {
 				if(!Common.isEmpty(string)){
-					flowerInfoService.delete(string);
+					FlowerInfo flowerInfo=flowerInfoService.getById(string);
+					if(flowerInfo.getStatus()==1){
+						map.put("flag", "nodelete");
+					}else{
+						map.put("flag", "true");
+						flowerInfoService.delete(string);
+					}
 				}
 			}
-			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
 		}

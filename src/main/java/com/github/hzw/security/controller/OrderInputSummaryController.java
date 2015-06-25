@@ -20,6 +20,7 @@ import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.ClothColor;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
@@ -280,6 +281,7 @@ public class OrderInputSummaryController extends BaseController {
 		if("包".equals(unitName)){
 			unitName="KG";
 		}
+		
 		model.addAttribute("clothInfo", clothInfo);
 		model.addAttribute("colors",colors);
 		model.addAttribute("inputsummary", info);

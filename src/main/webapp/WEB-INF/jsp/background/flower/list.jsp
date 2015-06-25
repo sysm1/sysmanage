@@ -76,6 +76,8 @@ $(function() {
 				    		parent.$.ligerDialog.success('删除成功!', '提示', function() {
 				    			loadGird();//重新加载表格数据
 							});
+						}else if(data.flag == "nodelete"){
+							alert("资料已经被使用，不能删除");
 						}else{
 							parent.$.ligerDialog.warn("删除失败！！");
 						}
@@ -224,12 +226,12 @@ function mycolor_detail(flowerId) {
 				class="icon-edit icon-white"></i> 修改
 			</a> 
 			
-			<!--a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
+			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
 				class="icon-trash icon-white"></i> Delete
-			</a-->
-			<a class="btn btn-danger" href="javascript:void(0)" id="updateView"> <i
-				class="icon-trash icon-white"></i>停用/正常
 			</a>
+			<!--a class="btn btn-danger" href="javascript:void(0)" id="updateView"> <i
+				class="icon-trash icon-white"></i>停用/正常
+			</a-->
 			
 			  
 			<!--a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
@@ -258,7 +260,7 @@ function mycolor_detail(flowerId) {
 						<td style="text-align:center;">我司颜色</td>
 						<td style="text-align:center;">工厂颜色</td>
 						<td style="text-align:center;">分色文件号</td>
-						<td style="text-align:center;">状态</td>
+						<!--td style="text-align:center;">状态</td-->
 					</tr>
 				</thead>
 			
@@ -275,7 +277,7 @@ function mycolor_detail(flowerId) {
 					<td style="text-align:center;"><a href="javascript:mycolor_detail('${flower.id}');">点击见详情</a></td>
 					<td style="text-align:center;"><a href="javascript:mycolor_detail('${flower.id}');">点击见详情</a></td>
 					<td style="text-align:center;">${flower.fileColor }</td>
-					<td style="text-align:center;">${flower.statusName }</td>
+					<!--td style="text-align:center;">${flower.statusName }</td-->
 				</tr>
 				</c:forEach>
 				</tbody>

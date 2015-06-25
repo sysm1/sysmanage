@@ -186,6 +186,17 @@ public class OrderSummaryController extends BaseController {
 			}
 			//坯布余量修改完成
 			
+			/**判断花号基本资料是否被使用**/
+			FlowerInfo flowerInfo=new FlowerInfo();
+			flowerInfo.setFactoryCode(info.getFactoryCode());
+			flowerInfo.setClothId(info.getClothId());
+			flowerInfo.setTechnologyId(info.getTechnologyId());
+			List<FlowerInfo> flowerInfos=flowerInfoService.queryFind(flowerInfo);
+			if(flowerInfos.size()>0){
+				flowerInfo=flowerInfos.get(0);
+				flowerInfoService.updateByStatus(flowerInfo.getId(), 1);//修改为不可删除
+			}
+			
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
