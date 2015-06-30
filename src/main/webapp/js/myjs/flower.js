@@ -4,7 +4,6 @@ var grid;
 $(function() {
 	//grid = window.lanyuan.ui.lyGrid();
 	$("#search").click("click", function() {//绑定查询按扭
-		alert("ds");
 		$('#pageNow').attr('value',1);
 		var f = $('#fenye');
 		//f.attr('target','_blank');
