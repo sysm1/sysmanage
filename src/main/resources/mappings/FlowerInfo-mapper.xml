@@ -17,7 +17,7 @@
     file_color fileColor, 
     technology_id technologyId, 
     (select technology.name from technology_info technology where technology.id = flower.technology_id ) as technologyName,
-    picture,     
+    picture,
     status,
     create_time createTime
   </sql>
