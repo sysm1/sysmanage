@@ -56,37 +56,27 @@
 						</td>
 					</tr>
 				</table>
-				
 			</form>
 		</div>
 		
 		<div class="topBtn">
-			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>新增</span>
+			<a class="btn btn-primary" href="javascript:void(0)" id="add"> 
+			<i class="icon-zoom-add icon-white"></i> <span>新增</span>
 			</a> 
 			
-			<a class="btn btn-info" href="javascript:void(0)" id="editView"> <i
-				class="icon-edit icon-white"></i> 修改
+			<a class="btn btn-info" href="javascript:void(0)" id="editView"> 
+			<i class="icon-edit icon-white"></i> 修改
 			</a> 
 			
-			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> <i
-				class="icon-trash icon-white"></i> Delete
+			<a class="btn btn-danger" href="javascript:void(0)" id="deleteView"> 
+			<i class="icon-trash icon-white"></i> 删除
 			</a>
-			<!--a class="btn btn-danger" href="javascript:void(0)" id="updateView"> <i
-				class="icon-trash icon-white"></i>停用/正常
-			</a-->
-			
-			  
-			<!--a class="btn btn-large btn-success" href="javascript:void(0)" id="exportExcel">
-				导出excel
-			</a-->
 			
 		</div>
 		
 		<div id="paging" class="pagclass">
 		
 		<table id="table_head" class="pp-list table table-striped table-bordered" style="margin-bottom: -3px; width: 1008px;">
-		
 		</table>
 		
 		<div style="overflow-y: auto; overflow-x: auto; height: 348px; border: 1px solid #DDDDDD;" class="t_table">
@@ -103,7 +93,6 @@
 						<td style="text-align:center;">我司颜色</td>
 						<td style="text-align:center;">工厂颜色</td>
 						<td style="text-align:center;">分色文件号</td>
-						<!--td style="text-align:center;">状态</td-->
 					</tr>
 				</thead>
 			
@@ -120,13 +109,11 @@
 					<td style="text-align:center;"><a href="javascript:mycolor_detail('${flower.id}');">点击见详情</a></td>
 					<td style="text-align:center;"><a href="javascript:mycolor_detail('${flower.id}');">点击见详情</a></td>
 					<td style="text-align:center;">${flower.fileColor }</td>
-					<!--td style="text-align:center;">${flower.statusName }</td-->
 				</tr>
 				</c:forEach>
 				</tbody>
 			</table>
 		</div>
-		
 		
 		<div style="vertical-align: middle;border: 2px solid #DDDDDD;margin-top: -3px;" class="span12 center">
 			<table width="100%">
@@ -143,7 +130,6 @@
 						</ul>
 					</div>
 				</td>
-				<!-- disabled active -->
 			<td style="text-align: right;">
 				<div class="dataTables_paginate paging_bootstrap pagination">
 					<ul>
