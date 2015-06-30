@@ -7,14 +7,14 @@ $(function() {
 		$('#pageNow').attr('value',1);
 		var f = $('#fenye');
 		//f.attr('target','_blank');
-		f.attr('action','${pageContext.request.contextPath}/background/flower/list.html');
+		f.attr('action',rootPath + '/background/flower/list.html');
 		f.submit();
 	});
 	
 	$("#exportExcel").click("click", function() {
 		var f = $('#fenye');
 		f.attr('target','_blank');
-		f.attr('action','${pageContext.request.contextPath}/background/flower/exportExcel.html');
+		f.attr('action', rootPath + '/background/flower/exportExcel.html');
 		f.submit();
 	});
 	
@@ -124,7 +124,7 @@ function page(pageNO){
 	$('#pageNow').attr('value',pageNO);
 	var f = $('#fenye');
 	//f.attr('target','_blank');
-	f.attr('action','${pageContext.request.contextPath}/background/flower/list.html');
+	f.attr('action', rootPath + '/background/flower/list.html');
 	f.submit();
 }
 
