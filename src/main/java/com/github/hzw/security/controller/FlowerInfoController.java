@@ -54,6 +54,7 @@ public class FlowerInfoController extends BaseController{
 		// String pagesize = "2";
 		// pageView = flowerInfoService.queryFind(getPageView(pageNow,pagesize), map);
 		String pagesize = "10";
+		pageNow = StringUtils.isEmpty(pageNow) ? "1":pageNow;
 		pageView = flowerInfoService.query(getPageView(pageNow,pagesize), info);
 		model.addAttribute("info", info);
 		model.addAttribute("pageView", pageView);
