@@ -234,7 +234,7 @@ function mycolor_detail(flowerId) {
 		<table id="table_head" class="pp-list table table-striped table-bordered" style="margin-bottom: -3px; width: 1008px;">
 		</table>
 		
-		<div style="overflow-y: auto; overflow-x: auto; height: 348px; border: 1px solid #DDDDDD;" class="t_table">
+		<div style="overflow-y: auto; overflow-x: auto; border: 1px solid #DDDDDD;" class="t_table">
 			<table id="mytable" class="pp-list table table-striped table-bordered" style="margin-bottom: -3px;">
 				<thead>
 					<tr style="line-height:27px;">
