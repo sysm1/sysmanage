@@ -38,12 +38,16 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					dataType:"json",
 					success : function(data) {
 						if (data.flag == "true") {
-							$.ligerDialog.success('提交成功!', '提示', function() {
-								//这个是调用同一个页面趾两个iframe里的js方法
-								//account是iframe的id
-								parent.flower.loadGird();
-								closeWin();
-							});
+							if(data.msg!=null){
+								alert(data.msg);
+							}else{
+								$.ligerDialog.success('提交成功!', '提示', function() {
+									//这个是调用同一个页面趾两个iframe里的js方法
+									//account是iframe的id
+									parent.flower.loadGird();
+									closeWin();
+								});
+							}
 							//parent.window.document.getElementById("username").focus();
 						} else {
 							$.ligerDialog.warn("提交失败！！" + data.msg);
@@ -239,7 +243,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td>工艺：</td>
 				<td>
 					<select id="technologyId" name="technologyId" style="width:100px;">
-							<option value="">请选择工艺</option>
 							<c:forEach items="${ technologys }" var = "technology">
 								<option value="${technology.id }">${technology.name}</option>
 							</c:forEach>

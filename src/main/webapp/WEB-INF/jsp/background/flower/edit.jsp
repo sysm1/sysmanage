@@ -10,23 +10,6 @@
 
 //单独验证某一个input  class="checkpass"
 
-jQuery.validator.addMethod("isNum", function(value, element) {
-	 var num = /^([0-9]+)$/;
-	 return this.optional(element) || (num.test(value));
-}, "只能输入数字");
-
-
-jQuery.validator.addMethod("isDay", function(value, element) {
-	 var num = /^(\d{4})-(\d{2})-(\d{2})$/;
-	 return this.optional(element) || (num.test(value));
-}, "只能输入日期(yyyy-MM-dd)");
-
-
-jQuery.validator.addMethod("chrnum", function(value, element) {
-	var chrnum = /^([a-zA-Z0-9]+)$/;
-	return this.optional(element) || (chrnum.test(value));
-}, "只能输入数字和字母(字符A-Z, a-z, 0-9)");
-
 	$(function() {
 		$("form").validate({
 			submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
@@ -47,31 +30,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 						}
 					}
 				});
-			},
-			rules : {
-				clothId : {
-					required : true
-				},
-				factoryId : {
-					required : true
-				}
-			},
-			messages : {
-				
-				clothId : {
-					required : "布种不能为空",
-				},
-				factoryId : {
-					required : "工厂不能为空",
-				}
-			},
-			errorPlacement : function(error, element) {//自定义提示错误位置
-				$(".l_err").css('display','block');
-				//element.css('border','3px solid #FFCCCC');
-				$(".l_err").html(error.html());
-			},
-			success: function(label) {//验证通过后
-				$(".l_err").css('display','none');
 			}
 		});
 	});
@@ -82,14 +40,14 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 			//var $d = $("#company_color_id");
 			//alert($d.html());
 			var $html = $("#company_color_id");
-			var $addH = $("<input name='myCompanyColors' type='text' style='width:100px;'/><input name='factoryColors' type='text' value='' style='width:100px;' /><br/>");
+			var $addH = $("<input name='myCompanyColors' type='text' style='width:100px;'/><input name='factoryColors' type='text' value='' style='width:100px;' /><input name='marks' type='text' value='' style='width:100px;'/><br/>");
 			$html.append($addH);
 		});
 		
 		
 		$("#addFacotyMyCode2").click("click", function() {
 			var $html = $("#company_color_id2");
-			var $addH = $("<input name='myCompanyColors2' type='text' style='width:100px;'/><input name='factoryColors2' type='text' value='' style='width:100px;' /><br/>");
+			var $addH = $("<input name='myCompanyColors2' type='text' style='width:100px;'/><input name='factoryColors2' type='text' value='' style='width:100px;' /><input name='marks2' type='text' value='' style='width:100px;'/><br/>");
 			$html.append($addH);
 		});
 		
@@ -113,6 +71,11 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 	});
 	
 	function saveWin() {
+		
+		$("#form").submit();
+	}
+	
+	function saveForm(){
 		$("#form").submit();
 	}
 	
@@ -169,15 +132,13 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td>工厂：</td>
 				<td>
 					<select id="factoryId" name="factoryId" style="width:100px;">
-							<option value="">请选择工厂</option>
-							<c:forEach items="${ factorys }" var = "factory">
-								<option value="${factory.id }">${factory.name}</option>
-							</c:forEach>
-						</select>
+						<option value="">请选择工厂</option>
+						<c:forEach items="${ factorys }" var = "factory">
+							<option value="${factory.id }"  <c:if test="${flower.factoryId==factory.id }">selected="selected"</c:if> >${factory.name}</option>
+						</c:forEach>
+					</select>
 				</td>
-			</tr>
-			
-			<tr>
+			</tr><tr>
 				<td>我司编号：</td>
 				<td><input id='myCompanyCode' name="myCompanyCode" type="text" value="${flower.myCompanyCode}" style="width:100px;"></td>
 				<td>布种：</td>
@@ -185,7 +146,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					<select id="clothId" name="clothId" style="width:100px;">
 							<option value="">请选择布种</option>
 							<c:forEach items="${ cloths }" var = "cloth">
-								<option value="${cloth.id }">${cloth.clothName}</option>
+								<option value="${cloth.id }" <c:if test="${flower.clothId==cloth.id }">selected="selected"</c:if>>${cloth.clothName}</option>
 							</c:forEach>
 					</select>
 				</td>
@@ -197,7 +158,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					<select id="technologyId" name="technologyId" style="width:100px;">
 							<option value="">请选择工艺</option>
 							<c:forEach items="${ technologys }" var = "technology">
-								<option value="${technology.id }">${technology.name}</option>
+								<option value="${technology.id }" <c:if test="${flower.technologyId==technology.id }">selected="selected"</c:if>>${technology.name}</option>
 							</c:forEach>
 					</select>
 				</td>
@@ -222,7 +183,8 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 							<c:forEach items="${flower.list}" var="fad">
 								<c:if test="${fad.factoryCode == factoryCode }">
 									<input name="myCompanyColors" type="text" value="${fad.myCompanyColor}" style="width:100px;"/>
-									<input name="factoryColors" type="text" value="${fad.factoryColor}" style="width:100px;"/><br/>
+									<input name="factoryColors" type="text" value="${fad.factoryColor}" style="width:100px;"/>
+									<input name="marks" type="text" value="${fad.mark}" style="width:100px;"/><br/>
 								</c:if>
 							</c:forEach>
 						</li>
@@ -245,36 +207,29 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 						<c:forEach items="${flower.list}" var="fad">
 							<c:if test="${fad.factoryCode == factoryCode2 }">
 								<input name="myCompanyColors2" type="text" value="${fad.myCompanyColor}" style="width:100px;"/>
-								<input name="factoryColors2" type="text" value="${fad.factoryColor}" style="width:100px;"/><br/>
+								<input name="factoryColors2" type="text" value="${fad.factoryColor}" style="width:100px;"/>
+								<input name="marks2" type="text" value="${fad.mark}" style="width:100px;"/><br/>
 							</c:if>
 						</c:forEach>	
 						</li>
 						<li><span id="addFacotyMyCode2"><a href="javascript:void(0);">+</a></span></li>
 					</ul>
 				</td>
-				
 			</tr>
-
 		<tr>
 			<td colspan="2" >上传图片:<input type="file" id="file1" name="file" /><input id="uploadFile" type="button" value="上传" /></td>
 			<td colspan="2" ><img id="img1" alt="图片预览" src="" /></td>
+		</tr><tr>
+			<td colspan="4">
+				<div class="l_btn_centent">
+					<!-- saveWin_form   from是表单Ｉd-->
+					<a class="btn btn-primary" href="javascript:void(0)" id="bc" onclick="saveForm();"><span>保存</span> </a> 
+					<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin()"><span>关闭</span> </a>
+				</div>
+			</td>
 		</tr>
-			
-		 <tr>
-					<td colspan="4">
-						<div class="l_btn_centent">
-								<!-- saveWin_form   from是表单Ｉd-->
-								<a class="btn btn-primary" href="javascript:void(0)"
-									id="saveWin_form" onclick="saveWin();"><span>保存</span> </a> <a
-									class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-									onclick="closeWin()"><span>关闭</span> </a>
-							</div>
-					</td>
-				</tr>
 			</tbody>
 		</table>
-		
-		
 	</form>
 	</div>
 </body>

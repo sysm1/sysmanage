@@ -148,7 +148,7 @@ public class FlowerInfoController extends BaseController{
 			}
 			
 			info.setList(fas);
-			info.setStatus(0);
+			info.setStatus(0);//修改花号基本资料初始状态为0 为可以删除的状态
 			info.setPicture(info.getPicture()==null?"http://www.baidu.com/img/bdlogo.png":info.getPicture());
 			info.setCreateTime(new Date());
 			//验证是否资料是否重复
@@ -158,6 +158,9 @@ public class FlowerInfoController extends BaseController{
 				if(flist.size()==0){
 					flowerInfoService.add(info);
 				}
+				map.put("flag", "true");
+				map.put("msg", "存在此花号基本资料");
+				
 			}else{
 				flowerInfoService.add(info);
 			}
@@ -187,9 +190,11 @@ public class FlowerInfoController extends BaseController{
 
 			String[] myCompanyColors = request.getParameterValues("myCompanyColors"); // 第1工厂编号对应的着色
 			String[] factoryColors = request.getParameterValues("factoryColors");
+			String[] marks = request.getParameterValues("marks");
 			
 			String[] myCompanyColors2 = request.getParameterValues("myCompanyColors2"); // 第2工厂编号对应的着色
 			String[] factoryColors2 = request.getParameterValues("factoryColors2");
+			String[] marks2 = request.getParameterValues("marks2");
 			
 			List<FlowerAdditional> fas = new ArrayList<FlowerAdditional>();
 			FlowerAdditional fa = null;
@@ -205,6 +210,7 @@ public class FlowerInfoController extends BaseController{
 					fa.setFactoryColor(factoryColors[i]);
 					fa.setMyCompanyColor(myCompanyColors[i]);
 					fa.setMyCompanyCode(info.getMyCompanyCode());
+					fa.setMark(marks[i]);
 					fas.add(fa);
 				}
 			}
@@ -221,11 +227,12 @@ public class FlowerInfoController extends BaseController{
 					fa.setFactoryColor(factoryColors2[i]);
 					fa.setMyCompanyColor(myCompanyColors2[i]);
 					fa.setMyCompanyCode(info.getMyCompanyCode());
+					fa.setMark(marks2[i]);
 					fas.add(fa);
 				}
 			}
 			info.setList(fas);
-			info.setStatus(1);
+			//info.setStatus(1);
 			info.setPicture(info.getPicture()==null?"http://www.baidu.com/img/bdlogo.png":info.getPicture());
 			flowerInfoService.update(info);
 			
