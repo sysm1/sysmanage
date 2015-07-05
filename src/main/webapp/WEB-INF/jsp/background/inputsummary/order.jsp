@@ -164,6 +164,10 @@ function selectFacctoryColor(obj){
 			alert(data);  
 	     }
 	});
+	if(factoryColor==null||factoryColor==''){
+		$('#tip').hide();
+		$('#factoryColorTd').css('background','');
+	}
 }
 
 
@@ -327,7 +331,7 @@ function setValue(id,obj){
 									<option value="${color}">${color }</option>
 								</c:forEach>
 							</select>
-							<span id="tip" style="font-size: 20px;font-weight: bold;display:none ;">&nbsp;?&nbsp;</span>
+							<span id="tip" style="font-size: 20px;font-weight: bold;display:none ;"><img src="../../images/info.png"/></span>
 						</div>
 					</td>
 				</tr><tr>
