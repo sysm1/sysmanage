@@ -154,6 +154,7 @@ function selectFacctoryColor(obj){
 	    	if(null!=data&&data!=''){
 	    		$('#tip').show();
 	    		$('#tip').attr('title',data);
+	    		$('#factoryColorTd').css('background','#FFE4E1');//background-color: #FFE4E1;
 	    	}else{
 	    		$('#tip').hide();
 	    	}
@@ -221,7 +222,7 @@ function setValue(id,obj){
 		<input type="hidden" id="salesmans" name="salesmans" value="${salmanIds }">
 		<table style=" height: 200px;" border="1" class='dataintable'>
 			<tbody>
-				<tr ><td colspan="6" style="text-align: center;height: 35px;">下单录入汇总页面</td></tr>
+				<tr ><th colspan="6" style="text-align: center;height: 35px;font-size: 20px;">下单录入汇总页面</th></tr>
 				<tr style="height: 30px;text-align: center;">
 					<td class="l_right">单号：</td>
 					<td style="text-align: left;" colspan="2">
@@ -318,14 +319,15 @@ function setValue(id,obj){
 						<span style="color: red;"><b>未回</b>：${noRetrun }</span>
 					</td>
 					<td class="l_right">工厂颜色：</td>
-					<td style="text-align: left;" colspan="2">
+					<td style="text-align: left;" colspan="2" id="factoryColorTd">
 						<div class="lanyuan_input">
-							<select id="factoryColor" name="factoryColor" class="frameborder" style="width: 90%;" onchange="selectFacctoryColor(this);">
+							<select id="factoryColor" name="factoryColor" class="frameborder" style="width: 85%;" onchange="selectFacctoryColor(this);">
 								<option value="">请选择</option>
 								<c:forEach var="color" items="${factoryColors }">
 									<option value="${color}">${color }</option>
 								</c:forEach>
-							</select><span id="tip" style="font-size: 20px;font-weight: bold;display: none;">&nbsp;?</span>
+							</select>
+							<span id="tip" style="font-size: 20px;font-weight: bold;display:none ;">&nbsp;?&nbsp;</span>
 						</div>
 					</td>
 				</tr><tr>
