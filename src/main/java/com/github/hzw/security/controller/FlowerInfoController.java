@@ -148,7 +148,7 @@ public class FlowerInfoController extends BaseController{
 			}
 			
 			info.setList(fas);
-			info.setStatus(1);
+			info.setStatus(0);
 			info.setPicture(info.getPicture()==null?"http://www.baidu.com/img/bdlogo.png":info.getPicture());
 			info.setCreateTime(new Date());
 			//验证是否资料是否重复
