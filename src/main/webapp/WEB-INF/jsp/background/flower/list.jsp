@@ -177,7 +177,7 @@ function mycolor_detail(flowerId) {
 							<select id="clothId" name="clothId" style="width:110px;">
 								<option value="">请选择布种</option>
 								<c:forEach items="${ cloths }" var = "cloth">
-									<option value="${cloth.id }">${cloth.clothName}</option>
+									<option value="${cloth.id }" <c:if test="${info.clothId == cloth.id }">selected="selected"</c:if> >${cloth.clothName}</option>
 								</c:forEach>
 							</select>
 						</td>
@@ -186,7 +186,7 @@ function mycolor_detail(flowerId) {
 							<select id="factoryId" name="factoryId" style="width:110px;">
 								<option value="">请选择工厂</option>
 								<c:forEach items="${ factorys }" var = "factory">
-									<option value="${factory.id }">${factory.name}</option>
+									<option value="${factory.id }" <c:if test="${info.factoryId == factory.id }">selected="selected"</c:if> >${factory.name}</option>
 								</c:forEach>
 							</select>
 						</td>
@@ -204,7 +204,7 @@ function mycolor_detail(flowerId) {
 							<select id="technologyId" name="technologyId" style="width:110px;">
 								<option value="">请选择工艺</option>
 								<c:forEach items="${ technologys }" var = "technology">
-									<option value="${technology.id }">${technology.name}</option>
+									<option value="${technology.id }" <c:if test="${info.technologyId == technology.id }">selected="selected"</c:if> >${technology.name}</option>
 								</c:forEach>
 							</select>
 							<a class="btn btn-primary" href="javascript:void(0)" id="search"> 查询</a>
