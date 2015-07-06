@@ -1,6 +1,7 @@
 package com.github.hzw.security.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -274,9 +275,10 @@ public class FlowerInfoController extends BaseController{
 		
 		FlowerInfo info = flowerInfoService.getById(id);
 		String[] factoryCodes = info.getFactoryCode().split("[,]");
+		
 		if(factoryCodes.length == 2) {
-			model.addAttribute("factoryCode", factoryCodes[0]);
-			model.addAttribute("factoryCode2", factoryCodes[1]);
+			model.addAttribute("factoryCode", factoryCodes[1]);
+			model.addAttribute("factoryCode2", factoryCodes[0]);
 		} else if(factoryCodes.length == 1) {
 			model.addAttribute("factoryCode", factoryCodes[0]);
 			model.addAttribute("factoryCode2", null);

@@ -84,7 +84,7 @@
 			and my_company_color = #{myCompanyColor}
 		</if>
 		</where>
-		order by id desc
+		order by id
 	</select>
 	
 	<select id="queryFactoryCode" parameterType="String" resultType="java.lang.String">
