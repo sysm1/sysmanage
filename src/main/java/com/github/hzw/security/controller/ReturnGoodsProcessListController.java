@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -83,6 +84,17 @@ public class ReturnGoodsProcessListController extends BaseController {
 			model.addAttribute("cloth", cloths.get(0));
 		}
 		return Common.BACKGROUND_PATH+"/processList/list";
+	}
+	@RequestMapping("view")
+	public String view(String id,HttpServletRequest request){
+		OrderSummary orderSummary=orderSummaryService.getById(id);
+		List<ReturnGoodsProcess> rlist=null;
+		rlist=returnGoodsProcessService.queryBySummaryId(id);
+		Map<Integer,List<ReturnGoodsProcess>> map=new HashMap<Integer,List<ReturnGoodsProcess>>();
+		map.put(Integer.parseInt(id), rlist);
+		request.setAttribute("item", orderSummary);
+		request.setAttribute("map",map);
+		return Common.BACKGROUND_PATH+"/processList/view";
 	}
 	
 	/**

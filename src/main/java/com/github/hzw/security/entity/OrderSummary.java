@@ -54,6 +54,8 @@ public class OrderSummary {
 
     private Double num;
     
+    private Double numKg;
+    
     /**下单单位**/
     private Integer unit;
     
@@ -599,5 +601,13 @@ public class OrderSummary {
 
 	public void setReturnMark(String returnMark) {
 		this.returnMark = returnMark;
+	}
+
+	public Double getNumKg() {
+		return numKg;
+	}
+
+	public void setNumKg(Double numKg) {
+		this.numKg = numKg;
 	}
 }
