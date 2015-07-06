@@ -38,12 +38,16 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 					dataType:"json",
 					success : function(data) {
 						if (data.flag == "true") {
-							$.ligerDialog.success('提交成功!', '提示', function() {
-								//这个是调用同一个页面趾两个iframe里的js方法
-								//account是iframe的id
-								parent.flower.loadGird();
-								closeWin();
-							});
+							if(data.msg!=null){
+								alert(data.msg);
+							}else{
+								$.ligerDialog.success('提交成功!', '提示', function() {
+									//这个是调用同一个页面趾两个iframe里的js方法
+									//account是iframe的id
+									parent.flower.loadGird();
+									closeWin();
+								});
+							}
 							//parent.window.document.getElementById("username").focus();
 						} else {
 							$.ligerDialog.warn("提交失败！！" + data.msg);
@@ -102,6 +106,61 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 	});
 	
 	function saveWin() {
+		var factoryId=$('#factoryId').val();
+		if(factoryId==null||factoryId==''){
+			alert('请选择工厂');
+			$('#factoryId').focus();
+			return false;
+		}
+		var clothId=$('#clothId').val();
+		if(clothId==null||clothId==''){
+			alert('请选择布种');
+			$('#clothId').focus();
+			return false;
+		}
+		var myCompanyCode=$('#myCompanyCode').val();
+		if(myCompanyCode==null||myCompanyCode==''){
+			alert('我司编号不能为空');
+			$('#myCompanyCode').focus();
+			return false;
+		}
+		var technologyId=$('#technologyId').val();
+		if(technologyId==null||technologyId==''){
+			alert('工艺不能为空');
+			$('#technologyId').focus();
+			return false;
+		}
+		var factoryCodes=$('#factoryCodes').val();
+		if(factoryCodes==null||factoryCodes==''){
+			alert("工厂编号不能为空");
+			$('#factoryCodes').focus();
+			return false;
+		}
+		var mycount=0;
+		var facount=0;
+		var myCompanyColors=document.getElementsByName("myCompanyColors");
+		for(var i=0;i<myCompanyColors.length;i++){
+			var my=myCompanyColors[i].value;
+			//alert(my);
+			if(my!='我司颜色'&&my!=''){
+				mycount++;
+			}
+		}
+		var factoryColors=document.getElementsByName("factoryColors");
+		for(var i=0;i<factoryColors.length;i++){
+			var fac=factoryColors[i].value;
+			if(fac!='工厂颜色'&&fac!=''){
+				facount++;
+			}
+		}
+		if(mycount==0){
+			alert("请输入我司颜色");
+			return false;
+		}
+		if(facount==0){
+			alert("请输入工厂颜色");
+			return false;
+		}
 		$("#form").submit();
 	}
 	
@@ -184,7 +243,6 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td>工艺：</td>
 				<td>
 					<select id="technologyId" name="technologyId" style="width:100px;">
-							<option value="">请选择工艺</option>
 							<c:forEach items="${ technologys }" var = "technology">
 								<option value="${technology.id }">${technology.name}</option>
 							</c:forEach>
@@ -201,7 +259,7 @@ jQuery.validator.addMethod("chrnum", function(value, element) {
 				<td>工厂编号：</td>
 				<td>
 					<span class="factoryCodeInputcss" id="factoryCodeInputID">
-					<input name="factoryCodes" type="text" value="" style="width:100px;"/>
+					<input name="factoryCodes" id="factoryCodes" type="text" value="" style="width:100px;"/>
 					</span><span id="addFacotyCodeId"><a href="javascript:void(0);">+</a></span>
 				</td>
 				

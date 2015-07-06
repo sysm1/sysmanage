@@ -149,6 +149,8 @@
 		</if>
 		<if test="technologyId != null and technologyId != ''">
 			and flower.technology_Id = #{technologyId}
+		</if><if test="myCompanyCode != null and myCompanyCode != ''">
+			and flower.my_company_code = #{myCompanyCode}
 		</if>
 		</where>
 		order by id desc

@@ -313,10 +313,20 @@ th.specalt {
 			$('#'+id).attr('value','');
 		}
 	}
+	function showdetail(id){
+		//alert(id);
+		dialog = parent.$.ligerDialog.open({
+			width : 1150,
+			height : 350,
+			url : rootPath + '/background/processList/view.html?id='+id,
+			title : "回货进度信息查看",
+			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+		});
+	}
 </script>
 </head>
 <body>
-	<div class="divBody" style="width:2200px;">
+	<div class="divBody" style="width:1500px;">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
@@ -410,10 +420,10 @@ th.specalt {
 					<th rowspan="2">&nbsp;状态&nbsp;</th>
 					<th rowspan="2" style="width: 60px;">下单日期</th>
 					<th style="min-width: 60px;" rowspan="2">工&nbsp;厂</th>
-					<th colspan="11">下单</th>
+					<!--th colspan="11">下单</th-->
 					<th colspan="16">实到</th>
 				</tr><tr>
-					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
+					<!--th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
 					<th>&nbsp;工&nbsp;艺&nbsp;</th>
@@ -423,7 +433,7 @@ th.specalt {
 					<th>空差</th>
 					<th>胶袋</th>
 					<th>条数</th>
-					<th>数量(KG)</th>
+					<th>数量(KG)</th-->
 					
 					<th>收货单位</th>
 					<th>布种</th>
@@ -444,18 +454,19 @@ th.specalt {
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-				<tr id="${item.id }">
+				<tr id="${item.id }" ondblclick="showdetail(${item.id });">
 					<td style="text-align: center;" id="0_${item.id }">
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
 					<!--td id="2_${item.id }">${item.id }</td-->
-					<td id="1_${item.id }">${item.status }</td>
+					<td id="1_${item.id }" title="双击查看详情">${item.status }</td>
 					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
-						<fmt:formatDate value='${item.orderDate }' pattern='yyyy/MM/dd'/>
+						<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
 					</td>
 					<td id="3_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
-					<td id="5_${item.id }">${item.clothName }</td>
+					
+					<!--td id="5_${item.id }">${item.clothName }</td>
 					<td id="6_${item.id }">${item.factoryCode }</td>
 					<td id="7_${item.id }">${item.factoryColor }</td>
 					
@@ -467,9 +478,9 @@ th.specalt {
 					<td id="12_${item.id }">${item.kongcha }</td>
 					<td id="13_${item.id }">${item.jiaodai }</td>
 					<td id="14_${item.id }">${item.num }</td>
-					<td id="15_${item.id }">${item.numKg }</td>
+					<td id="15_${item.id }">${item.numKg }</td-->
 					
-					<td>
+					<td title="双击查看回货进度详情">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							${item1.factoryName }<br>
 						</c:forEach>
