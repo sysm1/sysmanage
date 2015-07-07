@@ -128,4 +128,13 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 		flowerInfoMapper.updateByStatus(map);
 	}
 	
+	public List<FlowerInfo> queryByClothIdAndMyCompanyCode(Integer clothId, String myCompanyCode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clothId", clothId);
+		map.put("myCompanyCode", myCompanyCode);
+		return flowerInfoMapper.queryByClothIdAndMyCompanyCode(map);
+	}
+	
+	
+	
 }

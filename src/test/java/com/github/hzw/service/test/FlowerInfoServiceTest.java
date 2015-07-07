@@ -122,4 +122,13 @@ public class FlowerInfoServiceTest {
 	public void testUpdateByStatus() {
 		flowerInfoService.updateByStatus(9, 0);
 	}
+	
+	@Test
+	public void queryByClothIdAndMyCompanyCodeTest() {
+		Integer clothId = 11;
+		String myCompanyCode = "g78t78";
+		List<FlowerInfo> list = flowerInfoService.queryByClothIdAndMyCompanyCode(clothId, myCompanyCode);
+		System.out.println(list);
+	}
+	
 }

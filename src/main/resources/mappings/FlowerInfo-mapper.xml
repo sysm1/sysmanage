@@ -237,4 +237,17 @@
 		where id=#{id}
   </update>
   
+  
+  <select id="queryByClothIdAndMyCompanyCode" resultType="FlowerInfo" parameterType="map">
+		select
+		<include refid="selectIdExt" />
+			from flower_info flower
+		<where> 
+		 	my_company_code = '${myCompanyCode}'
+		 	and cloth_id = ${clothId}
+		</where>
+		order by flower.id desc
+	</select>
+	
+	
 </mapper>

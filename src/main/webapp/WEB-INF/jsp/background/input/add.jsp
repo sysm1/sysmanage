@@ -245,6 +245,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	/**查询未回数量**/
 	function queryNoReturnNum(obj){
 		var clothId=obj.parentNode.parentNode.children[1].childNodes[0].value;
+		
 		var myCompanyCode=obj.parentNode.parentNode.children[2].childNodes[0].value;
 		var myCompanyColor=obj.parentNode.parentNode.children[3].childNodes[0].value;
 		if(checkNull(clothId)&&checkNull(myCompanyCode)&&checkNull(myCompanyColor)){

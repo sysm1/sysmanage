@@ -329,7 +329,18 @@ public class OrderSummaryController extends BaseController {
 	@ResponseBody
 	@RequestMapping("queryNoReturnNum")
 	public String queryNoReturnNum(OrderSummary orderSummary){
-		return orderSummaryService.queryNoReturnNum(orderSummary);
+		 return orderSummaryService.queryNoReturnNum(orderSummary);
+	}
+	
+	@ResponseBody
+	@RequestMapping("queryNoReturnNum1")
+	public Map<String, Object> queryNoReturnNum1(OrderSummary orderSummary){
+		List<FlowerInfo> list = flowerInfoService.queryByClothIdAndMyCompanyCode(orderSummary.getClothId(), orderSummary.getMyCompanyCode());
+		String data =  orderSummaryService.queryNoReturnNum(orderSummary);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("data", data);
+		return map;
 	}
 	
 	@ResponseBody
