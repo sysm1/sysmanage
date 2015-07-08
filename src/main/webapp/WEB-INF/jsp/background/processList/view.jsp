@@ -78,6 +78,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 					<th style="min-width: 60px;" style="text-align: right;">工&nbsp;厂</th>
 					<td id="3_${item.id }" colspan="2" style="text-align: left;">${item.factoryName }</td>
+					<td>收货单位</td>
+					<td colspan="2">
+						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+							${item1.factoryName }<br>
+						</c:forEach>
+					</td>
 				</tr>
 				<tr>
 					<th colspan="11">下单</th>
@@ -111,7 +117,6 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<tr>
 					<th colspan="13">实到</th>
 				</tr><tr>
-					<th>收货单位</th>
 					<th>布种</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
@@ -126,12 +131,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th style="width: 68px;">条数</th>
 					<th style="width: 68px;">数量(KG)</th>
 					<th style="width: 68px;">备注</th>
+					<th style="width: 68px;">回货日期</th>
 				</tr><tr>
-					<td>
-						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-							${item1.factoryName }<br>
-						</c:forEach>
-					</td>
+					
 					<td id="26_${item.id }" style="width: 90px;" >
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
@@ -230,6 +232,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 								${item1.mark }<br>
 							</c:forEach>
 						</c:if>
+					</td>
+					<td>
+						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+							<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/><br>
+						</c:forEach>
 					</td>
 				</tr>
 				
