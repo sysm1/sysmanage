@@ -89,9 +89,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th colspan="11">下单</th>
 				</tr><tr>
 					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
+					<th>&nbsp;工&nbsp;艺&nbsp;</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
-					<th>&nbsp;工&nbsp;艺&nbsp;</th>
+					
 					<th>我司编号</th>
 					<th>我司颜色</th>
 					<th>纸管</th>
@@ -101,10 +102,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th>数量(KG)</th>
 				</tr><tr>
 					<td id="5_${item.id }">${item.clothName }</td>
+					<td id="8_${item.id }">${item.technologyName }</td>
 					<td id="6_${item.id }">${item.factoryCode }</td>
 					<td id="7_${item.id }">${item.factoryColor }</td>
 					
-					<td id="8_${item.id }">${item.technologyName }</td>
 					<td id="9_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
 					<td id="10_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
 					
@@ -118,9 +119,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th colspan="13">实到</th>
 				</tr><tr>
 					<th>布种</th>
+					<th>工艺</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
-					<th>工艺</th>
+					
 					<th>我司编号</th>
 					<th>我司颜色</th>
 					
@@ -141,6 +143,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</c:forEach>
 						</c:if>
 					</td>
+					<td id="19_${item.id }" style="width: 90px;">
+						<c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								${item1.technologyName }<br>
+							</c:forEach>
+						</c:if>
+					</td>
 					<td id="17_${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
@@ -156,13 +165,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</c:forEach>
 						</c:if>
 					</td>
-					<td id="19_${item.id }" style="width: 90px;">
-						<c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								${item1.technologyName }<br>
-							</c:forEach>
-						</c:if>
-					</td>
+					
 					<td id="20_${item.id }" style="width: 90px;">
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
