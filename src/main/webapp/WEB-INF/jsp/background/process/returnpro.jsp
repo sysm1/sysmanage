@@ -1,127 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/common/header.jsp"%>
-<link href="${ctx}/css/unsub.css" rel="stylesheet">
-<script type="text/javascript"	src="/js/My97DatePicker/WdatePicker.js"></script>
-<style type="text/css">
-.ordersearchDivCss { 
-	position: absolute; 
-	z-index: 100; 
-	display: block; 
-	padding-left: 150px;
-}
-
-/* CSS Document */
-
-text{height:3px}
-a {
- color: #c75f3e;
-}
-
-#mytable {
- width: 100%;
- padding: 0;
- margin: 0;
-}
-
-caption {
- padding: 0 0 5px 0;
- font: italic 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
- text-align: right;
-}
-
-th {
- font: bold 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
- color: #4f6b72;
- border-right: 1px solid #C1DAD7;
- border-bottom: 1px solid #C1DAD7;
- border-top: 1px solid #C1DAD7;
- letter-spacing: 2px;
- text-transform: uppercase;
- text-align: center;
- padding: 6px 5px 6px;
-}
-
-th.nobg {
- border-top: 0;
- border-left: 0;
- border-right: 1px solid #C1DAD7;
- background: none;
-}
-
-#mytable td {
- border-left: 1px solid #C1DAD7;
- border-right: 1px solid #C1DAD7;
- border-bottom: 1px solid #C1DAD7;
- border-top: 1px solid #C1DAD7;
- font-size:12px;
- padding: 2px 3px 2px ;
-}
-
-.lanyuan_bb{
-border-bottom: 1px solid #C1DAD7;
-}
-
-td.alt {
- background: #F5FAFA;
- color: #797268;
-}
-
-th.spec {
- border-left: 1px solid #C1DAD7;
- border-top: 0;
- background: #fff ;
- font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-}
-
-th.specalt {
- border-left: 1px solid #C1DAD7;
- border-top: 1px solid #C1DAD7;
- background: #f5fafa ;
- font: bold 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
- color: #797268;
-}
-</style>
-
 <script type="text/javascript">
-	var dialog;
-	var grid;
+jQuery.validator.addMethod("checkpass", function(value, element) {
+	 return this.optional(element) || ((value.length <= 16) && (value.length>=6));
+}, "密码由6至16位字符组合构成");
 	$(function() {
-		$("#seach").click("click", function() {//绑定查询按扭
-			$('#pageNow').attr('value',1);
-			$("#delay").attr('value','');
-			var f = $('#fenye');
-			//f.attr('target','_blank');
-			f.attr('action','${pageContext.request.contextPath}/background/process/list.html');
-			f.submit();
+		
+		$("form").validate({
+			submitHandler : function(form) {//必须写在验证前面，否则无法ajax提交
+				$(form).ajaxSubmit({//验证新增是否成功
+					type : "post",
+					dataType:"json",
+					success : function(data) {
+						if (data.flag == "true") {
+							$.ligerDialog.success('提交成功!', '提示', function() {
+								//这个是调用同一个页面趾两个iframe里的js方法
+								//account是iframe的id
+								parent.role.loadGird();
+								closeWin();
+							});
+							//parent.window.document.getElementById("username").focus();
+						} else {
+							$.ligerDialog.warn("提交失败！！");
+						}
+					}
+				});
+			},
+			rules : {
+				enable : {
+					required : true
+				}
+			},
+			messages : {
+				enable : {
+					required : "选择状态"
+				}
+			},
+			errorPlacement : function(error, element) {//自定义提示错误位置
+				$(".l_err").css('display','block');
+				//element.css('border','3px solid #FFCCCC');
+				$(".l_err").html(error.html());
+			},
+			success: function(label) {//验证通过后
+				$(".l_err").css('display','none');
+			}
 		});
-		$("#add").click("click", function() {//绑定查询按扭
-			dialog = parent.$.ligerDialog.open({
-				width : 300,
-				height : 310,
-				url : rootPath + '/background/role/addUI.html',
-				title : "增加角色",
-				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
-			});
-		});
+		
 		$("#saveTemp").click("click", function() {//绑定暂存按扭
 			if(!saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=0')){
 				alert("数据暂存成功");	
 			}
-		});
-		$("#delaybtn").click("click", function() {
-			$('#pageNow').attr('value',1);
-			$("#delay").attr('value',1);
-			var f = $('#fenye');
-			//f.attr('target','_blank');
-			f.attr('action','${pageContext.request.contextPath}/background/process/list.html');
-			f.submit();
 		});
 		$("#save").click("click", function() {//绑定查询按扭
 			saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=2');
@@ -129,114 +62,69 @@ th.specalt {
 			alert("数据已回");
 			location.reload();
 		});
-		
-		/***过滤查询**/
-		$("#factory_text").ligerComboBox({
-	        url: '/background/pinyin/factory.html',
-	        valueField: 'id',
-	        textField: 'name', 
-	        selectBoxWidth: 220,
-	        autocomplete: true,
-	        width: 220,
-	        height:20,
-	        onSelected:function(e) {
-	            $("#factoryId").val(e);
-	             // alert($("#factoryId").val());
-	        }
-	   });
-		
-		$("#deleteView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
-			if (cbox=="") {
-				parent.$.ligerDialog.alert("请选择删除项！！");
-				return;
-			}
-			parent.$.ligerDialog.confirm('删除后不能恢复，确定删除吗？', function(confirm) {
-				if (confirm) {
-					$.ajax({
-					    type: "post", //使用get方法访问后台
-					    dataType: "json", //json格式的数据
-					    async: false, //同步   不写的情况下 默认为true
-					    url: rootPath + '/background/role/deleteById.html', //要访问的后台地址
-					    data: {ids:cbox.join(",")}, //要发送的数据
-					    success: function(data){
-					    	if (data.flag == "true") {
-					    		parent.$.ligerDialog.success('删除成功!', '提示', function() {
-					    			loadGird();//重新加载表格数据
-								});
-							}else{
-								parent.$.ligerDialog.warn("删除失败！！");
-							}
-						}
-					});
-				}
-			});
-		});
 	});
-	
 	function saveData(url1){
 		//alert(document.getElementsByName("returnNum").length);
 		var cbox=getSelectedCheckbox();
-		if(cbox==""){
-			parent.$.ligerDialog.alert("请选择一条记录修改");
-			return false;
+		var url=url1;
+		var f = $('#form');
+		//alert(document.getElementsByName(cbox[i]+"returnNum").length);
+		//var url='${pageContext.request.contextPath}/background/process/save.html?returnStatus=2';
+		var returnNums=document.getElementsByName("${item.id }returnNum");
+		for(var j=0;j<returnNums.length;j++){
+			url+="&returnNum="+returnNums[j].value;
 		}
-		for(var i=0;i<cbox.length;i++){
-			var url=url1;
-			var f = $('#'+cbox[i]+'_form');
-			//alert(document.getElementsByName(cbox[i]+"returnNum").length);
-			//var url='${pageContext.request.contextPath}/background/process/save.html?returnStatus=2';
-			var returnNums=document.getElementsByName(cbox[i]+"returnNum");
-			for(var j=0;j<returnNums.length;j++){
-				url+="&returnNum="+returnNums[j].value;
-			}
-			
-			var returnNumKgs=document.getElementsByName(cbox[i]+"returnNumKg");
-			for(var j=0;j<returnNumKgs.length;j++){
-				url+="&returnNumKg="+returnNumKgs[j].value;
-			}
-			
-			var kongchas=document.getElementsByName(cbox[i]+"kongcha");
-			for(var j=0;j<kongchas.length;j++){
-				url+="&kongcha="+kongchas[j].value;
-			}
-			
-			var jiaodais=document.getElementsByName(cbox[i]+"jiaodai");
-			for(var j=0;j<jiaodais.length;j++){
-				url+="&jiaodai="+jiaodais[j].value;
-			}
-			//alert(url);
-			//alert(f.serialize());
-			f.attr('target','');
-			//f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
-			//f.submit();
-			$.ajax({
-			    type: "post", //使用get方法访问后台
-			    dataType: "json", //json格式的数据
-			    async: false, //同步   不写的情况下 默认为true
-			    url: url+"&id="+cbox[i], //要访问的后台地址
-			    data: f.serialize(), //要发送的数据
-			    success: function(data){
-			    	//alert(data);
-				},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
-					alert(XMLHttpRequest.status);
-					alert(XMLHttpRequest.readyState);
-					alert(data);  
-			     }
-			});
+		
+		var returnNumKgs=document.getElementsByName("${item.id }returnNumKg");
+		for(var j=0;j<returnNumKgs.length;j++){
+			url+="&returnNumKg="+returnNumKgs[j].value;
 		}
+		
+		var kongchas=document.getElementsByName("${item.id }kongcha");
+		for(var j=0;j<kongchas.length;j++){
+			url+="&kongcha="+kongchas[j].value;
+		}
+		
+		var jiaodais=document.getElementsByName("${item.id }jiaodai");
+		for(var j=0;j<jiaodais.length;j++){
+			url+="&jiaodai="+jiaodais[j].value;
+		}
+		//alert(url);
+		//alert(f.serialize());
+		f.attr('target','');
+		//f.attr('action','${pageContext.request.contextPath}/background/process/save.html?status=1');
+		//f.submit();
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: url+"&id=${item.id }", //要访问的后台地址
+		    data: f.serialize(), //要发送的数据
+		    success: function(data){
+		    	//alert(data);
+			},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+				alert(XMLHttpRequest.status);
+				alert(XMLHttpRequest.readyState);
+				alert(data);  
+		     }
+		});
 	}
-	
-	function loadGird(){
-		grid.loadData();
+	$(function() {
+		$("input:radio[value='${role.enable}']").attr('checked','true');
+	});
+	function saveWin() {
+		$("#form").submit();
 	}
-	
+	function closeWin() {
+		 parent.$.ligerDialog.close(); //关闭弹出窗; //关闭弹出窗
+		parent.$(".l-dialog,.l-window-mask").css("display","none"); 
+	}
 	/***增加一行**/
 	var index=1;
 	var newId=2;
 	function addOneRow(itemId){
-		//$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value=""'+
-		//		'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
+		$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value=""'+
+				'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
 		$('#'+itemId+'returnNum1').after('<input type="text"  name="'+itemId+'returnNum" value="" style="width: 60px"><br>');
 		$('#'+itemId+'returnNumKg1').before('<input type="text"  name="'+itemId+'returnNumKg" value="" style="width: 60px"><br>');
 		$('#'+itemId+'returnColor1').before('<input type="text"  name="'+itemId+'returnColor" value="" style="width: 60px"><br>');
@@ -253,72 +141,9 @@ th.specalt {
 		$('#'+itemId+'mark1').before('<input type="text" name="'+itemId+'mark" value="" style="width: 60px"><br>');
 		$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="'+itemId+'factoryName" value="" style="width: 90px"><br>');
 		
-		
 		//document.getElementById(itemId+"returnCode1").innerHTML=document.getElementById(itemId+"returnCode1").innerHTML+'<input type="text"  name="'+itemId+'returnCode" value="" style="width: 70px"><br>';
 		index++;
 		newId++;
-	}
-	
-	/**
-	 * 获取选中的值
-	 */
-	function getSelectedCheckbox() {
-		var arr = [];
-		$('input[name="checkId"]:checked').each(function() {
-			arr.push($(this).val());
-		});
-		return arr;
-	};
-	
-	function page(pageNO){
-		$('#pageNow').attr('value',pageNO);
-		var f = $('#fenye');
-		//f.attr('target','_blank');
-		f.attr('action','${pageContext.request.contextPath}/background/process/list.html');
-		f.submit();
-	}
-	/***点击**/
-	var allsize=26;
-	function onclickTr(id){
-		//obj.style.backgroundColor ="#EEDC82";
-		for(var i=0;i<=allsize;i++){
-			document.getElementById(i+"_"+id).style.backgroundColor ="#EEDC82";
-		}
-		document.getElementById(id+"checkId").checked=true;
-	}
-	/***选择一个checkbox**/
-	function clickCheckId(id){
-		var checkFlag=document.getElementById(id+"checkId").checked;
-		if(checkFlag){
-			for(var i=0;i<=allsize;i++){
-				document.getElementById(i+"_"+id).style.backgroundColor ="#EEDC82";
-			}
-		}else{
-			for(var i=0;i<=allsize;i++){
-				document.getElementById(i+"_"+id).style.backgroundColor ="";
-			}
-		}
-	}
-	/**全选checkbox**/
-	function checkAllIds(obj){
-		var falg=obj.checked;
-		var checkIds=document.getElementsByName("checkId");
-		for(var i=0;i<checkIds.length;i++){
-			checkIds[i].checked=falg;
-			clickCheckId(checkIds[i].value);
-		}
-	}
-	/**去除颜色**/
-	function clearColor(id){
-		for(var i=0;i<=allsize;i++){
-			document.getElementById(i+"_"+id).style.backgroundColor ="";
-		}
-		document.getElementById(id+"checkId").checked=false;
-	}
-	function changeTextValue(id,obj){
-		if(obj.value==''){
-			$('#'+id).attr('value','');
-		}
 	}
 	var cobject=null;
 	function selectCloth(obj){
@@ -350,74 +175,34 @@ th.specalt {
 		//alert(cobject.id);
 		cobject.value=name;
 	}
-	function showDetail(id){
-		dialog = parent.$.ligerDialog.open({
-			width : 1250,
-			height : 400,
-			url : rootPath + '/background/process/returnpro.html?id='+id,
-			title : "回货进度信息查看",
-			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
-		});
-	}
 </script>
 </head>
 <body>
-	<div class="divBody" style="width:2200px;">
-		<div class="search">
-			<form name="fenye" id="fenye">
-				<input type="hidden" id="pageNow" name="pageNow" value="">
-				<input type="hidden" id="delay" name="delay" value="">
-				<table class="dataintable">
-					<tr>
-						<td>工厂：</td>
-						<td>
-							<!--select  id="factoryId" name="factoryId">
-								<option value="">请选择工厂</option>
-								<c:forEach items="${ factoryInfos }" var = "factoryInfo">
-									<option <c:if test="${factoryInfo.id eq bean.factoryId }">selected="selected"</c:if> value="${factoryInfo.id }">${factoryInfo.name}</option>
-								</c:forEach>
-							</select-->
-							<input type="hidden" id="factoryId" name="factoryId" value="${ bean.factoryId }">
-							<input type="text" id="factory_text" style="width: 200px;" value="${factoryInfo.name }" 
-								onchange="changeTextValue('factoryId',this);"/> 
-						</td><td>&nbsp;&nbsp;编号：</td>
-						<td>
-							<input type="text" id="code" name="code" value="${bean.code }">
-						</td><td>
-							&nbsp;&nbsp;<a class="btn btn-primary" href="javascript:void(0)" id="seach"> <span>查询</span></a>
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
-		<div class="topBtn">
-			<a class="btn btn-primary" href="javascript:void(0)" id="saveTemp"> 
-				暂存数据
-			</a>
-			<a class="btn btn-info" href="javascript:void(0)" id="save"> 
-				已回
-			</a>
-			<a class="btn btn-info" href="javascript:void(0)" id="delaybtn"> 
-				拖延${delayDates }单
-			</a>
-		</div>
-		<div id="paging" class="pagclass" >
-			<table border="1" id="mytable" class="dataintable">
+<div class="divdialog">
+	<div class="l_err" style="width: 100%;"></div>
+	<form id="form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
+		<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
+		<table style="width: 100%; " class="dataintable">
+			<tbody>
 				<tr>
-					<th class="specalt" rowspan="2">
-						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
-					</th>
-					<!-- th rowspan="2">序号</th-->
-					<!--th rowspan="2">&nbsp;状态&nbsp;</th-->
-					<th rowspan="2" style="width: 60px;">下单日期</th>
-					<th style="min-width: 60px;" rowspan="2">工&nbsp;厂</th>
+					<th style="text-align: right;">&nbsp;状态&nbsp;</th>
+					<td id="1_${item.id }" colspan="2" style="text-align: left;">${item.status }</td>
+					<th style="text-align: right;">下单日期</th>
+					<td style="text-align: left;">
+						<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>
+					</td>
+					<th style="min-width: 60px;" style="text-align: right;">工&nbsp;厂</th>
+					<td id="3_${item.id }" colspan="2" style="text-align: left;">${item.factoryName }</td>
+					
+				</tr>
+				<tr>
 					<th colspan="11">下单</th>
-					<th colspan="16">实到</th>
 				</tr><tr>
 					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
+					<th>&nbsp;工&nbsp;艺&nbsp;</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
-					<th>&nbsp;工&nbsp;艺&nbsp;</th>
+					
 					<th>我司编号</th>
 					<th>我司颜色</th>
 					<th>纸管</th>
@@ -425,12 +210,30 @@ th.specalt {
 					<th>胶袋</th>
 					<th>条数</th>
 					<th>数量(KG)</th>
+				</tr><tr>
+					<td id="5_${item.id }">${item.clothName }</td>
+					<td id="8_${item.id }">${item.technologyName }</td>
+					<td id="6_${item.id }">${item.factoryCode }</td>
+					<td id="7_${item.id }">${item.factoryColor }</td>
 					
+					<td id="9_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
+					<td id="10_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
+					
+					<td id="11_${item.id }">${item.zhiguan }</td>
+					<td id="12_${item.id }">${item.kongcha }</td>
+					<td id="13_${item.id }">${item.jiaodai }</td>
+					<td id="14_${item.id }">${item.num }</td>
+					<td id="15_${item.id }">${item.numKg }</td>
+				</tr>
+				<tr>
+					<th colspan="13">实到</th>
+				</tr><tr>
 					<th>收货单位</th>
 					<th>布种</th>
+					<th>工艺</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
-					<th>工艺</th>
+					
 					<th>我司编号</th>
 					<th>我司颜色</th>
 					
@@ -441,35 +244,8 @@ th.specalt {
 					<th style="width: 68px;">条数</th>
 					<th style="width: 68px;">数量(KG)</th>
 					<th style="width: 68px;">备注</th>
-					<th></th>
-				</tr>
-				<c:forEach var="item" items="${pageView.records }" varStatus="status">
-				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-				<tr id="${item.id }" ondblclick="showDetail('${item.id }');">
-					<td style="text-align: center;" id="0_${item.id }">
-						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
-						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
-					</td>
-					<!--td id="2_${item.id }">${item.id }</td-->
-					<!--td id="1_${item.id }">${item.returnStatusName }</td-->
-					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
-						<fmt:formatDate value='${item.orderDate }' pattern='yyyy/MM/dd'/>
-					</td>
-					<td id="3_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
-					<td id="5_${item.id }">${item.clothName }</td>
-					<td id="6_${item.id }">${item.factoryCode }</td>
-					<td id="7_${item.id }">${item.factoryColor }</td>
-					
-					<td id="8_${item.id }">${item.technologyName }</td>
-					<td id="9_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyCode }</td>
-					<td id="10_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
-					
-					<td id="11_${item.id }">${item.zhiguan }</td>
-					<td id="12_${item.id }">${item.kongcha }</td>
-					<td id="13_${item.id }">${item.jiaodai }</td>
-					<td id="14_${item.id }">${item.num }</td>
-					<td id="15_${item.id }">${item.numKg }</td>
-					
+					<th style="width: 68px;">回货日期</th>
+				</tr><tr>
 					<td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }factoryName" value="${item.factoryName }" 
@@ -642,61 +418,38 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }mark1" ></span>
+					</td><td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
+					<c:if test="${fn:length(map[item.id]) ==0}">
+						<input type="text" name="${item.id }returnDate" style="width:70px" value=""
+							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
+					</c:if><c:if test="${map[item.id] != null }">
+						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+							<input type="text"  name="${item.id }returnDate" style="width:70px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
+								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
+						</c:forEach>
+					</c:if>
+					<span id="${item.id }returnDate" ></span>
 					</td>
-					<td>
-					<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" 
-						style="cursor:pointer;vertical-align:bottom;font-size: 24px;font-weight: bold;">
-					+
-					</span></td>
-				</tr>
-				</form>
-				</c:forEach>
-				<!-- 分页 -->
-				<tr style="height: 35px">
-					<td colspan="15" style="text-align: center;font-size: 14px;">
-<div id="pagelist">
-  <ul style="font-size: 14px;">
-  	<c:if test="${pageView.pageNow==1}">
-  		<li><a href="#">首页</a></li>
-  		<li><a href="#">上一页</a></li>
-  	</c:if><c:if test="${pageView.pageNow>1}">
-  		<li><a href="javascript:page(1)">首页</a></li>
-    	<li><a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a></li>
-  	</c:if>
-    
-    <c:if test="${pageView.pageNow>3 }"><li style="width:15px;border: 0">...</li></c:if>
-    <c:if test="${pageView.pageNow>2 }">
-		<li><a href="javascript:page(${pageView.pageNow-2 })">${pageView.pageNow-2 }</a></li>
-	</c:if><c:if test="${pageView.pageNow>1 }">					
-		<li><a href="javascript:page(${pageView.pageNow-1 })">${pageView.pageNow-1 }</a></li>
-	</c:if>	
-		<li class="current">${pageView.pageNow }</li>
-	<c:if test="${pageView.pageCount-1>=pageView.pageNow }">
-		<li><a href="javascript:page(${pageView.pageNow+1 })">${pageView.pageNow+1 }</a></li>
-	</c:if><c:if test="${pageView.pageCount-2>=pageView.pageNow }">
-		<li><a href="javascript:page(${pageView.pageNow+2 })">${pageView.pageNow+2 }</a></li>
-	</c:if><c:if test="${pageView.pageCount-3>=pageView.pageNow }">
-		<li style="width:15px;border: 0">...</li>
-	</c:if>
-    
-    <c:if test="${pageView.pageNow>=pageView.pageCount }">
-		<li><a href="#">下一页</a></li>
-		<li><a href="#">尾页</a></li>
-	</c:if><c:if test="${pageView.pageNow<pageView.pageCount }">
-		<li><a href="javascript:page(${pageView.pageNow+1 })">下一页</a></li>
-		<li><a href="javascript:page(${pageView.pageCount })">尾页</a></li>
-	</c:if>
-	
-    <li class="pageinfo">第${pageView.pageNow }页</li>
-    <li class="pageinfo">共${pageView.pageCount }页</li>
-    <li class="pageinfo">共${pageView.rowCount }条</li>
-  </ul>
-</div>
+				</tr><tr>
+					<td colspan="14">
+						<div class="l_btn_centent">
+							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
+								onclick="addOneRow(${item.id });" ><span>新增回货</span> </a>
+							<a class="btn btn-primary" href="javascript:void(0)" id="saveTemp"> 
+								暂存数据
+							</a>
+							<a class="btn btn-info" href="javascript:void(0)" id="save"> 
+								已回
+							</a>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
+								onclick="closeWin()"><span>关闭</span> </a>
+						</div>
 					</td>
 				</tr>
-			</table>
-		</div>
+			</tbody>
+		</table>
+	</form>
 	</div>
-	<iframe id="iframe" name="iframe" style="display: none"></iframe>
 </body>
 </html>

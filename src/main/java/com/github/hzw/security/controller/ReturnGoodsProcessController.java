@@ -93,6 +93,17 @@ public class ReturnGoodsProcessController extends BaseController {
 		model.addAttribute("bean", orderSummary);
 		return Common.BACKGROUND_PATH+"/process/list";
 	}
+	@RequestMapping("returnpro")
+	public String returnpro(String id,HttpServletRequest request){
+		OrderSummary orderSummary=orderSummaryService.getById(id);
+		List<ReturnGoodsProcess> rlist=null;
+		rlist=returnGoodsProcessService.queryBySummaryId(id);
+		Map<Integer,List<ReturnGoodsProcess>> map=new HashMap<Integer,List<ReturnGoodsProcess>>();
+		map.put(Integer.parseInt(id), rlist);
+		request.setAttribute("item", orderSummary);
+		request.setAttribute("map",map);
+		return Common.BACKGROUND_PATH+"/process/returnpro";
+	}
 	
 	/**
 	 * 修改回货进度的状态

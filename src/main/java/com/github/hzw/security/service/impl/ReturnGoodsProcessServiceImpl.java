@@ -27,6 +27,7 @@ import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
+import com.github.hzw.util.DateUtil;
 
 @Transactional
 @Service("returnGoodsProcessService")
@@ -125,6 +126,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		String[] myCompanyColors=request.getParameterValues(id+"myCompanyColor");
 		String[] technologyNames=request.getParameterValues(id+"technologyName");
 		String[] marks=request.getParameterValues(id+"mark");
+		String[] returnDate=request.getParameterValues(id+"returnDate");
 		String returnStatus=request.getParameter("returnStatus");
 		String returnMark="";
 		ClothInfo clothInfo=clothInfoService.getById(orderSummary.getClothId()+"");
@@ -165,6 +167,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				}if(null!=jiaodais[i]&&!"".equals(jiaodais[i])){
 					bean.setJiaodai(Double.parseDouble(jiaodais[i]));
 				}
+				bean.setReturnDate(DateUtil.str2Date(returnDate[i],"yyyy-MM-DD"));
 				bean.setClothName(clothNames[i]);
 				bean.setFactoryName(factoryNames[i]);
 				bean.setMyCompanyCode(myCompanyCodes[i]);
