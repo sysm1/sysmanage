@@ -340,11 +340,11 @@ function setValue(id,obj){
 						<div class="lanyuan_input">
 							<input id='num' name="num" class="checkdesc" type="text" value="${num }" 
 								style="width: 95px;height: 99%;border:1px solid ;" onchange="changeNum(this)">
-							<span id="balancetext" style="display: none">差额
+							<span id="balancetext" style="display: none">追加
 							<input type="text" id="balance" name="balance" value="" style="width: 45px;height: 99%;border:1px solid ;"></span>${unitName }
 						</div>
 					</td>
-					<td class="l_right"><span id="ywy" style="display: none">差额业务员：</span></td>
+					<td class="l_right"><span id="ywy" style="display: none">业务员：</span></td>
 					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
 							<select id="ywy2" style="display: none" id="balanceSalemanId" name="balanceSalemanId">
@@ -355,7 +355,7 @@ function setValue(id,obj){
 							</select>
 						</div></td>
 				</tr><tr style="display: none" id="balancemarkTr">
-					<td>差额业务员备注</td>
+					<td>业务员备注</td>
 					<td colspan="5" style="height: 30px;text-align: left;">
 						<input id='balancemark' name="balancemark" type="text" value="" style="width: 553px;height: 17px;border:1px solid ;">
 					</td>

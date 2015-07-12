@@ -165,6 +165,7 @@ function changeNum(obj){
 		$("#num").attr("value",beforNum);
 	}
 	var chae=parseInt(nowNum)-parseInt(beforNum);
+	//alert(chae);
 	if(chae>0){
 		$("#balancetext").show();
 		$("#balance").attr("value",chae);
@@ -174,6 +175,13 @@ function changeNum(obj){
 	}else if(chae<0){
 		alert("修改后的数量不能小于当前数量！");
 		$("#num").attr("value",beforNum);
+		$("#balancetext").hide();
+		$("#ywy").hide();
+		$("#ywy2").hide();
+		$("#balancemarkTr").hide();
+	}else if(chae==0){
+		$("#num").attr("value",beforNum);
+		$("#balance").attr("value",chae);
 		$("#balancetext").hide();
 		$("#ywy").hide();
 		$("#ywy2").hide();
