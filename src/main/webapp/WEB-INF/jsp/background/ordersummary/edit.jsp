@@ -184,6 +184,8 @@ $(function() {
 		var myCompanyColor=$('#myCompanyColor').val();
 		var technologyId=$('#technologyId').val();
 		var factoryCode=$('#factoryCode').val();
+		factoryCode = encodeURI(factoryCode) ;
+		myCompanyColor=encodeURI(myCompanyColor) ;
 		dialog = parent.$.ligerDialog.open({
 			width : 750,
 			height : 500,
