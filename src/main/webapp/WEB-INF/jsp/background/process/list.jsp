@@ -362,7 +362,7 @@ th.specalt {
 </script>
 </head>
 <body>
-	<div class="divBody" style="width:2200px;">
+	<div class="divBody" style="width:100%;">
 		<div class="search">
 			<form name="fenye" id="fenye">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
@@ -412,7 +412,7 @@ th.specalt {
 					<th rowspan="2" style="width: 60px;">下单日期</th>
 					<th style="min-width: 60px;" rowspan="2">工&nbsp;厂</th>
 					<th colspan="11">下单</th>
-					<th colspan="16">实到</th>
+					<!--th colspan="16">实到</th-->
 				</tr><tr>
 					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
 					<th>工厂编号</th>
@@ -423,10 +423,10 @@ th.specalt {
 					<th>纸管</th>
 					<th>空差</th>
 					<th>胶袋</th>
-					<th>条数</th>
-					<th>数量(KG)</th>
+					<th>数量</th>
+					<!-- th>数量(KG)</th-->
 					
-					<th>收货单位</th>
+					<!--th>收货单位</th>
 					<th>布种</th>
 					<th>工厂编号</th>
 					<th>工厂颜色</th>
@@ -437,11 +437,11 @@ th.specalt {
 					<th style="width: 50px;">纸管</th>
 					<th style="width: 50px;">空差</th>
 					<th style="width: 50px;">胶袋</th>
-					<!--th >回货日期</th-->
+					<th >回货日期</th>
 					<th style="width: 68px;">条数</th>
 					<th style="width: 68px;">数量(KG)</th>
 					<th style="width: 68px;">备注</th>
-					<th></th>
+					<th></th-->
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
@@ -467,10 +467,13 @@ th.specalt {
 					<td id="11_${item.id }">${item.zhiguan }</td>
 					<td id="12_${item.id }">${item.kongcha }</td>
 					<td id="13_${item.id }">${item.jiaodai }</td>
-					<td id="14_${item.id }">${item.num }</td>
-					<td id="15_${item.id }">${item.numKg }</td>
+					<td id="14_${item.id }">
+						<c:if test="${item.num!=null }">${item.num }条</c:if>
+						<c:if test="${item.numKg!=null }">${item.numKg }KG</c:if>
+					</td>
+					<!--td id="15_${item.id }">${item.numKg }</td-->
 					
-					<td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
+					<!--td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }factoryName" value="${item.factoryName }" 
 								ondblclick="selectFactory(this);" style="width: 90px;"><br>
@@ -539,7 +542,7 @@ th.specalt {
 					</td>
 					
 					
-					<!--td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
+					<td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
 					<c:if test="${fn:length(map[item.id]) ==0}">
 						<input type="text" name="${item.id }returnDate" style="width:70px" value=""
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
@@ -552,7 +555,7 @@ th.specalt {
 						<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" style="cursor:pointer;vertical-align:bottom;">
 							<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
 						</span>
-					</td-->
+					</td>
 					<td id="21_${item.id }" style="width: 90px;">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }myCompanyColor" value="${item.myCompanyColor }" style="width: 90px;"><br>
@@ -612,8 +615,8 @@ th.specalt {
 						</c:if>
 						<span id="${item.id }returnNumKg1" ></span>
 					</td>
-					<!--td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td-->
-					<!--td onclick="onclickTr(${item.id })">
+					<td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td>
+					<td onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }returnColor" value="${item1.returnColor }" style="width: 60px"><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -622,8 +625,8 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }returnColor" ></span>
-					</td-->
-					<!--td id="15_${item.id }" onclick="onclickTr(${item.id })">
+					</td>
+					<td id="15_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }mark" value="" ><br>
 						</c:if><c:if test="${map[item.id] != null }">
@@ -632,7 +635,7 @@ th.specalt {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id }mark" ></span>
-					</td-->
+					</td>
 					<td>
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text"  name="${item.id }mark" value="${item.mark }" style="width: 60px"><br>
@@ -647,7 +650,7 @@ th.specalt {
 					<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" 
 						style="cursor:pointer;vertical-align:bottom;font-size: 24px;font-weight: bold;">
 					+
-					</span></td>
+					</span></td-->
 				</tr>
 				</form>
 				</c:forEach>

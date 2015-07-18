@@ -196,7 +196,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					
 				</tr>
 				<tr>
-					<th colspan="11">下单</th>
+					<th colspan="10">下单</th>
 				</tr><tr>
 					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
 					<th>&nbsp;工&nbsp;艺&nbsp;</th>
@@ -209,7 +209,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th>空差</th>
 					<th>胶袋</th>
 					<th>条数</th>
-					<th>数量(KG)</th>
+					<!--th>数量(KG)</th-->
 				</tr><tr>
 					<td id="5_${item.id }">${item.clothName }</td>
 					<td id="8_${item.id }">${item.technologyName }</td>
@@ -222,8 +222,11 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td id="11_${item.id }">${item.zhiguan }</td>
 					<td id="12_${item.id }">${item.kongcha }</td>
 					<td id="13_${item.id }">${item.jiaodai }</td>
-					<td id="14_${item.id }">${item.num }</td>
-					<td id="15_${item.id }">${item.numKg }</td>
+					<td id="14_${item.id }">
+						<c:if test="${item.num!=null }">${item.num }条</c:if>
+						<c:if test="${item.numKg!=null }">${item.numKg }KG</c:if>
+					</td>
+					<!--td id="15_${item.id }">${item.numKg }</td-->
 				</tr>
 				<tr>
 					<th colspan="13">实到</th>
