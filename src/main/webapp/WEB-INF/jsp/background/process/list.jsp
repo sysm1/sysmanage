@@ -351,13 +351,7 @@ th.specalt {
 		cobject.value=name;
 	}
 	function showDetail(id){
-		dialog = parent.$.ligerDialog.open({
-			width : 1250,
-			height : 400,
-			url : rootPath + '/background/process/returnpro.html?id='+id,
-			title : "回货进度信息查看",
-			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
-		});
+		location.href=rootPath + '/background/process/returnpro.html?id='+id;
 	}
 </script>
 </head>

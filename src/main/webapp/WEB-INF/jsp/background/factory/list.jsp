@@ -11,39 +11,11 @@
 	var dialog;
 	var grid;
 	$(function() {
-		grid = window.lanyuan.ui.lyGrid({
-					id : 'paging',
-					l_column : [ {
-						colkey : "id",
-						name : "id",
-						width : "50px"
-					}, {
-						colkey : "name",
-						name : "名称",
-						width:"300px"
-					}, {
-						colkey : "cityName",
-						name : "分点",
-						width:"300px"
-					}, {
-						colkey : "statusName",
-						name : "状态",
-						width:"300px"
-					}
-					/**, {
-						colkey : "mark",
-						name : "备注"
-					}*/
-					],
-					jsonUrl : '${pageContext.request.contextPath}/background/factory/query.html',
-					checkbox : true
-				});
 		
 		$("#seach").click("click", function() {//绑定查询按扭
-			var searchParams = $("#fenye").serialize();
-			grid.setOptions({
-				data : searchParams
-			}); 
+			var f = $('#fenye');
+			f.attr('action','${pageContext.request.contextPath}/background/factory/list.html');
+			f.submit();
 		});
 		
 		$("#exportExcel").click("click", function() {//绑定查询按扭
@@ -65,7 +37,7 @@
 		});
 		
 		$("#editView").click("click", function() {//绑定查询按扭
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
@@ -123,8 +95,30 @@
 		});
 	});
 	function loadGird(){
-		grid.loadData();
+		window.location.reload();
 	}
+	
+	/**单选***/
+	function checkId(obj){
+		//alert(obj.value);
+		var flag=obj.checked;
+		 $(":checkbox").attr("checked", false);
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
+	}
+	/**
+	 * 获取选中的值
+	 */
+	function getSelectedCheckbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
+			arr.push($(this).val());
+		});
+		return arr;
+	};
 </script>
 </head>
 <body>
@@ -134,7 +128,7 @@
 				名称：<input type="text" name="name" value="${param.name}"
 					style="height: 20px" />
 				分点：
-				<select id="cityId" name="cityId">
+				<select id="cityId" name="cityId" style="width: 100px;">
 					<option value="">请选择</option>
 					<c:forEach items="${citys }" var="city">
 					<option value="${city.id }">${city.name }</option>
@@ -144,6 +138,11 @@
 				<input type="radio" id="status0" name="status" value=""  >全部
 				<input type="radio" id="status1" name="status" value="1" <c:if test="${factory.status eq 1 }">checked="checked" </c:if> >正常
 				<input type="radio" id="status2" name="status" value="2" <c:if test="${factory.status eq 2 }">checked="checked" </c:if>>停用
+				&nbsp;
+				是否默认
+				<input type="radio" id="isdefault1" name="isdefault" value=""  >全部
+				<input type="radio" id="isdefault2" name="isdefault" value="是" <c:if test="${factory.status eq '是' }">checked="checked" </c:if> >是
+				<input type="radio" id="isdefault"  name="isdefault" value="否" <c:if test="${factory.status eq '否' }">checked="checked" </c:if>>否
 				<a class="btn btn-primary" href="javascript:void(0)" id="seach"> <span>查询</span>
 				</a>
 			</form>
@@ -163,7 +162,42 @@
 			</a>
 			 -->
 		</div>
-		<div id="paging" class="pagclass"></div>
+		<div id="paging" class="pagclass">
+		<table class="dataintable" style="width: 100%;">
+				<tr>
+					<th ></th>
+					<th >名称</th>
+					<th >分点</th>
+					<th >是否默认</th>
+					<th >状态</th>
+					<th>备注</th>
+				</tr>
+				
+				<c:forEach var="item" items="${pageView.records }" varStatus="status">
+					<tr  id="${status.index }" >
+						<td style="width:10%;text-align: center;">
+					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
+					 	</td><td style="width: 15%;text-align: center;">
+					 		${item.name }
+					 	</td><td style="text-align: center;">
+					 		${item.cityName }
+					 	</td><td style="text-align: center;">
+					 		${item.isdefault }
+					 	</td><td style="text-align: center;">
+					 		${item.statusName }
+					 	</td><td>
+					 		${item.mark }
+					 	</td>
+					<tr>
+				</c:forEach>
+				<!-- 分页 -->
+				<tr style="height: 30px">
+					<td colspan="10" style="text-align: center;font-size: 12px;">
+						<%@ include file="../page.jsp"%>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

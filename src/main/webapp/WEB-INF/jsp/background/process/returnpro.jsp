@@ -123,7 +123,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	var index=1;
 	var newId=2;
 	function addOneRow(itemId){
-		$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value=""'+
+		$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value="${nowTime}"'+
 				'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
 		$('#'+itemId+'returnNum1').after('<input type="text"  name="'+itemId+'returnNum" value="" style="width: 60px"><br>');
 		$('#'+itemId+'returnNumKg1').before('<input type="text"  name="'+itemId+'returnNumKg" value="" style="width: 60px"><br>');
@@ -137,10 +137,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		$('#'+itemId+'factoryColor1').before('<input type="text" name="'+itemId+'factoryColor" value="" style="width: 90px"><br>');
 		$('#'+itemId+'myCompanyCode1').before('<input type="text" name="'+itemId+'myCompanyCode" value="" style="width: 90px"><br>');
 		$('#'+itemId+'myCompanyColor1').before('<input type="text" name="'+itemId+'myCompanyColor" value="" style="width: 90px"><br>');
-		$('#'+itemId+'technologyName1').before('<input type="text" name="'+itemId+'technologyName" value="" style="width: 90px"><br>');
+		$('#'+itemId+'technologyName1').before('<input type="text" name="'+itemId+'technologyName" value="" style="width: 90px" ondblclick="selectTechnologyName(this);"><br>');
 		$('#'+itemId+'mark1').before('<input type="text" name="'+itemId+'mark" value="" style="width: 60px"><br>');
-		$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="'+itemId+'factoryName" value="" style="width: 90px"><br>');
-		
+		//$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="'+itemId+'factoryName" value="" style="width: 90px"><br>');
+		$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="shdw" value="" style="width: 90px"><br>');
 		//document.getElementById(itemId+"returnCode1").innerHTML=document.getElementById(itemId+"returnCode1").innerHTML+'<input type="text"  name="'+itemId+'returnCode" value="" style="width: 70px"><br>';
 		index++;
 		newId++;
@@ -171,9 +171,23 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 		});
 	}
+	function selectTechnologyName(obj){
+		//alert(obj);
+		cobject=obj;
+		dialog = parent.$.ligerDialog.open({
+			width : 400,
+			height : 500,
+			url : rootPath + '/background/technology/addlist.html',
+			title : "添加工艺",
+			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+		});
+	}
 	function addFactory(name,id){
 		//alert(cobject.id);
 		cobject.value=name;
+	}
+	function fh(){
+		location.href=rootPath + '/background/process/list.html';
 	}
 </script>
 </head>
@@ -251,12 +265,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr><tr>
 					<td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
 						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }factoryName" value="${item.factoryName }" 
+							<input type="text" name="shdw" value="${facname }" 
 								ondblclick="selectFactory(this);" style="width: 90px;"><br>
 						</c:if><c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }factoryName" value="${item1.factoryName }" ondblclick="selectFactory(this);" style="width: 90px;">
-								<input type="hidden" name="${item.id }factoryId" value="${item1.factoryId }" style="width: 90px;"><br>
+								<input type="text" name="shdw" value="${item1.shdw }" ondblclick="selectFactory(this);" style="width: 90px;">
+								<input type="hidden" name="shdwId" value="${item1.shdwId }" style="width: 90px;"><br>
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}factoryName1" ></span>
@@ -272,7 +286,15 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</c:forEach>
 						</c:if>
 						<span id="${item.id}clothName1" ></span>
-					
+					</td><td id="19_${item.id }" style="width: 90px;" title="双击选择工艺">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }technologyName" value="${item.technologyName }" style="width: 90px;" ondblclick="selectTechnologyName(this);"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }technologyName" value="${item1.technologyName }" style="width: 90px;" ondblclick="selectTechnologyName(this);"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id}technologyName1" ></span>
 					</td>
 					
 					<td id="17_${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
@@ -296,16 +318,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						</c:if>
 						<span id="${item.id}factoryColor1" ></span>
 					</td>
-					<td id="19_${item.id }" style="width: 90px;">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }technologyName" value="${item.technologyName }" style="width: 90px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }technologyName" value="${item1.technologyName }" style="width: 90px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}technologyName1" ></span>
-					</td>
+					
 					<td id="20_${item.id }" style="width: 90px;">
 						<c:if test="${fn:length(map[item.id]) ==0}">
 							<input type="text" name="${item.id }myCompanyCode" value="${item.myCompanyCode }" style="width: 90px;"><br>
@@ -423,7 +436,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<span id="${item.id }mark1" ></span>
 					</td><td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
 					<c:if test="${fn:length(map[item.id]) ==0}">
-						<input type="text" name="${item.id }returnDate" style="width:70px" value=""
+						<input type="text" name="${item.id }returnDate" style="width:70px" value="${nowTime }"
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 					</c:if><c:if test="${map[item.id] != null }">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
@@ -431,7 +444,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 						</c:forEach>
 					</c:if>
-					<span id="${item.id }returnDate" ></span>
+					<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" 
+						style="cursor:pointer;vertical-align:bottom;font-size: 24px;font-weight: bold;">
+					
+					</span>
 					</td>
 				</tr><tr>
 					<td colspan="14">
@@ -446,7 +462,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</a>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-								onclick="closeWin()"><span>关闭</span> </a>
+								onclick="fh()"><span>返回</span> </a>
 						</div>
 					</td>
 				</tr>

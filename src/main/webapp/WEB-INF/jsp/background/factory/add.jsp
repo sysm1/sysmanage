@@ -92,6 +92,12 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<input type="radio" id="status2" name="status" value="2">停用
 					</td>
 				</tr><tr>
+					<td>状态</td>
+					<td>
+						<input type="radio" id="isdefault" name="isdefault" value="是">是
+						<input type="radio" id="isdefault1" name="isdefault" value="否">否
+					</td>
+				</tr><tr>
 					<td class="l_right">备注：</td>
 					<td class="l_left">
 						<textarea rows="10" cols="8" id='mark' name="mark" ></textarea>

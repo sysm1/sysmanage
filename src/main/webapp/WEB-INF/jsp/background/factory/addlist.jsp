@@ -125,7 +125,7 @@
 		<div id="paging" class="pagclass">
 		<table id="mytable" cellspacing="0" border="1" class="dataintable" style="width: 100%;">
 				<tr>
-					<th>工厂名称</th>
+					<th>工艺名称</th>
 				</tr>
 				<c:forEach var="bean" items="${pageView.records }" varStatus="status">
 				<tr>
