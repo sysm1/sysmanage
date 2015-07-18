@@ -122,6 +122,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		String[] jiaodais=request.getParameterValues(id+"jiaodai");
 		String[] clothNames=request.getParameterValues(id+"clothName");
 		String[] factoryNames=request.getParameterValues(id+"factoryName");
+		String[] shdws=request.getParameterValues("shdw");
 		String[] myCompanyCodes=request.getParameterValues(id+"myCompanyCode");
 		String[] myCompanyColors=request.getParameterValues(id+"myCompanyColor");
 		String[] technologyNames=request.getParameterValues(id+"technologyName");
@@ -149,13 +150,13 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				}
 				bean.setReturnDate(new Date());
 				if(null!=returnNums[i]&&!"".equals(returnNums[i])){
-					bean.setReturnNum(Integer.parseInt(returnNums[i]));
+					bean.setReturnNum((int)Double.parseDouble(returnNums[i]));
 				}if(null!=returnNumKgs[i]&&!"".equals(returnNumKgs[i])){
 					bean.setReturnNumKg(Double.parseDouble(returnNumKgs[i]));
 				}if(null!=returnCodes[i]&&!"".equals(returnCodes[i])){
 					bean.setReturnCode(returnCodes[i]);
 				}
-				
+				bean.setShdw(shdws[i]);
 				bean.setReturnUnit("");
 				bean.setStatisticsNum(null);
 				bean.setSummaryId(orderSummary.getId());
@@ -169,7 +170,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				}
 				bean.setReturnDate(DateUtil.str2Date(returnDate[i],"yyyy-MM-DD"));
 				bean.setClothName(clothNames[i]);
-				bean.setFactoryName(factoryNames[i]);
+				//bean.setFactoryName(factoryNames[i]);
 				bean.setMyCompanyCode(myCompanyCodes[i]);
 				bean.setMyCompanyColor(myCompanyColors[i]);
 				bean.setTechnologyName(technologyNames[i]);
