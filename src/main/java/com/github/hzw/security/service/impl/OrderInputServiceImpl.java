@@ -122,7 +122,6 @@ public class OrderInputServiceImpl implements OrderInputService {
 				inputSummary.setUnit(null);
 			}
 			inputSummary.setOrderIds(inputSummary.getOrderIds()+","+bean.getId());
-			inputSummary.setOrderIdsBak(inputSummary.getOrderIds());
 			try {
 				orderInputSummaryMapper.update(inputSummary);
 			} catch (Exception e) {
@@ -130,7 +129,6 @@ public class OrderInputServiceImpl implements OrderInputService {
 			}
 		}else{
 			inputSummary.setOrderIds(bean.getId()+"");
-			inputSummary.setOrderIdsBak(inputSummary.getOrderIds());
 			inputSummary.setNum(bean.getNum());
 			inputSummary.setUnit(bean.getUnit());
 			try {
@@ -195,9 +193,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 					if(orderIds.equals(",")){
 						orderInputSummary.setOrderIds(null);
 					}
-					if("".equals(orderIds)){
-						orderIds=null;
-					}
+					
 					orderInputSummary.setOrderIds(orderIds);
 					orderInputSummaryMapper.update(orderInputSummary);
 					inputSummary.setOrderIds(bean.getId()+"");
