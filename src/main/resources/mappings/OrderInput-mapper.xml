@@ -136,6 +136,10 @@
         	status=#{status},
       	</if><if test="technologyId != null and technologyId != ''">
         	technologyId=#{technologyId},
+      	</if><if test="mark != null and mark != ''">
+        	mark=#{mark},
+      	</if><if test="myCompanyColor != null and myCompanyColor != ''">
+        	my_Company_Color=#{myCompanyColor},
       	</if>
 		</set>
 		where id=#{id}

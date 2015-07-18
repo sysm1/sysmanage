@@ -122,7 +122,8 @@
 
 	<insert id="add" parameterType="OrderInputSummary" useGeneratedKeys="true" keyProperty="id">
 		insert into order_input_summary (
-			cloth_id, my_company_code, my_company_color, num, order_ids, mark,unit,technologyId
+			cloth_id, my_company_code, my_company_color, num, 
+			order_ids, mark,unit,technologyId
 		)
 		values(
 			#{clothId},

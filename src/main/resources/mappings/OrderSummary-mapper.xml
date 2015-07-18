@@ -31,14 +31,14 @@
     my_company_color myCompanyColor,
     factory_code factoryCode,
     factory_color factoryColor,
-    cloth_num clothNum, num,unit,
-    standard,
+    cloth_num clothNum,          num,unit,
+    order_Ids orderIds,          standard,
     packing_style packingStyle, 
-    print_status printStatus, print_num printNum,
-    status, return_status returnStatus,
-    create_time createTime, mark, CONCAT(salesmans,',',coalesce(balance_saleman_id,'0')) salesmans, 
+    print_status printStatus,    print_num printNum,
+    return_status returnStatus,  status,
+    create_time createTime,      mark, CONCAT(salesmans,',',coalesce(balance_saleman_id,'0')) salesmans, 
     zhiguan, kongcha, jiaodai, 
-    balance, balance_saleman_id balanceSalemanId, 
+    balance_saleman_id balanceSalemanId, balance,
     balancemark balancemark,
     kuanfu, kuanfufs, kezhong,
     kezhongUnit, kezhongfs,
@@ -395,6 +395,9 @@
       <if test="color != null" >
         color,
       </if>
+      <if test="orderIds != null" >
+        order_Ids,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -498,6 +501,8 @@
       </if>
       <if test="color != null" >
         #{color,jdbcType=VARCHAR},
+      </if><if test="orderIds != null" >
+        #{orderIds,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
