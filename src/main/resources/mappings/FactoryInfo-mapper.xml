@@ -6,7 +6,7 @@
     id, name, pinyin, 
     (select name from city c where city_id=c.id) cityName,
     CASE status WHEN 1 THEN '正常' WHEN 2 THEN '停用' ELSE '正常' END statusName,
-    mark
+    mark,isdefault,status,city_id cityId
   </sql>
   
   <select id="query" resultType="FactoryInfo" parameterType="FactoryInfo">
@@ -29,6 +29,8 @@
 			and city_id =${t.cityId}
 		</if><if test="t.status!=null and t.status!=''">
 			and status =${t.status}
+		</if><if test="t.isdefault!=null and t.isdefault!=''">
+			and isdefault ='${t.isdefault}'
 		</if>
 		</where>
 		order by status,id desc
@@ -67,20 +69,25 @@
 		select
 		<include refid="selectId" />
 		from factory_info
+		<where> 1=1
+		<if test="isdefault!=null and isdefault!=''">
+			and isdefault ='${isdefault}'
+		</if>
+		</where>
 		order by id desc
 	</select>
 
 
 	<insert id="add" parameterType="FactoryInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into factory_info (
-			name, pinyin, mark,city_id,status
+			name, pinyin, mark,city_id,status,isdefault
 		)
 		values(
 			#{name},
 			#{pinyin},
 			#{mark},
 			#{cityId},
-			#{status}
+			#{status},#{isdefault}
 		)
 	</insert>
 	
@@ -110,6 +117,8 @@
         	city_id=#{cityId},
       	</if><if test="status != null" >
         	status=#{status},
+      	</if><if test="isdefault != null" >
+        	isdefault=#{isdefault},
       	</if>
 		</set>
 		where id=#{id}
