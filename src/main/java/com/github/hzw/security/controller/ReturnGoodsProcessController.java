@@ -25,6 +25,7 @@ import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.ReturnGoodsProcessService;
 import com.github.hzw.util.Common;
+import com.github.hzw.util.DateUtil;
 import com.github.hzw.util.POIUtils;
 import com.github.hzw.util.PropertiesUtils;
 
@@ -95,6 +96,14 @@ public class ReturnGoodsProcessController extends BaseController {
 	}
 	@RequestMapping("returnpro")
 	public String returnpro(String id,HttpServletRequest request){
+		FactoryInfo fac1=new FactoryInfo();
+		fac1.setIsdefault("是");
+		List<FactoryInfo> facs=factoryInfoService.queryAll(fac1);
+		if(null!=facs&&facs.size()>0){
+			request.setAttribute("facname", facs.get(0).getName());
+		}
+		String nowTime=DateUtil.date2Str(new Date(), "yyyy-MM-dd");
+		request.setAttribute("nowTime", nowTime);
 		OrderSummary orderSummary=orderSummaryService.getById(id);
 		List<ReturnGoodsProcess> rlist=null;
 		rlist=returnGoodsProcessService.queryBySummaryId(id);

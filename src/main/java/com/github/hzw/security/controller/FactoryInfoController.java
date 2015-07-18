@@ -36,9 +36,11 @@ public class FactoryInfoController extends BaseController {
 	private CityService cityService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, String pageNow,HttpServletRequest request) {
+	public String list(Model model, Resources menu,FactoryInfo info,String pageNow,HttpServletRequest request,String pagesize) {
 		List<City> citys=cityService.getCitys(request);
 		request.setAttribute("citys", citys);
+		pageView = factoryInfoService.query(getPageView(pageNow,pagesize), info);
+		model.addAttribute("pageView",pageView);
 		return Common.BACKGROUND_PATH+"/factory/list";
 	}
 	
@@ -75,6 +77,13 @@ public class FactoryInfoController extends BaseController {
 	public Map<String, Object> add(FactoryInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			FactoryInfo t=new FactoryInfo();
+			t.setIsdefault("是");
+			List<FactoryInfo> list=factoryInfoService.queryAll(t);
+			for(FactoryInfo ti:list){
+				ti.setIsdefault("否");
+				factoryInfoService.update(ti);
+			}
 			// pinyin
 			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getName()).toUpperCase());
 			factoryInfoService.add(info);
@@ -165,12 +174,21 @@ public class FactoryInfoController extends BaseController {
 	public Map<String, Object> update(Model model, FactoryInfo info) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			FactoryInfo t=new FactoryInfo();
+			t.setIsdefault("是");
+			List<FactoryInfo> list=factoryInfoService.queryAll(t);
+			for(FactoryInfo ti:list){
+				ti.setIsdefault("否");
+				factoryInfoService.update(ti);
+			}
+			
 			// pinyin
 			info.setPinyin(PinyinUtil.getPinYinHeadChar(info.getName()).toUpperCase());
 			factoryInfoService.update(info);
 			map.put("flag", "true");
 		} catch (Exception e) {
 			map.put("flag", "false");
+			e.printStackTrace();
 		}
 		return map;
 	}

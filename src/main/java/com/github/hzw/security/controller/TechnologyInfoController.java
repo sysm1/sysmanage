@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.TechnologyInfoService;
@@ -46,7 +47,12 @@ public class TechnologyInfoController extends BaseController {
 		pageView = technologyInfoService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
 	}
-	
+	@RequestMapping("addlist")
+	public String addlist(Model model, Resources menu, TechnologyInfo info,String pageNow,String pagesize) {
+		pageView = technologyInfoService.query(getPageView(pageNow,pagesize), info);
+		model.addAttribute("pageView",pageView);
+		return Common.BACKGROUND_PATH+"/technology/addlist";
+	}
 	
 	/**
 	 * 保存数据
