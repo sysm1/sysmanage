@@ -168,8 +168,26 @@ ul { list-style:none;}
 			closeWin();
 		});
 		
+		/***下单撤销***/
+		$("#undo").click("click",function(){
+			var cbox=getSelectedCheckbox();
+			var orderIds=cbox.join(",").split("_")[1];
+			$.ajax({
+			    type: "post", //使用get方法访问后台
+			    dataType: "json", //json格式的数据
+			    async: false, //同步   不写的情况下 默认为true
+			    url: rootPath + '/background/ordersummary/undo.html', //要访问的后台地址
+			    data: {ids:cbox.join(",")}, //要发送的数据
+			    success: function(data){
+			    	alert(data.flag);
+			    	location.reload();
+				}
+			});
+		});
+		
 		$("#editView").click("click", function() {//绑定查询按扭
 			var cbox=getSelectedCheckbox();
+			//alert(cbox.join(",").split("_")[0]);
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
@@ -180,7 +198,7 @@ ul { list-style:none;}
 			    dataType: "json", //json格式的数据
 			    async: false, //同步   不写的情况下 默认为true
 			    url: rootPath + '/background/orderAudit/checkTime.html?type=2', //要访问的后台地址
-			    data: {ids:cbox.join(",")}, //要发送的数据
+			    data: {ids:cbox.join(",").split("_")[0]}, //要发送的数据
 			    success: function(data){
 			    	if (data.flag == "false") {
 			    		if(confirm("过期单据，修改需要审核，点击确定进行审核处理")){
@@ -337,6 +355,17 @@ ul { list-style:none;}
 			$('#'+id).attr('value','');
 		}
 	}
+	/**单选***/
+	function checkId(obj){
+		//alert(obj.value);
+		var flag=obj.checked;
+		 $(":checkbox").attr("checked", false);
+		 if(flag){
+			 obj.checked=flag;
+		 }else{
+			 obj.checked=flag;
+		 }
+	}
 </script>
 </head>
 <body  >
@@ -440,10 +469,6 @@ ul { list-style:none;}
 		</div>
 		<div class="topBtn">
 			<c:if test="${flag eq null }">
-			<!--a class="btn btn-primary" href="javascript:void(0)" id="add"> 
-				<span>下单预录入修改</span>
-			</a--> 
-			
 			<!-- <a class="btn btn-success" href="javascript:void(0)"> <i
 				class="icon-zoom-in icon-white" id="View"></i> View
 			</a> --> 
@@ -451,6 +476,11 @@ ul { list-style:none;}
 			<a class="btn btn-info" href="javascript:void(0)" id="editView"> 
 				下单汇总修改
 			</a> 
+			&nbsp;
+			<a class="btn btn-primary" href="javascript:void(0)" id="undo"> 
+				<span>下单汇总撤销</span>
+			</a> 
+			&nbsp;
 			</c:if>
 			<a class="btn btn-large btn-success" href="javascript:void(0)" id="search"> 
 				查询
@@ -467,7 +497,7 @@ ul { list-style:none;}
 		<table id="mytable" cellspacing="0" border="1" style="datalist" class='dataintable'>
 				<tr >
 					<th class="specalt" style="width:15px" rowspan="2">
-						<input type="checkbox" id="checkIds" name="checkIds">
+						<input type="checkbox" id="${item.id }" name="checkId" value="${item.id }" onclick="checkId(this);">
 					</th>
 					<th class="specalt" style="width:40px" rowspan="2">id</th>
 					<th class="specalt" style="width:45px" rowspan="2">日期</th>
@@ -495,7 +525,7 @@ ul { list-style:none;}
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 					<tr >
 					 	<td style="height: 25px;">
-					 		<input type="checkbox" id="${item.id }" name="checkId" value="${item.id }">
+					 		<input type="checkbox" id="${item.id }" name="checkId" value="${item.id }_${item.orderIds }" onclick="checkId(this);">
 					 	</td><td>
 					 		${item.id }
 					 	</td>

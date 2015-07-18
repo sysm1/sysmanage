@@ -333,7 +333,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<select id="myCompanyCode" name="myCompanyCode" style="width:99%;" onchange="queryNoReturnNum(this)">
 							<option value="">请选择</option>
 							<c:forEach items="${input.myCompanyCodes }" var="myCompanyCode">
-								<option value="${myCompanyCode }" <c:if test="${myCompanyCode ==input.myCompanyCode }"></c:if> >${myCompanyCode }</option>
+								<option value="${myCompanyCode }" <c:if test="${myCompanyCode ==input.myCompanyCode }">selected="selected"</c:if> >${myCompanyCode }</option>
 							</c:forEach>
 						</select>
 						</c:if><c:if test="${fn:length(input.myCompanyCodes)==0 }">
