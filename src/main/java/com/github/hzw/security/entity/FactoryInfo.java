@@ -19,6 +19,8 @@ public class FactoryInfo {
     private Integer status;
     
     private String statusName;
+    
+    private String isdefault;
 
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -133,6 +135,14 @@ public class FactoryInfo {
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+
+	public String getIsdefault() {
+		return isdefault;
+	}
+
+	public void setIsdefault(String isdefault) {
+		this.isdefault = isdefault;
 	}
     
 }

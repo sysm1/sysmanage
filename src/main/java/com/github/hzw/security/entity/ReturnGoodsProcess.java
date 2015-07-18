@@ -52,6 +52,12 @@ public class ReturnGoodsProcess {
     private String factoryName;
     
     private int factoryId;
+    
+    /**收货单位**/
+    private String shdw;
+    
+    /**收货单位**/
+    private int shdwId;
 
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
@@ -220,5 +226,21 @@ public class ReturnGoodsProcess {
 
 	public void setFactoryId(int factoryId) {
 		this.factoryId = factoryId;
+	}
+
+	public String getShdw() {
+		return shdw;
+	}
+
+	public void setShdw(String shdw) {
+		this.shdw = shdw;
+	}
+
+	public int getShdwId() {
+		return shdwId;
+	}
+
+	public void setShdwId(int shdwId) {
+		this.shdwId = shdwId;
 	}
 }
