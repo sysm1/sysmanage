@@ -12,8 +12,10 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderReportClothVO;
 import com.github.hzw.security.VO.OrderReportFactoryVO;
 import com.github.hzw.security.VO.OrderSummaryVO;
+import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.mapper.OrderSummaryMapper;
+import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderSummaryService;
 
 @Transactional
@@ -22,6 +24,9 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 
 	@Autowired
 	private OrderSummaryMapper orderSummaryMapper;
+	
+	@Autowired
+	private OrderInputService orderInputService;
 	
 	@Override
 	public PageView query(PageView pageView, OrderSummary t) {
@@ -40,6 +45,28 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
 	  */
 	 public List<OrderSummary> queryByIds(String[] ids){
 		 return orderSummaryMapper.queryByIds(ids);
+	 }
+	 
+	 /**
+	  * 撤销下单汇总
+	  */
+	 public Map<String, Object> undo(String ids){
+		 String id=ids.split("_")[0];//下单录入汇总ID
+			Map<String, Object> map=new HashMap<String, Object>();
+			String orderIds=ids.split("_")[1];
+			String[] orderArray=orderIds.split(",");
+			for(String oid:orderArray){
+				OrderInput bean=orderInputService.getById(oid);
+				orderInputService.huizong(bean);
+			}
+			try {
+				delete(id);
+				map.put("flag", "下单汇总撤销成功");
+			} catch (Exception e) {
+				map.put("flag", "下单汇总撤销失败");
+				e.printStackTrace();
+			}
+			return map;
 	 }
 	
 	@Override

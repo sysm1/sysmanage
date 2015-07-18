@@ -19,6 +19,7 @@ import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerInfo;
+import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
@@ -29,6 +30,7 @@ import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
+import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderInputSummaryService;
 import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
@@ -48,6 +50,9 @@ public class OrderSummaryController extends BaseController {
 	
 	@Inject
 	private FactoryInfoService factoryInfoService;
+	
+	@Inject
+	private OrderInputService orderInputService;
 	
 	@Inject
 	private SalesmanInfoService salesmanInfoService;
@@ -119,10 +124,19 @@ public class OrderSummaryController extends BaseController {
 		pageView = orderSummaryService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
 	}
-	
+	/**
+	 * 撤销下单录入汇总
+	 */
+	@ResponseBody
+	@RequestMapping("undo")
+	public Map<String, Object> undo(String ids){
+		Map<String, Object> map=new HashMap<String, Object>();
+		map=orderSummaryService.undo(ids);
+		return map;
+	}
 	
 	/**
-	 * 保存数据
+	 * 保存下单汇总数据
 	 * 
 	 * @param model
 	 * @param videoType
@@ -137,13 +151,22 @@ public class OrderSummaryController extends BaseController {
 			info.setPrintStatus(0);
 			info.setPrintNum(0);
 			info.setCreateTime(new Date());
-			orderSummaryService.add(info);
+			
 			OrderInputSummary orderInputSummary=orderInputSummaryService.getById(summId);
+			//下单汇总后  将汇总中的预录入单据ID清空
 			String orderIds=orderInputSummary.getOrderIds().replace(",,",",");
+			if(orderIds.indexOf(",")==0){
+				orderIds=orderIds.substring(1);
+			}
+			info.setOrderIds(orderIds);
+			orderSummaryService.add(info);
 			orderIds=","+orderIds;
 			String [] idsa=inputIds.split(",");
 			for(String id:idsa){
 				orderIds=orderIds.replace(","+id, "");
+			}
+			if(orderIds.equals(",")){
+				orderIds="";
 			}
 			orderInputSummary.setOrderIds(orderIds);
 			orderInputSummaryService.update(orderInputSummary);

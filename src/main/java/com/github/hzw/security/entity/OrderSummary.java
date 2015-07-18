@@ -127,6 +127,8 @@ public class OrderSummary {
     /***差额业务员备注信息**/
     private String balancemark;
     
+    private String orderIds;
+    
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
         return id;
@@ -609,5 +611,13 @@ public class OrderSummary {
 
 	public void setNumKg(Double numKg) {
 		this.numKg = numKg;
+	}
+
+	public String getOrderIds() {
+		return orderIds;
+	}
+
+	public void setOrderIds(String orderIds) {
+		this.orderIds = orderIds;
 	}
 }

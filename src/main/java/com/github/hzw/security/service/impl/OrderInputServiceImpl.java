@@ -76,7 +76,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 		String[] mark=request.getParameterValues("mark");
 		String[] technologyIds=request.getParameterValues("technologyId");
 		String[] salesmanId=request.getParameterValues("salesmanId");
-		OrderInputSummary inputSummary=new OrderInputSummary();
+		
 		List<OrderInputSummary> olist=null;
 		OrderInput bean=new OrderInput();
 		for(int i=0;i<clothId.length;i++){
@@ -94,32 +94,52 @@ public class OrderInputServiceImpl implements OrderInputService {
 			bean.setUnit(clothInfo.getUnit());
 			try {
 				this.add(bean);
-				
-				//预录入汇总
-				inputSummary.setMyCompanyCode(bean.getMyCompanyCode());
-				inputSummary.setClothId(bean.getClothId());
-				inputSummary.setMyCompanyColor(bean.getMyCompanyColor());
-				inputSummary.setTechnologyId(bean.getTechnologyId());
-				olist=orderInputSummaryMapper.queryAll(inputSummary);
-				if(olist.size()>0){
-					inputSummary=olist.get(0);
-					inputSummary.setNum(inputSummary.getNum()+bean.getNum());
-					if(inputSummary.getUnit()!=bean.getUnit()){
-						inputSummary.setUnit(null);
-					}
-					inputSummary.setOrderIds(inputSummary.getOrderIds()+","+bean.getId());
-					orderInputSummaryMapper.update(inputSummary);
-				}else{
-					inputSummary.setOrderIds(bean.getId()+"");
-					inputSummary.setNum(bean.getNum());
-					inputSummary.setUnit(bean.getUnit());
-					orderInputSummaryMapper.add(inputSummary);
-				}
+				olist=huizong(bean);
 				orderInputAdditionalService.saveAddition(request,bean);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	/**
+	 * 预录入汇总
+	 * @param bean
+	 * @return
+	 */
+	public List<OrderInputSummary> huizong(OrderInput bean){
+		OrderInputSummary inputSummary=new OrderInputSummary();
+		//预录入汇总
+		inputSummary.setMyCompanyCode(bean.getMyCompanyCode());
+		inputSummary.setClothId(bean.getClothId());
+		inputSummary.setMyCompanyColor(bean.getMyCompanyColor());
+		inputSummary.setTechnologyId(bean.getTechnologyId());
+		List<OrderInputSummary> olist=orderInputSummaryMapper.queryAll(inputSummary);
+		if(olist.size()>0){
+			inputSummary=olist.get(0);
+			inputSummary.setNum(inputSummary.getNum()+bean.getNum());
+			if(inputSummary.getUnit()!=bean.getUnit()){
+				inputSummary.setUnit(null);
+			}
+			inputSummary.setOrderIds(inputSummary.getOrderIds()+","+bean.getId());
+			inputSummary.setOrderIdsBak(inputSummary.getOrderIds());
+			try {
+				orderInputSummaryMapper.update(inputSummary);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			inputSummary.setOrderIds(bean.getId()+"");
+			inputSummary.setOrderIdsBak(inputSummary.getOrderIds());
+			inputSummary.setNum(bean.getNum());
+			inputSummary.setUnit(bean.getUnit());
+			try {
+				orderInputSummaryMapper.add(inputSummary);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return olist;
 	}
 	
 	@Override

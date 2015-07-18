@@ -8,6 +8,7 @@ import com.github.hzw.base.BaseService;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.OrderInput;
+import com.github.hzw.security.entity.OrderInputSummary;
 
 public interface OrderInputService extends BaseService<OrderInput> {
 	
@@ -18,5 +19,7 @@ public interface OrderInputService extends BaseService<OrderInput> {
 	public void addOrderInput(HttpServletRequest request);
 	
 	public void updateOrderInput(HttpServletRequest request);
+	
+	public List<OrderInputSummary> huizong(OrderInput bean);
 
 }

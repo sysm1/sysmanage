@@ -59,4 +59,6 @@ public interface OrderSummaryService extends BaseService<OrderSummary> {
 	
 	public List<String> queryFactoryColor(OrderSummary orderSummary);
 	
+	public Map<String, Object> undo(String ids);
+	
 }

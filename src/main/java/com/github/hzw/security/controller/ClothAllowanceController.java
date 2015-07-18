@@ -87,6 +87,9 @@ public class ClothAllowanceController extends BaseController {
 				}
 			}else if(clothInfo.getUnit()==1||clothInfo.getUnit()==4){
 				cloth_allowance_kg=PropertiesUtils.findPropertiesKey("cloth_allowance_kg");
+				if(null==clothAllowance||null==clothAllowance.getAllowance()){
+					return "无坯布";
+				}
 				if(clothAllowance.getAllowance()>Double.parseDouble(cloth_allowance_kg)){
 					return "大量 ";
 				}else{
