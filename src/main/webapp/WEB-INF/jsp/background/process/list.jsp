@@ -351,7 +351,14 @@ th.specalt {
 		cobject.value=name;
 	}
 	function showDetail(id){
-		location.href=rootPath + '/background/process/returnpro.html?id='+id;
+		dialog = parent.$.ligerDialog.open({
+			width : 1000,
+			height : 500,
+			url : rootPath + '/background/process/returnpro.html?id='+id,
+			title : "回货进度",
+			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+		});
+		//location.href=rootPath + '/background/process/returnpro.html?id='+id;
 	}
 </script>
 </head>
@@ -439,7 +446,7 @@ th.specalt {
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-				<tr id="${item.id }" ondblclick="showDetail('${item.id }');">
+				<tr id="${item.id }" ondblclick="showDetail('${item.id }');" title="双击弹出回货窗口">
 					<td style="text-align: center;" id="0_${item.id }">
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
