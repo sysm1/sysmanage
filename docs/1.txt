@@ -18,6 +18,7 @@ CREATE TABLE  factory_info(
 	`mark` text,
 	`city_id`  int(11) NULL DEFAULT NULL ,
 	`status`  int(255) NULL DEFAULT NULL COMMENT '1 正常  2停用' ,
+	'isdefault'  varchar(255),
 	PRIMARY KEY (`id`),
 	UNIQUE `uniqe_2` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -293,6 +294,7 @@ CREATE TABLE `order_summary` (
 `kezhongfs`  int(11) NULL DEFAULT NULL COMMENT '克重方式 0回后 1出机' ,
  notify_time datetime, -- 通知时间
  notify_id	int(11),  -- 通知id
+ order_Ids varchar(255),
  no varchar(255), -- 通知id
  `color`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '布种颜色' ,
 PRIMARY KEY (`id`)
