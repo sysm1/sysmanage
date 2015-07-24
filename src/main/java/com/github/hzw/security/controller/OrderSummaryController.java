@@ -151,7 +151,7 @@ public class OrderSummaryController extends BaseController {
 			info.setPrintStatus(0);
 			info.setPrintNum(0);
 			info.setCreateTime(new Date());
-			
+			info.setStatus("未回");
 			OrderInputSummary orderInputSummary=orderInputSummaryService.getById(summId);
 			//下单汇总后  将汇总中的预录入单据ID清空
 			String orderIds=orderInputSummary.getOrderIds().replace(",,",",");
