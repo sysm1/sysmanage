@@ -264,7 +264,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 			statusName+=","+"新色";
 		}
 		if(statusName.equals("")){
-			statusName=",已回";
+			statusName=",已回完";
 		}
 		return statusName.substring(1);
 	}

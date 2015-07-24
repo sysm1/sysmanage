@@ -557,7 +557,7 @@ public class OrderSummary {
 		}else if(returnStatus==1){
 			returnStatusName="未回完";
 		}else if(returnStatus==2){
-			returnStatusName="已回";
+			returnStatusName="已回完";
 		}
 		return returnStatusName;
 	}
