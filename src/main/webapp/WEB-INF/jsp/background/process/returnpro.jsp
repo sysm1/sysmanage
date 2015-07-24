@@ -21,8 +21,9 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							$.ligerDialog.success('提交成功!', '提示', function() {
 								//这个是调用同一个页面趾两个iframe里的js方法
 								//account是iframe的id
-								parent.role.loadGird();
-								closeWin();
+								location.href=rootPath + '/background/process/list.html';
+								//parent.role.loadGird();
+								//closeWin();
 							});
 							//parent.window.document.getElementById("username").focus();
 						} else {
@@ -53,14 +54,16 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		
 		$("#saveTemp").click("click", function() {//绑定暂存按扭
 			if(!saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=0')){
-				alert("数据暂存成功");	
+				alert("数据暂存成功");
+				location.href=rootPath + '/background/process/list.html';
 			}
 		});
 		$("#save").click("click", function() {//绑定查询按扭
 			saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=2');
 			//alert(document.getElementsByName("returnNum").length);
 			alert("数据已回");
-			location.reload();
+			location.href=rootPath + '/background/process/list.html';
+			//location.reload();
 		});
 	});
 	function saveData(url1){
@@ -200,14 +203,13 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			<tbody>
 				<tr>
 					<th style="text-align: right;">&nbsp;状态&nbsp;</th>
-					<td id="1_${item.id }" colspan="2" style="text-align: left;">${item.status }</td>
+					<td id="1_${item.id }" colspan="2" style="text-align: left;">${item.returnStatusName }</td>
 					<th style="text-align: right;">下单日期</th>
 					<td style="text-align: left;">
 						<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>
 					</td>
 					<th style="min-width: 60px;" style="text-align: right;">工&nbsp;厂</th>
 					<td id="3_${item.id }" colspan="2" style="text-align: left;">${item.factoryName }</td>
-					
 				</tr>
 				<tr>
 					<th colspan="10">下单</th>

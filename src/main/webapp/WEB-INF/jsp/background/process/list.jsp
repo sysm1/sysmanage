@@ -351,14 +351,14 @@ th.specalt {
 		cobject.value=name;
 	}
 	function showDetail(id){
-		dialog = parent.$.ligerDialog.open({
+		/**dialog = parent.$.ligerDialog.open({
 			width : 1000,
 			height : 500,
 			url : rootPath + '/background/process/returnpro.html?id='+id,
 			title : "回货进度",
 			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
-		});
-		//location.href=rootPath + '/background/process/returnpro.html?id='+id;
+		});*/
+		location.href=rootPath + '/background/process/returnpro.html?id='+id;
 	}
 </script>
 </head>
@@ -391,7 +391,7 @@ th.specalt {
 				</table>
 			</form>
 		</div>
-		<div class="topBtn">
+		<!--div class="topBtn">
 			<a class="btn btn-primary" href="javascript:void(0)" id="saveTemp"> 
 				暂存数据
 			</a>
@@ -401,7 +401,7 @@ th.specalt {
 			<a class="btn btn-info" href="javascript:void(0)" id="delaybtn"> 
 				拖延${delayDates }单
 			</a>
-		</div>
+		</div-->
 		<div id="paging" class="pagclass" >
 			<table border="1" id="mytable" class="dataintable">
 				<tr>
@@ -409,7 +409,7 @@ th.specalt {
 						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
 					</th>
 					<!-- th rowspan="2">序号</th-->
-					<!--th rowspan="2">&nbsp;状态&nbsp;</th-->
+					<th rowspan="2">&nbsp;状态&nbsp;</th>
 					<th rowspan="2" style="width: 60px;">下单日期</th>
 					<th style="min-width: 60px;" rowspan="2">工&nbsp;厂</th>
 					<th colspan="11">下单</th>
@@ -452,7 +452,7 @@ th.specalt {
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
 					<!--td id="2_${item.id }">${item.id }</td-->
-					<!--td id="1_${item.id }">${item.returnStatusName }</td-->
+					<td id="1_${item.id }">${item.returnStatusName }</td>
 					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='yyyy/MM/dd'/>
 					</td>
