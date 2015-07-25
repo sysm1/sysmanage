@@ -11,17 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputVO;
+import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.RecordLog;
 import com.github.hzw.security.mapper.OrderInputMapper;
 import com.github.hzw.security.mapper.OrderInputSummaryMapper;
+import com.github.hzw.security.service.AccountService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.OrderInputAdditionalService;
 import com.github.hzw.security.service.OrderInputService;
@@ -51,11 +55,21 @@ public class OrderInputServiceImpl implements OrderInputService {
 	@Inject
 	private RecordLogService recordLogService;
 	
+	@Inject
+	private AccountService accountService;
+	
 	@Override
 	public PageView queryVO(PageView pageView, OrderInputVO t) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("paging", pageView);
 		map.put("t", t);
+		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		logger.info("userDetails:{}", userDetails);
+		
+		Account account = accountService.queryByAccountName(userDetails.getUsername());
+		logger.info("account:{}", account);
+		map.put("cityId", account.getCityId());
 		List<OrderInputVO> list = orderInputMapper.queryVO(map);
 		pageView.setRecords(list);
 		return pageView;
@@ -68,6 +82,11 @@ public class OrderInputServiceImpl implements OrderInputService {
 	
 	@Override
 	public void addOrderInput(HttpServletRequest request){
+		
+		// 获取帐号信息
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Account account = accountService.queryByAccountName(userDetails.getUsername());
+		
 		String[] clothId=request.getParameterValues("clothId");
 		String[] myCompanyCode=request.getParameterValues("myCompanyCode");
 		String[] myCompanyColor=request.getParameterValues("myCompanyColor");
@@ -89,6 +108,9 @@ public class OrderInputServiceImpl implements OrderInputService {
 			bean.setSalesmanId(Integer.parseInt(salesmanId[i]));
 			bean.setTechnologyId(Integer.parseInt(technologyIds[i]));
 			bean.setStatus(0);
+			
+			bean.setCityId(account.getCityId());  // hujh
+			
 			ClothInfo clothInfo=new ClothInfo();
 			clothInfo=clothInfoService.getById(bean.getClothId()+"");
 			bean.setUnit(clothInfo.getUnit());

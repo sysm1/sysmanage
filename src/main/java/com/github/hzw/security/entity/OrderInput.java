@@ -33,6 +33,8 @@ public class OrderInput {
     private Integer unit;
     private String mark;
 
+    private Integer cityId;
+    
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
         return id;
@@ -156,4 +158,14 @@ public class OrderInput {
 	public void setTechnologyName(String technologyName) {
 		this.technologyName = technologyName;
 	}
+
+	public Integer getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
+	
+	
 }

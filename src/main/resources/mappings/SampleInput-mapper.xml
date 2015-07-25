@@ -17,7 +17,7 @@
     small_picture smallPicture,
     reply_date replyDate, 
     create_time createTime, 
-    demand, mark,reply_mark replyMark
+    demand, mark,reply_mark replyMark,cityId
   </sql>
   <sql id="selectId" >
     s.id id, 
@@ -38,7 +38,7 @@
     small_picture smallPicture,
     reply_date replyDate, 
     s.create_time createTime, 
-    demand, s.mark mark,s.reply_mark replyMark
+    demand, s.mark mark,s.reply_mark replyMark, cityId
   </sql>
   
   
@@ -116,6 +116,10 @@
 			and datediff(NOW(),sample_date) >#{t.delayDates}
 		</if>
 		
+		<if test="cityId!=null and cityId!=''">
+			and cityId = #{cityId}
+		</if>
+		
 		</where>
 		order by id desc
 	</select>
@@ -167,6 +171,11 @@
 		<if test="t.id != null and t.id != '' or t.id==0">
 			and s.id = #{t.id}
 		</if>
+		
+		<if test="cityId!=null and cityId!=''">
+			and cityId = #{cityId}
+		</if>
+		
 		</where>
 		order by status,id desc
 	</select>

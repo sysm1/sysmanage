@@ -179,6 +179,7 @@ create table sample_input(
 	status int not null,  -- 0 未回  1 新版 2 新厂 3 新色 4已回
 	reply_date datetime,  -- 回版日期
 	create_time datetime not null,
+	cityId int,   -- cityId
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -231,6 +232,7 @@ create table order_input(
 	unit int,   -- 0条item 1 kg 2cm 3yard 4包
 	mark text,   -- 
 	create_time datetime,
+	cityId int,   -- cityId
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

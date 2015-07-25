@@ -6,7 +6,7 @@
     id, cloth_id clothId, my_company_code myCompanyCode, salesman_id salesmanId,
     (select cloth_name from cloth_info where id=cloth_id) clothName,
     (select name from salesman_info where id=salesman_id) saleManName,
-    my_company_color myCompanyColor,status, create_time createTime,num,unit,mark
+    my_company_color myCompanyColor,status, create_time createTime,num,unit,mark,cityId
   </sql>
   
    <sql id="selectId" >
@@ -20,7 +20,8 @@
     (select name from technology_info where id=technologyId) technologyName,
     oi.num,
     oi.unit,
-    oi.mark
+    oi.mark,
+    oi.cityId
   </sql>
   
   <sql id="selectId2" >
@@ -29,8 +30,8 @@
   	oi.my_company_code myCompanyCode, 
   	(select name from salesman_info where id=oi.salesman_id) saleManName,
   	oa.num,
-  	oa.mark
-  	
+  	oa.mark,
+  	cityId
   </sql>
   
   <select id="queryVO" resultType="com.github.hzw.security.VO.OrderInputVO" parameterType="com.github.hzw.security.VO.OrderInputVO">
@@ -52,9 +53,18 @@
 		</if>
 		<if test="t.mark != null and t.mark != ''">
 			and oa.mark  like '%${t.mark}%'
-		</if><if test="t.technologyId!=null and t.technologyId!=''">
+		</if>
+		<if test="t.technologyId!=null and t.technologyId!=''">
 			and technologyId =#{t.technologyId}
 		</if>
+		<if test="t.technologyId!=null and t.technologyId!=''">
+			and technologyId =#{t.technologyId}
+		</if>
+		
+		<if test="cityId!=null and cityId!=''">
+			and cityId =#{cityId}
+		</if>
+		
 		</where>
 		order by id desc
 	</select>
@@ -94,7 +104,7 @@
 			my_company_color,
 			num,
 			unit,
-			mark,technologyId
+			mark,technologyId,cityId
 		)
 		values(
 			#{clothId},
@@ -105,7 +115,7 @@
 			#{myCompanyColor},
 			#{num},
 			#{unit},
-			#{mark},#{technologyId}
+			#{mark},#{technologyId},#{cityId}
 		)
 	</insert>
 	

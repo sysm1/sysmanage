@@ -1,6 +1,5 @@
 package com.github.hzw.security.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,14 @@ import com.github.hzw.util.Common;
 import com.github.hzw.util.Md5Tool;
 import com.github.hzw.util.POIUtils;
 
+
+/**
+ * UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+    .getAuthentication()
+    .getPrincipal();
+ * @author hujh
+ *
+ */
 
 @Controller
 @RequestMapping("/background/account/")

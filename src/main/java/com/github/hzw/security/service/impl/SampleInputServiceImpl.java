@@ -4,20 +4,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.SampleInputVO;
+import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.CodePicture;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.SampleAdditional;
 import com.github.hzw.security.entity.SampleInput;
 import com.github.hzw.security.mapper.SampleInputMapper;
+import com.github.hzw.security.service.AccountService;
 import com.github.hzw.security.service.CodePictureService;
 import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
@@ -42,11 +47,19 @@ public class SampleInputServiceImpl implements SampleInputService {
 	@Autowired
 	private CodePictureService codePictureService;
 	
+	@Inject
+	private AccountService accountService;
+	
 	@Override
 	public PageView query(PageView pageView, SampleInput t) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("paging", pageView);
 		map.put("t", t);
+		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();		
+		Account account = accountService.queryByAccountName(userDetails.getUsername());
+		map.put("cityId", account.getCityId());
+		
 		List<SampleInput> list = sampleInputMapper.query(map);
 		pageView.setRecords(list);
 		return pageView;
@@ -79,6 +92,11 @@ public class SampleInputServiceImpl implements SampleInputService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("paging", pageView);
 		map.put("t", t);
+		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();		
+		Account account = accountService.queryByAccountName(userDetails.getUsername());
+		map.put("cityId", account.getCityId());
+		
 		List<SampleInput> list = sampleInputMapper.queryReplay(map);
 		pageView.setRecords(list);
 		return pageView;

@@ -13,4 +13,7 @@ public interface AccountMapper extends BaseMapper<Account>{
 	public Account countAccount(Account account);
 	
 	public List<Account> queryNoMatch(Map<String, Object> map);
+	
+	public Account queryByAccountName(String name);
+	
 }

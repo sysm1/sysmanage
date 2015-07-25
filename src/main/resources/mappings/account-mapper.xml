@@ -21,6 +21,15 @@
 		createTime
 	</sql>
 
+	<sql id="selectId2">
+		id,
+		accountName,
+		password,
+		description,cityId,
+		state,
+		createTime
+	</sql>
+	
 	<!--resultType="Account" 每返回一条结果封装到Account里 -->
 	<select id="queryAll" resultType="Account" parameterType="Account">
 		select
@@ -98,6 +107,12 @@
 		from account where id=#{id}
 	</select>
 
+	<select id="queryByAccountName" parameterType="String" resultType="Account">
+		select
+		<include refid="selectId2" />
+		from account where accountName=#{accountName}
+	</select>
+	
 	<update id="update" parameterType="Account">
 		update account
 		<set>

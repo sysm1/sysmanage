@@ -74,4 +74,9 @@ public class AccountServiceImpl implements AccountService {
 	public Account countAccount(Account account) {
 		return accountMapper.countAccount(account);
 	}
+	
+	
+	public Account queryByAccountName(String name){
+		return accountMapper.queryByAccountName(name);
+	}
 }
