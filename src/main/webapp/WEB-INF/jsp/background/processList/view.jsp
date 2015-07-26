@@ -78,10 +78,10 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 					<th style="min-width: 60px;" style="text-align: right;">工&nbsp;厂</th>
 					<td id="3_${item.id }" colspan="2" style="text-align: left;">${item.factoryName }</td>
-					<td>收货单位</td>
+					<td colspan="2">收货单位</td>
 					<td colspan="2">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-							${item1.factoryName }<br>
+							<c:if test="${status1.index==0}">${item1.shdw } </c:if> 
 						</c:forEach>
 					</td>
 				</tr>
@@ -132,7 +132,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<!--th >回货日期</th-->
 					<th style="width: 68px;">条数</th>
 					<th style="width: 68px;">数量(KG)</th>
-					<th style="width: 68px;">备注</th>
+					<th >备注</th>
 					<th style="width: 68px;">回货日期</th>
 				</tr><tr>
 					
@@ -236,7 +236,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 							</c:forEach>
 						</c:if>
 					</td>
-					<td>
+					<td style="width: 68px;">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/><br>
 						</c:forEach>

@@ -53,7 +53,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		});
 		
 		$("#saveTemp").click("click", function() {//绑定暂存按扭
-			if(!saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=0')){
+			if(!saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=1')){
 				alert("数据暂存成功");
 				location.href=rootPath + '/background/process/list.html';
 			}
@@ -126,7 +126,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	var index=1;
 	var newId=2;
 	function addOneRow(itemId){
-		$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value="${nowTime}"'+
+		var newtr=$("#table1 tr:last").clone();
+  		newtr.insertAfter($("#table1 tr:last"));
+  		for(var i=1;i<13;i++){
+  			newtr.find("input").eq(i).attr("value",'');
+  		}
+		
+		/**
+　  		$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value="${nowTime}"'+
 				'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
 		$('#'+itemId+'returnNum1').after('<input type="text"  name="'+itemId+'returnNum" value="" style="width: 60px"><br>');
 		$('#'+itemId+'returnNumKg1').before('<input type="text"  name="'+itemId+'returnNumKg" value="" style="width: 60px"><br>');
@@ -145,9 +152,45 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		//$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="'+itemId+'factoryName" value="" style="width: 90px"><br>');
 		$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="shdw" value="" style="width: 90px"><br>');
 		//document.getElementById(itemId+"returnCode1").innerHTML=document.getElementById(itemId+"returnCode1").innerHTML+'<input type="text"  name="'+itemId+'returnCode" value="" style="width: 70px"><br>';
+		**/
 		index++;
 		newId++;
 	}
+	
+	function copyOne(itemId){
+		
+		var newtr=$("#table1 tr:last").clone();
+  		newtr.insertAfter($("#table1 tr:last"));
+		/**
+		//alert(1);
+		//$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value="${nowTime}"'+
+		//'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
+		var returnDate=$('#'+itemId+'returnDate').clone();
+		alert(returnDate);
+		//returnDate.insertAfter($("#table1 tr:last td:last"))
+		$('#'+itemId+'returnDate').before(returnDate);
+		$('#'+itemId+'returnNum1').after('<input type="text"  name="'+itemId+'returnNum" value="" style="width: 60px"><br>');
+		$('#'+itemId+'returnNumKg1').before('<input type="text"  name="'+itemId+'returnNumKg" value="" style="width: 60px"><br>');
+		$('#'+itemId+'returnColor1').before('<input type="text"  name="'+itemId+'returnColor" value="" style="width: 60px"><br>');
+		//$('#'+itemId+'mark').before('<input type="text"  name="'+itemId+'mark" value="" ><br>');
+		$('#'+itemId+'zhiguan1').before('<input type="text"  name="'+itemId+'zhiguan" value="" style="width: 45px"><br>');
+		$('#'+itemId+'kongcha1').before('<input type="text"  name="'+itemId+'kongcha" value="" style="width: 45px"><br>');
+		$('#'+itemId+'jiaodai1').before('<input type="text"  name="'+itemId+'jiaodai" value="" style="width: 45px"><br>');
+		$('#'+itemId+'returnCode1').before('<input type="text"  name="'+itemId+'returnCode" value="" style="width: 90px"><br>');
+		$('#'+itemId+'clothName1').before('<input type="text" ondblclick="selectCloth(this);" name="'+itemId+'clothName" value="" style="width: 90px"><br>');
+		$('#'+itemId+'factoryColor1').before('<input type="text" name="'+itemId+'factoryColor" value="" style="width: 90px"><br>');
+		$('#'+itemId+'myCompanyCode1').before('<input type="text" name="'+itemId+'myCompanyCode" value="" style="width: 90px"><br>');
+		$('#'+itemId+'myCompanyColor1').before('<input type="text" name="'+itemId+'myCompanyColor" value="" style="width: 90px"><br>');
+		$('#'+itemId+'technologyName1').before('<input type="text" name="'+itemId+'technologyName" value="" style="width: 90px" ondblclick="selectTechnologyName(this);"><br>');
+		$('#'+itemId+'mark1').before('<input type="text" name="'+itemId+'mark" value="" style="width: 60px"><br>');
+		//$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="'+itemId+'factoryName" value="" style="width: 90px"><br>');
+		$('#'+itemId+'factoryName1').before('<input type="text" ondblclick="selectFactory(this);" name="shdw" value="" style="width: 90px"><br>');
+		//document.getElementById(itemId+"returnCode1").innerHTML=document.getElementById(itemId+"returnCode1").innerHTML+'<input type="text"  name="'+itemId+'returnCode" value="" style="width: 70px"><br>';
+		**/
+		index++;
+		newId++;
+	}
+	
 	var cobject=null;
 	function selectCloth(obj){
 		cobject=obj;
@@ -199,7 +242,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	<div class="l_err" style="width: 100%;"></div>
 	<form id="form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 		<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
-		<table style="width: 100%; " class="dataintable">
+		<table style="width: 100%; " class="dataintable" id="table1" name="table1">
 			<tbody>
 				<tr>
 					<th style="text-align: right;">&nbsp;状态&nbsp;</th>
@@ -264,147 +307,56 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th style="width: 68px;">数量(KG)</th>
 					<th style="width: 68px;">备注</th>
 					<th style="width: 68px;">回货日期</th>
-				</tr><tr>
+				</tr>
+				<c:if test="${fn:length(map[item.id]) ==0}">
+				<tr>
 					<td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
-						<c:if test="${fn:length(map[item.id]) ==0}">
+						<c:if test="${item1.shdw ==null||item1.shdw ==''}">
 							<input type="text" name="shdw" value="${facname }" 
 								ondblclick="selectFactory(this);" style="width: 90px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="shdw" value="${item1.shdw }" ondblclick="selectFactory(this);" style="width: 90px;">
-								<input type="hidden" name="shdwId" value="${item1.shdwId }" style="width: 90px;"><br>
-							</c:forEach>
+						</c:if><c:if test="${item1.shdw  != null&&item1.shdw!='' }">
+							<input type="text" name="shdw" value="${item1.shdw }" ondblclick="selectFactory(this);" style="width: 90px;">
 						</c:if>
-						<span id="${item.id}factoryName1" ></span>
-					</td>
-					<td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }clothName" value="${item.clothName }" 
-								ondblclick="selectCloth(this);" style="width: 90px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }clothName" value="${item1.clothName }" ondblclick="selectCloth(this);" style="width: 90px;">
-								<input type="hidden" name="${item.id }clothId" value="${item1.clothId }" style="width: 90px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}clothName1" ></span>
+					</td><td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
+						<input type="text" name="${item.id }clothName" value="${item.clothName }" 
+							ondblclick="selectCloth(this);" style="width: 90px;"><br>
 					</td><td id="19_${item.id }" style="width: 90px;" title="双击选择工艺">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }technologyName" value="${item.technologyName }" style="width: 90px;" ondblclick="selectTechnologyName(this);"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }technologyName" value="${item1.technologyName }" style="width: 90px;" ondblclick="selectTechnologyName(this);"><br>
-							</c:forEach>
+						<c:if test="${item1.technologyName ==null||item1.technologyName ==''}">
+							<input type="text" name="${item.id }technologyName" value="${item.technologyName }" 
+								ondblclick="selectCloth(this);" style="width: 90px;"><br>
+						</c:if><c:if test="${item1.technologyName  != null&&item1.technologyName!='' }">
+							<input type="text" name="${item.id }technologyName" value="${item1.technologyName }" ondblclick="selectTechnologyName(this);" style="width: 90px;">
 						</c:if>
-						<span id="${item.id}technologyName1" ></span>
 					</td>
 					
 					<td id="17_${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }returnCode" value="${item.factoryCode }" style="width: 90px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }returnCode" value="${item1.returnCode }" style="width: 90px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}returnCode1" ></span>
+						<input type="text" name="${item.id }returnCode" value="${item1.returnCode }" style="width: 90px;">
 					</td>
 					
 					<td id="18_${item.id }" style="width: 90px;">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }factoryColor" value="${item.factoryColor }" style="width: 90px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }factoryColor" value="${item1.returnColor }" style="width: 90px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}factoryColor1" ></span>
+						<input type="text" name="${item.id }factoryColor" value="${item1.returnColor }" style="width: 90px;"><br>
 					</td>
 					
 					<td id="20_${item.id }" style="width: 90px;">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }myCompanyCode" value="${item.myCompanyCode }" style="width: 90px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }myCompanyCode" value="${item1.myCompanyCode }" style="width: 90px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}myCompanyCode1" ></span>
+						<input type="text" name="${item.id }myCompanyCode" value="${item1.myCompanyCode }" style="width: 90px;">
 					</td>
 					
-					
-					<!--td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
-					<c:if test="${fn:length(map[item.id]) ==0}">
-						<input type="text" name="${item.id }returnDate" style="width:70px" value=""
-							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
-					</c:if><c:if test="${map[item.id] != null }">
-						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-							<input type="text" name="${item.id }returnDate" style="width:70px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
-								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
-						</c:forEach>
-					</c:if>
-						<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" style="cursor:pointer;vertical-align:bottom;">
-							<img alt="点击新增编号" width="20px;" src="../../images/jiahao.jpg" />
-						</span>
-					</td-->
 					<td id="21_${item.id }" style="width: 90px;">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }myCompanyColor" value="${item.myCompanyColor }" style="width: 90px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }myCompanyColor" value="${item1.myCompanyColor }" style="width: 90px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}myCompanyColor1" ></span>
+						<input type="text" name="${item.id }myCompanyColor" value="${item1.myCompanyColor }" style="width: 90px;">
 					</td>
 					
 					<td id="22_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }zhiguan" value="${item.zhiguan }" style="width: 45px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }zhiguan" value="${item1.zhiguan }" style="width: 45px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}zhiguan1" ></span>
+						<input type="text" name="${item.id }zhiguan" value="${item1.zhiguan }" style="width: 45px;">
 					</td><td id="23_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }kongcha" value="${item.kongcha }" style="width: 45px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }kongcha" value="${item1.kongcha }" style="width: 45px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}kongcha1" ></span>
+						<input type="text" name="${item.id }kongcha" value="${item1.kongcha }" style="width: 45px;">
 					</td><td id="24_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text" name="${item.id }jiaodai" value="${item.jiaodai }" style="width: 45px;"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text" name="${item.id }jiaodai" value="${item1.jiaodai }" style="width: 45px;"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id}jiaodai1" ></span>
+						<input type="text" name="${item.id }jiaodai" value="${item1.jiaodai }" style="width: 45px;">
 					</td>
 					
 					<td id="25_${item.id }" onclick="onclickTr(${item.id })">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text"  name="${item.id }returnNum" value="${item.num }" style="width: 60px"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text"  name="${item.id }returnNum" value="${item1.returnNum }" style="width: 60px"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id }returnNum1" ></span>
+						<input type="text"  name="${item.id }returnNum" value="${item1.returnNum }" style="width: 60px">
 					</td><td id="4_${item.id }" onclick="onclickTr(${item.id })">
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text"  name="${item.id }returnNumKg" value="${item.numKg }" style="width: 60px"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text"  name="${item.id }returnNumKg" value="${item1.returnNumKg }" style="width: 60px"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id }returnNumKg1" ></span>
+						<input type="text"  name="${item.id }returnNumKg" value="${item1.returnNumKg }" style="width: 60px">
 					</td>
 					<!--td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td-->
 					<!--td onclick="onclickTr(${item.id })">
@@ -428,47 +380,131 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 						<span id="${item.id }mark" ></span>
 					</td-->
 					<td>
-						<c:if test="${fn:length(map[item.id]) ==0}">
-							<input type="text"  name="${item.id }mark" value="${item.mark }" style="width: 60px"><br>
-						</c:if><c:if test="${map[item.id] != null }">
-							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
-								<input type="text"  name="${item.id }mark" value="${item1.mark }" style="width: 60px"><br>
-							</c:forEach>
-						</c:if>
-						<span id="${item.id }mark1" ></span>
+						<input type="text"  name="${item.id }mark" value="${item1.mark }" style="width: 60px">
 					</td><td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
-					<c:if test="${fn:length(map[item.id]) ==0}">
-						<input type="text" name="${item.id }returnDate" style="width:70px" value="${nowTime }"
+						<c:if test="${item1.returnDate ==null||item1.returnDate ==''}">
+							<input type="text" name="${item.id }returnDate" style="width:70px" value="${nowTime }"
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
-					</c:if><c:if test="${map[item.id] != null }">
-						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+						</c:if><c:if test="${item1.returnDate  != null&&item1.returnDate!='' }">
 							<input type="text"  name="${item.id }returnDate" style="width:70px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
 								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
-						</c:forEach>
-					</c:if>
-					<span id="${item.id }returnDate" onclick="addOneRow(${item.id });" 
-						style="cursor:pointer;vertical-align:bottom;font-size: 24px;font-weight: bold;">
-					
-					</span>
-					</td>
-				</tr><tr>
-					<td colspan="14">
-						<div class="l_btn_centent">
-							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-								onclick="addOneRow(${item.id });" ><span>新增回货</span> </a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="saveTemp"> 
-								暂存数据
-							</a>
-							<a class="btn btn-info" href="javascript:void(0)" id="save"> 
-								已回
-							</a>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
-								onclick="fh()"><span>返回</span> </a>
-						</div>
+						</c:if>
 					</td>
 				</tr>
+				</c:if>
+				<c:if test="${map[item.id] != null }">
+				<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+				<tr>
+					<td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
+						<c:if test="${item1.shdw ==null||item1.shdw ==''}">
+							<input type="text" name="shdw" value="${facname }" 
+								ondblclick="selectFactory(this);" style="width: 90px;"><br>
+						</c:if><c:if test="${item1.shdw  != null&&item1.shdw!='' }">
+							<input type="text" name="shdw" value="${item1.shdw }" ondblclick="selectFactory(this);" style="width: 90px;">
+						</c:if>
+					</td><td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
+						<c:if test="${item1.clothName ==null||item1.clothName ==''}">
+							<input type="text" name="${item.id }clothName" value="${item.clothName }" 
+								ondblclick="selectCloth(this);" style="width: 90px;"><br>
+						</c:if><c:if test="${item1.clothName  != null&&item1.clothName!='' }">
+							<input type="text" name="${item.id }clothName" value="${item1.clothName }" ondblclick="selectCloth(this);" style="width: 90px;">
+							<input type="hidden" name="${item.id }clothId" value="${item1.clothId }" style="width: 90px;"><br>
+						</c:if>
+						<span id="${item.id}clothName1" ></span>
+					</td><td id="19_${item.id }" style="width: 90px;" title="双击选择工艺">
+						<c:if test="${item1.technologyName ==null||item1.technologyName ==''}">
+							<input type="text" name="${item.id }technologyName" value="${item.technologyName }" 
+								ondblclick="selectCloth(this);" style="width: 90px;"><br>
+						</c:if><c:if test="${item1.technologyName  != null&&item1.technologyName!='' }">
+							<input type="text" name="${item.id }technologyName" value="${item1.technologyName }" ondblclick="selectTechnologyName(this);" style="width: 90px;">
+						</c:if>
+					</td>
+					
+					<td id="17_${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
+						<input type="text" name="${item.id }returnCode" value="${item1.returnCode }" style="width: 90px;">
+					</td>
+					
+					<td id="18_${item.id }" style="width: 90px;">
+						<input type="text" name="${item.id }factoryColor" value="${item1.returnColor }" style="width: 90px;"><br>
+					</td>
+					
+					<td id="20_${item.id }" style="width: 90px;">
+						<input type="text" name="${item.id }myCompanyCode" value="${item1.myCompanyCode }" style="width: 90px;">
+					</td>
+					
+					<td id="21_${item.id }" style="width: 90px;">
+						<input type="text" name="${item.id }myCompanyColor" value="${item1.myCompanyColor }" style="width: 90px;">
+					</td>
+					
+					<td id="22_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+						<input type="text" name="${item.id }zhiguan" value="${item1.zhiguan }" style="width: 45px;">
+					</td><td id="23_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+						<input type="text" name="${item.id }kongcha" value="${item1.kongcha }" style="width: 45px;">
+					</td><td id="24_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
+						<input type="text" name="${item.id }jiaodai" value="${item1.jiaodai }" style="width: 45px;">
+					</td>
+					
+					<td id="25_${item.id }" onclick="onclickTr(${item.id })">
+						<input type="text"  name="${item.id }returnNum" value="${item1.returnNum }" style="width: 60px">
+					</td><td id="4_${item.id }" onclick="onclickTr(${item.id })">
+						<input type="text"  name="${item.id }returnNumKg" value="${item1.returnNumKg }" style="width: 60px">
+					</td>
+					<!--td id="14_${item.id }" onclick="onclickTr(${item.id })">${item.myCompanyColor }</td-->
+					<!--td onclick="onclickTr(${item.id })">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }returnColor" value="${item1.returnColor }" style="width: 60px"><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }returnColor" value="${item1.returnColor }" style="width: 60px"><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id }returnColor" ></span>
+					</td-->
+					<!--td id="15_${item.id }" onclick="onclickTr(${item.id })">
+						<c:if test="${fn:length(map[item.id]) ==0}">
+							<input type="text" name="${item.id }mark" value="" ><br>
+						</c:if><c:if test="${map[item.id] != null }">
+							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
+								<input type="text" name="${item.id }mark" value="${item1.mark }" ><br>
+							</c:forEach>
+						</c:if>
+						<span id="${item.id }mark" ></span>
+					</td-->
+					<td>
+						<input type="text"  name="${item.id }mark" value="${item1.mark }" style="width: 60px">
+					</td><td id="8_${item.id }" style="width:120px;" onclick="onclickTr(${item.id })">
+						<c:if test="${item1.returnDate ==null||item1.returnDate ==''}">
+							<input type="text" name="${item.id }returnDate" style="width:70px" value="${nowTime }"
+							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
+						</c:if><c:if test="${item1.returnDate  != null&&item1.returnDate!='' }">
+							<input type="text"  name="${item.id }returnDate" style="width:70px" value="<fmt:formatDate value="${item1.returnDate }" pattern="yyyy-MM-dd"/>"
+								onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
+						</c:if>
+					</td>
+				</tr>
+				</c:forEach>
+				</c:if>
 			</tbody>
+		</table>
+		<table style="width: 100%;">
+			<tr>
+				<td colspan="14">
+					<div class="l_btn_centent">
+						<a class="btn btn-primary" href="javascript:void(0)" onclick="copyOne(${item.id });">复制一行</a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
+							onclick="addOneRow(${item.id });" ><span>新增回货</span> </a>
+						<a class="btn btn-primary" href="javascript:void(0)" id="saveTemp"> 
+							暂存数据
+						</a>
+						<a class="btn btn-info" href="javascript:void(0)" id="save"> 
+							已回
+						</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="btn btn-primary" href="javascript:void(0)" id="closeWin"
+							onclick="fh()"><span>返回</span> </a>
+					</div>
+				</td>
+			</tr>
 		</table>
 	</form>
 	</div>
