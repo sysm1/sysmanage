@@ -1,5 +1,7 @@
 package com.github.hzw.security.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -375,7 +377,15 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("factoryInfo", factoryInfo);
 		model.addAttribute("technologyInfos", technologyInfos);
 		model.addAttribute("factoryId", request.getParameter("factoryId"));
-		model.addAttribute("myCompanyCode", request.getParameter("myCompanyCode"));
+		String myCompanyCode=null;
+		try {
+			myCompanyCode = URLDecoder.decode(request.getParameter("myCompanyCode"),"utf-8");
+			//myCompanyCode = URLDecoder.decode(request.getParameter("myCompanyCode"),"iso-8859-1");
+			//myCompanyCode = new String(request.getParameter("myCompanyCode").getBytes("ISO8859_1"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}//
+		model.addAttribute("myCompanyCode", myCompanyCode);
 		model.addAttribute("myCompanyColor", request.getParameter("myCompanyColor"));
 		model.addAttribute("technologyId", request.getParameter("technologyId"));
 		model.addAttribute("factoryCode", request.getParameter("factoryCode"));

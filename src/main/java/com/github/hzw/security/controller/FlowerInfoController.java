@@ -89,6 +89,11 @@ public class FlowerInfoController extends BaseController{
 		return null;
 	}
 	
+	@ResponseBody
+	@RequestMapping("queryFactoryCodeByFId")
+	public List<String> queryFactoryCodeByFId(String factoryId) {
+		return flowerAdditionalService.queryFactoryCodeByFId(factoryId);
+	}
 	
 	/**
 	 * 保存数据

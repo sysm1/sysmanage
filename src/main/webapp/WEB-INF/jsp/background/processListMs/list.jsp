@@ -295,11 +295,11 @@ th.specalt {
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 				<tr id="${item.id }" height="30px;">
-					<td id="2${item.id }">${item.id }</td>
-					<td  title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>" onclick="clearColor(${item.id});">
+					<td id="5${item.id }">${item.id }</td>
+					<td id="4${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy-MM-dd'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
 					</td>
-					<td id="5${item.id }">${item.clothName }</td>
+					<td id="6${item.id }">${item.clothName }</td>
 					<td id="7${item.id }">${item.myCompanyCode }</td>
 					<td id="8${item.id }" width="80px;">
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
@@ -326,7 +326,7 @@ th.specalt {
 						</c:forEach>
 					</td>
 					<td id="14${item.id }" >${item.myCompanyColor }</td>
-					<td >
+					<td id="17${item.id }" >
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							${item1.returnColor }<br>
 						</c:forEach>
@@ -339,8 +339,23 @@ th.specalt {
 							</span><br>
 						</c:forEach>
 					</td>
-					<td id="1${item.id }">${item.returnStatusName }</td>
+					<td id="16${item.id }">
+						<c:if test="${item.returnStatusName !='已回完' and  item.returnStatusName !='未回完' and item.returnStatusName !='未回'}">
+						${item.returnStatusName }
+						</c:if>
+					</td>
 				</tr>
+				<script type="text/javascript">
+					if('${item.returnStatusName }'=='未回完'){
+						for(var i=4;i<=17;i++){
+							document.getElementById(i+'${item.id }').style.background="#7FFFD4";
+						}
+					}else if('${item.returnStatusName }'=='已回完'){
+						for(var i=4;i<=17;i++){
+							document.getElementById(i+'${item.id }').style.background="#FFFFE0";
+						}
+					}
+				</script>
 				</form>
 				</c:forEach>
 				<!-- 分页 -->

@@ -405,9 +405,9 @@ th.specalt {
 		<div id="paging" class="pagclass" >
 			<table border="1" id="mytable" class="dataintable">
 				<tr>
-					<th class="specalt" rowspan="2">
+					<!--th class="specalt" rowspan="2">
 						<input type="checkbox" id="checkAll" name="checkAll" onclick="checkAllIds(this);">
-					</th>
+					</th-->
 					<!-- th rowspan="2">序号</th-->
 					<th rowspan="2">&nbsp;状态&nbsp;</th>
 					<th rowspan="2" style="width: 60px;">下单日期</th>
@@ -446,14 +446,14 @@ th.specalt {
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
-				<tr id="${item.id }" ondblclick="showDetail('${item.id }');" title="双击弹出回货窗口">
-					<td style="text-align: center;" id="0_${item.id }">
+				<tr id="${item.id }" ondblclick="showDetail('${item.id }');" title="双击弹出回货窗口" >
+					<!--td style="text-align: center;" id="0_${item.id }">
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
-					</td>
+					</td-->
 					<!--td id="2_${item.id }">${item.id }</td-->
 					<td id="1_${item.id }">${item.returnStatusName }</td>
-					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
+					<td id="2_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='yyyy/MM/dd'/>
 					</td>
 					<td id="3_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
@@ -468,7 +468,7 @@ th.specalt {
 					<td id="11_${item.id }">${item.zhiguan }</td>
 					<td id="12_${item.id }">${item.kongcha }</td>
 					<td id="13_${item.id }">${item.jiaodai }</td>
-					<td id="14_${item.id }">
+					<td id="4_${item.id }">
 						<c:if test="${item.num!=null }">${item.num }条</c:if>
 						<c:if test="${item.numKg!=null }">${item.numKg }KG</c:if>
 					</td>
@@ -653,6 +653,18 @@ th.specalt {
 					+
 					</span></td-->
 				</tr>
+				<script type="text/javascript">
+					if('${item.returnStatusName }'=='未回完'){
+						//alert(1);
+						//alert(document.getElementById('${item.id }').style.background);
+						for(var i=1;i<=13;i++){
+							document.getElementById(i+'_${item.id }').style.background="#7FFFD4";
+						}
+						
+						//alert(2);
+						//alert(document.getElementById('${item.id }').style.background);
+					}
+				</script>
 				</form>
 				</c:forEach>
 				<!-- 分页 -->

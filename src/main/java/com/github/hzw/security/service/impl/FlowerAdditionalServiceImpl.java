@@ -30,6 +30,10 @@ public class FlowerAdditionalServiceImpl implements FlowerAdditionalService {
 		return pageView;
 	}
 	
+	public List<String> queryFactoryCodeByFId(String factoryId){
+		return flowerAdditionalMapper.queryFactoryCodeByFId(factoryId);
+	}
+	
 	public List<FlowerAdditional> queryAllColor(FlowerAdditional fa){
 		return flowerAdditionalMapper.queryAllColor(fa);
 	}

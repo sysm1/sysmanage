@@ -97,24 +97,7 @@ function showOrHiddenBtn(){
 }
 //下单列表js结束
 
-/***添加到花号基本资料*/
-function addtoflower(code){
-	var factoryId=$('#factoryId').val();
-	var clothId=$('#clothId').val();
-	var myCompanyCode=$('#myCompanyCode').val();
-	var myCompanyColor=$('#myCompanyColor').val();
-	var technologyId=$('#technologyId').val();
-	var factoryCode=$('#factoryCode').val();
-	dialog = parent.$.ligerDialog.open({
-		width : 750,
-		height : 500,
-		url : rootPath + '/background/inputsummary/addtoFlowerUI.html?factoryId='+factoryId+
-				"&myCompanyCode="+myCompanyCode+"&clothId="+clothId+"&myCompanyColor="+myCompanyColor+
-				'&technologyId='+technologyId+"&factoryCode="+factoryCode,
-		title : "花号修改",
-		isHidden : false
-	});
-}
+
 
 function saveWin() {
 	var factoryId=$("#factoryId").val();

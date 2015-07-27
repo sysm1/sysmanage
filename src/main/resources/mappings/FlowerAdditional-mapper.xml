@@ -39,6 +39,16 @@
 		</where>
 		order by id desc
 	</select>
+	
+	<select id="queryFactoryCodeByFId" resultType="String" parameterType="String">
+		SELECT	a.factory_code
+		FROM
+			flower_additional a,
+			flower_info f
+		WHERE
+			f.id = a.flower_id
+		    AND f.factory_id = #{_parameter}
+	</select>
 
 	<select id="queryAll" resultType="FlowerAdditional">
 		select

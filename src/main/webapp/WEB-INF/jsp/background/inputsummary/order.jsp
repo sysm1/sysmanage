@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("UTF-8");%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -130,6 +131,29 @@ function changeFactory(obj){
 	    data: {}, //要发送的数据
 	    success: function(data){
 	    	$('#clothAllowance')[0].innerHTML=data;
+	    	filterFactoryCode(obj.value);
+		},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+			alert(XMLHttpRequest.status);
+			alert(XMLHttpRequest.readyState);
+			alert(data);  
+	     }
+	});
+}
+
+function filterFactoryCode(factoryId){
+	$.ajax({
+	    type: "post", //使用get方法访问后台
+	    dataType: "json", //json格式的数据
+	    async: false, //同步   不写的情况下 默认为true
+	    url: rootPath + '/background/flower/queryFactoryCodeByFId.html?factoryId='+factoryId, //要访问的后台地址
+	    data: {}, //要发送的数据
+	    success: function(data){
+	    	if(null==data||''==data){
+	    		alert("工厂没有对应的工厂编号，请在花号基本资料中添加");
+	    	}else{
+	    		alert(data);
+	    	}
+	    	
 		},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
 			alert(XMLHttpRequest.status);
 			alert(XMLHttpRequest.readyState);
@@ -206,6 +230,25 @@ if(1==2){
 
 function setValue(id,obj){
 	$('#'+id).attr('value',obj.value);
+}
+
+/***添加到花号基本资料*/
+function addtoflower(code){
+	var factoryId=$('#factoryId').val();
+	var clothId=$('#clothId').val();
+	var myCompanyCode=$('#myCompanyCode').val();
+	var myCompanyColor=$('#myCompanyColor').val();
+	var technologyId=$('#technologyId').val();
+	var factoryCode=$('#factoryCode').val();
+	dialog = parent.$.ligerDialog.open({
+		width : 750,
+		height : 500,
+		url : rootPath + '/background/inputsummary/addtoFlowerUI.html?factoryId='+factoryId+
+				"&myCompanyCode="+encodeURI(encodeURI(myCompanyCode))+"&clothId="+clothId+"&myCompanyColor="+myCompanyColor+
+				'&technologyId='+technologyId+"&factoryCode="+factoryCode,
+		title : "花号修改",
+		isHidden : false
+	});
 }
 </script>
 </head>

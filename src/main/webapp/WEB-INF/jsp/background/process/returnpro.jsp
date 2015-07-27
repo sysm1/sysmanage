@@ -59,6 +59,50 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			}
 		});
 		$("#save").click("click", function() {//绑定查询按扭
+			var returnCode=document.getElementsByName('${item.id }returnCode');
+		    if(!checkYh(returnCode)){
+		    	alert("工厂编号不能为空");
+		    	return false;
+		    }
+		    var factoryColor=document.getElementsByName('${item.id }factoryColor');
+		    if(!checkYh(factoryColor)){
+		    	alert("工厂颜色不能为空");
+		    	return false;
+		    }
+		    var myCompanyCode=document.getElementsByName('${item.id }myCompanyCode');
+		    if(!checkYh(myCompanyCode)){
+		    	alert("我司编号不能为空");
+		    	return false;
+		    }
+		    var myCompanyColor=document.getElementsByName('${item.id }myCompanyColor');
+		    if(!checkYh(myCompanyColor)){
+		    	alert("我司颜色不能为空");
+		    	return false;
+		    }
+		    var zhiguan=document.getElementsByName('${item.id }zhiguan');
+		    if(!checkYh(zhiguan)){
+		    	alert("纸管不能为空");
+		    	return false;
+		    }
+		    var kongcha=document.getElementsByName('${item.id }kongcha');
+		    if(!checkYh(kongcha)){
+		    	alert("空差不能为空");
+		    	return false;
+		    }
+		    var jiaodai=document.getElementsByName('${item.id }jiaodai');
+		    if(!checkYh(jiaodai)){
+		    	alert("胶袋不能为空");
+		    	return false;
+		    }var returnNum=document.getElementsByName('${item.id }returnNum');
+		    if(!checkYh(returnNum)){
+		    	alert("条数不能为空");
+		    	return false;
+		    }
+		    var returnNumKg=document.getElementsByName('${item.id }returnNumKg');
+		    if(!checkYh(returnNumKg)){
+		    	alert("数量不能为空");
+		    	return false;
+		    }
 			saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=2');
 			//alert(document.getElementsByName("returnNum").length);
 			alert("数据已回");
@@ -66,6 +110,16 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 			//location.reload();
 		});
 	});
+	
+	function checkYh(obja){
+		var length=obja.length;
+		for(var i=0;i<length;i++){
+			if(obja[i].value==''||null==obja[i].value){
+				return false;
+			}
+		}
+		return true;
+	}
 	function saveData(url1){
 		//alert(document.getElementsByName("returnNum").length);
 		var cbox=getSelectedCheckbox();

@@ -20,6 +20,8 @@ public interface FlowerAdditionalService extends BaseService<FlowerAdditional> {
 	 */
 	public List<String> queryFactoryCode(String  myCompanyCode);
 	
+	public List<String> queryFactoryCodeByFId(String factoryId);
+	
 	/**
 	 * 根据我司颜色 查询工厂颜色
 	 * @param myCompanyColor

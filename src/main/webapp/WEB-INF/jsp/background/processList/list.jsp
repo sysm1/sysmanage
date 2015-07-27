@@ -455,16 +455,20 @@ th.specalt {
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
 				<form id="${item.id }_form" action="${ctx}/background/sample/add.html" method="post" enctype="multipart/form-data">
 				<tr id="${item.id }" ondblclick="showdetail(${item.id });">
-					<td style="text-align: center;" id="0_${item.id }">
+					<td style="text-align: center;" id="11_${item.id }">
 						<input type="checkbox" id="${item.id }checkId" name="checkId" value="${item.id }" onclick="clickCheckId(${item.id });">
 						<input type="hidden" id="summaryId" name="summaryId" value="${item.id }">
 					</td>
 					<!--td id="2_${item.id }">${item.id }</td-->
-					<td id="1_${item.id }" title="双击查看详情">${item.status }</td>
-					<td id="16_${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
+					<td id="13_${item.id }" name="${item.id }" title="双击查看详情">
+						<c:if test="${item.returnStatus!=0 and item.status !='已回完' and  item.status !='未回完' and item.status !='未回'  and item.status !='已回'}">
+						${item.status }
+						</c:if>
+					</td>
+					<td id="14_${item.id }" name="${item.id }" title="<fmt:formatDate value='${item.orderDate }' pattern='yyyy年MM月dd日'/>" onclick="clearColor(${item.id});">
 						<fmt:formatDate value='${item.orderDate }' pattern='MM-dd'/>
 					</td>
-					<td id="3_${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
+					<td id="15_${item.id }" name="${item.id }" onclick="onclickTr(${item.id })">${item.factoryName }</td>
 					
 					<!--td id="5_${item.id }">${item.clothName }</td>
 					<td id="6_${item.id }">${item.factoryCode }</td>
@@ -480,19 +484,19 @@ th.specalt {
 					<td id="14_${item.id }">${item.num }</td>
 					<td id="15_${item.id }">${item.numKg }</td-->
 					
-					<td title="双击查看回货进度详情">
+					<td title="双击查看回货进度详情" name="${item.id }" id="12_${item.id }" >
 						<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 							${item1.factoryName }<br>
 						</c:forEach>
 					</td>
-					<td id="26_${item.id }" style="width: 90px;" >
+					<td id="16_${item.id }" name="${item.id }" style="width: 90px;" >
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								${item1.clothName }<br>
 							</c:forEach>
 						</c:if>
 					</td>
-					<td id="17_${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
+					<td id="17_${item.id }" name="${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								${item1.returnCode }<br>
@@ -500,21 +504,21 @@ th.specalt {
 						</c:if>
 					</td>
 					
-					<td id="18_${item.id }" style="width: 90px;">
+					<td id="18_${item.id }" name="${item.id }" style="width: 90px;">
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								${item1.returnColor }<br>
 							</c:forEach>
 						</c:if>
 					</td>
-					<td id="19_${item.id }" style="width: 90px;">
+					<td id="19_${item.id }" name="${item.id }" style="width: 90px;">
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								${item1.technologyName }<br>
 							</c:forEach>
 						</c:if>
 					</td>
-					<td id="20_${item.id }" style="width: 90px;">
+					<td id="20_${item.id }" name="${item.id }" style="width: 90px;">
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								${item1.myCompanyCode }<br>
@@ -571,13 +575,13 @@ th.specalt {
 								${item1.returnNum }<br>
 							</c:forEach>
 						</c:if>
-					</td><td id="4_${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="26_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								${item1.returnNumKg }<br>
 							</c:forEach>
 						</c:if>
-					</td><td id="4_${item.id }" onclick="onclickTr(${item.id })">
+					</td><td id="27_${item.id }" onclick="onclickTr(${item.id })">
 						<c:if test="${map[item.id] != null }">
 							<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 								${item1.mark }<br>
@@ -606,6 +610,19 @@ th.specalt {
 						<span id="${item.id }mark" ></span>
 					</td-->
 				</tr>
+				<script type="text/javascript">
+					//alert(${item.returnStatus});
+					if('${item.status }'=='未回完'||'${item.returnStatus}'==1){
+						for(var i=11;i<=27;i++){
+							document.getElementById(i+'_${item.id }').style.background="#7FFFD4";
+						}
+					}else if('${item.status }'=='已回完'||'${item.returnStatus}'==2){
+						for(var i=11;i<=27;i++){
+							document.getElementById(i+'_${item.id }').style.background="#FFFFE0";
+						}
+
+					}
+				</script>
 				</form>
 				</c:forEach>
 				<!-- 分页 -->

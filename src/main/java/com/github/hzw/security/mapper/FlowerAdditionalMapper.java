@@ -25,5 +25,7 @@ public interface FlowerAdditionalMapper extends BaseMapper<FlowerAdditional>{
 	 */
 	public List<String> queryFactoryColor(String  myCompanyColor);
 	
+	public List<String> queryFactoryCodeByFId(String factoryId);
+	
 	public List<FlowerAdditional> queryAllColor(FlowerAdditional fa);
 }
