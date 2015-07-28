@@ -279,7 +279,7 @@
 			and datediff(NOW(),order_code) >#{t.delayDates}
 		</if>
 		</where>
-		order by return_status, id desc
+		order by create_time desc,return_status, id desc
 	</select>
 
 	<select id="queryAll" resultType="OrderSummary">
