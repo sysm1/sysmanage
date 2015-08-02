@@ -256,6 +256,8 @@ create table order_input_summary(
 	unit int,                     -- 下单单位
 	mark text,   				-- 如果有“备注”则显示“见明细”，如果所有的“备注”都为空则显示“无”
 	order_ids varchar(255),  	-- order_id组合，以,分隔
+	technologyId int ,
+	order_Date varchar(32),
 	PRIMARY KEY (`id`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
