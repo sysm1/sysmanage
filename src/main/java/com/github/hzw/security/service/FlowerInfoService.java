@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.hzw.base.BaseService;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.entity.FlowerInfo;
 
 public interface FlowerInfoService extends BaseService<FlowerInfo> {
@@ -25,4 +26,11 @@ public interface FlowerInfoService extends BaseService<FlowerInfo> {
 	public void updateByStatus(Integer id, int status);
 	
 	public List<FlowerInfo> queryByClothIdAndMyCompanyCode(Integer clothId, String myCompanyCode);
+	
+	/**
+	 * 关联查询
+	 * @param map
+	 * @return
+	 */
+	public List<GlVo> queryGl(Map<String, Object> map);
 }

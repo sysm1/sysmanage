@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.VO.OrderInputSummaryVO;
 import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.ClothColor;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
-import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
@@ -232,6 +232,7 @@ public class OrderInputSummaryController extends BaseController {
 			ids+=","+idss.split("_")[0];
 		}
 		String summId=idsa[0].split("_")[1];
+		String technologyId=idsa[0].split("_")[2];
 		OrderInputSummaryVO info = orderInputSummaryService.getVOById(summId);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<OrderInputVO> orderInputList=orderInputService.queryByIds(ids.substring(1).split(","));//ids.substring(1).split(",")
@@ -284,6 +285,14 @@ public class OrderInputSummaryController extends BaseController {
 			unitName="KG";
 		}
 		
+		//过滤工厂信息
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("myCompanyCode", info.getMyCompanyCode());
+		map.put("myCompanyColor", info.getMyCompanyColor());
+		map.put("technologyId", technologyId);
+		map.put("clothId", info.getClothId());
+		List<GlVo> glList=flowerInfoService.queryGl(map);
+		model.addAttribute("glList", glList);
 		model.addAttribute("clothInfo", clothInfo);
 		model.addAttribute("colors",colors);
 		model.addAttribute("inputsummary", info);
@@ -293,6 +302,7 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("technologyInfos", technologyInfos);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("num",num);
+		model.addAttribute("technologyId",technologyId);
 		model.addAttribute("salesmanInfos",salesmanInfos);
 		model.addAttribute("nowDate", Common.fromDateY());
 		model.addAttribute("inputIds",ids.substring(1));

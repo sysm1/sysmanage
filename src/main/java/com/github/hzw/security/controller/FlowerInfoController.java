@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.Resources;
@@ -90,9 +91,17 @@ public class FlowerInfoController extends BaseController{
 	}
 	
 	@ResponseBody
-	@RequestMapping("queryFactoryCodeByFId")
-	public List<String> queryFactoryCodeByFId(String factoryId) {
-		return flowerAdditionalService.queryFactoryCodeByFId(factoryId);
+	@RequestMapping("queryGl")
+	public List<GlVo> queryGl(Model model,String factoryId,String technologyId,String clothId,String myCompanyCode,String myCompanyColor,String factoryCode) {
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("myCompanyCode", myCompanyCode);
+		map.put("myCompanyColor", myCompanyColor);
+		map.put("technologyId", technologyId);
+		map.put("clothId", clothId);
+		map.put("factoryId", factoryId);
+		map.put("factoryCode",factoryCode);
+		List<GlVo> glList=flowerInfoService.queryGl(map);
+		return glList;
 	}
 	
 	/**

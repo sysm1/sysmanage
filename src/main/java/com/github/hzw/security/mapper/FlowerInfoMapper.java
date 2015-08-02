@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.hzw.base.BaseMapper;
+import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.entity.FlowerInfo;
 
 public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
@@ -22,5 +23,12 @@ public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
 	public void updateByStatus(Map<String, Object> map);
 	
 	public List<FlowerInfo> queryByClothIdAndMyCompanyCode(Map<String, Object> map);
+	
+	/**
+	 * 关联查询
+	 * @param map
+	 * @return
+	 */
+	public List<GlVo> queryGl(Map<String, Object> map);
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.mapper.FlowerInfoMapper;
@@ -44,6 +45,15 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 		List<FlowerInfo> list = flowerInfoMapper.queryColor(map);
 		pageView.setRecords(list);
 		return pageView;
+	}
+	
+	/**
+	 * 关联查询
+	 * @param map
+	 * @return
+	 */
+	public List<GlVo> queryGl(Map<String, Object> map){
+		return flowerInfoMapper.queryGl(map);
 	}
 	
 	@Override
