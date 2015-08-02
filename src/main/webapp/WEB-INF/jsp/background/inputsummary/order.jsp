@@ -145,13 +145,54 @@ function filterFactoryCode(factoryId){
 	    type: "post", //使用get方法访问后台
 	    dataType: "json", //json格式的数据
 	    async: false, //同步   不写的情况下 默认为true
-	    url: rootPath + '/background/flower/queryFactoryCodeByFId.html?factoryId='+factoryId, //要访问的后台地址
-	    data: {}, //要发送的数据
+	    url: rootPath + '/background/flower/queryGl.html?factoryId='+factoryId, //要访问的后台地址
+	    data: {technologyId:$('#technologyId').val(),clothId:$('#clothId').val(),myCompanyCode:$('#myCompanyCode').val(),myCompanyColor:$('#myCompanyColor').val()}, //要发送的数据
 	    success: function(data){
 	    	if(null==data||''==data){
 	    		alert("工厂没有对应的工厂编号，请在花号基本资料中添加");
 	    	}else{
-	    		alert(data);
+	    		//alert(data.length);
+	    		$("#factoryCode").empty();
+	    		$("#factoryCode").append("<option value=''>请选择</option>");
+	    		for(var i=0;i<data.length;i++){
+	    			$("#factoryCode").append("<option value='"+data[i].factoryCode+"'>"+data[i].factoryCode+"</option>");
+	    		}
+	    		
+	    	}
+	    	
+		},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+			alert(XMLHttpRequest.status);
+			alert(XMLHttpRequest.readyState);
+			alert(data);  
+	     }
+	});
+}
+
+function changeFCode(obj){
+	//alert($('#factoryId').val());
+	if($('#factoryId').val()==''){
+		alert("请选择工厂");
+		return false;
+	}
+	//alert(obj.value);
+	$.ajax({
+	    type: "post", //使用get方法访问后台
+	    dataType: "json", //json格式的数据
+	    async: false, //同步   不写的情况下 默认为true
+	    url: rootPath + '/background/flower/queryGl.html?factoryId='+$('#factoryId').val(), //要访问的后台地址
+	    data: {technologyId:$('#technologyId').val(),clothId:$('#clothId').val(),
+	    	myCompanyCode:$('#myCompanyCode').val(),myCompanyColor:$('#myCompanyColor').val(),factoryCode:$('#factoryCode').val()}, //要发送的数据
+	    success: function(data){
+	    	if(null==data||''==data){
+	    		//alert("工厂没有对应的工厂编号，请在花号基本资料中添加");
+	    	}else{
+	    		//alert(data.length);
+	    		$("#factoryColor").empty();
+	    		$("#factoryColor").append("<option value=''>请选择</option>");
+	    		for(var i=0;i<data.length;i++){
+	    			$("#factoryColor").append("<option value='"+data[i].factoryColor+"'>"+data[i].factoryColor+"</option>");
+	    		}
+	    		
 	    	}
 	    	
 		},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
@@ -259,6 +300,7 @@ function addtoflower(code){
 		<input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }">
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
+		<input type="hidden" id="technologyId" name="technologyId" value="${technologyId }">
 		<input type="hidden" id="num1" name="num1" value="${num }">
 		<input type="hidden" id="unit" name="unit" value="${clothInfo.unit }">
 		<input type="hidden" id="status" name="status" value="1">
@@ -289,8 +331,8 @@ function addtoflower(code){
 						<div class="lanyuan_input">
 							<select id="factoryId" name="factoryId" onchange="changeFactory(this);" class="frameborder">
 								<option value="">请选择</option>
-								<c:forEach var="factory" items="${factoryInfos }" varStatus="status">
-								<option value="${factory.id }">${factory.name }</option>
+								<c:forEach var="factory" items="${glList }" varStatus="status">
+								<option value="${factory.factoryId }">${factory.factoryName }</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -330,7 +372,7 @@ function addtoflower(code){
 						<div class="lanyuan_input">
 							<select id='technologyId' name="technologyId" class="frameborder">
 								<c:forEach var="item" items="${technologyInfos }">
-								<option value="${item.id }" >${item.name }</option>
+								<option value="${item.id }" <c:if test="${item.id ==technologyId }">selected="selected"</c:if>  >${item.name }</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -339,7 +381,7 @@ function addtoflower(code){
 					<td class="l_right" style="height: 30px;">工厂编号：</td>
 					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryCode" name="factoryCode" class="frameborder">
+							<select id="factoryCode" name="factoryCode" class="frameborder" onchange="changeFCode(this);">
 								<option value="">请选择</option>
 								<c:forEach var="code" items="${factoryCodes }">
 									<option value="${code }">${code }</option>

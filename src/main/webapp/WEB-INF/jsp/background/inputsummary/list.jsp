@@ -245,10 +245,12 @@ ul { list-style:none;}
 			var td6=tr.insertCell(6);
 			var td7=tr.insertCell(7);
 			var td8=tr.insertCell(8);
-			var td9=tr.insertCell(9);
+			var td9=tr.insertCell(9);//technologyId
 			var td10=tr.insertCell(10);
 			td0.innerHTML='<input type="hidden" name="chtd'+pos+'" >';
-			td1.innerHTML='&nbsp;&nbsp;&nbsp;&nbsp;<input onclick="checkAllChild(this);" type="checkbox" ismap="'+data[i].summId+'" id="'+data[i].id+'_'+data[i].summId+'" name="childcheckId" value="'+data[i].id+'_'+data[i].summId+'">';
+			td1.innerHTML='&nbsp;&nbsp;&nbsp;&nbsp;<input onclick="checkAllChild(this);" type="checkbox" ismap="'+
+				data[i].summId+'" id="'+data[i].id+'_'+data[i].summId+'_'+data[i].technologyId+
+				'" name="childcheckId" value="'+data[i].id+'_'+data[i].summId+'_'+data[i].technologyId+'">';
 			td2.innerHTML=data[i].id;
 			td3.innerHTML=data[i].createTime;
 			td4.innerHTML=data[i].clothName;
