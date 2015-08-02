@@ -70,6 +70,8 @@
 			and my_company_color = #{myCompanyColor}
 		</if><if test="technologyId != null and technologyId != ''">
 			and technologyId = #{technologyId}
+		</if><if test="orderDate!=null and orderDate!=''">
+			and order_Date=#{orderDate}
 		</if>
 		</where>
 		order by id desc
@@ -123,7 +125,7 @@
 	<insert id="add" parameterType="OrderInputSummary" useGeneratedKeys="true" keyProperty="id">
 		insert into order_input_summary (
 			cloth_id, my_company_code, my_company_color, num, 
-			order_ids, mark,unit,technologyId
+			order_ids, mark,unit,technologyId,order_Date
 		)
 		values(
 			#{clothId},
@@ -132,7 +134,7 @@
 			#{num},
 			#{orderIds},
 			#{mark},
-			#{unit},#{technologyId}
+			#{unit},#{technologyId},#{orderDate}
 		)
 	</insert>
 	
@@ -185,6 +187,8 @@
         	 mark=#{mark},
       	</if><if test="technologyId != null and technologyId != ''">
         	 technologyId=#{technologyId},
+      	</if><if test="orderDate!=null and orderDate!=''">
+      		order_Date=#{orderDate},
       	</if>
 		</set>
 		where id=#{id}

@@ -136,6 +136,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 		inputSummary.setClothId(bean.getClothId());
 		inputSummary.setMyCompanyColor(bean.getMyCompanyColor());
 		inputSummary.setTechnologyId(bean.getTechnologyId());
+		inputSummary.setOrderDate(DateUtil.date2Str(new Date(),"yyyyMMdd"));
 		List<OrderInputSummary> olist=orderInputSummaryMapper.queryAll(inputSummary);
 		if(olist.size()>0){
 			inputSummary=olist.get(0);

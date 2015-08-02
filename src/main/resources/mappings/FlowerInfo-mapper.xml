@@ -165,6 +165,24 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="queryGl" resultType="com.github.hzw.security.VO.GlVo" parameterType="Map">
+		select 
+			fi.factory_id factoryId,
+			(select name from factory_info where factory_id=id) factoryName,
+			fi.factory_code factoryCode,
+			fa.factory_color factoryColor
+		from flower_info fi,flower_additional fa 
+		where fi.id=fa.flower_id 
+		  and fi.my_company_code=#{myCompanyCode} and fa.my_company_color=#{myCompanyColor}
+		  and fi.technology_id=#{technologyId} and fi.cloth_id=#{clothId}
+		<if test="factoryId!=null and factoryId !=''">
+			and fi.factory_id=#{factoryId}
+		</if>
+		<if test="factoryCode!=null and factoryCode!=''">
+			and fa.factory_code=#{factoryCode} 
+		</if>
+	</select>
 
 	<insert id="add" parameterType="FlowerInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into flower_info (
