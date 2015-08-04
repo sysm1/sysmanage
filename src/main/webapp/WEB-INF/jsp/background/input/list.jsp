@@ -78,7 +78,7 @@
 	        height:20,
 	        onSelected:function(e) {
 	            $("#clothId").val(e);
-	            //alert($("#clothId").val());
+	            alert($("#clothId").val());
 	            var clothId=$("#clothId").val();
 	            $.ajax({
 				    type: "post", //使用get方法访问后台

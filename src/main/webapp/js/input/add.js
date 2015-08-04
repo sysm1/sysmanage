@@ -13,11 +13,32 @@ var inputpagejs = {
 			inputpagejs.validate();
 			
 			$("#table1 tr[name=initfirst]").each(function(){
+				/**
 				$(this).find("select[name=clothId]").change(function(){
 					inputpagejs.clothIdChangeAjax(this);
 					
 				});
-				
+				**/
+				$(this).find("select[name=clothId]").bind({
+					change : function(){
+						inputpagejs.clothIdChangeAjax(this);
+					},
+				});
+				/**
+				$(this).find("select[name=clothId]").ligerComboBox({
+					url: '/background/pinyin/cloth.html',
+    				valueField: 'id',
+    		        textField: 'clothName', 
+    		        //selectBoxWidth: 133,
+    		        //selectBoxHeight: 11,
+    		        autocomplete: true,
+    		        //width: 142,
+    		        //height:20
+    		        onSelected:function(e) {
+    		            $("#clothId").val(e);
+    		         }
+		         });
+				**/
 				$(this).find("td[name=companyCode]").bind({
 					getCompanyCode : function(e,d){
 						inputpagejs.companyCodeAjax(d,this);

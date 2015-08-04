@@ -98,6 +98,7 @@ jQuery.validator.addMethod("isNum", function(value, element) {
              autocomplete: true,
              width: 110,
              onSelected:function(e) {
+            	 alert(e);
                  $("#factoryId").val(e);
                   // alert($("#factoryId").val());
              }
