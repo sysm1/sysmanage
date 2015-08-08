@@ -13,6 +13,100 @@ var inputpagejs = {
 			inputpagejs.validate();
 			
 			$("#table1 tr[name=initfirst]").each(function(){
+				
+				
+				/*myCompanyCode索引提示*/
+				$(this).find("[name=myCompanyCode]").bind({
+					//展示下拉菜单数据
+					showData : function(e,list){
+						console.log("showData");
+						$(this).ligerComboBox({
+		    				data : list,
+		    		        autocomplete: true
+		    		        //width: 142,
+		    		        //height:20
+				                }
+				            );
+					},
+					
+					//检查输入框的值是否有变化
+					checkData : function(){
+						var v =  $.trim($(this).val());
+						var oldv = $(this).attr("oldv");
+						if(v!=oldv){
+							$(this).attr("oldv",v);
+							$(this).trigger("setParamDatas",["kw",v]);
+							$(this).trigger("getAjaxData");
+						}
+					},
+					
+					//设置异步请求提交的参数 k是参数名  v是参数值
+					setParamDatas : function(e,k,v){
+						var d = $(this).data("paramdata");
+						if(d==null){
+							d = {};
+							$(this).data("paramdata",d);
+						}
+						
+						d[k] = v;
+					},
+					
+					//开启定时触发扫描
+					intvalCheckData : function(e){
+						var $this = this;
+						var intid = setInterval(function(){
+							$($this).trigger("checkData");
+						}, 1000);
+						
+						$(this).data("intid",intid);
+					},
+					
+					getAjaxData : function(){
+						/* 测试数据  start  有异步url后，把这段注销掉*/
+						var list =  [
+					             	{ id: "广东", text: "广东" },
+					             	{ id: "福建", text: "福建"}
+					             ];
+						$(this).trigger("showData",[list]);
+						return ;
+						/* 测试数据  end*/
+						
+						//数据筛选url
+						var the_url = rootPath + '/background/ordersummary/queryNoReturnNum.html';
+						var the_param = $(this).data("paramdata");
+						if(the_param==null || the_param==""){
+							the_param = {};
+						}
+						var $this = this;
+						$.ajax({
+						    type: "post", //使用get方法访问后台
+						    dataType: "json", //json格式的数据
+						    url: the_url, //要访问的后台地址
+						    data: the_param, //要发送的数据
+						    success: function(data){
+						    	var list = data;
+						    	//这个list的数据格式为 [{ id: "广东", text: "广东" },{ id: "福建", text: "福建"}];
+						    	$($this).trigger("showData",[list]);
+							},
+							error : function() {    
+						          alert("异常！");    
+						     } 
+						});
+					},
+					
+					focus : function(){
+						$(this).trigger("intvalCheckData");
+					},
+					
+					blur : function(){
+						var intid = $(this).data("intid");
+						window.clearInterval(intid);
+					}
+					
+					
+				});
+				
+				
 				/**
 				$(this).find("select[name=clothId]").change(function(){
 					inputpagejs.clothIdChangeAjax(this);
@@ -191,7 +285,7 @@ var inputpagejs = {
 			    url: rootPath + '/background/sample/queryMycompanyCodeByCloth.html', //要访问的后台地址
 			    data: {clothId:v}, //要发送的数据
 			    success: function(data){
-			    	if(data!=null&&data!=''){
+			    	/*if(data!=null&&data!=''){
 				    	var list = [];
 				    	for(var i=0;i<data.length;i++){
 				    		if(null!=data[i]){
@@ -217,7 +311,7 @@ var inputpagejs = {
 				    	
 			    	}else{
 			    		$($companyCodeTd).html('<input type="text"  name="myCompanyCode"  />');
-			    	}
+			    	}*/
 				},error : function() {    
 			          // view("异常！");
 			          alert("异常！");    
