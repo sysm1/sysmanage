@@ -190,9 +190,10 @@ function changeFCode(obj){
 	    		$("#factoryColor").empty();
 	    		$("#factoryColor").append("<option value=''>请选择</option>");
 	    		for(var i=0;i<data.length;i++){
-	    			$("#factoryColor").append("<option value='"+data[i].factoryColor+"'>"+data[i].factoryColor+"</option>");
+	    			if(null!=data[i].factoryColor){
+	    				$("#factoryColor").append("<option value='"+data[i].factoryColor+"'>"+data[i].factoryColor+"</option>");
+	    			}
 	    		}
-	    		
 	    	}
 	    	
 		},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
@@ -300,7 +301,7 @@ function addtoflower(code){
 		<input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }">
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
-		<input type="hidden" id="technologyId" name="technologyId" value="${technologyId }">
+		<!--input type="hidden" id="technologyId" name="technologyId" value="${technologyId }"-->
 		<input type="hidden" id="num1" name="num1" value="${num }">
 		<input type="hidden" id="unit" name="unit" value="${clothInfo.unit }">
 		<input type="hidden" id="status" name="status" value="1">
