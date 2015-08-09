@@ -101,7 +101,23 @@ public class FlowerInfoController extends BaseController{
 		map.put("factoryId", factoryId);
 		map.put("factoryCode",factoryCode);
 		List<GlVo> glList=flowerInfoService.queryGl(map);
-		return glList;
+		List<GlVo> llist=new ArrayList<GlVo>();
+		for(GlVo vo:glList){
+			GlVo vot=vo;
+			String[] as=vo.getFactoryCode().split(",");
+			System.out.println(as.length);
+			if(as.length==2){
+				vot=vo;
+				vot.setFactoryCode(as[0]);
+				llist.add(vot);
+				vot=new GlVo();
+				vot.setFactoryCode(as[1]);
+				llist.add(vot);
+			}else{
+				llist.add(vo);
+			}
+		}
+		return llist;
 	}
 	
 	/**
