@@ -77,6 +77,37 @@
 		order by id desc
 	</select>
 	
+	<select id="queryMyCode" resultType="FlowerInfo" parameterType="FlowerInfo">
+		select my_company_code myCompanyCode,
+			cloth_Id clothId,
+			technology_id technologyId
+			from flower_info flower
+		<where> <!-- flower.id = a.flower_id  -->
+		<if test="clothId != null and clothId != ''">
+			and flower.cloth_id = #{clothId}
+		</if>
+		<if test="myCompanyCode != null and myCompanyCode != ''">
+			and flower.my_company_code like '%${myCompanyCode}%' 
+		</if>
+		<if test="factoryId != null and factoryId != ''">
+			and flower.factory_id = #{factoryId}
+		</if>
+		<if test="technologyId != null and technologyId != ''">
+			and flower.technology_id = #{technologyId}
+		</if>
+		<if test="fileColor != null and fileColor != ''">
+			and flower.file_color = #{fileColor}
+		</if>
+		<if test="status != null and status != ''">
+			and flower.status = #{status}
+		</if>
+		<if test="factoryCode != null and factoryCode != ''">
+			and factory_code like '%${factoryCode}%'
+		</if>
+		</where>
+		order by id desc
+	</select>
+	
 	<select id="queryColor" resultType="FlowerInfo" parameterType="map">
 		select
 		<include refid="selectIdExt" />
@@ -156,14 +187,28 @@
 		order by id desc
 	</select>
 	
-	<select id="queryMycompanyCodeByCloth" parameterType="Integer" resultType="String">
+	<!-- 布种  工艺 我司编号  过滤我司颜色-->
+	<select id="queryMycompanyCodeByCloth" parameterType="FlowerInfo" resultType="String">
 		select DISTINCT my_company_code myCompanyCode 
 		from flower_info 
 		<where> 1=1
-			<if test="_parameter != null and _parameter != ''">
-			and cloth_id = #{_parameter}
+			<if test="clothId != null and clothId != ''">
+			and cloth_id = #{clothId}
+			</if>
+			<if test="technologyId != null and technologyId != ''">
+			and technology_Id = #{technologyId}
 			</if>
 		</where>
+	</select>
+	
+	<select id="queryMycompanyColor" parameterType="FlowerInfo" resultType="String">
+		select 
+			fa.my_company_color from flower_info fi,flower_additional fa 
+		where fi.id=fa.flower_id 
+			and fi.cloth_id=#{clothId} and fi.technology_id=#{technologyId}
+		<if test="factoryCode!=null and factoryCode!=''">
+			and fa.my_company_color like '%${factoryCode}%'
+		</if>
 	</select>
 	
 	<select id="queryGl" resultType="com.github.hzw.security.VO.GlVo" parameterType="Map">

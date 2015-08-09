@@ -301,10 +301,30 @@ public class SampleInputController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("queryMycompanyCodeByCloth")
-	public List<String> queryMycompanyCodeByCloth(Integer clothId){
+	public List<String> queryMycompanyCodeByCloth(Integer clothId,Integer technologyId){
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setClothId(clothId);
-		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(clothId);
+		flowerInfo.setTechnologyId(technologyId);
+		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
+		return list;
+	}
+	
+	/**
+	 * 根据布种 关联我司颜色
+	 * @param clothId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryMycompanyColor")
+	public List<String> queryMycompanyColor(Integer clothId,Integer technologyId,String myCompanyCode,String myCompanyColor){
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setClothId(clothId);
+		flowerInfo.setTechnologyId(technologyId);
+		flowerInfo.setMyCompanyCode(myCompanyCode);
+		if(null!=myCompanyColor&&!"".equals(myCompanyColor)){
+			flowerInfo.setFactoryCode(myCompanyColor);
+		}
+		List<String> list=flowerInfoService.queryMycompanyColor(flowerInfo);
 		return list;
 	}
 	

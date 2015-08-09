@@ -23,6 +23,7 @@ import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.ClothColor;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
@@ -159,7 +160,10 @@ public class OrderInputSummaryController extends BaseController {
 		List<OrderInputVO> list=orderInputService.queryByIds(newArr);
 		List<String> mycompanyCodes=null;
 		for(OrderInputVO vo:list){
-			mycompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(vo.getClothId());
+			FlowerInfo flowerInfo=new FlowerInfo();
+			flowerInfo.setClothId(vo.getClothId());
+			flowerInfo.setTechnologyId(vo.getTechnologyId());
+			mycompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
 			vo.setMyCompanyCodes(mycompanyCodes);
 		}
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);

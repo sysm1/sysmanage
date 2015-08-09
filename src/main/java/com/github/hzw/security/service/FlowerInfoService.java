@@ -10,7 +10,9 @@ import com.github.hzw.security.entity.FlowerInfo;
 
 public interface FlowerInfoService extends BaseService<FlowerInfo> {
 
-	public List<FlowerInfo> queryFind(FlowerInfo info );
+	public List<FlowerInfo> queryFind(FlowerInfo info ); 
+	
+	public List<FlowerInfo> queryMyCode(FlowerInfo info );
 	
 	public PageView queryCode(PageView pageView, String code);
 	
@@ -21,7 +23,9 @@ public interface FlowerInfoService extends BaseService<FlowerInfo> {
 	 * @param clothId
 	 * @return
 	 */
-	public List<String> queryMycompanyCodeByCloth(Integer clothId);
+	public List<String> queryMycompanyCodeByCloth(FlowerInfo info);
+	
+	public List<String> queryMycompanyColor(FlowerInfo info);
 	
 	public void updateByStatus(Integer id, int status);
 	

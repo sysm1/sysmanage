@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.ClothInfo;
+import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputAdditional;
 import com.github.hzw.security.entity.Resources;
@@ -93,6 +94,26 @@ public class OrderInputController extends BaseController {
 		return pageView;
 	}
 	
+	/**
+	 * @param model
+	 * 查询我司编号
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryMyCode")
+	public List<FlowerInfo> queryMyCode(String kw,Integer clothId,Integer technologyId) {
+		//System.out.println("==========xiadan==============：");
+		FlowerInfo info =new FlowerInfo();
+		info.setClothId(clothId);
+		info.setTechnologyId(technologyId);
+		info.setMyCompanyCode(kw);
+		List<FlowerInfo> list=flowerInfoService.queryMyCode(info);
+		if(list.size()>0){
+			return list;
+		}
+		//System.out.println("下单预录入查询："+pageView.getPageSize());
+		return null;
+	}
 	
 	/**
 	 * 保存数据
@@ -251,6 +272,11 @@ public class OrderInputController extends BaseController {
 	public void exportExcel(HttpServletResponse response,OrderInput info) {
 		 List<OrderInput> acs = orderInputService.queryAll(info);
 		POIUtils.exportToExcel(response, "下单预录入报表", acs, OrderInput.class, "下单预录入", acs.size());
+	}
+	
+	public static void main(String[] args){
+		OrderInputController oc=new OrderInputController();
+		oc.queryMyCode("1", 1, 1);
 	}
 	
 }

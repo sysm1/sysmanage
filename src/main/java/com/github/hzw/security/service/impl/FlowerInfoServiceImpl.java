@@ -66,10 +66,14 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 	 * @param clothId
 	 * @return
 	 */
-	public List<String> queryMycompanyCodeByCloth(Integer clothId){
-		return flowerInfoMapper.queryMycompanyCodeByCloth(clothId);
+	public List<String> queryMycompanyCodeByCloth(FlowerInfo info){
+		return flowerInfoMapper.queryMycompanyCodeByCloth(info);
 	}
 
+	public List<String> queryMycompanyColor(FlowerInfo info){
+		return flowerInfoMapper.queryMycompanyColor(info); 
+	}
+	
 	@Override
 	public void delete(String id) throws Exception {
 		flowerAdditionalService.deleteByFlowerId(id);
@@ -124,6 +128,10 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 	@Override
 	public List<FlowerInfo> queryFind(FlowerInfo info ){
 		return flowerInfoMapper.queryFind(info);
+	}
+	
+	public List<FlowerInfo> queryMyCode(FlowerInfo info ){
+		return flowerInfoMapper.queryMyCode(info);
 	}
 	
 	public List<FlowerInfo> queryReport(Map<String, Object> map) {
