@@ -63,16 +63,16 @@ var inputpagejs = {
 					
 					getAjaxData : function(){
 						/* 测试数据  start  有异步url后，把这段注销掉*/
-						var list =  [
+						/*var list =  [
 					             	{ id: "广东", text: "广东" },
 					             	{ id: "福建", text: "福建"}
 					             ];
 						$(this).trigger("showData",[list]);
-						return ;
+						return ;*/
 						/* 测试数据  end*/
 						
 						//数据筛选url
-						var the_url = rootPath + '/background/ordersummary/queryNoReturnNum.html';
+						var the_url = rootPath + '/background/sample/queryMycompanyCodeByCloth.html';
 						var the_param = $(this).data("paramdata");
 						if(the_param==null || the_param==""){
 							the_param = {};
@@ -84,7 +84,10 @@ var inputpagejs = {
 						    url: the_url, //要访问的后台地址
 						    data: the_param, //要发送的数据
 						    success: function(data){
-						    	var list = data;
+						    	var list = [];
+						    	for(var i=0;i<data.length;i++){
+						    		list.push({id:data[i],text:data[i]});
+						    	}
 						    	//这个list的数据格式为 [{ id: "广东", text: "广东" },{ id: "福建", text: "福建"}];
 						    	$($this).trigger("showData",[list]);
 							},
@@ -148,7 +151,27 @@ var inputpagejs = {
 						inputpagejs.queryNoReturnNum(this);
 					}
 				});
+				
+				//布种值改变时，引起我司编号筛选参数数据变化
+				$(this).find("select[name=clothId]").change(function(){
+					var v = $(this).val();
+					
+					var $tr = $(this).parents("tr[name=initfirst]");
+					$($tr).find("input[name=myCompanyCode]").trigger("setParamDatas",["clothId",v]);
+				}).trigger("change");
+				
+				//工艺值改变时，引起我司编号筛选参数数据变化
+				$(this).find("select[name=technologyId]").change(function(){
+					var v = $(this).val();
+					
+					var $tr = $(this).parents("tr[name=initfirst]");
+					$($tr).find("input[name=myCompanyCode]").trigger("setParamDatas",["technologyId",v]);
+				}).trigger("change");
 			});
+			
+			
+			
+			
 			
 			inputpagejs.initfirstDom = $("#table1 tr[name=initfirst]").clone(true);
 			

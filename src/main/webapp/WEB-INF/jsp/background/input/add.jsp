@@ -81,7 +81,7 @@
 									</select>
 								</td>
 								<td name="companyCode">
-									<input id="myCompanyCode" name="myCompanyCode" style="width:99%;"  />
+									<input  name="myCompanyCode" style="width:99%;"  />
 								</td>
 								<td class="l_left tdw150" >
 									<input type="text" name="myCompanyColor" style="width:150px;" value="" onchange="queryNoReturnNum(this)">
