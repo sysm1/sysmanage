@@ -337,7 +337,9 @@ ul { list-style:none;}
 					 		<input type="checkbox"  id="${item.id }" name="checkId" value="${item.id }" onclick="checkAll('${status.index +1}',this);">
 					 	</td>
 						<td style="background:#FFE4B5;">${item.id }</td>
-						<td style="background:#FFE4B5;"></td>
+						<td style="background:#FFE4B5;">
+							${item.orderDate }
+						</td>
 						<td style="background:#FFE4B5;">${item.clothName }</td>
 						<td style="background:#FFE4B5;">${item.technologyName }
 							<c:if test="${item.technologyName ==null}">-</c:if>

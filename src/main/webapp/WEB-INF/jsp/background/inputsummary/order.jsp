@@ -145,7 +145,7 @@ function filterFactoryCode(factoryId){
 	    type: "post", //使用get方法访问后台
 	    dataType: "json", //json格式的数据
 	    async: false, //同步   不写的情况下 默认为true
-	    url: rootPath + '/background/flower/queryGl.html?factoryId='+factoryId, //要访问的后台地址
+	    url: rootPath + '/background/flower/queryGlFactoryCode.html?factoryId='+factoryId, //要访问的后台地址
 	    data: {technologyId:$('#technologyId').val(),clothId:$('#clothId').val(),myCompanyCode:$('#myCompanyCode').val(),myCompanyColor:$('#myCompanyColor').val()}, //要发送的数据
 	    success: function(data){
 	    	if(null==data||''==data){
@@ -371,11 +371,13 @@ function addtoflower(code){
 					<td class="l_right">工艺：</td>
 					<td style="text-align: left;" colspan="5">
 						<div class="lanyuan_input">
-							<select id='technologyId' name="technologyId" class="frameborder">
+						<input type="hidden" id='technologyId' name="technologyId" value="${technoInfo.id }" >
+						${technoInfo.name }
+							<!--select id='technologyId' name="technologyId" class="frameborder">
 								<c:forEach var="item" items="${technologyInfos }">
 								<option value="${item.id }" <c:if test="${item.id ==technologyId }">selected="selected"</c:if>  >${item.name }</option>
 								</c:forEach>
-							</select>
+							</select-->
 						</div>
 					</td>
 				</tr><tr>
