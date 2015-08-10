@@ -26,6 +26,8 @@ public class OrderInputSummaryVO {
     
     private Date createTime;
     
+    private String orderDate;
+    
     /***我司编号**/
     private String myCompanyCode;
 
@@ -176,5 +178,13 @@ public class OrderInputSummaryVO {
 
 	public void setTechnologyName(String technologyName) {
 		this.technologyName = technologyName;
+	}
+
+	public String getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
 	}
 }
