@@ -108,6 +108,7 @@ public class OrderInputController extends BaseController {
 		info.setTechnologyId(technologyId);
 		info.setMyCompanyCode(kw);
 		List<FlowerInfo> list=flowerInfoService.queryMyCode(info);
+		
 		if(list.size()>0){
 			return list;
 		}

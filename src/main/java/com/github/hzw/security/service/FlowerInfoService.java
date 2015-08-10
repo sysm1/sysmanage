@@ -37,4 +37,9 @@ public interface FlowerInfoService extends BaseService<FlowerInfo> {
 	 * @return
 	 */
 	public List<GlVo> queryGl(Map<String, Object> map);
+	
+	public List<GlVo> queryGlFactory(Map<String, Object> map);
+	
+	public List<GlVo> queryGlFactoryCode(Map<String, Object> map);
+	
 }

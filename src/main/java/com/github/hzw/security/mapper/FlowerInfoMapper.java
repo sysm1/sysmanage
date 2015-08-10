@@ -34,4 +34,8 @@ public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
 	 */
 	public List<GlVo> queryGl(Map<String, Object> map);
 	
+	public List<GlVo> queryGlFactory(Map<String, Object> map); 
+	
+	public List<GlVo> queryGlFactoryCode(Map<String, Object> map);
+	
 }

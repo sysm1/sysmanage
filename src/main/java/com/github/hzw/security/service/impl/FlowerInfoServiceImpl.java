@@ -56,6 +56,19 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 		return flowerInfoMapper.queryGl(map);
 	}
 	
+	/**
+	 * 关联查询
+	 * @param map
+	 * @return
+	 */
+	public List<GlVo> queryGlFactory(Map<String, Object> map){
+		return flowerInfoMapper.queryGlFactory(map);
+	}
+	
+	public List<GlVo> queryGlFactoryCode(Map<String, Object> map){
+		return flowerInfoMapper.queryGlFactoryCode(map);
+	}
+	
 	@Override
 	public List<FlowerInfo> queryAll(FlowerInfo t) {
 		return flowerInfoMapper.queryAll(t);

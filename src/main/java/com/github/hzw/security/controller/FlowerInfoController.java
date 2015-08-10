@@ -91,6 +91,36 @@ public class FlowerInfoController extends BaseController{
 	}
 	
 	@ResponseBody
+	@RequestMapping("queryGlFactoryCode")
+	public List<GlVo> queryGlFactoryCode(Model model,String factoryId,String technologyId,String clothId,String myCompanyCode,String myCompanyColor,String factoryCode) {
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("myCompanyCode", myCompanyCode);
+		map.put("myCompanyColor", myCompanyColor);
+		map.put("technologyId", technologyId);
+		map.put("clothId", clothId);
+		map.put("factoryId", factoryId);
+		map.put("factoryCode",factoryCode);
+		List<GlVo> glList=flowerInfoService.queryGlFactoryCode(map);
+		List<GlVo> llist=new ArrayList<GlVo>();
+		for(GlVo vo:glList){
+			GlVo vot=vo;
+			String[] as=vo.getFactoryCode().split(",");
+			System.out.println(as.length);
+			if(as.length==2){
+				vot=vo;
+				vot.setFactoryCode(as[0]);
+				llist.add(vot);
+				vot=new GlVo();
+				vot.setFactoryCode(as[1]);
+				llist.add(vot);
+			}else{
+				llist.add(vo);
+			}
+		}
+		return llist;
+	}
+	
+	@ResponseBody
 	@RequestMapping("queryGl")
 	public List<GlVo> queryGl(Model model,String factoryId,String technologyId,String clothId,String myCompanyCode,String myCompanyColor,String factoryCode) {
 		Map<String,Object> map=new HashMap<String,Object>();

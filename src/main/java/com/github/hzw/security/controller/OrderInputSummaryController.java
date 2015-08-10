@@ -240,7 +240,8 @@ public class OrderInputSummaryController extends BaseController {
 		OrderInputSummaryVO info = orderInputSummaryService.getVOById(summId);
 		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<OrderInputVO> orderInputList=orderInputService.queryByIds(ids.substring(1).split(","));//ids.substring(1).split(",")
-		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
+		//List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
+		TechnologyInfo technoInfo=technologyInfoService.getById(technologyId);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		
 		int num=0;
@@ -295,7 +296,7 @@ public class OrderInputSummaryController extends BaseController {
 		map.put("myCompanyColor", info.getMyCompanyColor());
 		map.put("technologyId", technologyId);
 		map.put("clothId", info.getClothId());
-		List<GlVo> glList=flowerInfoService.queryGl(map);
+		List<GlVo> glList=flowerInfoService.queryGlFactory(map);
 		model.addAttribute("glList", glList);
 		model.addAttribute("clothInfo", clothInfo);
 		model.addAttribute("colors",colors);
@@ -303,7 +304,7 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("unitName", unitName);
 		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("orderInputList", orderInputList);
-		model.addAttribute("technologyInfos", technologyInfos);
+		model.addAttribute("technoInfo", technoInfo);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("num",num);
 		model.addAttribute("technologyId",technologyId);

@@ -301,10 +301,11 @@ public class SampleInputController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("queryMycompanyCodeByCloth")
-	public List<String> queryMycompanyCodeByCloth(Integer clothId,Integer technologyId){
+	public List<String> queryMycompanyCodeByCloth(Integer clothId,Integer technologyId,String kw){
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setClothId(clothId);
 		flowerInfo.setTechnologyId(technologyId);
+		flowerInfo.setMyCompanyCode(kw);
 		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
 		return list;
 	}
