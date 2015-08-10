@@ -198,6 +198,9 @@
 			<if test="technologyId != null and technologyId != ''">
 			and technology_Id = #{technologyId}
 			</if>
+			<if test="myCompanyCode!=null and myCompanyCode!=''">
+			and my_company_code like '%${myCompanyCode}%'
+		</if>
 		</where>
 	</select>
 	
@@ -219,8 +222,56 @@
 			fa.factory_color factoryColor
 		from flower_info fi,flower_additional fa 
 		where fi.id=fa.flower_id 
-		  and fi.my_company_code=#{myCompanyCode} and fa.my_company_color=#{myCompanyColor}
 		  and fi.technology_id=#{technologyId} and fi.cloth_id=#{clothId}
+		<if test="myCompanyCode!=null and myCompanyCode!=''">
+			and fi.my_company_code=#{myCompanyCode} 
+		</if>
+		<if test="myCompanyColor!=null and myCompanyColor!=''">
+			and fa.my_company_color=#{myCompanyColor}
+		</if>
+		<if test="factoryId!=null and factoryId !=''">
+			and fi.factory_id=#{factoryId}
+		</if>
+		<if test="factoryCode!=null and factoryCode!=''">
+			and fa.factory_code=#{factoryCode} 
+		</if>
+	</select>
+	
+	<select id="queryGlFactory" resultType="com.github.hzw.security.VO.GlVo" parameterType="Map">
+		select DISTINCT
+			fi.factory_id factoryId,
+			(select name from factory_info where factory_id=id) factoryName			
+		from flower_info fi,flower_additional fa 
+		where fi.id=fa.flower_id 
+		  and fi.technology_id=#{technologyId} and fi.cloth_id=#{clothId}
+		<if test="myCompanyCode!=null and myCompanyCode!=''">
+			and fi.my_company_code=#{myCompanyCode} 
+		</if>
+		<if test="myCompanyColor!=null and myCompanyColor!=''">
+			and fa.my_company_color=#{myCompanyColor}
+		</if>
+		<if test="factoryId!=null and factoryId !=''">
+			and fi.factory_id=#{factoryId}
+		</if>
+		<if test="factoryCode!=null and factoryCode!=''">
+			and fa.factory_code=#{factoryCode} 
+		</if>
+	</select>
+	
+	<select id="queryGlFactoryCode" resultType="com.github.hzw.security.VO.GlVo" parameterType="Map">
+		select DISTINCT
+			fi.factory_id factoryId,
+			(select name from factory_info where factory_id=id) factoryName,
+			fi.factory_code	factoryCode
+		from flower_info fi,flower_additional fa 
+		where fi.id=fa.flower_id 
+		  and fi.technology_id=#{technologyId} and fi.cloth_id=#{clothId}
+		<if test="myCompanyCode!=null and myCompanyCode!=''">
+			and fi.my_company_code=#{myCompanyCode} 
+		</if>
+		<if test="myCompanyColor!=null and myCompanyColor!=''">
+			and fa.my_company_color=#{myCompanyColor}
+		</if>
 		<if test="factoryId!=null and factoryId !=''">
 			and fi.factory_id=#{factoryId}
 		</if>

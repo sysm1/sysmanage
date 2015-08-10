@@ -14,7 +14,7 @@
   <sql id="selectIdVO" >
     ois.id,ci.cloth_name clothName,ois.my_company_code myCompanyCode,
     ois.my_company_color myCompanyColor,ois.num,ois.unit,
-    technologyId,
+    technologyId,order_Date orderDate,
     (select name from technology_info where id=technologyId) technologyName
   </sql>
   
@@ -63,10 +63,10 @@
 		<if test="clothId != null and clothId != ''">
 			and cloth_id = #{clothId}
 		</if>
-		<if test="myCompanyCode != null and myCompanyCode != ''">
+		<if test="myCompanyCode != null ">
 			and my_company_code = #{myCompanyCode}
 		</if>
-		<if test="myCompanyColor != null and myCompanyColor != ''">
+		<if test="myCompanyColor != null ">
 			and my_company_color = #{myCompanyColor}
 		</if><if test="technologyId != null and technologyId != ''">
 			and technologyId = #{technologyId}
