@@ -58,7 +58,11 @@ public class OrderInputAdditionalServiceImpl implements
 		for(int i=0;i<myCompanyColors.length;i++){
 			bean=new OrderInputAdditional();
 			bean.setMyCompanyColor(myCompanyColors[i]);
-			bean.setNum(Integer.parseInt(nums[i].trim()));
+			if(null==nums[i]||"".equals(nums[i])){
+				bean.setNum(0);
+			}else{
+				bean.setNum(Integer.parseInt(nums[i].trim()));
+			}
 			bean.setMark(marks[i]);
 			bean.setInputId(input.getId());
 			try {

@@ -1,4 +1,4 @@
-$(function(){
+﻿$(function(){
 	
 	inputpagejs.init();
 	
@@ -33,7 +33,7 @@ var inputpagejs = {
 					checkData : function(){
 						var v =  $.trim($(this).val());
 						var oldv = $(this).attr("oldv");
-						if(v!=oldv){
+						if(v!=null && v!="" && v!=oldv){
 							$(this).attr("oldv",v);
 							$(this).trigger("setParamDatas",["kw",v]);
 							$(this).trigger("getAjaxData");
@@ -73,6 +73,7 @@ var inputpagejs = {
 						
 						//数据筛选url
 						var the_url = rootPath + '/background/sample/queryMycompanyCodeByCloth.html';
+						//var the_url = rootPath + '/background/input/queryMyCode.html';
 						var the_param = $(this).data("paramdata");
 						if(the_param==null || the_param==""){
 							the_param = {};
@@ -136,7 +137,7 @@ var inputpagejs = {
 					checkData : function(){
 						var v =  $.trim($(this).val());
 						var oldv = $(this).attr("oldv");
-						if(v!=oldv){
+						if(v!=null && v!="" && v!=oldv){
 							$(this).attr("oldv",v);
 							$(this).trigger("setParamDatas",["kw",v]);
 							$(this).trigger("getAjaxData");
@@ -268,6 +269,9 @@ var inputpagejs = {
 					var v = $(this).val();
 					
 					var $tr = $(this).parents("tr[name=initfirst]");
+					$($tr).find("input[name=myCompanyCode]").trigger("getAjaxData");
+					$($tr).find("input[name=myCompanyColor]").trigger("getAjaxData");
+
 					$($tr).find("input[name=myCompanyCode]").trigger("setParamDatas",["clothId",v]);
 					$($tr).find("input[name=myCompanyColor]").trigger("setParamDatas",["clothId",v]);
 				}).trigger("change");

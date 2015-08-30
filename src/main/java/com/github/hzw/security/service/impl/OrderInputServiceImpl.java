@@ -104,7 +104,11 @@ public class OrderInputServiceImpl implements OrderInputService {
 			bean.setMark(mark[i]);
 			bean.setMyCompanyCode(myCompanyCode[i]);
 			bean.setMyCompanyColor(myCompanyColor[i]);
-			bean.setNum(Integer.parseInt(num[i].trim()));
+			if(null==num[i]||"".equals(num[i])){
+				bean.setNum(0);
+			}else{
+				bean.setNum(Integer.parseInt(num[i].trim()));
+			}
 			bean.setSalesmanId(Integer.parseInt(salesmanId[i]));
 			bean.setTechnologyId(Integer.parseInt(technologyIds[i]));
 			bean.setStatus(0);

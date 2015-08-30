@@ -675,6 +675,7 @@
 		select sum(t.num)-coalesce((select sum(coalesce(return_num,0)) from return_goods_process where t.id=summary_id),0) noReturn 
 		from order_summary  t
 		where cloth_id=#{clothId} and my_company_code=#{myCompanyCode} and my_company_color=#{myCompanyColor}
+		and technology_id=#{technologyId}
 	</select>
   
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="OrderSummary" >

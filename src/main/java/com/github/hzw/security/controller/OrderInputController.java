@@ -156,7 +156,9 @@ public class OrderInputController extends BaseController {
 	@RequestMapping("addUI")
 	public String addUI(Model model) {
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
-		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		SalesmanInfo si=new SalesmanInfo();
+		si.setStatus(1);
+		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(si);
 		List<TechnologyInfo> technologys=technologyInfoService.queryAll(null);
 		model.addAttribute("cloths", cloths);
 		model.addAttribute("technologys", technologys);
@@ -179,10 +181,14 @@ public class OrderInputController extends BaseController {
 		String type=request.getParameter("type");
 		OrderInput info = orderInputService.getById(id);
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
-		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		SalesmanInfo si=new SalesmanInfo();
+		si.setStatus(1);
+		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(si);
 		OrderInputAdditional orderInputAdditional=new OrderInputAdditional();
 		orderInputAdditional.setInputId(info.getId());
 		List<OrderInputAdditional> addtionlist=orderInputAdditionalService.queryAll(orderInputAdditional);
+		List<TechnologyInfo> technologys=technologyInfoService.queryAll(null);
+		model.addAttribute("technologys", technologys);
 		model.addAttribute("input", info);
 		model.addAttribute("type", type);
 		model.addAttribute("addtionlist", addtionlist);

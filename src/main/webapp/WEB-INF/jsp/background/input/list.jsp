@@ -27,13 +27,15 @@
 		
 		
 		$("#add").click("click", function() {//绑定新增按扭
+			/**
 			dialog = parent.$.ligerDialog.open({
 				width : 1150,
 				height : 550,
 				url : rootPath + '/background/input/addUI.html',
 				title : "下单预录入",
 				isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
-			});
+			});*/
+			location.href=rootPath + '/background/input/addUI.html';
 		});
 		
 		$("#editView").click("click", function() {//绑定编辑按扭
@@ -52,18 +54,12 @@
 		});
 		
 		$("#copyAdd").click("click", function() {//复制新增按钮
-			var cbox=grid.getSelectedCheckbox();
+			var cbox=getSelectedCheckbox();
 			if (cbox.length > 1||cbox=="") {
 				parent.$.ligerDialog.alert("只能选中一个");
 				return;
 			}
-			dialog = parent.$.ligerDialog.open({
-				width : 1150,
-				height :550,
-				url : rootPath + '/background/input/editUI.html?id='+cbox+"&type=copy",
-				title : "复制新增下单预录入",
-				isHidden : false
-			});
+			location.href=rootPath + '/background/input/editUI.html?id='+cbox+'&type=copy';
 		});
 		
 		/***过滤查询**/
@@ -78,7 +74,7 @@
 	        height:20,
 	        onSelected:function(e) {
 	            $("#clothId").val(e);
-	            alert($("#clothId").val());
+	            //alert($("#clothId").val());
 	            var clothId=$("#clothId").val();
 	            $.ajax({
 				    type: "post", //使用get方法访问后台
@@ -171,7 +167,7 @@
 		var arr = [];
 		$('input[name="checkId"]:checked').each(function() {
 			arr.push($(this).val());
-			delarr.push($(this).val());
+			//delarr.push($(this).val());
 		});
 		return arr;
 	};

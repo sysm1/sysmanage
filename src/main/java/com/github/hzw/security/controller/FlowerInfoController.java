@@ -1,7 +1,6 @@
 package com.github.hzw.security.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -436,6 +435,79 @@ public class FlowerInfoController extends BaseController{
 			map.put("flag", "false");
 		}
 		return map;
+	}
+	
+	/**
+	 * 跑到新增界面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("addMyCompanyCode")
+	public String addMyCompanyCode(Model model,Integer clothId,Integer technologyId,String code) {
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setClothId(clothId);
+		flowerInfo.setTechnologyId(technologyId);
+		flowerInfo.setMyCompanyCode(code);
+		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
+		model.addAttribute("list", list);
+		model.addAttribute("clothId", clothId);
+		model.addAttribute("technologyId", technologyId);
+		return Common.BACKGROUND_PATH+"/flower/addMyCompanyCode";
+	}
+	/**
+	 * 跑到新增界面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("addMyCompanyColor")
+	public String addMyCompanyColor(Model model,Integer clothId,Integer technologyId,String code,String color) {
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setClothId(clothId);
+		flowerInfo.setTechnologyId(technologyId);
+		flowerInfo.setMyCompanyCode(code);
+		flowerInfo.setFactoryCode(color);
+		List<String> list=flowerInfoService.queryMycompanyColor(flowerInfo);
+		model.addAttribute("list", list);
+		model.addAttribute("clothId", clothId);
+		model.addAttribute("technologyId", technologyId);
+		return Common.BACKGROUND_PATH+"/flower/addMyCompanyColor";
+	}
+	
+	/**
+	 * 根据布种 关联我司编号
+	 * @param clothId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryMycompanyCodeByCloth")
+	public List<String> queryMycompanyCodeByCloth(Integer clothId,Integer technologyId,String kw){
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setClothId(clothId);
+		flowerInfo.setTechnologyId(technologyId);
+		flowerInfo.setMyCompanyCode(kw);
+		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
+		return list;
+	}
+	
+	/**
+	 * 根据布种 关联我司颜色
+	 * @param clothId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryMycompanyColor")
+	public List<String> queryMycompanyColor(Integer clothId,Integer technologyId,String myCompanyCode,String myCompanyColor){
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setClothId(clothId);
+		flowerInfo.setTechnologyId(technologyId);
+		flowerInfo.setMyCompanyCode(myCompanyCode);
+		if(null!=myCompanyColor&&!"".equals(myCompanyColor)){
+			flowerInfo.setFactoryCode(myCompanyColor);
+		}
+		List<String> list=flowerInfoService.queryMycompanyColor(flowerInfo);
+		return list;
 	}
 
 }

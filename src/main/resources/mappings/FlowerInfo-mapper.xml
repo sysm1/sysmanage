@@ -212,6 +212,9 @@
 		<if test="factoryCode!=null and factoryCode!=''">
 			and fa.my_company_color like '%${factoryCode}%'
 		</if>
+		<if test="myCompanyCode!=null and myCompanyCode!=''">
+			and fi.my_company_code=#{myCompanyCode} 
+		</if>
 	</select>
 	
 	<select id="queryGl" resultType="com.github.hzw.security.VO.GlVo" parameterType="Map">

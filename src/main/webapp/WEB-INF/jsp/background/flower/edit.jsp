@@ -168,7 +168,14 @@
 					<input id='fileColor' name="fileColor" type="text" value="${flower.fileColor}" style="width:100px;">
 				</td>
 			</tr>
-			
+			<tr>
+				<td colspan="2">&nbsp;</td>
+				<td colspan="2">
+					<div style="width:150px;display:inline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我司编号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+					<div style="width:100px;display:inline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工厂编号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+					<div style="width:100px;display:inline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注</div>
+				</td>
+			</tr>
 			<tr>
 				<td>工厂编号：</td>
 				<td>

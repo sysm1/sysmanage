@@ -15,7 +15,7 @@
 		
 		$("#seach").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
-			f.attr('action','${pageContext.request.contextPath}/background/cloth/addlist.html');
+			f.attr('action','${pageContext.request.contextPath}/background/flower/addMyCompanyCode.html');
 			f.submit();
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
@@ -81,13 +81,13 @@
 	function loadGird(){
 		grid.loadData();
 	}
-	function selectCloth(name,id){
+	function selectCloth(id){
 		//alert(id);
 		if(parent.process!=undefined){
-			parent.process.addCloth(name);
+			parent.process.addCloth(id);
 		}
 		if(parent.input!=undefined){
-			parent.input.addCloth(name,id);
+			parent.input.addColorData(id);
 		}
 		closeWin();
 	}
@@ -96,10 +96,12 @@
 <body>
 	<div class="divBody">
 		<div class="search">
-			<form name="fenye" id="fenye" ation="${pageContext.request.contextPath}/background/cloth/addlist.html">
+			<form name="fenye" id="fenye" ation="${pageContext.request.contextPath}/background/flower/addMyCompanyCode.html">
+				<input type="hidden" id="clothId" name="clothId" value="${clothId}">
+				<input type="hidden" id="technologyId" name="technologyId" value="${technologyId }">
 				<table><tr>
 					<td>
-					布种名称：<input type="text" name="clothName" value="${param.clothName}" style="height: 17px;width: 150px;" /> 
+					我司编号：<input type="text" name="code" value="${param.code}" style="height: 17px;width: 150px;" /> 
 					</td><td>
 					<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询</a>
 					</td>
@@ -109,25 +111,25 @@
 		<div id="paging" class="pagclass">
 			<table id="mytable" cellspacing="0" border="1" class="dataintable" style="width: 100%;">
 				<tr>
-					<th>布种名称</th>
+					<th>我司编号</th>
 				</tr>
-				<c:forEach var="bean" items="${pageView.records }" varStatus="status">
+				<c:forEach var="bean" items="${list}" varStatus="status">
 				<tr>
 					<td style="text-align: center;">
-						<a href="#" onclick="selectCloth('${bean.clothName }','${bean.id }');">${bean.clothName }</a>
+						<a href="#" onclick="selectCloth('${bean }');">${bean }</a>
 					</td>
 				</tr>
 				</c:forEach>
 				
 				
-				<tr style="width:100px;">
+				<!-- tr style="width:100px;">
 					<td  style="text-align: center;width: 200px;">
 					<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
 					${pageView.pageNow }
 					<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
 					共${pageView.pageNow }页
 					</td>
-				</tr>
+				</tr-->
 				
 			</table>
 		
