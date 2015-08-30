@@ -392,7 +392,6 @@ $(function() {
 						</select>
 					</td><td>
 						<select id="codeType" name="codeType" style="width:80px">
-							<option value="">编号类型</option>
 							<option value="0">分色文件号</option>
 							<option value="1">工厂编号</option>
 							<option value="2">我司编号</option>
@@ -401,7 +400,6 @@ $(function() {
 						<input id='codeValue' name="codeValue" class="isNum" type="text" value="" style="width: 100px;">
 					</td><td>
 						<select id="technologyId" name="technologyId" style="width: 100px;">
-							<option value="">请选择工艺</option>
 							<c:forEach items="${ technologyInfos }" var = "technologyInfo">
 								<option value="${technologyInfo.id }">${technologyInfo.name}</option>
 							</c:forEach>
