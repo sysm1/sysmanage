@@ -318,7 +318,7 @@ function checkNull(value){
 									</select>
 								</td>
 								<td name="companyCode" title="双击选择我司编号">
-									<input name="myCompanyCode" style="width:110px;" ondblclick="popMyCompanyCode(this)" readonly="readonly"/>
+									<input type="text" name="myCompanyCode" style="width:110px;" ondblclick="popMyCompanyCode(this)" readonly="readonly"/>
 								</td>
 								<td title="双击选择我司颜色">
 									<input type="text" name="myCompanyColor" style="width:110px;" value="" ondblclick="popMyCompanyColor(this);" readonly="readonly">
