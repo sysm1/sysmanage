@@ -11,6 +11,8 @@ public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
 
 	public List<FlowerInfo> queryFind(FlowerInfo flowerInfo);
 	
+	public List<FlowerInfo> queryFindLike(FlowerInfo flowerInfo);
+	
 	public List<FlowerInfo> queryMyCode(FlowerInfo flowerInfo);
 	
 	// public List<FlowerInfo> queryColor(String color);

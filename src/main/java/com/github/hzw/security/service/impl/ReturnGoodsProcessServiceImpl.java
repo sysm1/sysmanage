@@ -131,7 +131,10 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 		String returnStatus=request.getParameter("returnStatus");
 		String returnMark="";
 		ClothInfo clothInfo=clothInfoService.getById(orderSummary.getClothId()+"");
-		Double tiaoKg=clothInfo.getTiaoKg();
+		Double tiaoKg=0D;;
+		if(null!=clothInfo){
+			tiaoKg=clothInfo.getTiaoKg();
+		}
 		int unit=orderSummary.getUnit();
 		try {
 			int returnNum=0;
@@ -156,7 +159,7 @@ public class ReturnGoodsProcessServiceImpl implements ReturnGoodsProcessService 
 				}if(null!=returnCodes[i]&&!"".equals(returnCodes[i])){
 					bean.setReturnCode(returnCodes[i]);
 				}
-				bean.setShdw(shdws[i]);
+				bean.setShdw(shdws[0]);
 				bean.setReturnUnit("");
 				bean.setStatisticsNum(null);
 				bean.setSummaryId(orderSummary.getId());

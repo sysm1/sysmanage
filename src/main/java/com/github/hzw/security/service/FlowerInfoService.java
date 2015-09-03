@@ -12,6 +12,8 @@ public interface FlowerInfoService extends BaseService<FlowerInfo> {
 
 	public List<FlowerInfo> queryFind(FlowerInfo info ); 
 	
+	public List<FlowerInfo> queryFindLike(FlowerInfo info ); 
+	
 	public List<FlowerInfo> queryMyCode(FlowerInfo info );
 	
 	public PageView queryCode(PageView pageView, String code);

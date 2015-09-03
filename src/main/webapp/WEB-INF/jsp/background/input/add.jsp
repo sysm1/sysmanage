@@ -106,18 +106,28 @@ function popCloth(obj){
 }
 function popMyCompanyCode(obj){
 	var clothId=obj.parentNode.parentNode.children[1].firstChild.value;
+	if(clothId==''||clothId==undefined){
+		alert("请选择布种");
+		return false;
+	}
+	//alert(clothId);
 	var technologyId=obj.parentNode.parentNode.children[2].firstChild.value;
+	//alert(technologyId);
 	object=obj;
 	dialog = parent.$.ligerDialog.open({
 		width : 550,
 		height : 500,
-		url : rootPath + '/background/flower/addMyCompanyCode.html?clothId='+clothId+'&technologyId='+technologyId,
+		url : '/background/flower/addMyCompanyCode.html?clothId='+clothId+'&technologyId='+technologyId,
 		title : "我司编号选择",
 		isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 	});
 }
 function popMyCompanyColor(obj){
 	var clothId=obj.parentNode.parentNode.children[1].firstChild.value;
+	if(clothId==''||clothId==undefined){
+		alert("请选择布种");
+		return false;
+	}
 	var technologyId=obj.parentNode.parentNode.children[2].firstChild.value;
 	var companyCode=obj.parentNode.parentNode.children[3].firstChild.value;
 	object=obj;

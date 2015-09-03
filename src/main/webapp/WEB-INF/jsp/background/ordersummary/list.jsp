@@ -263,6 +263,35 @@ ul { list-style:none;}
 	             // alert($("#factoryId").val());
 	        }
 	   });
+		$("#factoryCode_text").ligerComboBox({
+	        url: '/background/flower/queryFindLike.html?clothId='+$("#clothId").val(),
+	        valueField: 'factoryCode',
+	        textField: 'factoryCode', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:15,
+	        onSelected:function(e) {
+	        	//alert(e);
+	            $("#factoryCode").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
+		/***过滤查询**/
+		$("#myCompanyCode_text").ligerComboBox({
+	        url: '/background/flower/queryFindLikeMyCode.html?clothId='+$("#clothId").val(),
+	        valueField: 'myCompanyCode',
+	        textField: 'myCompanyCode', 
+	        selectBoxWidth: 220,
+	        autocomplete: true,
+	        width: 220,
+	        height:15,
+	        onSelected:function(e) {
+	        	//alert(e);
+	            $("#myCompanyCode").val(e);
+	             // alert($("#factoryId").val());
+	        }
+	   });
 		/***过滤查询**/
 		$("#cloth_text").ligerComboBox({
 	        url: '/background/pinyin/cloth.html',
@@ -274,10 +303,25 @@ ul { list-style:none;}
 	        width: 215,
 	        height:15,
 	        onSelected:function(e) {
+	        	//alert(e);
 	            $("#clothId").val(e);
 	            //alert($("#clothId").val());
 	            var clothId=$("#clothId").val();
-	            $.ajax({
+	            $("#factoryCode_text").ligerComboBox({
+	    	        url: '/background/flower/queryFindLike.html?clothId='+$("#clothId").val(),
+	    	        valueField: 'factoryCode',
+	    	        textField: 'factoryCode', 
+	    	        selectBoxWidth: 220,
+	    	        autocomplete: true,
+	    	        width: 220,
+	    	        height:15,
+	    	        onSelected:function(e) {
+	    	        	//alert(e);
+	    	            $("#factoryCode").val(e.factoryCode);
+	    	             // alert($("#factoryId").val());
+	    	        }
+	    	   });
+	            /**$.ajax({
 				    type: "post", //使用get方法访问后台
 				    dataType: "json", //json格式的数据
 				    async: false, //同步   不写的情况下 默认为true
@@ -296,7 +340,7 @@ ul { list-style:none;}
 				    		//alert('没有相关联的我司编号');
 				    	}
 					}
-				});
+				});**/
 	        }
 	    });
 		
@@ -366,12 +410,21 @@ ul { list-style:none;}
 			 obj.checked=flag;
 		 }
 	}
+	function showDetail(id){
+		dialog = parent.$.ligerDialog.open({
+			width : 750,
+			height : 500,
+			url : rootPath +'/background/ordersummary/viewUI.html?id='+id,
+			title : "下单录入汇总查看",
+			isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
+		});
+	}
 </script>
 </head>
 <body  >
 	<div class="divBody" style="width: 1550px">
 		<div class="search">
-			<form name="fenye" id="fenye">
+			<form name="fenye" id="fenye" method="post">
 				<input type="hidden" id="pageNow" name="pageNow" value="">
 				<input type="hidden" id="flag" name="flag" value="${flag }">
 				<table border="1" class='dataintable'>
@@ -403,12 +456,13 @@ ul { list-style:none;}
 								onchange="changeTextValue('factoryId',this);"/> 
 						</td>
 					</tr><tr>
-						<td style="width:70px;text-align: right;">布种：</td>
+						<td style="width:70px;text-align: right;height: 30px;">布种：</td>
 						<td>
 							<!--select id="clothId" name="clothId">
 								<option value="">请选择布种</option>
 								<c:forEach items="${ cloths }" var = "cloth">
-									<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
+									<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">
+										${cloth.clothName}</option>
 								</c:forEach>
 							</select-->
 							
@@ -418,15 +472,14 @@ ul { list-style:none;}
 						</td><td style="width:70px;text-align: right;">
 							工厂编号：
 						</td><td>
-							<input type="text" id="factoryCode" name="factoryCode" value="${bean.factoryCode}" >
+							<input type="hidden" id="factoryCode" name="factoryCode" value="${bean.factoryCode}" >
+							<input type="text" id="factoryCode_text" name="factoryCode_text" value="${bean.factoryCode}" 
+								onchange="changeTextValue('factoryCode',this);">
 						</td><td style="width:70px;text-align: right;">我司编号：</td>
 						<td>
-							<select id="myCompanyCode" name="myCompanyCode" >
-								<option value="">请选择</option>
-								<c:forEach var="code" items="${myCompanyCodes }">
-									<option value="${code }">${code }</option>
-								</c:forEach>
-							</select>
+							<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${bean.myCompanyCode}" >
+							<input type="text" id="myCompanyCode_text" name="myCompanyCode_text" 
+								value="${bean.myCompanyCode}" onchange="changeTextValue('myCompanyCode',this);">
 						</td>
 					</tr><tr>
 						<td style="width:70px;text-align: right;">我司颜色：</td>
@@ -523,7 +576,7 @@ ul { list-style:none;}
 					<th class="specalt" >胶袋</th>
 				</tr>
 				<c:forEach var="item" items="${pageView.records }" varStatus="status">
-					<tr >
+					<tr ondblclick="showDetail('${item.id}');" title="双击查询详细信息">
 					 	<td style="height: 25px;">
 					 		<input type="checkbox" id="${item.id }" name="checkId" value="${item.id }_${item.orderIds }" onclick="checkId(this);">
 					 	</td><td>
@@ -570,7 +623,7 @@ ul { list-style:none;}
 							${fn:substring(item.mark,0,10)}  
 							<c:if test="${fn:length(item.mark)>10}">...</c:if>
 						</td><td >
-					 		<span id="${status.index }_salesId">${item.salesmans }</span>
+					 		<span id="${status.index }_salesId">${item.salesmans }_${item.id }</span>
 					 	</td>
 					<tr>
 				</c:forEach>

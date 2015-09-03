@@ -89,6 +89,53 @@ public class FlowerInfoController extends BaseController{
 		return null;
 	}
 	
+	/**
+	 * @param model
+	 * 存放返回界面的model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryFindLike")
+	public List<FlowerInfo> queryFindLike(FlowerInfo info,String factoryCode,Integer clothId,String key) {
+		info.setClothId(clothId);
+		info.setFactoryCode(key);
+		List<FlowerInfo> list=flowerInfoService.queryFindLike(info);
+		List<FlowerInfo> list2=new ArrayList<FlowerInfo>();
+		System.out.println(list.size());
+		if(null!=list&&list.size()>0){
+			for(FlowerInfo fi:list){
+				if(fi.getFactoryCode().contains(",")){
+					String[] code=fi.getFactoryCode().split(",");
+					FlowerInfo fl=getFlowerInfo(fi);
+					FlowerInfo fl2=getFlowerInfo(fi);
+					fl.setFactoryCode(code[0]);
+					list2.add(fl);
+					fl2.setFactoryCode(code[1]);
+					list2.add(fl2);
+				}else{
+					list2.add(fi);
+				}
+			}
+		}
+		return list2;
+	}
+	
+	@ResponseBody
+	@RequestMapping("queryFindLikeMyCode")
+	public List<FlowerInfo> queryFindLikeMyCode(FlowerInfo info,String factoryCode,Integer clothId,String key) {
+		info.setClothId(clothId);
+		info.setMyCompanyCode(key);
+		List<FlowerInfo> list=flowerInfoService.queryFindLike(info);
+		return list;
+	}
+	
+	public FlowerInfo getFlowerInfo(FlowerInfo info){
+		FlowerInfo fi=new FlowerInfo();
+		fi.setMyCompanyCode(info.getMyCompanyCode());
+		fi.setFactoryCode(info.getFactoryCode());
+		return fi;
+	}
+	
 	@ResponseBody
 	@RequestMapping("queryGlFactoryCode")
 	public List<GlVo> queryGlFactoryCode(Model model,String factoryId,String technologyId,String clothId,String myCompanyCode,String myCompanyColor,String factoryCode) {
@@ -508,6 +555,44 @@ public class FlowerInfoController extends BaseController{
 		}
 		List<String> list=flowerInfoService.queryMycompanyColor(flowerInfo);
 		return list;
+	}
+	
+	/**
+	 * 验证数据
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("checkValue")
+	public String checkValue(Integer type,String value){
+		String flag="0";
+		if(type<=2){
+			FlowerInfo fi=new FlowerInfo();
+			
+			if(type==1){
+				fi.setFactoryCode(value);
+			}else if(type==2){
+				fi.setMyCompanyCode(value);
+			}
+			List<FlowerInfo> list=new ArrayList<FlowerInfo>();
+			list=flowerInfoService.queryAll(fi);
+			if(null!=list&&list.size()>0){
+				flag="1";
+			}
+		}else{
+			FlowerAdditional flowerAdditional=new FlowerAdditional();
+			if(type==3){//我司颜色
+				flowerAdditional.setMyCompanyColor(value);
+			}else if(type==4){//工厂颜色
+				flowerAdditional.setFactoryColor(value);
+			}
+			List<FlowerAdditional> lista=flowerAdditionalService.queryFind(flowerAdditional);
+			if(null!=lista&&lista.size()>0){
+				flag="1";
+			}
+		}
+		return flag;
 	}
 
 }

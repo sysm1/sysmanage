@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.Resources;
+import com.github.hzw.security.VO.OrderInputVO;
+import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.SalesmanInfo;
+import com.github.hzw.security.service.OrderInputService;
+import com.github.hzw.security.service.OrderSummaryService;
 import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.POIUtils;
@@ -22,7 +25,11 @@ import com.github.hzw.util.POIUtils;
 @Controller
 @RequestMapping("/background/salesman/")
 public class SalesmanInfoController extends BaseController {
-
+	@Inject
+	private OrderSummaryService orderSummaryService;
+	
+	@Inject
+	private OrderInputService orderInputService;
 	
 	@Inject
 	private SalesmanInfoService salesmanInfoService;
@@ -102,8 +109,20 @@ public class SalesmanInfoController extends BaseController {
 	@RequestMapping("getSalmansName")
 	@ResponseBody
 	public String getSalmansName(String ids){
-		String[] idsa=ids.split(",");
-		return salesmanInfoService.getSalmansName(idsa);
+		String sumId=ids.split("_")[1];
+		OrderSummary info = orderSummaryService.getById(sumId);
+		String orderIds=info.getOrderIds();
+		if(null==orderIds){
+			return "";
+		}
+		List<OrderInputVO> list=orderInputService.queryByIds(orderIds.split(","));
+		String msg="";
+		for(OrderInputVO vo:list){
+			msg+=","+vo.getSaleManName()+"("+vo.getNum()+")";
+		}
+		//String[] idsa=ids.split("_")[0].split(",");
+		//return salesmanInfoService.getSalmansName(idsa);
+		return msg.substring(1);
 	}
 	
 	/**

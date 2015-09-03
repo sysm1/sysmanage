@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
-import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.TechnologyInfoService;

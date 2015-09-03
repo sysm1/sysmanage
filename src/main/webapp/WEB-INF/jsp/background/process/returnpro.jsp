@@ -53,12 +53,18 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		});
 		
 		$("#saveTemp").click("click", function() {//绑定暂存按扭
+			if(!check()){
+				return false;
+			}
 			if(!saveData('${pageContext.request.contextPath}/background/process/save.html?returnStatus=1')){
 				alert("数据暂存成功");
 				location.href=rootPath + '/background/process/list.html';
 			}
 		});
 		$("#save").click("click", function() {//绑定查询按扭
+			if(!check()){
+				return false;
+			}
 			var returnCode=document.getElementsByName('${item.id }returnCode');
 		    if(!checkYh(returnCode)){
 		    	alert("工厂编号不能为空");
@@ -182,10 +188,15 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	function addOneRow(itemId){
 		var newtr=$("#table1 tr:last").clone();
   		newtr.insertAfter($("#table1 tr:last"));
-  		for(var i=1;i<13;i++){
+  		for(var i=2;i<13;i++){
   			newtr.find("input").eq(i).attr("value",'');
   		}
-		
+  		newtr.find("input").eq(1).attr("value",'${item.clothName }');
+  		newtr.find("input").eq(2).attr("value",'${item.technologyName }');
+  		newtr.find("input").eq(3).attr("value",'${item.factoryCode }');
+  		newtr.find("input").eq(4).attr("value",'${item.factoryColor }');
+  		newtr.find("input").eq(5).attr("value",'${item.myCompanyCode }');
+  		newtr.find("input").eq(6).attr("value",'${item.myCompanyColor }');
 		/**
 　  		$('#'+itemId+'returnDate').before('<input type="text"  name="'+itemId+'returnDate" style="width:70px" value="${nowTime}"'+
 				'onfocus="WdatePicker({isShowClear:true,readOnly:true})">');
@@ -289,6 +300,54 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 	function fh(){
 		location.href=rootPath + '/background/process/list.html';
 	}
+	/****1 工厂编号 ***/
+	var arr=new Array();
+	var arrindex=0;
+	function checkValueInFlower(obj,type){
+		arr[arrindex]=obj;
+		//alert(obj.value);
+		var url='/background/flower/checkValue.html?type='+type+"&value="+obj.value;
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: url, //要访问的后台地址
+		    //data: f.serialize(), //要发送的数据
+		    success: function(data){
+		    	if(data=='0'){
+		    		alert("所填数据在花号基本资料中不存在，请重新填写");
+		    		//document.getElementById("saveTemp").style.display="none";
+		    		//document.getElementById("save").style.display="none";
+		    		obj.value=obj.value;
+		    		//obj.focus();
+		    		return false;
+		    	}if(data=='1'){
+		    		for(i=0;i<arr.length;i++){
+		    			if(arr[i]==obj){
+		    				arr[i]="";
+		    			}
+		    		}
+		    		//document.getElementById("saveTemp").style.display="";
+		    		//document.getElementById("save").style.display="";
+		    	}
+			},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+				alert(XMLHttpRequest.status);
+				alert(XMLHttpRequest.readyState);
+				alert(data);  
+		     }
+		});
+		arrindex=arrindex+1;
+	}
+	function check(){
+		for(i=0;i<arr.length;i++){
+			if(arr[i]!=''){
+				alert("数据添加不正确");
+				arr[i].focus();
+				return false;
+			}
+		}
+		return true;
+	}
 </script>
 </head>
 <body>
@@ -307,9 +366,18 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 					<th style="min-width: 60px;" style="text-align: right;">工&nbsp;厂</th>
 					<td id="3_${item.id }" colspan="2" style="text-align: left;">${item.factoryName }</td>
+					<th title="双击选择收货单位">收货单位</th>
+					<td colspan="2">
+						<c:if test="${item1.shdw ==null||item1.shdw ==''}">
+							<input type="text" name="shdw" value="${facname }" 
+								ondblclick="selectFactory(this);" style="width: 93%;"><br>
+						</c:if><c:if test="${item1.shdw  != null&&item1.shdw!='' }">
+							<input type="text" name="shdw" value="${item1.shdw }" ondblclick="selectFactory(this);" style="width: 93%;">
+						</c:if>
+					</td>
 				</tr>
 				<tr>
-					<th colspan="10">下单</th>
+					<th colspan="11">下单</th>
 				</tr><tr>
 					<th style="min-width:60px;">&nbsp;布&nbsp;种&nbsp;</th>
 					<th>&nbsp;工&nbsp;艺&nbsp;</th>
@@ -321,7 +389,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<th>纸管</th>
 					<th>空差</th>
 					<th>胶袋</th>
-					<th>条数</th>
+					<th colspan="2">条数</th>
 					<!--th>数量(KG)</th-->
 				</tr><tr>
 					<td id="5_${item.id }">${item.clothName }</td>
@@ -335,7 +403,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					<td id="11_${item.id }">${item.zhiguan }</td>
 					<td id="12_${item.id }">${item.kongcha }</td>
 					<td id="13_${item.id }">${item.jiaodai }</td>
-					<td id="14_${item.id }">
+					<td id="14_${item.id }" colspan="2">
 						<c:if test="${item.num!=null }">${item.num }条</c:if>
 						<c:if test="${item.numKg!=null }">${item.numKg }KG</c:if>
 					</td>
@@ -344,7 +412,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<tr>
 					<th colspan="13">实到</th>
 				</tr><tr>
-					<th>收货单位</th>
+					<!--th>收货单位</th-->
 					<th>布种</th>
 					<th>工艺</th>
 					<th>工厂编号</th>
@@ -364,39 +432,55 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				</tr>
 				<c:if test="${fn:length(map[item.id]) ==0}">
 				<tr>
-					<td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
+					<!--td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
 						<c:if test="${item1.shdw ==null||item1.shdw ==''}">
 							<input type="text" name="shdw" value="${facname }" 
 								ondblclick="selectFactory(this);" style="width: 90px;"><br>
 						</c:if><c:if test="${item1.shdw  != null&&item1.shdw!='' }">
 							<input type="text" name="shdw" value="${item1.shdw }" ondblclick="selectFactory(this);" style="width: 90px;">
 						</c:if>
-					</td><td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
+					</td--><td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
 						<input type="text" name="${item.id }clothName" value="${item.clothName }" 
 							ondblclick="selectCloth(this);" style="width: 90px;"><br>
 					</td><td id="19_${item.id }" style="width: 90px;" title="双击选择工艺">
 						<c:if test="${item1.technologyName ==null||item1.technologyName ==''}">
 							<input type="text" name="${item.id }technologyName" value="${item.technologyName }" 
-								ondblclick="selectCloth(this);" style="width: 90px;"><br>
+								ondblclick="selectTechnologyName(this);" style="width: 90px;"><br>
 						</c:if><c:if test="${item1.technologyName  != null&&item1.technologyName!='' }">
 							<input type="text" name="${item.id }technologyName" value="${item1.technologyName }" ondblclick="selectTechnologyName(this);" style="width: 90px;">
 						</c:if>
 					</td>
 					
 					<td id="17_${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
+					<c:if test="${item1.returnCode eq null }">
+						<input type="text" name="${item.id }returnCode" value="${item.factoryCode }" style="width: 90px;">
+					</c:if><c:if test="${item1.returnCode != null }">
 						<input type="text" name="${item.id }returnCode" value="${item1.returnCode }" style="width: 90px;">
+					</c:if>
 					</td>
 					
 					<td id="18_${item.id }" style="width: 90px;">
+					<c:if test="${item1.returnCode eq null }">
+						<input type="text" name="${item.id }factoryColor" value="${item.factoryColor }" style="width: 90px;"><br>
+					</c:if><c:if test="${item1.returnCode != null }">
 						<input type="text" name="${item.id }factoryColor" value="${item1.returnColor }" style="width: 90px;"><br>
+					</c:if>
 					</td>
 					
 					<td id="20_${item.id }" style="width: 90px;">
+					<c:if test="${item1.myCompanyCode eq null }">
+						<input type="text" name="${item.id }myCompanyCode" value="${item.myCompanyCode }" style="width: 90px;">
+					</c:if><c:if test="${item1.myCompanyCode != null }">
 						<input type="text" name="${item.id }myCompanyCode" value="${item1.myCompanyCode }" style="width: 90px;">
+					</c:if>
 					</td>
 					
 					<td id="21_${item.id }" style="width: 90px;">
+					<c:if test="${item1.myCompanyColor eq null }">
+						<input type="text" name="${item.id }myCompanyColor" value="${item.myCompanyColor }" style="width: 90px;">
+					</c:if><c:if test="${item1.myCompanyColor != null }">
 						<input type="text" name="${item.id }myCompanyColor" value="${item1.myCompanyColor }" style="width: 90px;">
+					</c:if>
 					</td>
 					
 					<td id="22_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">
@@ -449,14 +533,14 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 				<c:if test="${map[item.id] != null }">
 				<c:forEach var="item1" items="${map[item.id]}" varStatus="status1">
 				<tr>
-					<td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
+					<!--td id="27_${item.id }" style="width: 90px;" title="双击选择收货单位">
 						<c:if test="${item1.shdw ==null||item1.shdw ==''}">
 							<input type="text" name="shdw" value="${facname }" 
 								ondblclick="selectFactory(this);" style="width: 90px;"><br>
 						</c:if><c:if test="${item1.shdw  != null&&item1.shdw!='' }">
 							<input type="text" name="shdw" value="${item1.shdw }" ondblclick="selectFactory(this);" style="width: 90px;">
 						</c:if>
-					</td><td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
+					</td--><td id="26_${item.id }" style="width: 90px;" title="双击选择布种">
 						<c:if test="${item1.clothName ==null||item1.clothName ==''}">
 							<input type="text" name="${item.id }clothName" value="${item.clothName }" 
 								ondblclick="selectCloth(this);" style="width: 90px;"><br>
@@ -475,19 +559,19 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 					</td>
 					
 					<td id="17_${item.id }" onclick="onclickTr(${item.id })" style="width: 90px;">
-						<input type="text" name="${item.id }returnCode" value="${item1.returnCode }" style="width: 90px;">
+						<input type="text" name="${item.id }returnCode" onblur="checkValueInFlower(this,1);" value="${item1.returnCode }" style="width: 90px;">
 					</td>
 					
 					<td id="18_${item.id }" style="width: 90px;">
-						<input type="text" name="${item.id }factoryColor" value="${item1.returnColor }" style="width: 90px;"><br>
+						<input type="text" name="${item.id }factoryColor" onblur="checkValueInFlower(this,4);" value="${item1.returnColor }" style="width: 90px;"><br>
 					</td>
 					
 					<td id="20_${item.id }" style="width: 90px;">
-						<input type="text" name="${item.id }myCompanyCode" value="${item1.myCompanyCode }" style="width: 90px;">
+						<input type="text" name="${item.id }myCompanyCode" onblur="checkValueInFlower(this,2);" value="${item1.myCompanyCode }" style="width: 90px;">
 					</td>
 					
 					<td id="21_${item.id }" style="width: 90px;">
-						<input type="text" name="${item.id }myCompanyColor" value="${item1.myCompanyColor }" style="width: 90px;">
+						<input type="text" name="${item.id }myCompanyColor" onblur="checkValueInFlower(this,3);" value="${item1.myCompanyColor }" style="width: 90px;">
 					</td>
 					
 					<td id="22_${item.id }" onclick="onclickTr(${item.id })" style="width: 50px;">

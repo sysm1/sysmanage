@@ -143,6 +143,10 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 		return flowerInfoMapper.queryFind(info);
 	}
 	
+	public List<FlowerInfo> queryFindLike(FlowerInfo info ){
+		return flowerInfoMapper.queryFindLike(info);
+	}
+	
 	public List<FlowerInfo> queryMyCode(FlowerInfo info ){
 		return flowerInfoMapper.queryMyCode(info);
 	}

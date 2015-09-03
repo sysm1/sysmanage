@@ -91,6 +91,11 @@ public class OrderSummaryController extends BaseController {
 		fac.setId(info.getFactoryId());
 		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,null), fac).getRecords();
 		
+		if("".equals(info.getFactoryCode())){
+			info.setFactoryCode(null);
+		}if("".equals(info.getMyCompanyCode())||",".equals(info.getMyCompanyCode())){
+			info.setMyCompanyCode(null);
+		}
 		pageView = orderSummaryService.query(getPageView(pageNow,null), info);
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setMyCompanyCode(info.getMyCompanyCode());
@@ -275,6 +280,42 @@ public class OrderSummaryController extends BaseController {
 		model.addAttribute("clothInfos",clothInfos);
 		model.addAttribute("technologyInfos", technologyInfos);
 		return Common.BACKGROUND_PATH+"/ordersummary/edit";
+	}
+	
+	/**
+	 * 跑到修改界面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("viewUI")
+	public String viewUI(Model model,String id) {
+		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
+		
+		OrderSummary info = orderSummaryService.getById(id);
+		ClothInfo clothInfo=clothInfoService.getById(info.getClothId()+"");
+		TechnologyInfo technologyInfo=technologyInfoService.getById(info.getTechnologyId()+"");
+		List<String> factoryCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
+		if(factoryCodes.size()==0){
+			model.addAttribute("codeRed", "red;font-weight:bold");
+			factoryCodes=flowerAdditionalService.queryFactoryCode(null);
+		}
+		model.addAttribute("factoryCodes",factoryCodes);
+		
+		List<String> factoryColors=flowerAdditionalService.queryFactoryColor(info.getMyCompanyColor());
+		if(factoryColors.size()==0){
+			model.addAttribute("colorRed", "red;font-weight:bold");
+			factoryColors=flowerAdditionalService.queryFactoryColor(null);
+		}
+		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		model.addAttribute("factoryColors",factoryColors);
+		model.addAttribute("inputsummary", info);
+		model.addAttribute("orgNum", info.getNum()-(null==info.getBalance()?0:info.getBalance()));
+		model.addAttribute("salesmanInfos", salesmanInfos);
+		model.addAttribute("factoryInfos", factoryInfos);
+		model.addAttribute("clothInfo",clothInfo);
+		model.addAttribute("technologyInfo", technologyInfo);
+		return Common.BACKGROUND_PATH+"/ordersummary/view";
 	}
 	
 	
