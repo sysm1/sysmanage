@@ -20,6 +20,8 @@ public interface FlowerAdditionalService extends BaseService<FlowerAdditional> {
 	 */
 	public List<String> queryFactoryCode(String  myCompanyCode);
 	
+	public List<String> queryFactoryCode1(FlowerAdditional  myCompanyCode);
+	
 	public List<String> queryFactoryCodeByFId(String factoryId);
 	
 	/**

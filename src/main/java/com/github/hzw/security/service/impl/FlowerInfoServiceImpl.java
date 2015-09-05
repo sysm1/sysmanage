@@ -14,6 +14,7 @@ import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
+import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.mapper.FlowerInfoMapper;
 import com.github.hzw.security.service.FlowerAdditionalService;
 import com.github.hzw.security.service.FlowerInfoService;
@@ -187,5 +188,9 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 		map.put("clothId", clothId);
 		map.put("myCompanyCode", myCompanyCode);
 		return flowerInfoMapper.queryByClothIdAndMyCompanyCode(map);
+	}
+	
+	public List<TechnologyInfo> queryTechnology(FlowerInfo t){
+		return flowerInfoMapper.queryTechnology(t);
 	}
 }

@@ -110,7 +110,7 @@
 				<input type="hidden" id="pageNow" name="pageNow" value="${pageView.pageNow}" />
 				<table><tr>
 					<td>
-					我司编号：<input type="text" name="code" value="${param.code}" style="height: 17px;width: 150px;" /> 
+					我司编号：<input type="text" name="code" value="${code}" style="height: 17px;width: 150px;" /> 
 					</td><td>
 					<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查询</a>
 					</td>

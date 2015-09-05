@@ -1,5 +1,6 @@
 package com.github.hzw.security.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.Resources;
+import com.github.hzw.security.entity.TechnologyInfo;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerAdditionalService;
@@ -513,11 +515,17 @@ public class FlowerInfoController extends BaseController{
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setClothId(clothId);
 		flowerInfo.setTechnologyId(technologyId);
+		try {
+			code= java.net.URLDecoder.decode(code,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} 
 		flowerInfo.setMyCompanyCode(code);
 		flowerInfo.setFactoryCode(color);
 		pageView=flowerInfoService.queryMycompanyColor(getPageView(pageNow,pagesize), flowerInfo);
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("clothId", clothId);
+		model.addAttribute("color", color);
 		model.addAttribute("technologyId", technologyId);
 		return Common.BACKGROUND_PATH+"/flower/addMyCompanyColor";
 	}
@@ -554,6 +562,20 @@ public class FlowerInfoController extends BaseController{
 			flowerInfo.setFactoryCode(myCompanyColor);
 		}
 		List<String> list=flowerInfoService.queryMycompanyColor1(flowerInfo);
+		return list;
+	}
+	
+	/**
+	 * 根据布种 关联我司颜色
+	 * @param clothId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryTechnology")
+	public List<TechnologyInfo> queryTechnology(Integer clothId){
+		FlowerInfo flowerInfo=new FlowerInfo();
+		flowerInfo.setClothId(clothId);
+		List<TechnologyInfo> list=flowerInfoService.queryTechnology(flowerInfo);
 		return list;
 	}
 	

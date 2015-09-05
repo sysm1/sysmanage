@@ -105,6 +105,12 @@
 		</if>
 	</select>
 	
+	<select id="queryFactoryCode1" parameterType="FlowerAdditional" resultType="java.lang.String">
+		select DISTINCT factory_code factoryCode
+		from flower_additional 
+		where my_company_code = #{myCompanyCode} and my_company_color = #{myCompanyColor}
+	</select>
+	
 	<select id="queryFactoryColor" parameterType="String" resultType="java.lang.String">
 		select DISTINCT factory_color factoryColor
 		from flower_additional 

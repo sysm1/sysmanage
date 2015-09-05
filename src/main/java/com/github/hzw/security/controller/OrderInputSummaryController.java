@@ -23,6 +23,7 @@ import com.github.hzw.security.VO.OrderInputVO;
 import com.github.hzw.security.entity.ClothColor;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
+import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.OrderSummary;
@@ -253,10 +254,13 @@ public class OrderInputSummaryController extends BaseController {
 		salmanIds=salmanIds.substring(1);
 		
 		//****判断我司编号和我司颜色是否在花号基本资料中存在 不存在标记为红色****/
-		List<String> factoryCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
+		FlowerAdditional fa=new FlowerAdditional();
+		fa.setMyCompanyCode(info.getMyCompanyCode());
+		fa.setMyCompanyColor(info.getMyCompanyColor());
+		List<String> factoryCodes=flowerAdditionalService.queryFactoryCode1(fa);
 		if(factoryCodes.size()==0){
 			model.addAttribute("codeRed", "red;font-weight:bold");
-			factoryCodes=flowerAdditionalService.queryFactoryCode(null);
+			factoryCodes=flowerAdditionalService.queryFactoryCode1(null);
 		}
 		model.addAttribute("factoryCodes",factoryCodes);
 		

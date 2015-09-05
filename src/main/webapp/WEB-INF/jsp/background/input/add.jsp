@@ -148,11 +148,13 @@ function popMyCompanyColor(obj){
 	var technologyId=obj.parentNode.parentNode.cells[2].childNodes[0].value;
 	//alert(technologyId);
 	var companyCode=obj.parentNode.parentNode.cells[3].childNodes[0].value;
+	//alert(companyCode);
+	companyCode=encodeURI(encodeURI(companyCode));
 	object=obj;
 	dialog = parent.$.ligerDialog.open({
 		width : 550,
 		height : 500,
-		url : rootPath + '/background/flower/addMyCompanyColor.html?clothId='+clothId+'&technologyId='+technologyId+'&companyCode='+companyCode,
+		url : rootPath + '/background/flower/addMyCompanyColor.html?clothId='+clothId+'&technologyId='+technologyId+'&code='+companyCode,
 		//url : rootPath + '/background/flower/addMyCompanyColor.html',
 		title : "我司编号选择",
 		isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
@@ -172,6 +174,26 @@ function addCloth(name,id){
 	    success: function(data){
 	    	//alert(data);
 	    	object.parentNode.parentNode.children[6].innerHTML=data;
+		},error : function() {    
+	          alert("异常！");
+	     } 
+	});
+	
+	$.ajax({
+	    type: "post", //使用get方法访问后台
+	    dataType: "json", //json格式的数据
+	    async: false, //同步   不写的情况下 默认为true
+	    url: rootPath + '/background/flower/queryTechnology.html', //要访问的后台地址
+	    data: {clothId:id}, //要发送的数据
+	    success: function(data){
+	    	//alert(data);
+	    	var vvv='<select  name="technologyId" style="width:100px;">';
+	    	for(var i=0;i<data.length;i++){
+	    		vvv+='<option  value="'+data[i].id+'">'+data[i].name+'</option>';
+	    	}
+	    	vvv+='</select>';
+	    	//alert(vvv);
+	    	object.parentNode.parentNode.children[2].innerHTML=vvv;
 		},error : function() {    
 	          alert("异常！");
 	     } 

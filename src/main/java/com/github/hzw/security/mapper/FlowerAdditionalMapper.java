@@ -18,6 +18,8 @@ public interface FlowerAdditionalMapper extends BaseMapper<FlowerAdditional>{
 	 */
 	public List<String> queryFactoryCode(String  myCompanyCode);
 	
+	public List<String> queryFactoryCode1(FlowerAdditional info);
+	
 	/**
 	 * 根据我司颜色 查询工厂颜色
 	 * @param myCompanyColor

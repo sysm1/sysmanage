@@ -7,6 +7,7 @@ import com.github.hzw.base.BaseService;
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.entity.FlowerInfo;
+import com.github.hzw.security.entity.TechnologyInfo;
 
 public interface FlowerInfoService extends BaseService<FlowerInfo> {
 
@@ -28,6 +29,8 @@ public interface FlowerInfoService extends BaseService<FlowerInfo> {
 	public PageView queryMycompanyCodeByCloth(PageView pageView, FlowerInfo t);
 	
 	public PageView queryMycompanyColor(PageView pageView, FlowerInfo t);
+	
+	public List<TechnologyInfo> queryTechnology(FlowerInfo t);
 	
 	public List<String> queryMycompanyCodeByCloth1(FlowerInfo t);
 	

@@ -237,6 +237,13 @@
 		</where>
 	</select>
 	
+	<select id="queryTechnology" parameterType="FlowerInfo" resultType="com.github.hzw.security.entity.TechnologyInfo">
+		select DISTINCT ti.id,ti.name 
+		from flower_info fi,technology_info ti 
+		where ti.id=fi.technology_id and fi.cloth_id=#{clothId}
+		ORDER BY id
+	</select>
+	
 	<select id="queryMycompanyCodeByCloth1" parameterType="FlowerInfo" resultType="String">
 		select DISTINCT my_company_code myCompanyCode 
 		from flower_info 
@@ -254,7 +261,7 @@
 	</select>
 	
 	<select id="queryMycompanyColor" parameterType="FlowerInfo" resultType="String">
-		select 
+		select DISTINCT
 			fa.my_company_color from flower_info fi,flower_additional fa 
 		where fi.id=fa.flower_id 
 		<if test="t.technologyId != null and t.technologyId != ''">
@@ -272,7 +279,7 @@
 	</select>
 	
 	<select id="queryMycompanyColor1" parameterType="FlowerInfo" resultType="String">
-		select 
+		select DISTINCT
 			fa.my_company_color from flower_info fi,flower_additional fa 
 		where fi.id=fa.flower_id 
 		<if test="technologyId != null and technologyId != ''">
@@ -337,7 +344,7 @@
 		select DISTINCT
 			fi.factory_id factoryId,
 			(select name from factory_info where factory_id=id) factoryName,
-			fi.factory_code	factoryCode
+			fa.factory_code	factoryCode
 		from flower_info fi,flower_additional fa 
 		where fi.id=fa.flower_id 
 		  and fi.technology_id=#{technologyId} and fi.cloth_id=#{clothId}

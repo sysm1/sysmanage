@@ -58,6 +58,10 @@ public class FlowerAdditionalServiceImpl implements FlowerAdditionalService {
 		return flowerAdditionalMapper.queryFactoryCode(myCompanyCode);
 	}
 	
+	public List<String> queryFactoryCode1(FlowerAdditional  info){
+		return flowerAdditionalMapper.queryFactoryCode1(info);
+	}
+	
 	/**
 	 * 根据我司颜色 查询工厂颜色
 	 * @param myCompanyColor
