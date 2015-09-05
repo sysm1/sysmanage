@@ -99,7 +99,7 @@ public class OrderSummaryController extends BaseController {
 		pageView = orderSummaryService.query(getPageView(pageNow,null), info);
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setMyCompanyCode(info.getMyCompanyCode());
-		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(null);
+		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth1(null);
 		if(cloths.size()==1){
 			model.addAttribute("cloth", cloths.get(0));
 		}

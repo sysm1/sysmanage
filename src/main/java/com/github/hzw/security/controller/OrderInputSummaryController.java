@@ -163,7 +163,7 @@ public class OrderInputSummaryController extends BaseController {
 			FlowerInfo flowerInfo=new FlowerInfo();
 			flowerInfo.setClothId(vo.getClothId());
 			flowerInfo.setTechnologyId(vo.getTechnologyId());
-			mycompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
+			mycompanyCodes=flowerInfoService.queryMycompanyCodeByCloth1(flowerInfo);
 			vo.setMyCompanyCodes(mycompanyCodes);
 		}
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);

@@ -79,12 +79,31 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 	 * @param clothId
 	 * @return
 	 */
-	public List<String> queryMycompanyCodeByCloth(FlowerInfo info){
-		return flowerInfoMapper.queryMycompanyCodeByCloth(info);
+	public PageView queryMycompanyCodeByCloth(PageView pageView, FlowerInfo t){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("paging", pageView);
+		map.put("t", t);
+		List<String> list = flowerInfoMapper.queryMycompanyCodeByCloth(map);
+		pageView.setRecords(list);
+		return pageView;
 	}
 
-	public List<String> queryMycompanyColor(FlowerInfo info){
-		return flowerInfoMapper.queryMycompanyColor(info); 
+	public PageView queryMycompanyColor(PageView pageView, FlowerInfo t){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("paging", pageView);
+		map.put("t", t);
+		List<String> list = flowerInfoMapper.queryMycompanyColor(map);
+		pageView.setRecords(list);
+		return pageView;
+	}
+	
+	public List<String> queryMycompanyCodeByCloth1(FlowerInfo t){
+		return flowerInfoMapper.queryMycompanyCodeByCloth1(t);
+	}
+	
+	public List<String> queryMycompanyColor1(FlowerInfo t){
+		return flowerInfoMapper.queryMycompanyColor1(t);
 	}
 	
 	@Override
@@ -169,7 +188,4 @@ public class FlowerInfoServiceImpl implements FlowerInfoService {
 		map.put("myCompanyCode", myCompanyCode);
 		return flowerInfoMapper.queryByClothIdAndMyCompanyCode(map);
 	}
-	
-	
-	
 }

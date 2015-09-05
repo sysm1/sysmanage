@@ -69,7 +69,7 @@ public class OrderInputController extends BaseController {
 		System.out.println("下单预录入查询 布种："+cloths.size());
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		System.out.println("下单预录入查询 业务员："+salesmanInfos.size());
-		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth(null);
+		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth1(null);
 		List<TechnologyInfo> technologys=technologyInfoService.queryAll(null);
 		pageView = orderInputService.queryVO(getPageView(pageNow,pagesize), info);
 		model.addAttribute("pageView", pageView);

@@ -491,13 +491,13 @@ public class FlowerInfoController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("addMyCompanyCode")
-	public String addMyCompanyCode(Model model,Integer clothId,Integer technologyId,String code) {
+	public String addMyCompanyCode(Model model,Integer clothId,Integer technologyId,String code,String pageNow,String pagesize) {
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setClothId(clothId);
 		flowerInfo.setTechnologyId(technologyId);
 		flowerInfo.setMyCompanyCode(code);
-		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
-		model.addAttribute("list", list);
+		pageView=flowerInfoService.queryMycompanyCodeByCloth(getPageView(pageNow,pagesize), flowerInfo);
+		model.addAttribute("pageView", pageView);
 		model.addAttribute("clothId", clothId);
 		model.addAttribute("technologyId", technologyId);
 		return Common.BACKGROUND_PATH+"/flower/addMyCompanyCode";
@@ -509,14 +509,14 @@ public class FlowerInfoController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("addMyCompanyColor")
-	public String addMyCompanyColor(Model model,Integer clothId,Integer technologyId,String code,String color) {
+	public String addMyCompanyColor(Model model,Integer clothId,Integer technologyId,String code,String color,String pageNow,String pagesize) {
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setClothId(clothId);
 		flowerInfo.setTechnologyId(technologyId);
 		flowerInfo.setMyCompanyCode(code);
 		flowerInfo.setFactoryCode(color);
-		List<String> list=flowerInfoService.queryMycompanyColor(flowerInfo);
-		model.addAttribute("list", list);
+		pageView=flowerInfoService.queryMycompanyColor(getPageView(pageNow,pagesize), flowerInfo);
+		model.addAttribute("pageView", pageView);
 		model.addAttribute("clothId", clothId);
 		model.addAttribute("technologyId", technologyId);
 		return Common.BACKGROUND_PATH+"/flower/addMyCompanyColor";
@@ -534,7 +534,7 @@ public class FlowerInfoController extends BaseController{
 		flowerInfo.setClothId(clothId);
 		flowerInfo.setTechnologyId(technologyId);
 		flowerInfo.setMyCompanyCode(kw);
-		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
+		List<String> list=flowerInfoService.queryMycompanyCodeByCloth1(flowerInfo);
 		return list;
 	}
 	
@@ -553,7 +553,7 @@ public class FlowerInfoController extends BaseController{
 		if(null!=myCompanyColor&&!"".equals(myCompanyColor)){
 			flowerInfo.setFactoryCode(myCompanyColor);
 		}
-		List<String> list=flowerInfoService.queryMycompanyColor(flowerInfo);
+		List<String> list=flowerInfoService.queryMycompanyColor1(flowerInfo);
 		return list;
 	}
 	

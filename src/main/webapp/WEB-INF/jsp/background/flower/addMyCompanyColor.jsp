@@ -15,6 +15,7 @@
 		
 		$("#seach").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
+			$('#pageNow').attr('value',1);
 			f.attr('action','${pageContext.request.contextPath}/background/flower/addMyCompanyCode.html');
 			f.submit();
 		});
@@ -91,14 +92,22 @@
 		}
 		closeWin();
 	}
+	function page(pageNO){
+		$('#pageNow').attr('value',pageNO);
+		var f = $('#fenye');
+		//f.attr('target','_blank');
+		f.attr('action','${pageContext.request.contextPath}/background/flower/addMyCompanyColor.html');
+		f.submit();
+	}
 </script>
 </head>
 <body>
 	<div class="divBody">
 		<div class="search">
-			<form name="fenye" id="fenye" ation="${pageContext.request.contextPath}/background/flower/addMyCompanyCode.html">
+			<form name="fenye" id="fenye" ation="${pageContext.request.contextPath}/background/flower/addMyCompanyColor.html">
 				<input type="hidden" id="clothId" name="clothId" value="${clothId}">
 				<input type="hidden" id="technologyId" name="technologyId" value="${technologyId }">
+				<input type="hidden" id="pageNow" name="pageNow" value="${pageView.pageNow}" />
 				<table><tr>
 					<td>
 					我司编号：<input type="text" name="code" value="${param.code}" style="height: 17px;width: 150px;" /> 
@@ -113,7 +122,7 @@
 				<tr>
 					<th>我司编号</th>
 				</tr>
-				<c:forEach var="bean" items="${list}" varStatus="status">
+				<c:forEach var="bean" items="${pageView.records}" varStatus="status">
 				<tr>
 					<td style="text-align: center;">
 						<a href="#" onclick="selectCloth('${bean }');">${bean }</a>
@@ -121,15 +130,17 @@
 				</tr>
 				</c:forEach>
 				
-				
-				<!-- tr style="width:100px;">
+				<tr style="width:100px;">
 					<td  style="text-align: center;width: 200px;">
 					<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
 					${pageView.pageNow }
-					<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
-					共${pageView.pageNow }页
+					<c:if test="${pageView.pageCount< pageView.pageNow+1 }">下一页</c:if>
+					<c:if test="${pageView.pageCount>= pageView.pageNow+1 }">
+						<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
+					</c:if>
+					共${pageView.pageCount }页
 					</td>
-				</tr-->
+				</tr>
 				
 			</table>
 		

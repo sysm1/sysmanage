@@ -225,6 +225,22 @@
 		select DISTINCT my_company_code myCompanyCode 
 		from flower_info 
 		<where> 1=1
+			<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+			</if>
+			<if test="t.technologyId != null and t.technologyId != ''">
+			and technology_Id = #{t.technologyId}
+			</if>
+			<if test="t.myCompanyCode!=null and t.myCompanyCode!=''">
+			and my_company_code like '%${t.myCompanyCode}%'
+		</if>
+		</where>
+	</select>
+	
+	<select id="queryMycompanyCodeByCloth1" parameterType="FlowerInfo" resultType="String">
+		select DISTINCT my_company_code myCompanyCode 
+		from flower_info 
+		<where> 1=1
 			<if test="clothId != null and clothId != ''">
 			and cloth_id = #{clothId}
 			</if>
@@ -241,7 +257,30 @@
 		select 
 			fa.my_company_color from flower_info fi,flower_additional fa 
 		where fi.id=fa.flower_id 
-			and fi.cloth_id=#{clothId} and fi.technology_id=#{technologyId}
+		<if test="t.technologyId != null and t.technologyId != ''">
+			 and fi.technology_id=#{t.technologyId}
+		</if>
+		<if test="t.clothId != null and t.clothId != ''">
+			and cloth_id = #{t.clothId}
+		</if>
+		<if test="t.factoryCode!=null and t.factoryCode!=''">
+			and fa.my_company_color like '%${t.factoryCode}%'
+		</if>
+		<if test="t.myCompanyCode!=null and t.myCompanyCode!=''">
+			and fi.my_company_code=#{t.myCompanyCode} 
+		</if>
+	</select>
+	
+	<select id="queryMycompanyColor1" parameterType="FlowerInfo" resultType="String">
+		select 
+			fa.my_company_color from flower_info fi,flower_additional fa 
+		where fi.id=fa.flower_id 
+		<if test="technologyId != null and technologyId != ''">
+			 and fi.technology_id=#{technologyId}
+		</if>
+		<if test="clothId != null and clothId != ''">
+			and cloth_id = #{clothId}
+		</if>
 		<if test="factoryCode!=null and factoryCode!=''">
 			and fa.my_company_color like '%${factoryCode}%'
 		</if>

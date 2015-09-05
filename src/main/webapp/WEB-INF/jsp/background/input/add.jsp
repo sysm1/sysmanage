@@ -105,44 +105,63 @@ function popCloth(obj){
 	});
 }
 function popMyCompanyCode(obj){
-	var clothId=obj.parentNode.parentNode.children[1].firstChild.value;
+	var clothId=obj.parentNode.parentNode.cells[1].childNodes[0].value;
+	//if(clothId==undefined){
+	//	clothId=obj.parentNode.parentNode.cells[1].innerHTML;
+	//	clothId=clothId.split("value=")[1].split(" ")[0];
+	//}
+	//alert(clothId);
 	if(clothId==''||clothId==undefined){
 		alert("请选择布种");
 		return false;
 	}
 	//alert(clothId);
-	var technologyId=obj.parentNode.parentNode.children[2].firstChild.value;
+	var technologyId=obj.parentNode.parentNode.cells[2].childNodes[0].value1;
+	if(technologyId==undefined){
+		technologyId=obj.parentNode.parentNode.cells[2].innerHTML;
+		//alert(technologyId);
+		technologyId=technologyId.split("selected value=")[1].split(">")[0];
+	}
 	//alert(technologyId);
 	object=obj;
 	dialog = parent.$.ligerDialog.open({
 		width : 550,
 		height : 500,
 		url : '/background/flower/addMyCompanyCode.html?clothId='+clothId+'&technologyId='+technologyId,
+		//url : '/background/flower/addMyCompanyCode.html',
 		title : "我司编号选择",
 		isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 	});
 }
 function popMyCompanyColor(obj){
 	var clothId=obj.parentNode.parentNode.children[1].firstChild.value;
+	clothId=obj.parentNode.parentNode.cells[1].childNodes[0].value;
+	//if(clothId==undefined){
+	//	clothId=obj.parentNode.parentNode.cells[1].innerHTML;
+	//	clothId=clothId.split("value=")[1].split(" ")[0];
+	//}
+	//alert(clothId);
 	if(clothId==''||clothId==undefined){
 		alert("请选择布种");
 		return false;
 	}
-	var technologyId=obj.parentNode.parentNode.children[2].firstChild.value;
-	var companyCode=obj.parentNode.parentNode.children[3].firstChild.value;
+	var technologyId=obj.parentNode.parentNode.cells[2].childNodes[0].value;
+	//alert(technologyId);
+	var companyCode=obj.parentNode.parentNode.cells[3].childNodes[0].value;
 	object=obj;
 	dialog = parent.$.ligerDialog.open({
 		width : 550,
 		height : 500,
 		url : rootPath + '/background/flower/addMyCompanyColor.html?clothId='+clothId+'&technologyId='+technologyId+'&companyCode='+companyCode,
+		//url : rootPath + '/background/flower/addMyCompanyColor.html',
 		title : "我司编号选择",
 		isHidden:false   //关闭对话框时是否只是隐藏，还是销毁对话框
 	});
 }
-/**设置备注信息**/
+/**设置布种信息**/
 function addCloth(name,id){
 	object.value=name;
-	object.parentNode.parentNode.children[1].firstChild.value=id;
+	object.parentNode.parentNode.childNodes[1].childNodes[0].value=id;
 	
 	$.ajax({
 	    type: "post", //使用get方法访问后台
@@ -197,6 +216,7 @@ function addColorData(data){
 }
 function clothIdCheck(){
 	var b = true;
+	/**
 	$("#table1 input[name=clothId]").each(function(){
 		var v = $(this).val();
 		if(v==""){
@@ -204,12 +224,21 @@ function clothIdCheck(){
 			b = false;
 			return false;
 		}
-	});
+	});*/
+	var cloth=document.getElementsByName("clothId");
+	for(var i=0;i<cloth.length;i++){
+		if(cloth[i].value==''){
+			alert("请选择布种");
+			b = false;
+			return false;
+		}
+	}
 	return b;
 }
 
 function salesmanIdCheck(){
 	var b = true;
+	/**
 	$("#table1 select[name=salesmanId]").each(function(){
 		var v = $(this).val();
 		if(v==""){
@@ -218,6 +247,15 @@ function salesmanIdCheck(){
 			return false;
 		}
 	});
+	*/
+	var cloth=document.getElementsByName("salesmanId");
+	for(var i=0;i<cloth.length;i++){
+		if(cloth[i].value==''){
+			alert("请选择布种");
+			b = false;
+			return false;
+		}
+	}
 	return b;
 }
 function queryNoReturnNum($this){
@@ -313,12 +351,6 @@ function checkNull(value){
 								<td class="l_left tdw100" title="双击选择布种">
 									<input type="hidden" name="clothId" value="">
 									<input type="text"  name="clothName" value="" style="width: 110px;" ondblclick="popCloth(this)" readonly="readonly">
-									<!-- select  name="clothId"  style="width:110px;">
-										<option value="">请选择</option>
-										<c:forEach items="${ cloths }" var = "cloth">
-											<option <c:if test="${cloth.id eq bean.clothId }">selected="selected"</c:if> value="${cloth.id }">${cloth.clothName}</option>
-										</c:forEach>
-									</select-->
 								</td>
 								<td >
 									<select  name="technologyId" style="width:100px;">

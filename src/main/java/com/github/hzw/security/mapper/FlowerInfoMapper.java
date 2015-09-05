@@ -21,9 +21,13 @@ public interface FlowerInfoMapper extends BaseMapper<FlowerInfo> {
 	
 	public List<FlowerInfo> queryReport(Map<String, Object> map);
 	
-	public List<String> queryMycompanyCodeByCloth(FlowerInfo flowerInfo);
+	public List<String> queryMycompanyCodeByCloth(Map<String, Object> map);
 	
-	public List<String> queryMycompanyColor(FlowerInfo info);
+	public List<String> queryMycompanyColor(Map<String, Object> map);
+	
+	public List<String> queryMycompanyCodeByCloth1(FlowerInfo t);
+	
+	public List<String> queryMycompanyColor1(FlowerInfo t);
 	
 	public void updateByStatus(Map<String, Object> map);
 	

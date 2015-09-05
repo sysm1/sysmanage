@@ -306,7 +306,7 @@ public class SampleInputController extends BaseController {
 		flowerInfo.setClothId(clothId);
 		flowerInfo.setTechnologyId(technologyId);
 		flowerInfo.setMyCompanyCode(kw);
-		List<String> list=flowerInfoService.queryMycompanyCodeByCloth(flowerInfo);
+		List<String> list=flowerInfoService.queryMycompanyCodeByCloth1(flowerInfo);
 		return list;
 	}
 	
@@ -325,7 +325,7 @@ public class SampleInputController extends BaseController {
 		if(null!=myCompanyColor&&!"".equals(myCompanyColor)){
 			flowerInfo.setFactoryCode(myCompanyColor);
 		}
-		List<String> list=flowerInfoService.queryMycompanyColor(flowerInfo);
+		List<String> list=flowerInfoService.queryMycompanyColor1(flowerInfo);
 		return list;
 	}
 	

@@ -91,12 +91,20 @@
 		}
 		closeWin();
 	}
+	function page(pageNO){
+		$('#pageNow').attr('value',pageNO);
+		var f = $('#fenye');
+		//f.attr('target','_blank');
+		f.attr('action','${pageContext.request.contextPath}/background/cloth/addlist.html');
+		f.submit();
+	}
 </script>
 </head>
 <body>
 	<div class="divBody">
 		<div class="search">
 			<form name="fenye" id="fenye" ation="${pageContext.request.contextPath}/background/cloth/addlist.html">
+				<input type="hidden" id="pageNow" name="pageNow" value="">			
 				<table><tr>
 					<td>
 					布种名称：<input type="text" name="clothName" value="${param.clothName}" style="height: 17px;width: 150px;" /> 
@@ -124,8 +132,11 @@
 					<td  style="text-align: center;width: 200px;">
 					<a href="javascript:page(${pageView.pageNow-1>0?pageView.pageNow-1:1 })">上一页</a>
 					${pageView.pageNow }
-					<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
-					共${pageView.pageNow }页
+					<c:if test="${pageView.pageCount< pageView.pageNow+1 }">下一页</c:if>
+					<c:if test="${pageView.pageCount> pageView.pageNow+1 }">
+						<a href="javascript:page(${pageView.pageNow+1 })">下一页</a>
+					</c:if>
+					共${pageView.pageCount }页
 					</td>
 				</tr>
 				

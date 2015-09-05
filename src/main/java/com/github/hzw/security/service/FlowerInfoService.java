@@ -25,9 +25,13 @@ public interface FlowerInfoService extends BaseService<FlowerInfo> {
 	 * @param clothId
 	 * @return
 	 */
-	public List<String> queryMycompanyCodeByCloth(FlowerInfo info);
+	public PageView queryMycompanyCodeByCloth(PageView pageView, FlowerInfo t);
 	
-	public List<String> queryMycompanyColor(FlowerInfo info);
+	public PageView queryMycompanyColor(PageView pageView, FlowerInfo t);
+	
+	public List<String> queryMycompanyCodeByCloth1(FlowerInfo t);
+	
+	public List<String> queryMycompanyColor1(FlowerInfo t);
 	
 	public void updateByStatus(Integer id, int status);
 	
