@@ -56,6 +56,16 @@ public class BackgroundController
 		return Common.BACKGROUND_PATH+"/framework/login";
 	}
 	
+	@RequestMapping ("loginOut")
+	public String loginOut(Model model,HttpServletRequest request){
+		//重新登录时销毁该用户的Session
+		Object o = request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+		if(null != o){
+			request.getSession().removeAttribute("SPRING_SECURITY_CONTEXT");
+		}
+		return Common.BACKGROUND_PATH+"/framework/login";
+	}
+	
 	@RequestMapping ("loginCheck")
 	@ResponseBody
 	public Map<String, Object> loginCheck(String username,String password){

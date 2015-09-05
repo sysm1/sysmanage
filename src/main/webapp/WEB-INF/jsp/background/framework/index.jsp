@@ -245,8 +245,10 @@
 
 	<div class="l_header" id="l_header">
 		<span class="l_flow-btn" style="z-index: 0">主页</span>
+		<div style="height: 40px;text-align:right;width: 15%;padding-left: 80%;font-size: 16px;font-weight: bold;">
+			<a href="/loginOut.html"><span style="color: #FFFFFF;">注销用户</span></a>
+		</div>
 	</div>
-
 
 	<div class="l_body">
 		<div class="l_container">
