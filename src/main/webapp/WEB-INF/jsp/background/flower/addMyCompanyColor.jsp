@@ -16,7 +16,7 @@
 		$("#seach").click("click", function() {//绑定查询按扭
 			var f = $('#fenye');
 			$('#pageNow').attr('value',1);
-			f.attr('action','${pageContext.request.contextPath}/background/flower/addMyCompanyCode.html');
+			f.attr('action','${pageContext.request.contextPath}/background/flower/addMyCompanyColor.html');
 			f.submit();
 		});
 		$("#exportExcel").click("click", function() {//绑定查询按扭
