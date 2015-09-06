@@ -247,12 +247,10 @@
 			</form>
 		</div>
 		<div class="topBtn">
-			<a class="btn btn-primary" href="javascript:void(0)" id="add"> <i
-				class="icon-zoom-add icon-white"></i> <span>新增</span>
+			<a class="btn btn-primary" href="javascript:void(0)" id="add"> 新增
 			</a> 
 			
-			<a class="btn btn-success" href="javascript:void(0)" id="copyAdd"> <i
-				class="icon-zoom-in icon-white" id="View"></i> 复制新增
+			<a class="btn btn-success" href="javascript:void(0)" id="copyAdd"> 复制新增
 			</a>
 			
 			<!--a class="btn btn-info" href="javascript:void(0)" id="editView"> <i

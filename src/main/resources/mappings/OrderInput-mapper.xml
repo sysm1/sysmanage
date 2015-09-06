@@ -80,6 +80,7 @@
 		select
 			oi.id, 
   			oi.cloth_id clothId,technologyId,
+  			(select cloth_name from cloth_info where id=cloth_id) clothName,
   			oi.create_time createTime,
   			oi.my_company_code myCompanyCode, salesman_id salesmanId,
   			(select name from salesman_info where id=oi.salesman_id) saleManName,
@@ -150,6 +151,12 @@
         	mark=#{mark},
       	</if><if test="myCompanyColor != null and myCompanyColor != ''">
         	my_Company_Color=#{myCompanyColor},
+      	</if>
+      	<if test="num != null and num != ''">
+        	num=#{num},
+      	</if>
+      	<if test="num ==0">
+        	num=#{num},
       	</if>
 		</set>
 		where id=#{id}

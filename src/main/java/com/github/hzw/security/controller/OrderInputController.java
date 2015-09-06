@@ -23,7 +23,6 @@ import com.github.hzw.security.entity.OrderInputAdditional;
 import com.github.hzw.security.entity.Resources;
 import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
-import com.github.hzw.security.service.AccountService;
 import com.github.hzw.security.service.ClothInfoService;
 import com.github.hzw.security.service.FactoryInfoService;
 import com.github.hzw.security.service.FlowerInfoService;
@@ -237,7 +236,7 @@ public class OrderInputController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("update2")
-	public Map<String, Object> update2(HttpServletRequest request,Model model, OrderInput info) {
+	public Map<String, Object> update2(HttpServletRequest request,Model model) {
 		orderInputService.updateOrderInput(request);
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {

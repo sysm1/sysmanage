@@ -82,13 +82,17 @@
 		grid.loadData();
 	}
 	function selectCloth(name,id){
-		//alert(id);
+		
 		if(parent.process!=undefined){
 			parent.process.addCloth(name);
 		}
-		if(parent.input!=undefined){
+		else if(parent.input!=undefined){
 			parent.input.addCloth(name,id);
 		}
+		else if(parent.inputsummary!=undefined){
+			parent.inputsummary.addCloth(name,id);
+		}
+		//alert(id);
 		closeWin();
 	}
 	function page(pageNO){

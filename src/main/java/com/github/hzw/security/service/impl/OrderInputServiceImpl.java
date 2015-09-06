@@ -182,6 +182,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 		List<OrderInputSummary> olist=null;
 		OrderInput bean=new OrderInput();
 		for(int i=0;i<clothId.length;i++){
+			int nnum=orderInputMapper.getById(ids[i]).getNum();
 			bean.setId(Integer.parseInt(ids[i]));
 			bean.setClothId(Integer.parseInt(clothId[i]));
 			bean.setCreateTime(new Date());
@@ -206,7 +207,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 				olist=orderInputSummaryMapper.queryAll(inputSummary);
 				if(olist.size()>0){
 					inputSummary=olist.get(0);
-					inputSummary.setNum(inputSummary.getNum()+bean.getNum());
+					inputSummary.setNum(inputSummary.getNum()+(bean.getNum()-nnum));
 					if(inputSummary.getUnit()!=bean.getUnit()){
 						inputSummary.setUnit(null);
 					}

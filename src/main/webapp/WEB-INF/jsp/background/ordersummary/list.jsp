@@ -172,6 +172,9 @@ ul { list-style:none;}
 		$("#undo").click("click",function(){
 			var cbox=getSelectedCheckbox();
 			var orderIds=cbox.join(",").split("_")[1];
+			if(!confirm("确定撤销次单据吗?")){
+				return false;
+			}
 			$.ajax({
 			    type: "post", //使用get方法访问后台
 			    dataType: "json", //json格式的数据

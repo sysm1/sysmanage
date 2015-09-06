@@ -239,7 +239,6 @@ public class OrderInputSummaryController extends BaseController {
 		String summId=idsa[0].split("_")[1];
 		String technologyId=idsa[0].split("_")[2];
 		OrderInputSummaryVO info = orderInputSummaryService.getVOById(summId);
-		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
 		List<OrderInputVO> orderInputList=orderInputService.queryByIds(ids.substring(1).split(","));//ids.substring(1).split(",")
 		//List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		TechnologyInfo technoInfo=technologyInfoService.getById(technologyId);
@@ -306,7 +305,6 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("colors",colors);
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("unitName", unitName);
-		model.addAttribute("factoryInfos", factoryInfos);
 		model.addAttribute("orderInputList", orderInputList);
 		model.addAttribute("technoInfo", technoInfo);
 		model.addAttribute("orderNo", orderNo);

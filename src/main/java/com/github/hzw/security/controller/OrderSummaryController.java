@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.VO.GlVo;
 import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerInfo;
-import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
@@ -254,9 +254,7 @@ public class OrderSummaryController extends BaseController {
 	 */
 	@RequestMapping("editUI")
 	public String editUI(Model model,String id) {
-		List<FactoryInfo> factoryInfos=factoryInfoService.queryAll(null);
-		List<ClothInfo> clothInfos=clothInfoService.queryAll(null);
-		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
+		//List<ClothInfo> clothInfos=clothInfoService.queryAll(null);
 		OrderSummary info = orderSummaryService.getById(id);
 		
 		List<String> factoryCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
@@ -271,14 +269,19 @@ public class OrderSummaryController extends BaseController {
 			model.addAttribute("colorRed", "red;font-weight:bold");
 			factoryColors=flowerAdditionalService.queryFactoryColor(null);
 		}
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("myCompanyCode", info.getMyCompanyCode());
+		map.put("myCompanyColor", info.getMyCompanyColor());
+		map.put("technologyId", info.getTechnologyId());
+		map.put("clothId", info.getClothId());
+		List<GlVo> glList=flowerInfoService.queryGlFactory(map);
+		model.addAttribute("glList", glList);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		model.addAttribute("factoryColors",factoryColors);
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("orgNum", info.getNum()-(null==info.getBalance()?0:info.getBalance()));
 		model.addAttribute("salesmanInfos", salesmanInfos);
-		model.addAttribute("factoryInfos", factoryInfos);
-		model.addAttribute("clothInfos",clothInfos);
-		model.addAttribute("technologyInfos", technologyInfos);
+		//model.addAttribute("clothInfos",clothInfos);
 		return Common.BACKGROUND_PATH+"/ordersummary/edit";
 	}
 	
