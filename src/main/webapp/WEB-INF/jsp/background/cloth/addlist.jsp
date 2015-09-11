@@ -82,14 +82,15 @@
 		grid.loadData();
 	}
 	function selectCloth(name,id){
-		
+		//alert(parent.input);
+		//alert(parent.inputsummary);
 		if(parent.process!=undefined){
 			parent.process.addCloth(name);
 		}
-		else if(parent.input!=undefined){
+		if(parent.input!=undefined){
 			parent.input.addCloth(name,id);
 		}
-		else if(parent.inputsummary!=undefined){
+		if(parent.inputsummary!=undefined){
 			parent.inputsummary.addCloth(name,id);
 		}
 		//alert(id);

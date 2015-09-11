@@ -87,10 +87,10 @@
 		if(parent.process!=undefined){
 			parent.process.addCloth(id);
 		}
-		else if(parent.input!=undefined){
+		if(parent.input!=undefined){
 			parent.input.addColorData(id);
 		}
-		else if(parent.inputsummary!=undefined){
+		if(parent.inputsummary!=undefined){
 			parent.inputsummary.addColorData(id);
 		}
 		closeWin();

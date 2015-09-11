@@ -186,13 +186,49 @@ $(function() {
 			isHidden : false
 		});
 	}
+	
+	function changeFCode(obj){
+		//alert($('#factoryId').val());
+		if($('#factoryId').val()==''){
+			alert("请选择工厂");
+			return false;
+		}
+		//alert(obj.value);
+		$.ajax({
+		    type: "post", //使用get方法访问后台
+		    dataType: "json", //json格式的数据
+		    async: false, //同步   不写的情况下 默认为true
+		    url: rootPath + '/background/flower/queryGl.html?factoryId='+$('#factoryId').val(), //要访问的后台地址
+		    data: {technologyId:$('#technologyId').val(),clothId:$('#clothId').val(),
+		    	myCompanyCode:$('#myCompanyCode').val(),myCompanyColor:$('#myCompanyColor').val(),factoryCode:$('#factoryCode').val()}, //要发送的数据
+		    success: function(data){
+		    	if(null==data||''==data){
+		    		//alert("工厂没有对应的工厂编号，请在花号基本资料中添加");
+		    	}else{
+		    		//alert(data.length);
+		    		$("#factoryColor").empty();
+		    		$("#factoryColor").append("<option value=''>请选择</option>");
+		    		for(var i=0;i<data.length;i++){
+		    			if(null!=data[i].factoryColor){
+		    				$("#factoryColor").append("<option value='"+data[i].factoryColor+"'>"+data[i].factoryColor+"</option>");
+		    			}
+		    		}
+		    	}
+		    	
+			},error : function(XMLHttpRequest, textStatus, errorThrown,data) {    
+				alert(XMLHttpRequest.status);
+				alert(XMLHttpRequest.readyState);
+				alert(data);  
+		     }
+		});
+	}
 </script>
 </head>
 <body>
 <div class="divdialog">
 	<div class="l_err" style="width: 270px;"></div>
 	<form name="form" id="form" action="${ctx}/background/ordersummary/update.html" method="post">
-		<!--input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }"-->
+		<input type="hidden" id="clothId" name="clothId" value="${inputsummary.clothId }">
 		<input type="hidden" id="myCompanyCode" name="myCompanyCode" value="${inputsummary.myCompanyCode }">
 		<input type="hidden" id="myCompanyColor" name="myCompanyColor" value="${inputsummary.myCompanyColor }">
 		<input type="hidden" id="num1" name="num1" value="${inputsummary.num }">
@@ -242,16 +278,17 @@ $(function() {
 					</td>
 					<th style="text-align: right;">工艺：</th>
 					<td style="text-align: left;" colspan="2">
+						<input type="hidden" id="technologyId" name="technologyId" value="${inputsummary.technologyId }">
 						${inputsummary.technologyName }
 					</td>
 				</tr><tr>
 					<th style="text-align: right;">工厂编号：</th>
 					<td style="text-align: left;" colspan="2">
 						<div class="lanyuan_input">
-							<select id="factoryCode" name="factoryCode">
+							<select id="factoryCode" name="factoryCode" onchange="changeFCode(this);">
 								<option value="">请选择</option>
 								<c:forEach var="code" items="${factoryCodes }">
-									<option value="${code}" <c:if test="${code eq inputsummary.factoryCode}">selected="selected"</c:if>  >${code }</option>
+									<option value="${code.factoryCode}" <c:if test="${code.factoryCode eq inputsummary.factoryCode}">selected="selected"</c:if>  >${code.factoryCode }</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -277,7 +314,7 @@ $(function() {
 							<select id="factoryColor" name="factoryColor">
 								<option value="">请选择</option>
 								<c:forEach var="color" items="${factoryColors }">
-									<option value="${color}"  <c:if test="${color eq inputsummary.factoryColor }">selected="selected"</c:if>  >${color }</option>
+									<option value="${color.factoryColor}"  <c:if test="${color.factoryColor eq inputsummary.factoryColor }">selected="selected"</c:if>  >${color.factoryColor }</option>
 								</c:forEach>
 							</select>
 						</div>

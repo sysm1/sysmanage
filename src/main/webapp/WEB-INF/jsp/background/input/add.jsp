@@ -332,9 +332,9 @@ function checkNull(value){
 					<a class="btn btn-primary" href="javascript:void(0)" style=width:60px;"
 						id="saveWin_form" ><span>保存</span> </a>
 				</td>
-				<td>
+				<!--td>
 					<a class="btn btn-primary" href="javascript:void(0)" id="fh"><span>返回</span> </a>
-				</td>
+				</td-->
 				<td style="text-align: right;">
 					<a class="btn btn-primary" href="javascript:void(0)" id="deleteTable" style="background-color: red;"><span>删除</span></a>
 				</td>

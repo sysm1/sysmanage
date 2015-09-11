@@ -256,28 +256,19 @@ public class OrderSummaryController extends BaseController {
 	public String editUI(Model model,String id) {
 		//List<ClothInfo> clothInfos=clothInfoService.queryAll(null);
 		OrderSummary info = orderSummaryService.getById(id);
-		
-		List<String> factoryCodes=flowerAdditionalService.queryFactoryCode(info.getMyCompanyCode());
-		if(factoryCodes.size()==0){
-			model.addAttribute("codeRed", "red;font-weight:bold");
-			factoryCodes=flowerAdditionalService.queryFactoryCode(null);
-		}
-		model.addAttribute("factoryCodes",factoryCodes);
-		
-		List<String> factoryColors=flowerAdditionalService.queryFactoryColor(info.getMyCompanyColor());
-		if(factoryColors.size()==0){
-			model.addAttribute("colorRed", "red;font-weight:bold");
-			factoryColors=flowerAdditionalService.queryFactoryColor(null);
-		}
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("myCompanyCode", info.getMyCompanyCode());
 		map.put("myCompanyColor", info.getMyCompanyColor());
 		map.put("technologyId", info.getTechnologyId());
 		map.put("clothId", info.getClothId());
 		List<GlVo> glList=flowerInfoService.queryGlFactory(map);
+		List<GlVo> glListfc=flowerInfoService.queryGlFactoryCode(map);
+		List<GlVo> glListfco=flowerInfoService.queryGl(map);
+		model.addAttribute("factoryCodes",glListfc);
+		model.addAttribute("glList", glList);
 		model.addAttribute("glList", glList);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
-		model.addAttribute("factoryColors",factoryColors);
+		model.addAttribute("factoryColors",glListfco);
 		model.addAttribute("inputsummary", info);
 		model.addAttribute("orgNum", info.getNum()-(null==info.getBalance()?0:info.getBalance()));
 		model.addAttribute("salesmanInfos", salesmanInfos);
