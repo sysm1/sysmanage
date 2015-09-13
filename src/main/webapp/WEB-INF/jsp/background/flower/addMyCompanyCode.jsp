@@ -87,11 +87,20 @@
 		if(parent.process!=undefined){
 			parent.process.addCloth(id);
 		}
+		//alert(parent.inputsummary);
 		if(parent.input!=undefined){
-			parent.input.addData(id);
+			try{
+				parent.input.addData(id);
+			}catch (e){
+				//alert(e);
+			}
 		}
 		if(parent.inputsummary!=undefined){
-			parent.inputsummary.addData(id);
+			try{
+				parent.inputsummary.addData(id);
+			}catch (e){
+				//alert(e);
+			}
 		}
 		closeWin();
 	}

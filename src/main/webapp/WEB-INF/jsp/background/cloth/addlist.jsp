@@ -88,10 +88,18 @@
 			parent.process.addCloth(name);
 		}
 		if(parent.input!=undefined){
-			parent.input.addCloth(name,id);
+			try{
+				parent.input.addCloth(name,id);
+			}catch(e){
+				
+			}
 		}
 		if(parent.inputsummary!=undefined){
-			parent.inputsummary.addCloth(name,id);
+			try{
+				parent.inputsummary.addCloth(name,id);
+			}catch(e){
+				
+			}
 		}
 		//alert(id);
 		closeWin();

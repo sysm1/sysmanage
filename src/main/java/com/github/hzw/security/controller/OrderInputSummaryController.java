@@ -25,6 +25,7 @@ import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
+import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderInputSummary;
 import com.github.hzw.security.entity.OrderSummary;
 import com.github.hzw.security.entity.Resources;
@@ -150,7 +151,7 @@ public class OrderInputSummaryController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("editUI")
-	public String editUI(Model model,String addId,HttpServletRequest request) {
+	public String editUI(Model model,String addId,HttpServletRequest request,String insumId) {
 		String[] addIdsa=addId.split(",");
 		String[] newArr=new String[addIdsa.length];
 		int i=0;
@@ -174,6 +175,7 @@ public class OrderInputSummaryController extends BaseController {
 		model.addAttribute("technologys", technologys);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("list", list);
+		model.addAttribute("insumId",insumId);
 		return Common.BACKGROUND_PATH+"/inputsummary/edit";
 	}
 	
@@ -359,8 +361,10 @@ public class OrderInputSummaryController extends BaseController {
 			for (String string : id) {
 				if(!Common.isEmpty(string)){
 					idarray=string.split("_");
+					OrderInput input=orderInputService.getById(idarray[0]);
 					orderInputService.delete(idarray[0]);
 					summary=orderInputSummaryService.getById(idarray[1]);
+					summary.setNum(summary.getNum()-input.getNum());
 					String orderIds=","+summary.getOrderIds()+",";
 					orderIds=orderIds.replace(","+idarray[0]+",", ",");
 					if(orderIds.equals(",")){

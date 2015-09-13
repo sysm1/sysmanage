@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.OrderNotifyInfo;
 import com.github.hzw.security.entity.OrderSummary;
@@ -56,14 +57,14 @@ public class PrintSummaryController extends BaseController {
 	
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request, HttpServletResponse response, String pageNow,String pagesize) {
-		
+		Account account = (Account) request.getSession().getAttribute("userSession");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		// map.put("printNum", 0);
 		
 		map.put("beginTime", DateUtil.beginDate(null));
 		map.put("endTime", DateUtil.endDate(null));
-		
+		map.put("cityId", account.getCityId());
 		map.put("printStatus", "2");
 		
 		if(StringUtils.isEmpty(pageNow)) {
@@ -76,10 +77,7 @@ public class PrintSummaryController extends BaseController {
 		
 		pageView = orderSummaryService.queryPrint(getPageView(pageNow,pagesize), map);
 		model.addAttribute("pageView", pageView);
-		
-		
 		return Common.BACKGROUND_PATH+"/printsummary/list";
-		
 	}
 	
 	@ResponseBody

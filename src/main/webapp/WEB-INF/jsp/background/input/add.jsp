@@ -238,17 +238,9 @@ function addColorData(data){
 }
 function clothIdCheck(){
 	var b = true;
-	/**
-	$("#table1 input[name=clothId]").each(function(){
-		var v = $(this).val();
-		if(v==""){
-			alert("请选择布种");
-			b = false;
-			return false;
-		}
-	});*/
 	var cloth=document.getElementsByName("clothId");
 	for(var i=0;i<cloth.length;i++){
+		//alert(cloth[i].value);
 		if(cloth[i].value==''){
 			alert("请选择布种");
 			b = false;

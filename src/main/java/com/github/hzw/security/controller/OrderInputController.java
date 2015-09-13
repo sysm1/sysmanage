@@ -69,7 +69,9 @@ public class OrderInputController extends BaseController {
 		Integer cityId=account.getCityId();
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		System.out.println("下单预录入查询 布种："+cloths.size());
-		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
+		SalesmanInfo salseInfo=new SalesmanInfo();
+		salseInfo.setStatus(1);
+		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(salseInfo);
 		System.out.println("下单预录入查询 业务员："+salesmanInfos.size());
 		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth1(null);
 		List<TechnologyInfo> technologys=technologyInfoService.queryAll(null);

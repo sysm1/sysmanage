@@ -93,11 +93,9 @@ public class OrderNotifyInfoController extends BaseController {
 	// @ResponseBody
 	@RequestMapping("list")
 	public String querynotify(Model model, HttpServletRequest request, HttpServletResponse response, String pageNow,String pagesize) {
-		
 		if(StringUtils.isEmpty(pageNow)) {
 			pageNow = "1";
 		}
-		
 		if(StringUtils.isEmpty(pagesize)) {
 			pagesize = "100";
 		}
@@ -117,21 +115,19 @@ public class OrderNotifyInfoController extends BaseController {
 		pageView = orderSummaryService.queryNotify(getPageView(pageNow,pagesize), map);
 		
 		model.addAttribute("pageView", pageView);
-		
-		model.addAttribute("cloths",clothInfoService.queryAll(null));
-		model.addAttribute("factorys",factoryInfoService.queryAll(null));
+		//model.addAttribute("cloths",clothInfoService.queryAll(null));
 		model.addAttribute("technologys",technologyInfoService.queryAll(null));
-		
 		model.addAttribute("model", map);
-		
-		
+		model.addAttribute("clothId", request.getParameter("clothId"));
+		model.addAttribute("cloth_text", request.getParameter("cloth_text"));
+		model.addAttribute("factoryId", request.getParameter("factoryId"));
+		model.addAttribute("factory_text", request.getParameter("factory_text"));
 		// 今天的
 		int recordCount = recordLogService.sum("notify", "cancel");
 		model.addAttribute("recordCount", recordCount);
 		// model.addAttribute("recordCount", 6);
 		int num = passwordService.getNum();
 		model.addAttribute("num", num);
-		
 		return Common.BACKGROUND_PATH+"/notify/list";
 	}
 	

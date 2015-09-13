@@ -59,7 +59,36 @@
 				}
 			});
 		});
-		
+		/***过滤查询**/
+		$("#factory_text").ligerComboBox({
+	        url: '/background/pinyin/factory.html',
+	        valueField: 'id',
+	        textField: 'name', 
+	        selectBoxWidth: 150,
+	        autocomplete: true,
+	        width: 150,
+	        height:20,
+	        onSelected:function(e) {
+	        	//alert(e+"11");
+	            $("#factoryId").val(e);
+	            //alert($("#factoryId").val());
+	        }
+	   });
+		/***过滤查询**/
+		$("#cloth_text").ligerComboBox({
+	        url: '/background/pinyin/cloth.html',
+	        valueField: 'id',
+	        textField: 'clothName', 
+	        selectBoxWidth: 215,
+	        selectBoxHeight: 215,
+	        autocomplete: true,
+	        width: 215,
+	        height:20,
+	        onSelected:function(e) {
+	            $("#clothId").val(e);
+	            //alert($("#clothId").val());
+	        }
+	    });
 		$('#checkAllId').click(function(){
 	         //判断apple是否被选中
 	         var bischecked=$('#checkAllId').is(':checked');
@@ -179,7 +208,11 @@
 		f.attr('action','${pageContext.request.contextPath}/background/notify/list.html');
 		f.submit();
 	}
-	
+	function changeTextValue(id,obj){
+		if(obj.value==''){
+			$('#'+id).attr('value','');
+		}
+	}
 </script>
 </head>
 <body>
@@ -196,12 +229,14 @@
 							onfocus="WdatePicker({isShowClear:true,readOnly:true,maxDate:''})">
 					</td><td style="text-align: right;">工&nbsp;厂：</td>
 					<td>
-						<select id="factoryId" name="factoryId" style="width:150px;">
+						<input type="hidden" id="factoryId" name="factoryId" value="${factoryId }">
+						<input type="text" id="factory_text" name="factory_text" style="width: 150px;" value="${factory_text }" onchange="changeTextValue('factoryId',this);"/> 
+						<!--select id="factoryId" name="factoryId" style="width:150px;">
 							<option value="">请选择工厂</option>
 							<c:forEach items="${ factorys }" var = "factory">
 								<option value="${factory.id }">${factory.name}</option>
 							</c:forEach>
-						</select>
+						</select-->
 					</td><td style="text-align: right;">工&nbsp;艺：</td>
 					<td>
 						<select id="factoryId" name="factoryId" style="width:150px;">
@@ -214,20 +249,14 @@
 				</tr><tr>
 					<td style="text-align: right;">布&nbsp;种：</td>
 					<td style="text-align: left;">
-						<select id="clothId" name="clothId" style="width:170px;">
-							<option value="">请选择布种</option>
-							<c:forEach items="${ cloths }" var = "cloth">
-								<option value="${cloth.id }">${cloth.clothName}</option>
-							</c:forEach>
-						</select>
+						<input type="hidden" id="clothId" name="clothId" value="${clothId }">
+						<input type="text" id="cloth_text" name="cloth_text" style="width: 200px;" value="${cloth_text}" 
+						  		onchange="changeTextValue('clothId',this);"/>
 					</td>
 					<td style="text-align: right;">工厂编号：</td>
 					<td><input type="text" name="factoryCode" value="${model.factoryCode}" style="width:140px;" /></td>
 					<td style="text-align: right;">工厂颜色：</td>
 					<td><input type="text" name="factoryColor" value="${model.factoryColor}" style="width:140px;" /></td>
-					<td>
-						&nbsp;<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查&nbsp;询</a>
-					</td>
 				</tr>
 			</table>
 				
@@ -235,10 +264,9 @@
 		</div>
 		<div class="topBtn">
 
-			<a class="btn btn-danger" href="javascript:void(0)" id="cancelView"> <i
-				class="icon-trash icon-white"></i> 撤销打印
-			</a>
+			<a class="btn btn-danger" href="javascript:void(0)" id="cancelView">  撤销打印</a>
 			
+			&nbsp;<a class="btn btn-primary" href="javascript:void(0)" id="seach"> 查&nbsp;询</a>
 		</div>
 		<div id="paging" class="pagclass">
 			

@@ -51,7 +51,7 @@ ul { list-style:none;}
 		});
 		$("#editView").click("click", function() {//绑定编辑按扭
 			var cbox=getSelectedCheckbox();
-			
+			var pcbox=getSelectedCheckIdbox();
 			$.ajax({
 			    type: "post", //使用get方法访问后台
 			    dataType: "json", //json格式的数据
@@ -74,7 +74,7 @@ ul { list-style:none;}
 					}else if(data.flag=="false2"){
 						alert("单据审核不通过不能修改，审核原因："+data.reason);
 					}else{
-						window.location.href=rootPath + '/background/inputsummary/editUI.html?addId='+data.newIds;
+						window.location.href=rootPath + '/background/inputsummary/editUI.html?addId='+data.newIds+"&insumId="+pcbox.join(",");
 						/**dialog = parent.$.ligerDialog.open({
 		    				width : 1140,
 		    				height : 550,
@@ -111,6 +111,28 @@ ul { list-style:none;}
 			}
 		});
 	});
+	
+	function showOrHiddenBtn(){
+		var csize=0;
+		var checkId=document.getElementsByName("checkId");
+		for(var i=0;i<checkId.length;i++){
+			if(checkId[i].checked){
+				csize++;
+			}
+		}
+		var childcheckId=document.getElementsByName("childcheckId");
+		if(csize>1){
+			document.getElementById("order").style.display="none";
+			document.getElementById("order2").style.display="";
+		}else{
+			document.getElementById("order").style.display="";
+			document.getElementById("order2").style.display="none";
+		}
+		if(childcheckId.length>1){
+			document.getElementById("order").style.display="none";
+			document.getElementById("order2").style.display="";
+		}
+	}
 	
 	function pwd_valid_fun(){
 		var v = $("#pwd").val();
@@ -203,6 +225,15 @@ ul { list-style:none;}
 	function getSelectedCheckbox() {
 		var arr = [];
 		$('input[name="childcheckId"]:checked').each(function() {
+			arr.push($(this).val());
+			delarr.push($(this).val());
+		});
+		return arr;
+	};
+	
+	function getSelectedCheckIdbox() {
+		var arr = [];
+		$('input[name="checkId"]:checked').each(function() {
 			arr.push($(this).val());
 			delarr.push($(this).val());
 		});

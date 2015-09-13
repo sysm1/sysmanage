@@ -45,7 +45,8 @@ function checkAllChild(obj){
 			}
 		}
 	}
-	if(chsize==size){
+	//alert(chsize);
+	if(chsize>0){
 		document.getElementById(summId).checked=true;
 	}else{
 		document.getElementById(summId).checked=false;
@@ -73,30 +74,7 @@ function checkAll(index,obj){
 	showOrHiddenBtn();
 }
 
-function showOrHiddenBtn(){
-	var csize=0;
-	var checkId=document.getElementsByName("checkId");
-	for(var i=0;i<checkId.length;i++){
-		if(checkId[i].checked){
-			csize++;
-		}
-	}
-	if(csize>1){
-		document.getElementById("order").style.display="none";
-		document.getElementById("order2").style.display="";
-	}else{
-		document.getElementById("order").style.display="";
-		document.getElementById("order2").style.display="none";
-	}
-	if(childcheckId.length>1){
-		document.getElementById("order").style.display="none";
-		document.getElementById("order2").style.display="";
-	}
-	var childcheckId=document.getElementsByName("childcheckId");
-	
-}
 //下单列表js结束
-
 
 
 function saveWin() {

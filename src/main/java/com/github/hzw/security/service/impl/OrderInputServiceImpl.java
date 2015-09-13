@@ -169,6 +169,7 @@ public class OrderInputServiceImpl implements OrderInputService {
 	
 	@Override
 	public void updateOrderInput(HttpServletRequest request){
+		String insumId=request.getParameter("insumId");
 		String[] clothId=request.getParameterValues("clothId");
 		String[] ids=request.getParameterValues("id");
 		String[] myCompanyCode=request.getParameterValues("myCompanyCode");
@@ -204,10 +205,33 @@ public class OrderInputServiceImpl implements OrderInputService {
 				inputSummary.setClothId(bean.getClothId());
 				inputSummary.setMyCompanyColor(bean.getMyCompanyColor());
 				inputSummary.setTechnologyId(bean.getTechnologyId());
+				inputSummary.setOrderDate(DateUtil.date2Str(new Date(), "yyyy-MM-dd"));
 				olist=orderInputSummaryMapper.queryAll(inputSummary);
 				if(olist.size()>0){
 					inputSummary=olist.get(0);
-					inputSummary.setNum(inputSummary.getNum()+(bean.getNum()-nnum));
+					//判断修改的单子是否有变化
+					if(!(inputSummary.getId()+"").equals(insumId)){
+						OrderInput input=orderInputMapper.getById(bean.getId()+"");
+						//orderInputMapper.delete(bean.getId()+"");
+						OrderInputSummary summary=orderInputSummaryMapper.getById(insumId);
+						summary.setNum(summary.getNum()-input.getNum());
+						String orderIds=","+summary.getOrderIds()+",";
+						orderIds=orderIds.replace(","+bean.getId()+""+",", ",");
+						//orderIds=orderIds.replace(",,","");
+						if(orderIds.equals(",")){
+							summary.setOrderIds("");
+						}else{
+							orderIds=orderIds.substring(1, orderIds.length()-1);
+							summary.setOrderIds(orderIds);
+						}
+						orderInputSummaryMapper.update(summary);
+					}
+					if(inputSummary.getOrderIds().contains(bean.getId()+"")){
+						inputSummary.setNum(inputSummary.getNum()+(bean.getNum()-nnum));
+					}else{
+						inputSummary.setNum(inputSummary.getNum()+bean.getNum());
+						inputSummary.setOrderIds(inputSummary.getOrderIds()+","+bean.getId());
+					}
 					if(inputSummary.getUnit()!=bean.getUnit()){
 						inputSummary.setUnit(null);
 					}

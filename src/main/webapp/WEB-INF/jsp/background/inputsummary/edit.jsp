@@ -415,6 +415,7 @@ jQuery.validator.addMethod("checkpass", function(value, element) {
 		</table>
 	</div>
 	<form name="form" id="form" action="${ctx}/background/input/update2.html" method="post">
+	<input type="hidden" id="insumId" name="insumId" value="${insumId}">
 	<table><tr><td valign="top">
 		<table id="table1" border="1" name="table1" class="dataintable">
 			<tbody>
