@@ -19,10 +19,12 @@ import com.github.hzw.security.entity.AuditBean;
 import com.github.hzw.security.entity.OrderInput;
 import com.github.hzw.security.entity.OrderNotifyInfo;
 import com.github.hzw.security.entity.OrderSummary;
+import com.github.hzw.security.entity.SalesmanInfo;
 import com.github.hzw.security.service.AuditService;
 import com.github.hzw.security.service.OrderInputService;
 import com.github.hzw.security.service.OrderNotifyInfoService;
 import com.github.hzw.security.service.OrderSummaryService;
+import com.github.hzw.security.service.SalesmanInfoService;
 import com.github.hzw.util.Common;
 import com.github.hzw.util.DateUtil;
 
@@ -35,6 +37,9 @@ public class OrderAuditController extends BaseController{
 	
 	@Inject
 	private OrderSummaryService orderSummaryService;
+	
+	@Inject
+	private SalesmanInfoService salesmanInfoService;
 	
 	@Inject
 	private AuditService auditService;
@@ -65,8 +70,15 @@ public class OrderAuditController extends BaseController{
 			OrderInput orderInput=orderInputService.getById(audit.getOrderId()+"");
 			model.addAttribute("bean", orderInput);
 			return Common.BACKGROUND_PATH+"/orderAudit/auditOrderInput";
-		}else if(audit.getType()==2){
+		}else if(audit.getType()==2||audit.getType()==4){
 			OrderSummary orderSummary=orderSummaryService.getById(audit.getOrderId()+"");
+			if(null!=orderSummary.getBalanceSalemanId()){
+				SalesmanInfo sminfo=salesmanInfoService.getById(orderSummary.getBalanceSalemanId()+"");
+				if(null!=sminfo){
+					String salename=salesmanInfoService.getById(orderSummary.getBalanceSalemanId()+"").getName();
+					model.addAttribute("salename", salename);
+				}
+			}
 			model.addAttribute("inputsummary",orderSummary);
 			return Common.BACKGROUND_PATH+"/orderAudit/auditOrderSummary";
 		}else if(audit.getType()==3){
@@ -142,7 +154,7 @@ public class OrderAuditController extends BaseController{
 				String ff=newIds;
 				map.put("ff",ff.replace(",","") );
 				map.put("newIds",newIds);
-			}else if("2".equals(type)){
+			}else if("2".equals(type)||"4".equals(type)){// 4下单汇总撤销
 				OrderSummary vo=orderSummaryService.getById(ids);
 				if(DateUtil.DatePattern(vo.getOrderDate(),"yyyy-MM-dd").before(DateUtil.DatePattern(new Date(),"yyyy-MM-dd"))){//过期单
 					AuditBean t=new AuditBean();

@@ -9,7 +9,7 @@ public interface FactoryInfoService extends BaseService<FactoryInfo> {
 
 	public FactoryInfo isExist(String name);
 	
-	public List<FactoryInfo> queryPinyin(String name);
+	public List<FactoryInfo> queryPinyin(String name,Integer cityId);
 	
 	public List<FactoryInfo> queryPinyinByBean(FactoryInfo info);
 }

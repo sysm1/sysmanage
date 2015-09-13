@@ -37,6 +37,8 @@ public class FactoryInfoController extends BaseController {
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu,FactoryInfo info,String pageNow,HttpServletRequest request,String pagesize) {
+		Account account=(Account) request.getSession().getAttribute("userSession");
+		info.setCityId(account.getCityId());
 		List<City> citys=cityService.getCitys(request);
 		request.setAttribute("citys", citys);
 		pageView = factoryInfoService.query(getPageView(pageNow,pagesize), info);
@@ -45,7 +47,9 @@ public class FactoryInfoController extends BaseController {
 	}
 	
 	@RequestMapping("addlist")
-	public String addlist(Model model, Resources menu, FactoryInfo info,String pageNow,String pagesize) {
+	public String addlist(Model model, Resources menu, FactoryInfo info,String pageNow,String pagesize,HttpServletRequest request) {
+		Account account=(Account) request.getSession().getAttribute("userSession");
+		info.setCityId(account.getCityId());
 		pageView = factoryInfoService.query(getPageView(pageNow,pagesize), info);
 		model.addAttribute("pageView",pageView);
 		return Common.BACKGROUND_PATH+"/factory/addlist";
@@ -58,7 +62,9 @@ public class FactoryInfoController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("query")
-	public PageView query(FactoryInfo info,String pageNow,String pagesize) {
+	public PageView query(FactoryInfo info,String pageNow,String pagesize,HttpServletRequest request) {
+		Account account=(Account) request.getSession().getAttribute("userSession");
+		info.setCityId(account.getCityId());
 		pageView = factoryInfoService.query(getPageView(pageNow,pagesize), info);
 		return pageView;
 	}

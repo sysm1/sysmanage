@@ -7,19 +7,14 @@
   </sql>
   
   <sql id="selectId" >
-    id, 
-    factory_id factoryId, 
-    (select factory.name from factory_info factory where factory.id = flower.factory_id ) as factoryName,
+    flower.id, factory_id factoryId, 
+    factory.name as factoryName,
     my_company_code myCompanyCode, 
-    factory_code factoryCode,
-    cloth_id clothId, 
+    factory_code factoryCode,cloth_id clothId, 
     (select cloth.cloth_name from cloth_info cloth where cloth.id = flower.cloth_id ) as clothName, 
-    file_color fileColor, 
-    technology_id technologyId, 
+    file_color fileColor, technology_id technologyId, 
     (select technology.name from technology_info technology where technology.id = flower.technology_id ) as technologyName,
-    picture,
-    status,
-    create_time createTime
+    picture,flower.status,create_time createTime
   </sql>
   
   <sql id="selectIdExt" >
@@ -167,8 +162,8 @@
   <select id="query" resultType="FlowerInfo" parameterType="FlowerInfo">
 		select
 		<include refid="selectId" />
-			from flower_info flower
-		<where> 1=1
+		from flower_info flower,factory_info factory
+		<where> factory.id = flower.factory_id
 		<if test="t.clothId != null and t.clothId != ''">
 			and cloth_id = #{t.clothId}
 		</if>
@@ -184,15 +179,15 @@
 		<if test="t.fileColor != null and t.fileColor != ''">
 			and file_color = #{t.fileColor}
 		</if>
-		
+		<if test="t.cityId != null and t.cityId != ''">
+			and factory.city_id = #{t.cityId}
+		</if>		
 		<if test="t.status != null and t.status != ''">
 			and status = #{t.status}
 		</if>
-		
 		<if test="factoryCode != null and factoryCode != ''">
 			and factory_code like '%${t.factoryCode}%'
 		</if>
-		
 		</where>
 		order by id desc
 	</select>
@@ -200,7 +195,7 @@
 	<select id="queryAll" resultType="FlowerInfo" parameterType="FlowerInfo">
 		select
 		<include refid="selectId" />
-		from flower_info flower
+		from flower_info flower,factory_info factory
 		<where> 1=1
 		<if test="clothId != null and clothId != ''">
 			and flower.cloth_id = #{clothId}
@@ -215,6 +210,9 @@
 		</if>
 		<if test="factoryCode != null and factoryCode != ''">
 			and factory_code  = #{factoryCode}
+		</if>
+		<if test="cityId != null and cityId != ''">
+			and factory.city_id = #{cityId}
 		</if>
 		</where>
 		order by id desc

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.GlVo;
+import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.FlowerAdditional;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.Resources;
@@ -49,7 +50,8 @@ public class FlowerInfoController extends BaseController{
 	
 	@RequestMapping("list")
 	public String list(Model model, Resources menu, String pageNow, HttpServletRequest request, FlowerInfo info) {
-		
+		Account account = (Account) request.getSession().getAttribute("userSession");
+		info.setCityId(account.getCityId());
 		model.addAttribute("cloths",clothInfoService.queryAll(null));
 		model.addAttribute("factorys",factoryInfoService.queryAll(null));
 		model.addAttribute("technologys", this.technologyInfoService.queryAll(null));

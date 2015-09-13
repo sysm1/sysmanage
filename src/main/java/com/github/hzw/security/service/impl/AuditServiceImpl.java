@@ -106,7 +106,7 @@ public class AuditServiceImpl implements AuditService {
 						}
 					}
 				}
-			}else if("2".equals(type)){//下单预录入
+			}else if("2".equals(type)||"4".equals(type)){//下单预录入
 				OrderSummary vo=orderSummaryService.getById(ids);
 				if(vo.getCreateTime().before(new Date())){//过期单
 					AuditBean t=new AuditBean();

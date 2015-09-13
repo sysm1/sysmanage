@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
+import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.ClothAllowance;
 import com.github.hzw.security.entity.OrderNotifyInfo;
 import com.github.hzw.security.entity.OrderSummary;
@@ -100,11 +101,11 @@ public class OrderNotifyInfoController extends BaseController {
 		if(StringUtils.isEmpty(pagesize)) {
 			pagesize = "100";
 		}
-		
+		Account account = (Account) request.getSession().getAttribute("userSession");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clothId", request.getParameter("clothId"));
 		map.put("factoryId", request.getParameter("factoryId"));
-		
+		map.put("cityId", account.getCityId());
 		map.put("printStatus", "1");
 		map.put("technologyId", request.getParameter("technologyId"));
 		map.put("factoryCode", request.getParameter("factoryCode"));

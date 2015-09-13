@@ -83,10 +83,10 @@ public class OrderSummaryController extends BaseController {
 			//info.setEndDate(new Date());
 		}
 		
-		ClothInfo cloth=new ClothInfo();
-		cloth.setId(info.getClothId());
-		List<ClothInfo> cloths = clothInfoService.query(getPageView(pageNow,null), cloth).getRecords();
-		
+		//ClothInfo cloth=new ClothInfo();
+		//cloth.setId(info.getClothId());
+		//List<ClothInfo> cloths = clothInfoService.query(getPageView(pageNow,null), cloth).getRecords();
+		ClothInfo clothInfo=clothInfoService.getById(info.getClothId()+"");
 		FactoryInfo fac=new FactoryInfo();
 		fac.setId(info.getFactoryId());
 		List<FactoryInfo> factoryInfos=factoryInfoService.query(getPageView(pageNow,null), fac).getRecords();
@@ -100,9 +100,9 @@ public class OrderSummaryController extends BaseController {
 		FlowerInfo flowerInfo=new FlowerInfo();
 		flowerInfo.setMyCompanyCode(info.getMyCompanyCode());
 		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth1(null);
-		if(cloths.size()==1){
-			model.addAttribute("cloth", cloths.get(0));
-		}
+//		if(cloths.size()==1){
+//			model.addAttribute("cloth", cloths.get(0));
+//		}
 		List<TechnologyInfo> technologyInfos= technologyInfoService.queryAll(null);
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		model.addAttribute("pageView", pageView);
@@ -110,7 +110,7 @@ public class OrderSummaryController extends BaseController {
 		if(factoryInfos.size()==1){
 			model.addAttribute("factoryInfo", factoryInfos.get(0));
 		}
-		model.addAttribute("cloths", cloths);
+		model.addAttribute("clothInfo", clothInfo);
 		model.addAttribute("salesmanInfos", salesmanInfos);
 		model.addAttribute("bean", info);
 		model.addAttribute("technologyInfos", technologyInfos);

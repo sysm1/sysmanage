@@ -45,9 +45,9 @@ ul { list-style:none;}
 			//alert(cbox[0].split("_")[0]);
 			var vheight=450;
 			var vwidth=650;
-			if(cbox[0].split("_")[1]==2){
+			if(cbox[0].split("_")[1]==2||cbox[0].split("_")[1]==4){
 				vheight=550;
-				vwidth=710;
+				vwidth=740;
 			}else if(cbox[0].split("_")[1]==3){
 				vheight=550;
 				vwidth=950;
@@ -285,6 +285,7 @@ ul { list-style:none;}
 							<c:if test="${item.type ==1 }">下单预录入</c:if>
 							<c:if test="${item.type ==2 }"><span style="color: #0004B5">下单汇总</span></c:if>
 							<c:if test="${item.type ==3 }"><span style="color: #CDCD00;">打印下单</span></c:if>
+							<c:if test="${item.type ==4 }"><span style="color: #CDCD00;">下单汇总撤销</span></c:if>
 						</td>
 						<td >${item.myCompanyCode }</td>
 						<td >${item.myCompanyColor }</td>

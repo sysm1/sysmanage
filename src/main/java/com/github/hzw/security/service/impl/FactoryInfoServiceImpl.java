@@ -33,12 +33,13 @@ public class FactoryInfoServiceImpl implements FactoryInfoService {
 		return pageView;
 	}
 	
-	public List<FactoryInfo> queryPinyin(String name){
+	public List<FactoryInfo> queryPinyin(String name,Integer cityId){
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(StringUtils.isNotEmpty(name)){
 			name = name.toUpperCase();
 		}
 		map.put("t", name);
+		map.put("cityId", cityId);
 		return factoryInfoMapper.queryPinyin(map);
 	}
 	

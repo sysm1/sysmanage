@@ -32,6 +32,9 @@
 		</if><if test="t.isdefault!=null and t.isdefault!=''">
 			and isdefault ='${t.isdefault}'
 		</if>
+		<if test="t.cityId!=null and t.cityId!=''">
+			and city_id ='${t.cityId}'
+		</if>
 		</where>
 		order by status,id desc
 	</select>
@@ -40,9 +43,12 @@
 		select
 		<include refid="selectId" />
 		from factory_info
-		<where>
+		<where> 1=1
 		<if test="t != null and t != ''">
-			name like '%${t}%' or pinyin like '%${t}%'
+			and name like '%${t}%' or pinyin like '%${t}%'
+		</if>
+		<if test="cityId!=null and cityId!=''">
+			and city_id ='${cityId}'
 		</if>
 		</where>
 		order by id desc
@@ -72,6 +78,9 @@
 		<where> 1=1
 		<if test="isdefault!=null and isdefault!=''">
 			and isdefault ='${isdefault}'
+		</if>
+		<if test="cityId!=null and cityId!=''">
+			and city_id ='${cityId}'
 		</if>
 		</where>
 		order by id desc

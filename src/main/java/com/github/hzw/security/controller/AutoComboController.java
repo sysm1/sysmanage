@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FactoryInfo;
 import com.github.hzw.security.entity.TechnologyInfo;
@@ -40,9 +42,10 @@ public class AutoComboController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping("factory")
-	public List<FactoryInfo> findfactory(String key) {
+	public List<FactoryInfo> findfactory(String key,HttpServletRequest request) {
+		Account account = (Account) request.getSession().getAttribute("userSession");
 		System.out.println("factory:" + key);
-		return factoryInfoService.queryPinyin(key);
+		return factoryInfoService.queryPinyin(key,account.getCityId());
 	}
 	
 	@ResponseBody

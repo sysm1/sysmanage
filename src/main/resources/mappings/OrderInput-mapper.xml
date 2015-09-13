@@ -62,7 +62,7 @@
 		</if>
 		
 		<if test="cityId!=null and cityId!=''">
-			and cityId =#{cityId}
+			and (cityId =#{cityId} or cityId is null)
 		</if>
 		
 		</where>

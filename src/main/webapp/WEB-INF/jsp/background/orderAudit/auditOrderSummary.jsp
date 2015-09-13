@@ -241,24 +241,17 @@ $(function() {
 						<span id="ywy" >业务员：</span>
 						</c:if>
 					</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						<c:if test="${inputsummary.balance != null}">
-						<div class="lanyuan_input">
-							<select id="ywy2" id="balanceSalemanId" name="balanceSalemanId">
-								<option value="">请选择</option>
-								<c:forEach var="saleman" items="${salesmanInfos }">
-								<option value="${saleman.id }" <c:if test="${saleman.id==inputsummary.balanceSalemanId }"> selected="selected" </c:if> >${saleman.name }</option>
-								</c:forEach>
-							</select>
-						</div>
+						${salename}
 						</c:if>
 					</td>
 				</tr>
 				<c:if test="${inputsummary.balancemark!=null &&inputsummary.balancemark!=''}">
 				<tr>
 					<td>差额业务员备注：</td>
-					<td colspan="5">
-						<input id='balancemark' name="balancemark" type="text" value="${inputsummary.balancemark }" style="width: 553px;height: 17px;border:1px solid green;">
+					<td colspan="5" style="text-align: left;">
+						${inputsummary.balancemark }
 					</td>
 				</tr>
 				</c:if>
@@ -295,7 +288,7 @@ $(function() {
 				<c:forEach	var="order" items="${orderInputList }">
 				<tr style="height: 30px;text-align: center;">
 					<td class="l_right" >业务员：</td>
-					<td class="l_left" colspan="2">
+					<td style="text-align: left;" colspan="2">
 						${order.saleManName }
 					</td>
 					<td class="l_right">业务员备注：</td>
@@ -328,7 +321,7 @@ $(function() {
 							<a class="btn btn-primary" href="javascript:void(0)" id="saveWin_form" onclick="saveWin();">
 								<span>保存</span> 
 							</a>
-							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="javascript:history.go(-1);">
+							<a class="btn btn-primary" href="javascript:void(0)" id="closeWin" onclick="closeWin();">
 								<span>取消</span> 
 							</a>
 							<!--a class="btn btn-primary" href="javascript:void(0)" id="search" onclick="closeWin()">

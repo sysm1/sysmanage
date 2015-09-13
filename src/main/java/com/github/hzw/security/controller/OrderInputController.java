@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.hzw.pulgin.mybatis.plugin.PageView;
 import com.github.hzw.security.VO.OrderInputVO;
+import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.entity.ClothInfo;
 import com.github.hzw.security.entity.FlowerInfo;
 import com.github.hzw.security.entity.OrderInput;
@@ -63,13 +64,16 @@ public class OrderInputController extends BaseController {
 	private FlowerInfoService flowerInfoService;
 	
 	@RequestMapping("list")
-	public String list(Model model, Resources menu, OrderInputVO info,String pageNow,String pagesize) {
+	public String list(HttpServletRequest request,Model model, Resources menu, OrderInputVO info,String pageNow,String pagesize) {
+		Account account=(Account) request.getSession().getAttribute("userSession");
+		Integer cityId=account.getCityId();
 		List<ClothInfo> cloths = clothInfoService.queryAll(null);
 		System.out.println("下单预录入查询 布种："+cloths.size());
 		List<SalesmanInfo> salesmanInfos= salesmanInfoService.queryAll(null);
 		System.out.println("下单预录入查询 业务员："+salesmanInfos.size());
 		List<String> myCompanyCodes=flowerInfoService.queryMycompanyCodeByCloth1(null);
 		List<TechnologyInfo> technologys=technologyInfoService.queryAll(null);
+		info.setCityId(cityId);
 		pageView = orderInputService.queryVO(getPageView(pageNow,pagesize), info);
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("cloths", cloths);

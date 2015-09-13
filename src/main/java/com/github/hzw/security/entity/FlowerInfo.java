@@ -37,6 +37,8 @@ public class FlowerInfo {
     
     private Date createTime;
     
+    private Integer cityId;
+    
     @ExcelDataMapper(title="id",order=1)
     public Integer getId() {
         return id;
@@ -180,5 +182,11 @@ public class FlowerInfo {
 		this.statusName = statusName;
 	}
 
-	
+	public Integer getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
 }
