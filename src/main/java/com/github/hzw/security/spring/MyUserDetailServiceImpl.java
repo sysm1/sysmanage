@@ -73,7 +73,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
 		for (Resources res : menus) {
 			// TODO:ZZQ 用户可以访问的资源名称（或者说用户所拥有的权限） 注意：必须"ROLE_"开头
 			// 关联代码：applicationContext-security.xml
-			// 关联代码：com.huaxin.security.MySecurityMetadataSource#loadResourceDefine
+			// 关联代码：com.github.huzw.security.MySecurityMetadataSource#loadResourceDefine
 			authSet.add(new SimpleGrantedAuthority("ROLE_" + res.getResKey()));
 		}
 		return authSet;

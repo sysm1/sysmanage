@@ -16,8 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.github.hzw.security.entity.Account;
 import com.github.hzw.security.mapper.AccountMapper;
 import com.github.hzw.util.Common;
-//import com.lanyuan.dao.UserDao;
-//import com.lanyuan.entity.UserLoginList;
+
 
 /**
  * 这个类主要是用户登录验证

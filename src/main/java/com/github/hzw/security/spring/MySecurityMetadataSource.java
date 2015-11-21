@@ -51,7 +51,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
 				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
 				// TODO:ZZQ 通过资源名称来表示具体的权限 注意：必须"ROLE_"开头
 				// 关联代码：applicationContext-security.xml
-				// 关联代码：com.huaxin.security.MyUserDetailServiceImpl#obtionGrantedAuthorities
+				// 关联代码：com.github.huzw.security.MyUserDetailServiceImpl#obtionGrantedAuthorities
 				ConfigAttribute configAttribute = new SecurityConfig("ROLE_" + m.getResKey());
 				configAttributes.add(configAttribute);
 				resourceMap.put(m.getResUrl(), configAttributes);

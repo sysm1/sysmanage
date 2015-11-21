@@ -44,9 +44,9 @@
 	<http use-expressions="true" auto-config="false" entry-point-ref="myAuthenticationEntryPoint" access-denied-page="/denied.jsp">
 
 	
-        <!-- 关联代码：com.huaxin.security.MySecurityMetadataSource#loadResourceDefine
+        <!-- 关联代码：com.github.huzw.security.MySecurityMetadataSource#loadResourceDefine
 -->
-        <!-- 关联代码：com.huaxin.security.MyUserDetailServiceImpl#obtionGrantedAuthorities
+        <!-- 关联代码：com.github.huzw.security.MyUserDetailServiceImpl#obtionGrantedAuthorities
 -->
         <!-- "ROLE_"固定，AAA为权限：注意对于我的例子其实是RESOURCES表的NAME字段的值 -->
         <!-- ↓↓↓SPRING默认的访问权限控制↓↓↓ -->

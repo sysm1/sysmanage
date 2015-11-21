@@ -59,13 +59,7 @@ public class Account implements java.io.Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
-	/**
-	 * 时间格式化
-	 * @author lanyuan
-	 * Email：mmm333zzz520@163.com
-	 * date：2014-2-17
-	 * @return
-	 */
+
 	@ExcelDataMapper(title="创建时间",order=4)
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getCreateTime() {
